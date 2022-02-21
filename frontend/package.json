@@ -8,8 +8,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.8.1",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.4.2",
+    "@mui/material": "^5.4.2",
+    "@vime/core": "^5.3.1",
+    "@vime/react": "^5.3.1",
+    "plyr-react": "^3.2.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-router-dom": "6"
   },
   "devDependencies": {
     "@types/react": "^17.0.33",

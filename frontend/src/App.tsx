@@ -1,45 +1,42 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React, { useState, useEffect } from "react";
+import { Routes, Route } from "react-router";
+import { ThemeProvider } from "@mui/system";
+import { createTheme } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import HomeScreen from "./screen/HomeScreen";
+import LoginScreen from "./screen/LoginScreen";
+import SignUpScreen from "./screen/SignUpScreen";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const [mode, setMode] = React.useState(prefersDarkMode ? "dark" : "light");
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          // @ts-ignore
+          mode: localStorage.getItem("theme")
+            ? localStorage.getItem("theme")
+            : prefersDarkMode
+            ? "dark"
+            : "light",
+        },
+      }),
+    [prefersDarkMode, mode]
+  );
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+    <ThemeProvider theme={theme}>
+      <Routes>
+        <Route
+          path="/"
+          element={<HomeScreen theme={theme} setMode={setMode} />}
+        />
+        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/signup" element={<SignUpScreen />} />
+      </Routes>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
