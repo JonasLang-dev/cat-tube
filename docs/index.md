@@ -1,37 +1,36 @@
-## Welcome to GitHub Pages
+# Cat Tube
 
-You can use the [editor on GitHub](https://github.com/Cat-Family/cat-tube/edit/main/docs/index.md) to maintain and preview the content for your website in Markdown files.
+**Vidstack Uploader is in the pre-alpha stage. Tap the watch button above to get notified of any developments.**
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+The functionality implemented by the project：
+- [ ] User Management
+- [ ] Permission Management
+- [ ] Fee Management
+- [ ] Sponsor Management
+- [ ] Video Management
+- [ ] Copyright Management
+- [ ] Categorize and recommend
+- [ ] Video playback
+- [ ] Vido moderation
+- [ ] Live chat
 
-### Markdown
+## Backend
+<p align="center">
+  <img alt="React" src="https://img.shields.io/badge/express%20-%2320232a.svg?&style=for-the-badge&logo=express&logoColor=%2361DAFB" style="margin:2px;"/>  
+  <img alt="React" src="https://img.shields.io/badge/typescript%20-%2320232a.svg?&style=for-the-badge&logo=typescript&logoColor=%2361DAFB" style="margin:2px;"/>  
+  <img alt="React" src="https://img.shields.io/badge/mongodb%20-%2320232a.svg?&style=for-the-badge&logo=mongodb&logoColor=%2361DAFB" style="margin:2px;"/>  
+  
+<br />
+</P>
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
+## Frontend
+<p align="center">
+  <img alt="React" src="https://img.shields.io/badge/react%20-%2320232a.svg?&style=for-the-badge&logo=react&logoColor=%2361DAFB" style="margin:2px;"/>  
+  <img alt="React" src="https://img.shields.io/badge/mui%20-%2320232a.svg?&style=for-the-badge&logo=mui&logoColor=%2361DAFB" style="margin:2px;"/>  
+  <img alt="React" src="https://img.shields.io/badge/typescript%20-%2320232a.svg?&style=for-the-badge&logo=typescript&logoColor=%2361DAFB" style="margin:2px;"/>  
+  <img alt="React" src="https://img.shields.io/badge/vite%20-%2320232a.svg?&style=for-the-badge&logo=vite&logoColor=%2361DAFB" style="margin:2px;"/>  
+  
+<br />
+</P>
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Cat-Family/cat-tube/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
