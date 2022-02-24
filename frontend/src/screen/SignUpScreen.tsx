@@ -32,10 +32,6 @@ export default function SignUpScreen() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          background: "rgba(255,255,255, 0.1)",
-          padding: "2rem",
-          borderRadius: "0.4rem",
-          backdropFilter: "blur(20px)",
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -105,7 +101,7 @@ export default function SignUpScreen() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link href="/signin" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
