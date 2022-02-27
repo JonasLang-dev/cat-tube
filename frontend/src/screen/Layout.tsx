@@ -44,7 +44,9 @@ import {
   Home,
   HomeOutlined,
   InfoOutlined,
+  Logout,
   MenuSharp,
+  PersonAdd,
   RoundaboutLeftOutlined,
   Settings,
   SettingsOutlined,
@@ -57,18 +59,23 @@ import {
 } from "@mui/icons-material";
 import { Outlet, Route, Routes, Link } from "react-router-dom";
 
-const drawerWidth = 240;
 
 function Layout({ theme, setMode }) {
+  const drawerWidth = 240;
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
         setMode((prevMode: string) =>
           prevMode === "light" ? "dark" : "light"
         );
-        localStorage.getItem("theme") === "light"
-          ? localStorage.setItem("theme", "dark")
-          : localStorage.setItem("theme", "light");
+        localStorage.getItem("theme") ?
+          (localStorage.getItem("theme") === "dark"
+            ? localStorage.setItem("theme", "light")
+            : localStorage.setItem("theme", "dark"))
+          :(prefersDarkMode 
+            ? localStorage.setItem("theme", "light") 
+            : localStorage.setItem("theme", "dark"));
       },
     }),
     []
@@ -90,21 +97,76 @@ function Layout({ theme, setMode }) {
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
       id={menuId}
       keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
       open={isMenuOpen}
       onClose={handleMenuClose}
+      PaperProps={{
+        elevation: 0,
+        sx: {
+          overflow: 'visible',
+          filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+          mt: 1.5,
+          '& .MuiAvatar-root': {
+            width: 32,
+            height: 32,
+            ml: -0.5,
+            mr: 1,
+          },
+          '&:before': {
+            content: '""',
+            display: 'block',
+            position: 'absolute',
+            top: 0,
+            right: 14,
+            width: 10,
+            height: 10,
+            bgcolor: 'background.paper',
+            transform: 'translateY(-50%) rotate(45deg)',
+            zIndex: 0,
+          },
+        },
+      }}
+      transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+      anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
-      <MenuItem onClick={handleMenuClose}>用户配置</MenuItem>
-      <MenuItem onClick={handleMenuClose}>退出登录</MenuItem>
+      <MenuItem>
+        <Avatar /> Profile
+      </MenuItem>
+      <MenuItem>
+        <Avatar /> My account
+      </MenuItem>
+      <Divider />
+      <MenuItem>
+        <ListItemIcon>
+          <PersonAdd fontSize="small" />
+        </ListItemIcon>
+        Add another account
+      </MenuItem>
+      <MenuItem>
+        <ListItemIcon>
+          <Settings fontSize="small" />
+        </ListItemIcon>
+        Settings
+      </MenuItem>
+      <MenuItem>
+        <ListItemIcon>
+          <Logout fontSize="small" />
+        </ListItemIcon>
+        Logout
+      </MenuItem>
+      <MenuItem
+        onClick={colorMode.toggleColorMode}
+      >
+        <ListItemIcon>
+          {theme.palette.mode === "dark" ? (
+            <Brightness7Icon />
+          ) : (
+            <Brightness4Icon />
+          )}
+        </ListItemIcon>
+        外观：{localStorage.getItem("theme") ? (localStorage.getItem("theme") === "dark" ? "深色主题" : "浅色主题") : "使用设备主题"}
+      </MenuItem>
     </Menu>
   );
 
@@ -131,12 +193,12 @@ function Layout({ theme, setMode }) {
         sx={
           theme.palette.mode == "dark"
             ? {
-                backdropFilter: "blur(20px)",
-                background: "rgba(0,127,255, 0.4)",
-              }
+              backdropFilter: "blur(20px)",
+              background: "rgba(0,127,255, 0.4)",
+            }
             : {
-                backdropFilter: "blur(20px)",
-              }
+              backdropFilter: "blur(20px)",
+            }
         }
       >
         <Toolbar>
@@ -154,28 +216,6 @@ function Layout({ theme, setMode }) {
 
           <Box sx={{ flexGrow: 1 }} />
 
-          <Box sx={{ flexGrow: 1 }} />
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              bgcolor: "background.primary",
-              color: "white",
-              borderRadius: 1,
-            }}
-          >
-            <IconButton
-              sx={{ ml: 1, color: "inherit" }}
-              onClick={colorMode.toggleColorMode}
-            >
-              {theme.palette.mode === "dark" ? (
-                <Brightness7Icon />
-              ) : (
-                <Brightness4Icon />
-              )}
-            </IconButton>
-          </Box>
 
           <Box sx={{ display: "flex" }}>
             <IconButton color="inherit" size="large">
@@ -210,23 +250,23 @@ function Layout({ theme, setMode }) {
         sx={
           theme.palette.mode === "dark"
             ? {
+              width: drawerWidth,
+              flexShrink: 0,
+              [`& .MuiDrawer-paper`]: {
                 width: drawerWidth,
-                flexShrink: 0,
-                [`& .MuiDrawer-paper`]: {
-                  width: drawerWidth,
-                  boxSizing: "border-box",
-                  background: "rgba(18,18,18,0.6)",
-                  backdropFilter: "blur(20px)",
-                },
-              }
+                boxSizing: "border-box",
+                background: "rgba(18,18,18,0.6)",
+                backdropFilter: "blur(20px)",
+              },
+            }
             : {
+              width: drawerWidth,
+              flexShrink: 0,
+              [`& .MuiDrawer-paper`]: {
                 width: drawerWidth,
-                flexShrink: 0,
-                [`& .MuiDrawer-paper`]: {
-                  width: drawerWidth,
-                  boxSizing: "border-box",
-                },
-              }
+                boxSizing: "border-box",
+              },
+            }
         }
         anchor="left"
         open={open}

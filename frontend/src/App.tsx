@@ -15,12 +15,11 @@ function App() {
     () =>
       createTheme({
         palette: {
-          // @ts-ignore
           mode: localStorage.getItem("theme")
             ? localStorage.getItem("theme")
-            : prefersDarkMode
+            :( prefersDarkMode
             ? "dark"
-            : "light",
+            : "light")
         },
       }),
     [prefersDarkMode, mode]
