@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ThemeProvider } from "@mui/system";
-import { createTheme } from "@mui/material";
+import { createTheme, PaletteMode } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import SignInScreen from "./screen/SignInScreen";
 import SignUpScreen from "./screen/SignUpScreen";
@@ -16,10 +16,10 @@ function App() {
       createTheme({
         palette: {
           mode: localStorage.getItem("theme")
-            ? localStorage.getItem("theme")
-            :( prefersDarkMode
+            ? (localStorage.getItem("theme") as PaletteMode)
+            : prefersDarkMode
             ? "dark"
-            : "light")
+            : "light",
         },
       }),
     [prefersDarkMode, mode]
@@ -38,6 +38,8 @@ function App() {
           <Route path="/subscriptions" element={<p>test</p>} />
           <Route path="/premium" element={<p>test</p>} />
           <Route path="/watch" element={<p>test</p>} />
+          <Route path="/profile" element={<p>test</p>} />
+          <Route path="/studio" element={<p>test</p>} />
         </Route>
         <Route path="/signin" element={<SignInScreen />} />
         <Route path="/signup" element={<SignUpScreen />} />

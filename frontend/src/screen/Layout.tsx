@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { ThemeProvider } from "@mui/system";
+import React, { FC, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import LoginScreen from "./LoginScreen";
-import SignUpScreen from "./SignUpScreen";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import AppBar from "@mui/material/AppBar";
@@ -20,14 +16,11 @@ import Toolbar from "@mui/material/Toolbar";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import {
-  Button,
   Container,
-  Grid,
-  Paper,
   Link as Links,
-  createTheme,
   ListItemButton,
   Typography,
+  PaletteMode,
 } from "@mui/material";
 import logo from "../logo.svg";
 import Copyright from "../components/Copyright";
@@ -46,20 +39,27 @@ import {
   InfoOutlined,
   Logout,
   MenuSharp,
-  PersonAdd,
-  RoundaboutLeftOutlined,
   Settings,
   SettingsOutlined,
   Subscriptions,
   SubscriptionsOutlined,
   VideoLibrary,
   VideoLibraryOutlined,
+  VideoSettings,
   WorkspacePremium,
   WorkspacePremiumOutlined,
 } from "@mui/icons-material";
-import { Outlet, Route, Routes, Link } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
+interface Layout {
+  theme: {
+    palette: {
+      mode: PaletteMode;
+    };
+  };
+  setMode: Function;
+}
 
-function Layout({ theme, setMode }) {
+const Layout: FC<Layout> = ({ theme, setMode }) => {
   const drawerWidth = 240;
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const colorMode = React.useMemo(
@@ -75,6 +75,24 @@ function Layout({ theme, setMode }) {
           : prefersDarkMode
           ? localStorage.setItem("theme", "light")
           : localStorage.setItem("theme", "dark");
+      },
+      switchDarkMode: () => {
+        setMode((prevMode: string) =>
+          prevMode === "light" ? "dark" : "light"
+        );
+        localStorage.setItem("theme", "dark");
+      },
+      switchLightMode: () => {
+        setMode((prevMode: string) =>
+          prevMode === "light" ? "dark" : "light"
+        );
+        localStorage.setItem("theme", "light");
+      },
+      switchDefault: () => {
+        setMode((prevMode: string) =>
+          prevMode === "light" ? "dark" : "light"
+        );
+        localStorage.removeItem("theme");
       },
     }),
     [prefersDarkMode]
@@ -130,20 +148,16 @@ function Layout({ theme, setMode }) {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      <MenuItem>
+      <MenuItem onClick={handleMenuClose} component={Link} to="/profile">
         <Avatar /> Profile
       </MenuItem>
-      <MenuItem>
-        <Avatar /> My account
-      </MenuItem>
-      <Divider />
-      <MenuItem>
+      <MenuItem onClick={handleMenuClose} component={Link} to="/studio">
         <ListItemIcon>
-          <PersonAdd fontSize="small" />
+          <VideoSettings fontSize="small" />
         </ListItemIcon>
-        Add another account
+        Studio
       </MenuItem>
-      <MenuItem>
+      <MenuItem onClick={handleMenuClose} component={Link} to="/settings">
         <ListItemIcon>
           <Settings fontSize="small" />
         </ListItemIcon>
@@ -155,12 +169,13 @@ function Layout({ theme, setMode }) {
         </ListItemIcon>
         Logout
       </MenuItem>
+      <Divider />
       <MenuItem onClick={colorMode.toggleColorMode}>
         <ListItemIcon>
           {theme.palette.mode === "dark" ? (
-            <Brightness7Icon />
+            <Brightness7Icon fontSize="small" />
           ) : (
-            <Brightness4Icon />
+            <Brightness4Icon fontSize="small" />
           )}
         </ListItemIcon>
         外观：
@@ -169,6 +184,17 @@ function Layout({ theme, setMode }) {
             ? "深色主题"
             : "浅色主题"
           : "使用设备主题"}
+      </MenuItem>
+      <MenuItem onClick={colorMode.switchDarkMode}>
+        <ListItemIcon></ListItemIcon>
+        深色主题
+      </MenuItem>
+      <MenuItem onClick={colorMode.switchLightMode}>
+        <ListItemIcon></ListItemIcon>
+        浅色主题
+      </MenuItem>
+      <MenuItem onClick={colorMode.switchDefault}>
+        <ListItemIcon></ListItemIcon>使用设备主题
       </MenuItem>
     </Menu>
   );
@@ -181,10 +207,7 @@ function Layout({ theme, setMode }) {
     setOpen(false);
   };
 
-  const handleListItemClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: string
-  ) => {
+  const handleListItemClick = (index: string) => {
     setSelectedIndex(index);
   };
 
@@ -215,7 +238,10 @@ function Layout({ theme, setMode }) {
           >
             <MenuSharp />
           </IconButton>
-          <img style={{ width: "2rem" }} src={logo} alt="logo" />
+
+          <Link to="/">
+            <img className="logo" src={logo} alt="logo" />
+          </Link>
 
           <Box sx={{ flexGrow: 1 }} />
 
@@ -285,7 +311,9 @@ function Layout({ theme, setMode }) {
           >
             <MenuSharp />
           </IconButton>
-          <img style={{ width: "2rem" }} src={logo} alt="logo" />
+          <Link to="/">
+            <img className="logo" src={logo} alt="logo" />
+          </Link>
         </Toolbar>
         <Box sx={{ overflow: "auto" }}>
           <List component="nav" aria-label="home explore">
@@ -293,7 +321,10 @@ function Layout({ theme, setMode }) {
               component={Link}
               to="/"
               selected={selectedIndex === "/"}
-              onClick={(event) => handleListItemClick(event, "/")}
+              onClick={() => {
+                handleListItemClick("/");
+                handleClose();
+              }}
             >
               <ListItemIcon>
                 {selectedIndex === "/" ? <Home /> : <HomeOutlined />}
@@ -304,7 +335,10 @@ function Layout({ theme, setMode }) {
               component={Link}
               to="/explore"
               selected={selectedIndex === "/explore"}
-              onClick={(event) => handleListItemClick(event, "/explore")}
+              onClick={() => {
+                handleListItemClick("/explore");
+                handleClose();
+              }}
             >
               <ListItemIcon>
                 {selectedIndex === "/explore" ? (
@@ -319,7 +353,10 @@ function Layout({ theme, setMode }) {
               component={Link}
               to="/subscriptions"
               selected={selectedIndex === "/subscriptions"}
-              onClick={(event) => handleListItemClick(event, "/subscriptions")}
+              onClick={() => {
+                handleListItemClick("/subscriptions");
+                handleClose();
+              }}
             >
               <ListItemIcon>
                 {selectedIndex === "/subscriptions" ? (
@@ -334,7 +371,10 @@ function Layout({ theme, setMode }) {
               component={Link}
               to="/premium"
               selected={selectedIndex === "/premium"}
-              onClick={(event) => handleListItemClick(event, "/premium")}
+              onClick={() => {
+                handleListItemClick("/premium");
+                handleClose();
+              }}
             >
               <ListItemIcon>
                 {selectedIndex === "/premium" ? (
@@ -352,7 +392,10 @@ function Layout({ theme, setMode }) {
               component={Link}
               to="/library"
               selected={selectedIndex === "/library"}
-              onClick={(event) => handleListItemClick(event, "/library")}
+              onClick={() => {
+                handleListItemClick("/library");
+                handleClose();
+              }}
             >
               <ListItemIcon>
                 {selectedIndex === "/library" ? (
@@ -367,7 +410,10 @@ function Layout({ theme, setMode }) {
               component={Link}
               to="/history"
               selected={selectedIndex === "/history"}
-              onClick={(event) => handleListItemClick(event, "/history")}
+              onClick={() => {
+                handleListItemClick("/history");
+                handleClose();
+              }}
             >
               <ListItemIcon>
                 {selectedIndex === "/history" ? (
@@ -382,7 +428,10 @@ function Layout({ theme, setMode }) {
               component={Link}
               to="/download"
               selected={selectedIndex === "/download"}
-              onClick={(event) => handleListItemClick(event, "/download")}
+              onClick={() => {
+                handleListItemClick("/download");
+                handleClose();
+              }}
             >
               <ListItemIcon>
                 {selectedIndex === "/download" ? (
@@ -400,7 +449,10 @@ function Layout({ theme, setMode }) {
               component={Link}
               to="/settings"
               selected={selectedIndex === "/settings"}
-              onClick={(event) => handleListItemClick(event, "/settings")}
+              onClick={() => {
+                handleListItemClick("/settings");
+                handleClose();
+              }}
             >
               <ListItemIcon>
                 {selectedIndex === "/settings" ? (
@@ -470,6 +522,6 @@ function Layout({ theme, setMode }) {
       </Box>
     </Box>
   );
-}
+};
 
 export default Layout;
