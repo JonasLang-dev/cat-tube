@@ -59,7 +59,6 @@ import {
 } from "@mui/icons-material";
 import { Outlet, Route, Routes, Link } from "react-router-dom";
 
-
 function Layout({ theme, setMode }) {
   const drawerWidth = 240;
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -69,17 +68,18 @@ function Layout({ theme, setMode }) {
         setMode((prevMode: string) =>
           prevMode === "light" ? "dark" : "light"
         );
-        localStorage.getItem("theme") ?
-          (localStorage.getItem("theme") === "dark"
+        localStorage.getItem("theme")
+          ? localStorage.getItem("theme") === "dark"
             ? localStorage.setItem("theme", "light")
-            : localStorage.setItem("theme", "dark"))
-          :(prefersDarkMode 
-            ? localStorage.setItem("theme", "light") 
-            : localStorage.setItem("theme", "dark"));
+            : localStorage.setItem("theme", "dark")
+          : prefersDarkMode
+          ? localStorage.setItem("theme", "light")
+          : localStorage.setItem("theme", "dark");
       },
     }),
-    []
+    [prefersDarkMode]
   );
+
   const matches = useMediaQuery("(min-width:1313px)");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedIndex, setSelectedIndex] = useState(location.pathname);
@@ -104,31 +104,31 @@ function Layout({ theme, setMode }) {
       PaperProps={{
         elevation: 0,
         sx: {
-          overflow: 'visible',
-          filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+          overflow: "visible",
+          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
           mt: 1.5,
-          '& .MuiAvatar-root': {
+          "& .MuiAvatar-root": {
             width: 32,
             height: 32,
             ml: -0.5,
             mr: 1,
           },
-          '&:before': {
+          "&:before": {
             content: '""',
-            display: 'block',
-            position: 'absolute',
+            display: "block",
+            position: "absolute",
             top: 0,
             right: 14,
             width: 10,
             height: 10,
-            bgcolor: 'background.paper',
-            transform: 'translateY(-50%) rotate(45deg)',
+            bgcolor: "background.paper",
+            transform: "translateY(-50%) rotate(45deg)",
             zIndex: 0,
           },
         },
       }}
-      transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-      anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      transformOrigin={{ horizontal: "right", vertical: "top" }}
+      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
       <MenuItem>
         <Avatar /> Profile
@@ -155,9 +155,7 @@ function Layout({ theme, setMode }) {
         </ListItemIcon>
         Logout
       </MenuItem>
-      <MenuItem
-        onClick={colorMode.toggleColorMode}
-      >
+      <MenuItem onClick={colorMode.toggleColorMode}>
         <ListItemIcon>
           {theme.palette.mode === "dark" ? (
             <Brightness7Icon />
@@ -165,7 +163,12 @@ function Layout({ theme, setMode }) {
             <Brightness4Icon />
           )}
         </ListItemIcon>
-        外观：{localStorage.getItem("theme") ? (localStorage.getItem("theme") === "dark" ? "深色主题" : "浅色主题") : "使用设备主题"}
+        外观：
+        {localStorage.getItem("theme")
+          ? localStorage.getItem("theme") === "dark"
+            ? "深色主题"
+            : "浅色主题"
+          : "使用设备主题"}
       </MenuItem>
     </Menu>
   );
@@ -193,12 +196,12 @@ function Layout({ theme, setMode }) {
         sx={
           theme.palette.mode == "dark"
             ? {
-              backdropFilter: "blur(20px)",
-              background: "rgba(0,127,255, 0.4)",
-            }
+                backdropFilter: "blur(20px)",
+                background: "rgba(0,127,255, 0.4)",
+              }
             : {
-              backdropFilter: "blur(20px)",
-            }
+                backdropFilter: "blur(20px)",
+              }
         }
       >
         <Toolbar>
@@ -215,7 +218,6 @@ function Layout({ theme, setMode }) {
           <img style={{ width: "2rem" }} src={logo} alt="logo" />
 
           <Box sx={{ flexGrow: 1 }} />
-
 
           <Box sx={{ display: "flex" }}>
             <IconButton color="inherit" size="large">
@@ -250,23 +252,23 @@ function Layout({ theme, setMode }) {
         sx={
           theme.palette.mode === "dark"
             ? {
-              width: drawerWidth,
-              flexShrink: 0,
-              [`& .MuiDrawer-paper`]: {
                 width: drawerWidth,
-                boxSizing: "border-box",
-                background: "rgba(18,18,18,0.6)",
-                backdropFilter: "blur(20px)",
-              },
-            }
+                flexShrink: 0,
+                [`& .MuiDrawer-paper`]: {
+                  width: drawerWidth,
+                  boxSizing: "border-box",
+                  background: "rgba(18,18,18,0.6)",
+                  backdropFilter: "blur(20px)",
+                },
+              }
             : {
-              width: drawerWidth,
-              flexShrink: 0,
-              [`& .MuiDrawer-paper`]: {
                 width: drawerWidth,
-                boxSizing: "border-box",
-              },
-            }
+                flexShrink: 0,
+                [`& .MuiDrawer-paper`]: {
+                  width: drawerWidth,
+                  boxSizing: "border-box",
+                },
+              }
         }
         anchor="left"
         open={open}
