@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { ThemeProvider } from "@mui/system";
 import { createTheme, PaletteMode } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import SignInScreen from "./screen/SignInScreen";
 import SignUpScreen from "./screen/SignUpScreen";
 import Layout from "./screen/Layout";
-import { Outlet, Route, Routes, Link } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import HomeScreen from "./screen/HomeScreen";
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
           <Route path="/library" element={<p>test</p>} />
           <Route path="/history" element={<p>test</p>} />
           <Route path="/download" element={<p>test</p>} />
-          <Route path="/Settings" element={<p>test</p>} />
+          <Route path="/settings" element={<p>test</p>} />
           <Route path="/subscriptions" element={<p>test</p>} />
           <Route path="/premium" element={<p>test</p>} />
           <Route path="/watch" element={<p>test</p>} />

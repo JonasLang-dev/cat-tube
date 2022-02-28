@@ -12,12 +12,12 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Copyright from "../components/Copyright";
+import { Link as Links } from "react-router-dom";
 
 export default function SignInScreen() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
     console.log({
       email: data.get("email"),
       password: data.get("password"),
@@ -93,7 +93,8 @@ export default function SignInScreen() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              href="/"
+              component={Links}
+              to="/"
             >
               Sign In
             </Button>
@@ -104,7 +105,7 @@ export default function SignInScreen() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/signup" variant="body2">
+                <Link component={Links} to="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

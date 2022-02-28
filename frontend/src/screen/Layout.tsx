@@ -21,10 +21,13 @@ import {
   ListItemButton,
   Typography,
   PaletteMode,
+  Button,
 } from "@mui/material";
 import logo from "../logo.svg";
 import Copyright from "../components/Copyright";
 import {
+  AccountCircleOutlined,
+  CloudUpload,
   Dashboard,
   Download,
   DownloadOutlined,
@@ -39,6 +42,8 @@ import {
   InfoOutlined,
   Logout,
   MenuSharp,
+  More,
+  MoreVert,
   Settings,
   SettingsOutlined,
   Subscriptions,
@@ -149,7 +154,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
       <MenuItem onClick={handleMenuClose} component={Link} to="/profile">
-        <Avatar /> Profile
+        <Avatar /> &nbsp; supercat
       </MenuItem>
       <MenuItem onClick={handleMenuClose} component={Link} to="/studio">
         <ListItemIcon>
@@ -163,7 +168,13 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
         </ListItemIcon>
         Settings
       </MenuItem>
-      <MenuItem>
+      <MenuItem component={Link} to="/premium" onClick={handleMenuClose}>
+        <ListItemIcon>
+          <WorkspacePremium fontSize="small" />
+        </ListItemIcon>
+        Premium
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose} component={Link} to="/signin">
         <ListItemIcon>
           <Logout fontSize="small" />
         </ListItemIcon>
@@ -178,23 +189,42 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
             <Brightness4Icon fontSize="small" />
           )}
         </ListItemIcon>
-        外观：
+        Theme:&nbsp;
         {localStorage.getItem("theme")
           ? localStorage.getItem("theme") === "dark"
-            ? "深色主题"
-            : "浅色主题"
-          : "使用设备主题"}
+            ? "Dark mode"
+            : "Light mode"
+          : "Default mode"}
       </MenuItem>
       <MenuItem onClick={colorMode.switchDarkMode}>
         <ListItemIcon></ListItemIcon>
-        深色主题
+        Dark mode
       </MenuItem>
       <MenuItem onClick={colorMode.switchLightMode}>
         <ListItemIcon></ListItemIcon>
-        浅色主题
+        Light mode
       </MenuItem>
       <MenuItem onClick={colorMode.switchDefault}>
-        <ListItemIcon></ListItemIcon>使用设备主题
+        <ListItemIcon></ListItemIcon>Default mode
+      </MenuItem>
+      <Divider />
+      <MenuItem>
+        <ListItemIcon>
+          <FeedbackOutlined fontSize="small" />
+        </ListItemIcon>
+        Feedback
+      </MenuItem>
+      <MenuItem>
+        <ListItemIcon>
+          <InfoOutlined fontSize="small" />
+        </ListItemIcon>
+        About
+      </MenuItem>
+      <MenuItem>
+        <ListItemIcon>
+          <GitHub fontSize="small" />
+        </ListItemIcon>
+        Github
       </MenuItem>
     </Menu>
   );
@@ -220,7 +250,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           theme.palette.mode == "dark"
             ? {
                 backdropFilter: "blur(20px)",
-                background: "rgba(0,127,255, 0.4)",
+                background: "rgba(0,127,255, 0.6)",
               }
             : {
                 backdropFilter: "blur(20px)",
@@ -245,19 +275,29 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
 
           <Box sx={{ flexGrow: 1 }} />
 
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <IconButton color="inherit" size="large">
               <Dashboard />
             </IconButton>
-            {/* <Button
-              sx={{}}
+            <IconButton color="inherit" size="large">
+              <CloudUpload />
+            </IconButton>
+            <IconButton
+              color="inherit"
+              size="large"
+              onClick={handleProfileMenuOpen}
+            >
+              <MoreVert />
+            </IconButton>
+            <Button
               color="inherit"
               variant="outlined"
-              startIcon={<AccountCircleOutlinedIcon />}
-              href="/login"
+              startIcon={<AccountCircleOutlined />}
+              to="/signin"
+              component={Link}
             >
               SIGN IN
-            </Button> */}
+            </Button>
             <IconButton
               size="large"
               edge="end"
@@ -283,7 +323,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
                 [`& .MuiDrawer-paper`]: {
                   width: drawerWidth,
                   boxSizing: "border-box",
-                  background: "rgba(18,18,18,0.6)",
+                  background: "rgba(18,18,18,0.7)",
                   backdropFilter: "blur(20px)",
                 },
               }

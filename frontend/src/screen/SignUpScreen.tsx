@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Copyright from "../components/Copyright";
+import { Link as Links } from "react-router-dom";
 export default function SignUpScreen() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -96,12 +97,14 @@ export default function SignUpScreen() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            component={Links}
+            to="/"
           >
             Sign Up
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/signin" variant="body2">
+              <Link component={Links} to="/signin" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
