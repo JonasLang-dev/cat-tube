@@ -25,6 +25,8 @@ import {
 } from "@mui/material";
 import logo from "../logo.svg";
 import Copyright from "../components/Copyright";
+import { styled } from "@mui/material/styles";
+import MuiDrawer from "@mui/material/Drawer";
 import {
   AccountCircleOutlined,
   Dashboard,
@@ -56,11 +58,13 @@ import {
 import { Outlet, Link } from "react-router-dom";
 
 interface Layout {
-  theme: {
-    palette: {
-      mode: PaletteMode;
-    };
-  };
+  theme:
+    | {
+        palette: {
+          mode: PaletteMode;
+        };
+      }
+    | any;
   setMode: Function;
 }
 
@@ -346,7 +350,6 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
     </Menu>
   );
 
-  
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -358,19 +361,320 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
     setSelectedIndex(index);
   };
 
+  const renderDrawerItem = (
+    <Box sx={{ overflow: "hidden" }}>
+      <List component="nav" aria-label="home explore">
+        <ListItemButton
+          component={Link}
+          to="/"
+          selected={selectedIndex === "/"}
+          onClick={() => {
+            handleListItemClick("/");
+            !matcheWithLg && handleClose();
+          }}
+        >
+          <ListItemIcon>
+            {selectedIndex === "/" ? <Home /> : <HomeOutlined />}
+          </ListItemIcon>
+          <ListItemText primary="Home" />
+        </ListItemButton>
+        <ListItemButton
+          component={Link}
+          to="/explore"
+          selected={selectedIndex === "/explore"}
+          onClick={() => {
+            handleListItemClick("/explore");
+            !matcheWithLg && handleClose();
+          }}
+        >
+          <ListItemIcon>
+            {selectedIndex === "/explore" ? <Explore /> : <ExploreOutlined />}
+          </ListItemIcon>
+          <ListItemText primary="Explore" />
+        </ListItemButton>
+        <ListItemButton
+          component={Link}
+          to="/subscriptions"
+          selected={selectedIndex === "/subscriptions"}
+          onClick={() => {
+            handleListItemClick("/subscriptions");
+            !matcheWithLg && handleClose();
+          }}
+        >
+          <ListItemIcon>
+            {selectedIndex === "/subscriptions" ? (
+              <Subscriptions />
+            ) : (
+              <SubscriptionsOutlined />
+            )}
+          </ListItemIcon>
+          <ListItemText primary="Subscriptions" />
+        </ListItemButton>
+        <ListItemButton
+          component={Link}
+          to="/premium"
+          selected={selectedIndex === "/premium"}
+          onClick={() => {
+            handleListItemClick("/premium");
+            !matcheWithLg && handleClose();
+          }}
+        >
+          <ListItemIcon>
+            {selectedIndex === "/premium" ? (
+              <WorkspacePremium />
+            ) : (
+              <WorkspacePremiumOutlined />
+            )}
+          </ListItemIcon>
+          <ListItemText primary="Premium" />
+        </ListItemButton>
+      </List>
+      <Divider />
+      <List component="nav" aria-label="library history download">
+        <ListItemButton
+          component={Link}
+          to="/library"
+          selected={selectedIndex === "/library"}
+          onClick={() => {
+            handleListItemClick("/library");
+            !matcheWithLg && handleClose();
+          }}
+        >
+          <ListItemIcon>
+            {selectedIndex === "/library" ? (
+              <VideoLibrary />
+            ) : (
+              <VideoLibraryOutlined />
+            )}
+          </ListItemIcon>
+          <ListItemText primary="Library" />
+        </ListItemButton>
+        <ListItemButton
+          component={Link}
+          to="/history"
+          selected={selectedIndex === "/history"}
+          onClick={() => {
+            handleListItemClick("/history");
+            !matcheWithLg && handleClose();
+          }}
+        >
+          <ListItemIcon>
+            {selectedIndex === "/history" ? <History /> : <HistoryOutlined />}
+          </ListItemIcon>
+          <ListItemText primary="History" />
+        </ListItemButton>
+        <ListItemButton
+          component={Link}
+          to="/download"
+          selected={selectedIndex === "/download"}
+          onClick={() => {
+            handleListItemClick("/download");
+            !matcheWithLg && handleClose();
+          }}
+        >
+          <ListItemIcon>
+            {selectedIndex === "/download" ? (
+              <Download />
+            ) : (
+              <DownloadOutlined />
+            )}
+          </ListItemIcon>
+          <ListItemText primary="Download" />
+        </ListItemButton>
+      </List>
+      <Divider />
+      <List component="nav" aria-label="library history download">
+        <ListItemButton
+          component={Link}
+          to="/settings"
+          selected={selectedIndex === "/settings"}
+          onClick={() => {
+            handleListItemClick("/settings");
+            !matcheWithLg && handleClose();
+          }}
+        >
+          <ListItemIcon>
+            {selectedIndex === "/settings" ? (
+              <Settings />
+            ) : (
+              <SettingsOutlined />
+            )}
+          </ListItemIcon>
+          <ListItemText primary="Settings" />
+        </ListItemButton>
+        <ListItemButton onClick={(event) => console.log(event)}>
+          <ListItemIcon>
+            <FeedbackOutlined />
+          </ListItemIcon>
+          <ListItemText primary="Send feedback" />
+        </ListItemButton>
+        <ListItemButton onClick={(event) => console.log(event)}>
+          <ListItemIcon>
+            <InfoOutlined />
+          </ListItemIcon>
+          <ListItemText primary="About" />
+        </ListItemButton>
+        <ListItemButton
+          href="https://github.com/Cat-Family/cat-tube"
+          component={Links}
+        >
+          <ListItemIcon>
+            <GitHub />
+          </ListItemIcon>
+          <ListItemText primary="Github" />
+        </ListItemButton>
+      </List>
+
+      {!open && matcheWithLg && (
+        <>
+          <Typography variant="body2" pl={2} mt={1}>
+            About Press Copyright
+            <br />
+            Contact us Creators
+            <br />
+            Advertise Developers
+            <br />
+            Terms Privacy Policy & Safety
+            <br />
+            How Cat Tube works
+            <br />
+            Test new features
+          </Typography>
+          <Copyright sx={{ pt: 2 }} />{" "}
+        </>
+      )}
+      {open && !matcheWithLg && !matcheWithsm && (
+        <>
+          <Typography variant="body2" pl={2} mt={1}>
+            About Press Copyright
+            <br />
+            Contact us Creators
+            <br />
+            Advertise Developers
+            <br />
+            Terms Privacy Policy & Safety
+            <br />
+            How Cat Tube works
+            <br />
+            Test new features
+          </Typography>
+          <Copyright sx={{ pt: 2 }} />{" "}
+        </>
+      )}
+
+      {matcheWithsm && (
+        <>
+          <Typography variant="body2" pl={2} mt={1}>
+            About Press Copyright
+            <br />
+            Contact us Creators
+            <br />
+            Advertise Developers
+            <br />
+            Terms Privacy Policy & Safety
+            <br />
+            How Cat Tube works
+            <br />
+            Test new features
+          </Typography>
+          <Copyright sx={{ pt: 2 }} />{" "}
+        </>
+      )}
+    </Box>
+  );
+
+  const DrawerLg = styled(MuiDrawer, {
+    shouldForwardProp: (prop) => prop !== "open",
+  })(({ theme, open }) => ({
+    "& .MuiDrawer-paper": {
+      position: "relative",
+      whiteSpace: "nowrap",
+      width: drawerWidth,
+      transition: theme.transitions.create("width", {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      boxSizing: "border-box",
+      ...(open && {
+        overflowX: "hidden",
+        transition: theme.transitions.create("width", {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+        width: theme.spacing(7),
+        [theme.breakpoints.up("sm")]: {
+          width: theme.spacing(9),
+        },
+      }),
+    },
+  }));
+
+  const DrawerMd = styled(MuiDrawer, {
+    shouldForwardProp: (prop) => prop !== "open",
+  })(({ theme, open }) => ({
+    "& .MuiDrawer-paper": {
+      position: "relative",
+      whiteSpace: "nowrap",
+      width: drawerWidth,
+      transition: theme.transitions.create("width", {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      boxSizing: "border-box",
+      ...(!open && {
+        overflowX: "hidden",
+        transition: theme.transitions.create("width", {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+        width: theme.spacing(7),
+        [theme.breakpoints.up("sm")]: {
+          width: theme.spacing(9),
+        },
+      }),
+    },
+  }));
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
         sx={
-          theme.palette.mode == "dark"
+          matcheWithsm
+            ? theme.palette.mode == "dark"
+              ? {
+                  backdropFilter: "blur(20px)",
+                  background: "rgba(0,127,255, 0.6)",
+                  transition: theme.transitions.create(["width", "margin"], {
+                    easing: theme.transitions.easing.sharp,
+                    duration: theme.transitions.duration.enteringScreen,
+                  }),
+                }
+              : {
+                  backdropFilter: "blur(20px)",
+                  transition: theme.transitions.create(["width", "margin"], {
+                    easing: theme.transitions.easing.sharp,
+                    duration: theme.transitions.duration.enteringScreen,
+                  }),
+                }
+            : theme.palette.mode == "dark"
             ? {
                 backdropFilter: "blur(20px)",
                 background: "rgba(0,127,255, 0.6)",
+                zIndex: theme.zIndex.drawer + 1,
+                transition: theme.transitions.create(["width", "margin"], {
+                  easing: theme.transitions.easing.sharp,
+                  duration: theme.transitions.duration.enteringScreen,
+                }),
               }
             : {
                 backdropFilter: "blur(20px)",
+                zIndex: theme.zIndex.drawer + 1,
+                transition: theme.transitions.create(["width", "margin"], {
+                  easing: theme.transitions.easing.sharp,
+                  duration: theme.transitions.duration.enteringScreen,
+                }),
               }
         }
       >
@@ -441,239 +745,89 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
         {renderProfileMenu}
         {renderMenu}
       </AppBar>
-      <Drawer
-        variant={"temporary"}
-        sx={
-          theme.palette.mode === "dark"
-            ? {
-                width: drawerWidth,
-                flexShrink: 0,
-                [`& .MuiDrawer-paper`]: {
-                  width: drawerWidth,
-                  boxSizing: "border-box",
-                  background: "rgba(18,18,18,0.7)",
-                  backdropFilter: "blur(20px)",
-                },
-              }
-            : {
-                width: drawerWidth,
-                flexShrink: 0,
-                [`& .MuiDrawer-paper`]: {
-                  width: drawerWidth,
-                  boxSizing: "border-box",
-                },
-              }
-        }
-        anchor="left"
-        open={open}
-        onClose={handleClose}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            size="large"
-            edge="start"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            onClick={toggleDrawer}
+      {matcheWithLg ? (
+        <DrawerLg variant="permanent" open={open}>
+          <Toolbar
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              px: [1],
+            }}
           >
-            <MenuSharp />
-          </IconButton>
-          <Link to="/">
-            <img className="logo" src={logo} alt="logo" />
-          </Link>
-          <Typography variant="h6" component="h1">
-            ube
-          </Typography>
-        </Toolbar>
-        <Box sx={{ overflow: "auto" }}>
-          <List component="nav" aria-label="home explore">
-            <ListItemButton
-              component={Link}
-              to="/"
-              selected={selectedIndex === "/"}
-              onClick={() => {
-                handleListItemClick("/");
-                handleClose();
-              }}
-            >
-              <ListItemIcon>
-                {selectedIndex === "/" ? <Home /> : <HomeOutlined />}
-              </ListItemIcon>
-              <ListItemText primary="Home" />
-            </ListItemButton>
-            <ListItemButton
-              component={Link}
-              to="/explore"
-              selected={selectedIndex === "/explore"}
-              onClick={() => {
-                handleListItemClick("/explore");
-                handleClose();
-              }}
-            >
-              <ListItemIcon>
-                {selectedIndex === "/explore" ? (
-                  <Explore />
-                ) : (
-                  <ExploreOutlined />
-                )}
-              </ListItemIcon>
-              <ListItemText primary="Explore" />
-            </ListItemButton>
-            <ListItemButton
-              component={Link}
-              to="/subscriptions"
-              selected={selectedIndex === "/subscriptions"}
-              onClick={() => {
-                handleListItemClick("/subscriptions");
-                handleClose();
-              }}
-            >
-              <ListItemIcon>
-                {selectedIndex === "/subscriptions" ? (
-                  <Subscriptions />
-                ) : (
-                  <SubscriptionsOutlined />
-                )}
-              </ListItemIcon>
-              <ListItemText primary="Subscriptions" />
-            </ListItemButton>
-            <ListItemButton
-              component={Link}
-              to="/premium"
-              selected={selectedIndex === "/premium"}
-              onClick={() => {
-                handleListItemClick("/premium");
-                handleClose();
-              }}
-            >
-              <ListItemIcon>
-                {selectedIndex === "/premium" ? (
-                  <WorkspacePremium />
-                ) : (
-                  <WorkspacePremiumOutlined />
-                )}
-              </ListItemIcon>
-              <ListItemText primary="Premium" />
-            </ListItemButton>
-          </List>
+            <IconButton onClick={toggleDrawer}>
+              <MenuSharp />
+            </IconButton>
+          </Toolbar>
           <Divider />
-          <List component="nav" aria-label="library history download">
-            <ListItemButton
-              component={Link}
-              to="/library"
-              selected={selectedIndex === "/library"}
-              onClick={() => {
-                handleListItemClick("/library");
-                handleClose();
-              }}
+          {renderDrawerItem}
+        </DrawerLg>
+      ) : matcheWithsm ? (
+        <Drawer
+          variant={"temporary"}
+          sx={
+            theme.palette.mode === "dark"
+              ? {
+                  width: drawerWidth,
+                  flexShrink: 0,
+                  [`& .MuiDrawer-paper`]: {
+                    width: drawerWidth,
+                    boxSizing: "border-box",
+                    background: "rgba(18,18,18,0.7)",
+                    backdropFilter: "blur(20px)",
+                  },
+                }
+              : {
+                  width: drawerWidth,
+                  flexShrink: 0,
+                  [`& .MuiDrawer-paper`]: {
+                    width: drawerWidth,
+                    boxSizing: "border-box",
+                  },
+                }
+          }
+          anchor="left"
+          open={open}
+          onClose={handleClose}
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              size="large"
+              edge="start"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}
+              onClick={toggleDrawer}
             >
-              <ListItemIcon>
-                {selectedIndex === "/library" ? (
-                  <VideoLibrary />
-                ) : (
-                  <VideoLibraryOutlined />
-                )}
-              </ListItemIcon>
-              <ListItemText primary="Library" />
-            </ListItemButton>
-            <ListItemButton
-              component={Link}
-              to="/history"
-              selected={selectedIndex === "/history"}
-              onClick={() => {
-                handleListItemClick("/history");
-                handleClose();
-              }}
-            >
-              <ListItemIcon>
-                {selectedIndex === "/history" ? (
-                  <History />
-                ) : (
-                  <HistoryOutlined />
-                )}
-              </ListItemIcon>
-              <ListItemText primary="History" />
-            </ListItemButton>
-            <ListItemButton
-              component={Link}
-              to="/download"
-              selected={selectedIndex === "/download"}
-              onClick={() => {
-                handleListItemClick("/download");
-                handleClose();
-              }}
-            >
-              <ListItemIcon>
-                {selectedIndex === "/download" ? (
-                  <Download />
-                ) : (
-                  <DownloadOutlined />
-                )}
-              </ListItemIcon>
-              <ListItemText primary="Download" />
-            </ListItemButton>
-          </List>
+              <MenuSharp />
+            </IconButton>
+            <Link to="/">
+              <img className="logo" src={logo} alt="logo" />
+            </Link>
+            <Typography variant="h6" component="h1">
+              ube
+            </Typography>
+          </Toolbar>
+          {renderDrawerItem}
+        </Drawer>
+      ) : (
+        <DrawerMd variant="permanent" open={open}>
+          <Toolbar
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              px: [1],
+            }}
+          >
+            <IconButton onClick={toggleDrawer}>
+              <MenuSharp />
+            </IconButton>
+          </Toolbar>
           <Divider />
-          <List component="nav" aria-label="library history download">
-            <ListItemButton
-              component={Link}
-              to="/settings"
-              selected={selectedIndex === "/settings"}
-              onClick={() => {
-                handleListItemClick("/settings");
-                handleClose();
-              }}
-            >
-              <ListItemIcon>
-                {selectedIndex === "/settings" ? (
-                  <Settings />
-                ) : (
-                  <SettingsOutlined />
-                )}
-              </ListItemIcon>
-              <ListItemText primary="Settings" />
-            </ListItemButton>
-            <ListItemButton onClick={(event) => console.log(event)}>
-              <ListItemIcon>
-                <FeedbackOutlined />
-              </ListItemIcon>
-              <ListItemText primary="Send feedback" />
-            </ListItemButton>
-            <ListItemButton onClick={(event) => console.log(event)}>
-              <ListItemIcon>
-                <InfoOutlined />
-              </ListItemIcon>
-              <ListItemText primary="About" />
-            </ListItemButton>
-            <ListItemButton
-              href="https://github.com/Cat-Family/cat-tube"
-              component={Links}
-            >
-              <ListItemIcon>
-                <GitHub />
-              </ListItemIcon>
-              <ListItemText primary="Github" />
-            </ListItemButton>
-          </List>
-
-          <Typography variant="body2" pl={2} mt={1}>
-            About Press Copyright
-            <br />
-            Contact us Creators
-            <br />
-            Advertise Developers
-            <br />
-            Terms Privacy Policy & Safety
-            <br />
-            How Cat Tube works
-            <br />
-            Test new features
-          </Typography>
-
-          <Copyright sx={{ pt: 2 }} />
-        </Box>
-      </Drawer>
+          {renderDrawerItem}
+        </DrawerMd>
+      )}
       <Box
         component="main"
         sx={{
