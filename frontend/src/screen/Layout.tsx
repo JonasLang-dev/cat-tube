@@ -747,19 +747,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
       </AppBar>
       {matcheWithLg ? (
         <DrawerLg variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <MenuSharp />
-            </IconButton>
-          </Toolbar>
-          <Divider />
+          <Toolbar></Toolbar>
           {renderDrawerItem}
         </DrawerLg>
       ) : matcheWithsm ? (
@@ -812,19 +800,8 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
         </Drawer>
       ) : (
         <DrawerMd variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <MenuSharp />
-            </IconButton>
-          </Toolbar>
-          <Divider />
+          <Toolbar></Toolbar>
+
           {renderDrawerItem}
         </DrawerMd>
       )}

@@ -33,3 +33,17 @@ The functionality implemented by the project：
   <img alt="Vite.js" src="https://img.shields.io/badge/vite%20-%2320232a.svg?&style=for-the-badge&logo=vite" style="margin:2px;"/>
 <br />
 </P>
+
+### Features
+
+This is the progress of the current project.
+
+* Support toggle theme color -- dark/light/default mod
+
+* Responsove sidebar
+
+* Responsove Header
+
+* Single page
+
+
