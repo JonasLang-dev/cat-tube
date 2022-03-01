@@ -27,7 +27,6 @@ import logo from "../logo.svg";
 import Copyright from "../components/Copyright";
 import {
   AccountCircleOutlined,
-  CloudUpload,
   Dashboard,
   Download,
   DownloadOutlined,
@@ -42,12 +41,12 @@ import {
   InfoOutlined,
   Logout,
   MenuSharp,
-  More,
   MoreVert,
   Settings,
   SettingsOutlined,
   Subscriptions,
   SubscriptionsOutlined,
+  VideoCameraFrontOutlined,
   VideoLibrary,
   VideoLibraryOutlined,
   VideoSettings,
@@ -55,6 +54,7 @@ import {
   WorkspacePremiumOutlined,
 } from "@mui/icons-material";
 import { Outlet, Link } from "react-router-dom";
+
 interface Layout {
   theme: {
     palette: {
@@ -66,6 +66,20 @@ interface Layout {
 
 const Layout: FC<Layout> = ({ theme, setMode }) => {
   const drawerWidth = 240;
+  const matcheWithLg = useMediaQuery("(min-width:900px)");
+  const matcheWithsm = useMediaQuery("(max-width:600px)");
+  const profileMenuId = "primary-account-menu";
+  const menuId = "primary-not-signin-menu";
+
+  const [selectedIndex, setSelectedIndex] = useState(location.pathname);
+  const [anchorProfileMenu, setAnchorProfileMenu] =
+    useState<null | HTMLElement>(null);
+  const [anchorMenu, setAnchorMenu] = useState<null | HTMLElement>(null);
+  const isProfileMenuOpen = Boolean(anchorProfileMenu);
+  const isMenuOpen = Boolean(anchorMenu);
+
+  const [open, setOpen] = React.useState(false);
+
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const colorMode = React.useMemo(
     () => ({
@@ -103,27 +117,23 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
     [prefersDarkMode]
   );
 
-  const matches = useMediaQuery("(min-width:1313px)");
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedIndex, setSelectedIndex] = useState(location.pathname);
-  const isMenuOpen = Boolean(anchorEl);
+  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) =>
+    setAnchorProfileMenu(event.currentTarget);
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const handleProfileMenuClose = () => setAnchorProfileMenu(null);
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) =>
+    setAnchorMenu(event.currentTarget);
 
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
+  const handleMenuClose = () => setAnchorMenu(null);
+
+  const renderProfileMenu = (
     <Menu
-      anchorEl={anchorEl}
-      id={menuId}
+      anchorEl={anchorProfileMenu}
+      id={profileMenuId}
       keepMounted
-      open={isMenuOpen}
-      onClose={handleMenuClose}
+      open={isProfileMenuOpen}
+      onClose={handleProfileMenuClose}
       PaperProps={{
         elevation: 0,
         sx: {
@@ -153,28 +163,32 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      <MenuItem onClick={handleMenuClose} component={Link} to="/profile">
+      <MenuItem onClick={handleProfileMenuClose} component={Link} to="/profile">
         <Avatar /> &nbsp; supercat
       </MenuItem>
-      <MenuItem onClick={handleMenuClose} component={Link} to="/studio">
+      <MenuItem onClick={handleProfileMenuClose} component={Link} to="/studio">
         <ListItemIcon>
           <VideoSettings fontSize="small" />
         </ListItemIcon>
         Studio
       </MenuItem>
-      <MenuItem onClick={handleMenuClose} component={Link} to="/settings">
+      <MenuItem
+        onClick={handleProfileMenuClose}
+        component={Link}
+        to="/settings"
+      >
         <ListItemIcon>
           <Settings fontSize="small" />
         </ListItemIcon>
         Settings
       </MenuItem>
-      <MenuItem component={Link} to="/premium" onClick={handleMenuClose}>
+      <MenuItem component={Link} to="/premium" onClick={handleProfileMenuClose}>
         <ListItemIcon>
           <WorkspacePremium fontSize="small" />
         </ListItemIcon>
         Premium
       </MenuItem>
-      <MenuItem onClick={handleMenuClose} component={Link} to="/signin">
+      <MenuItem onClick={handleProfileMenuClose} component={Link} to="/signin">
         <ListItemIcon>
           <Logout fontSize="small" />
         </ListItemIcon>
@@ -220,7 +234,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
         </ListItemIcon>
         About
       </MenuItem>
-      <MenuItem>
+      <MenuItem href="https://github.com/Cat-Family/cat-tube" component={Links}>
         <ListItemIcon>
           <GitHub fontSize="small" />
         </ListItemIcon>
@@ -229,7 +243,110 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
     </Menu>
   );
 
-  const [open, setOpen] = React.useState(false);
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorMenu}
+      id={menuId}
+      keepMounted
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+      PaperProps={{
+        elevation: 0,
+        sx: {
+          overflow: "visible",
+          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+          mt: 1.5,
+          "& .MuiAvatar-root": {
+            width: 32,
+            height: 32,
+            ml: -0.5,
+            mr: 1,
+          },
+          "&:before": {
+            content: '""',
+            display: "block",
+            position: "absolute",
+            top: 0,
+            right: 14,
+            width: 10,
+            height: 10,
+            bgcolor: "background.paper",
+            transform: "translateY(-50%) rotate(45deg)",
+            zIndex: 0,
+          },
+        },
+      }}
+      transformOrigin={{ horizontal: "right", vertical: "top" }}
+      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+    >
+      <MenuItem to="/signin" onClick={handleMenuClose} component={Link}>
+        <ListItemIcon>
+          <AccountCircleOutlined />
+        </ListItemIcon>
+        Sign In
+      </MenuItem>
+      <MenuItem to="/settings" onClick={handleMenuClose} component={Link}>
+        <ListItemIcon>
+          <Settings />
+        </ListItemIcon>
+        Settings
+      </MenuItem>
+      <MenuItem to="/premium" onClick={handleMenuClose} component={Link}>
+        <ListItemIcon>
+          <WorkspacePremium />
+        </ListItemIcon>
+        Premium
+      </MenuItem>
+      <Divider />
+      <MenuItem onClick={colorMode.toggleColorMode}>
+        <ListItemIcon>
+          {theme.palette.mode === "dark" ? (
+            <Brightness7Icon fontSize="small" />
+          ) : (
+            <Brightness4Icon fontSize="small" />
+          )}
+        </ListItemIcon>
+        Theme:&nbsp;
+        {localStorage.getItem("theme")
+          ? localStorage.getItem("theme") === "dark"
+            ? "Dark mode"
+            : "Light mode"
+          : "Default mode"}
+      </MenuItem>
+      <MenuItem onClick={colorMode.switchDarkMode}>
+        <ListItemIcon></ListItemIcon>
+        Dark mode
+      </MenuItem>
+      <MenuItem onClick={colorMode.switchLightMode}>
+        <ListItemIcon></ListItemIcon>
+        Light mode
+      </MenuItem>
+      <MenuItem onClick={colorMode.switchDefault}>
+        <ListItemIcon></ListItemIcon>Default mode
+      </MenuItem>
+      <Divider />
+      <MenuItem>
+        <ListItemIcon>
+          <FeedbackOutlined fontSize="small" />
+        </ListItemIcon>
+        Feedback
+      </MenuItem>
+      <MenuItem>
+        <ListItemIcon>
+          <InfoOutlined fontSize="small" />
+        </ListItemIcon>
+        About
+      </MenuItem>
+      <MenuItem href="https://github.com/Cat-Family/cat-tube" component={Links}>
+        <ListItemIcon>
+          <GitHub fontSize="small" />
+        </ListItemIcon>
+        Github
+      </MenuItem>
+    </Menu>
+  );
+
+  
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -273,6 +390,20 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
             <img className="logo" src={logo} alt="logo" />
           </Link>
 
+          {matcheWithLg ? (
+            <Typography variant="h6" component="h1">
+              ube Video
+            </Typography>
+          ) : matcheWithsm ? (
+            <Typography variant="h6" component="h1">
+              <></>
+            </Typography>
+          ) : (
+            <Typography variant="h6" component="h1">
+              ube
+            </Typography>
+          )}
+
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -280,13 +411,9 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
               <Dashboard />
             </IconButton>
             <IconButton color="inherit" size="large">
-              <CloudUpload />
+              <VideoCameraFrontOutlined />
             </IconButton>
-            <IconButton
-              color="inherit"
-              size="large"
-              onClick={handleProfileMenuOpen}
-            >
+            <IconButton color="inherit" size="large" onClick={handleMenuOpen}>
               <MoreVert />
             </IconButton>
             <Button
@@ -302,7 +429,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
               size="large"
               edge="end"
               aria-label="account of current user"
-              aria-controls={menuId}
+              aria-controls={profileMenuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
@@ -311,6 +438,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
             </IconButton>
           </Box>
         </Toolbar>
+        {renderProfileMenu}
         {renderMenu}
       </AppBar>
       <Drawer
@@ -354,6 +482,9 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           <Link to="/">
             <img className="logo" src={logo} alt="logo" />
           </Link>
+          <Typography variant="h6" component="h1">
+            ube
+          </Typography>
         </Toolbar>
         <Box sx={{ overflow: "auto" }}>
           <List component="nav" aria-label="home explore">
