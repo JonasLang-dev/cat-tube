@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { FC, useMemo } from "react";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,8 +14,41 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Copyright from "../components/Copyright";
 import { Link as Links } from "react-router-dom";
+import { IconButton, PaletteMode } from "@mui/material";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
-export default function SignInScreen() {
+interface SignIn {
+  theme:
+    | {
+        palette: {
+          mode: PaletteMode;
+        };
+      }
+    | any;
+  setMode: Function;
+}
+
+const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const colorMode = useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode: string) =>
+          prevMode === "light" ? "dark" : "light"
+        );
+        localStorage.getItem("theme")
+          ? localStorage.getItem("theme") === "dark"
+            ? localStorage.setItem("theme", "light")
+            : localStorage.setItem("theme", "dark")
+          : prefersDarkMode
+          ? localStorage.setItem("theme", "light")
+          : localStorage.setItem("theme", "dark");
+      },
+    }),
+    [prefersDarkMode]
+  );
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -52,6 +86,16 @@ export default function SignInScreen() {
             alignItems: "center",
           }}
         >
+          <IconButton
+            sx={{ position: "absolute", right: "4vw", top: "4vh" }}
+            onClick={colorMode.toggleColorMode}
+          >
+            {theme.palette.mode === "dark" ? (
+              <Brightness7Icon fontSize="small" />
+            ) : (
+              <Brightness4Icon fontSize="small" />
+            )}
+          </IconButton>
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -116,4 +160,6 @@ export default function SignInScreen() {
       </Grid>
     </Grid>
   );
-}
+};
+
+export default SignInScreen;

@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { FC, useMemo } from "react";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,7 +14,59 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Copyright from "../components/Copyright";
 import { Link as Links } from "react-router-dom";
-export default function SignUpScreen() {
+import { IconButton, PaletteMode } from "@mui/material";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+
+interface SignUp {
+  theme:
+    | {
+        palette: {
+          mode: PaletteMode;
+        };
+      }
+    | any;
+  setMode: Function;
+}
+
+const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const colorMode = useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode: string) =>
+          prevMode === "light" ? "dark" : "light"
+        );
+        localStorage.getItem("theme")
+          ? localStorage.getItem("theme") === "dark"
+            ? localStorage.setItem("theme", "light")
+            : localStorage.setItem("theme", "dark")
+          : prefersDarkMode
+          ? localStorage.setItem("theme", "light")
+          : localStorage.setItem("theme", "dark");
+      },
+      switchDarkMode: () => {
+        setMode((prevMode: string) =>
+          prevMode === "light" ? "dark" : "light"
+        );
+        localStorage.setItem("theme", "dark");
+      },
+      switchLightMode: () => {
+        setMode((prevMode: string) =>
+          prevMode === "light" ? "dark" : "light"
+        );
+        localStorage.setItem("theme", "light");
+      },
+      switchDefault: () => {
+        setMode((prevMode: string) =>
+          prevMode === "light" ? "dark" : "light"
+        );
+        localStorage.removeItem("theme");
+      },
+    }),
+    [prefersDarkMode]
+  );
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -35,6 +88,16 @@ export default function SignUpScreen() {
           alignItems: "center",
         }}
       >
+        <IconButton
+          sx={{ position: "absolute", right: "4vw", top: "4vh" }}
+          onClick={colorMode.toggleColorMode}
+        >
+          {theme.palette.mode === "dark" ? (
+            <Brightness7Icon fontSize="small" />
+          ) : (
+            <Brightness4Icon fontSize="small" />
+          )}
+        </IconButton>
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
@@ -114,4 +177,6 @@ export default function SignUpScreen() {
       <Copyright sx={{ mt: 5 }} />
     </Container>
   );
-}
+};
+
+export default SignUpScreen;

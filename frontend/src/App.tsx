@@ -41,8 +41,14 @@ function App() {
           <Route path="/profile" element={<p>test</p>} />
           <Route path="/studio" element={<p>test</p>} />
         </Route>
-        <Route path="/signin" element={<SignInScreen />} />
-        <Route path="/signup" element={<SignUpScreen />} />
+        <Route
+          path="/signin"
+          element={<SignInScreen theme={theme} setMode={setMode} />}
+        />
+        <Route
+          path="/signup"
+          element={<SignUpScreen theme={theme} setMode={setMode} />}
+        />
       </Routes>
     </ThemeProvider>
   );
