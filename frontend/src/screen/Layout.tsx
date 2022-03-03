@@ -2,11 +2,9 @@ import React, { FC, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
@@ -22,13 +20,16 @@ import {
   Typography,
   PaletteMode,
   Button,
+  ListItem,
+  Drawer,
 } from "@mui/material";
 import logo from "../logo.svg";
 import Copyright from "../components/Copyright";
-import { styled } from "@mui/material/styles";
-import MuiDrawer from "@mui/material/Drawer";
+import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import {
   AccountCircleOutlined,
+  ChevronLeft,
+  ChevronRight,
   Dashboard,
   Download,
   DownloadOutlined,
@@ -56,6 +57,96 @@ import {
   WorkspacePremiumOutlined,
 } from "@mui/icons-material";
 import { Outlet, Link } from "react-router-dom";
+import MuiDrawer from "@mui/material/Drawer";
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+
+const drawerWidth = 240;
+
+const openedMixin = (theme: Theme): CSSObject => ({
+  width: drawerWidth,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: "hidden",
+});
+
+const closedMixin = (theme: Theme): CSSObject => ({
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: "hidden",
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up("sm")]: {
+    width: `calc(${theme.spacing(9)} + 1px)`,
+  },
+});
+
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
+
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== "open",
+})<AppBarProps>(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(["width", "margin"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const CosDrawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
+
+const CoslDrawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  ...(!open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
 
 interface Layout {
   theme:
@@ -69,9 +160,8 @@ interface Layout {
 }
 
 const Layout: FC<Layout> = ({ theme, setMode }) => {
-  const drawerWidth = 240;
-  const matcheWithLg = useMediaQuery("(min-width:900px)");
-  const matcheWithsm = useMediaQuery("(max-width:600px)");
+  const matcheWithLg = useMediaQuery("(min-width:1200px)");
+  const matcheWithSm = useMediaQuery("(max-width:600px)");
   const profileMenuId = "primary-account-menu";
   const menuId = "primary-not-signin-menu";
 
@@ -350,11 +440,12 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
     </Menu>
   );
 
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   const toggleDrawer = () => {
     setOpen(!open);
-  };
-  const handleClose = () => {
-    setOpen(false);
   };
 
   const handleListItemClick = (index: string) => {
@@ -362,7 +453,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
   };
 
   const renderDrawerItem = (
-    <Box sx={{ overflow: "hidden" }}>
+    <>
       <List component="nav" aria-label="home explore">
         <ListItemButton
           component={Link}
@@ -370,7 +461,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           selected={selectedIndex === "/"}
           onClick={() => {
             handleListItemClick("/");
-            !matcheWithLg && handleClose();
+            !matcheWithLg && handleDrawerClose();
           }}
         >
           <ListItemIcon>
@@ -384,7 +475,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           selected={selectedIndex === "/explore"}
           onClick={() => {
             handleListItemClick("/explore");
-            !matcheWithLg && handleClose();
+            !matcheWithLg && handleDrawerClose();
           }}
         >
           <ListItemIcon>
@@ -398,7 +489,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           selected={selectedIndex === "/subscriptions"}
           onClick={() => {
             handleListItemClick("/subscriptions");
-            !matcheWithLg && handleClose();
+            !matcheWithLg && handleDrawerClose();
           }}
         >
           <ListItemIcon>
@@ -416,7 +507,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           selected={selectedIndex === "/premium"}
           onClick={() => {
             handleListItemClick("/premium");
-            !matcheWithLg && handleClose();
+            !matcheWithLg && handleDrawerClose();
           }}
         >
           <ListItemIcon>
@@ -437,7 +528,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           selected={selectedIndex === "/library"}
           onClick={() => {
             handleListItemClick("/library");
-            !matcheWithLg && handleClose();
+            !matcheWithLg && handleDrawerClose();
           }}
         >
           <ListItemIcon>
@@ -455,7 +546,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           selected={selectedIndex === "/history"}
           onClick={() => {
             handleListItemClick("/history");
-            !matcheWithLg && handleClose();
+            !matcheWithLg && handleDrawerClose();
           }}
         >
           <ListItemIcon>
@@ -469,7 +560,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           selected={selectedIndex === "/download"}
           onClick={() => {
             handleListItemClick("/download");
-            !matcheWithLg && handleClose();
+            !matcheWithLg && handleDrawerClose();
           }}
         >
           <ListItemIcon>
@@ -490,7 +581,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           selected={selectedIndex === "/settings"}
           onClick={() => {
             handleListItemClick("/settings");
-            !matcheWithLg && handleClose();
+            !matcheWithLg && handleDrawerClose();
           }}
         >
           <ListItemIcon>
@@ -524,8 +615,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           <ListItemText primary="Github" />
         </ListItemButton>
       </List>
-
-      {!open && matcheWithLg && (
+      {matcheWithLg && !open && (
         <>
           <Typography variant="body2" pl={2} mt={1}>
             About Press Copyright
@@ -543,7 +633,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           <Copyright sx={{ pt: 2 }} />{" "}
         </>
       )}
-      {open && !matcheWithLg && !matcheWithsm && (
+      {!matcheWithLg && !matcheWithSm && open && (
         <>
           <Typography variant="body2" pl={2} mt={1}>
             About Press Copyright
@@ -561,120 +651,23 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           <Copyright sx={{ pt: 2 }} />{" "}
         </>
       )}
-
-      {matcheWithsm && (
-        <>
-          <Typography variant="body2" pl={2} mt={1}>
-            About Press Copyright
-            <br />
-            Contact us Creators
-            <br />
-            Advertise Developers
-            <br />
-            Terms Privacy Policy & Safety
-            <br />
-            How Cat Tube works
-            <br />
-            Test new features
-          </Typography>
-          <Copyright sx={{ pt: 2 }} />{" "}
-        </>
-      )}
-    </Box>
+    </>
   );
-
-  const DrawerLg = styled(MuiDrawer, {
-    shouldForwardProp: (prop) => prop !== "open",
-  })(({ theme, open }) => ({
-    "& .MuiDrawer-paper": {
-      position: "relative",
-      whiteSpace: "nowrap",
-      width: drawerWidth,
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: "border-box",
-      ...(open && {
-        overflowX: "hidden",
-        transition: theme.transitions.create("width", {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up("sm")]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }));
-
-  const DrawerMd = styled(MuiDrawer, {
-    shouldForwardProp: (prop) => prop !== "open",
-  })(({ theme, open }) => ({
-    "& .MuiDrawer-paper": {
-      position: "relative",
-      whiteSpace: "nowrap",
-      width: drawerWidth,
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: "border-box",
-      ...(!open && {
-        overflowX: "hidden",
-        transition: theme.transitions.create("width", {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up("sm")]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }));
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
+        open={matcheWithLg ? !open : matcheWithSm ? false : open}
         position="fixed"
         sx={
-          matcheWithsm
-            ? theme.palette.mode == "dark"
-              ? {
-                  backdropFilter: "blur(20px)",
-                  background: "rgba(0,127,255, 0.6)",
-                  transition: theme.transitions.create(["width", "margin"], {
-                    easing: theme.transitions.easing.sharp,
-                    duration: theme.transitions.duration.enteringScreen,
-                  }),
-                }
-              : {
-                  backdropFilter: "blur(20px)",
-                  transition: theme.transitions.create(["width", "margin"], {
-                    easing: theme.transitions.easing.sharp,
-                    duration: theme.transitions.duration.enteringScreen,
-                  }),
-                }
-            : theme.palette.mode == "dark"
+          theme.palette.mode == "dark"
             ? {
                 backdropFilter: "blur(20px)",
                 background: "rgba(0,127,255, 0.6)",
-                zIndex: theme.zIndex.drawer + 1,
-                transition: theme.transitions.create(["width", "margin"], {
-                  easing: theme.transitions.easing.sharp,
-                  duration: theme.transitions.duration.enteringScreen,
-                }),
               }
             : {
                 backdropFilter: "blur(20px)",
-                zIndex: theme.zIndex.drawer + 1,
-                transition: theme.transitions.create(["width", "margin"], {
-                  easing: theme.transitions.easing.sharp,
-                  duration: theme.transitions.duration.enteringScreen,
-                }),
               }
         }
       >
@@ -698,7 +691,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
             <Typography variant="h6" component="h1">
               ube Video
             </Typography>
-          ) : matcheWithsm ? (
+          ) : matcheWithSm ? (
             <Typography variant="h6" component="h1">
               <></>
             </Typography>
@@ -745,14 +738,15 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
         {renderProfileMenu}
         {renderMenu}
       </AppBar>
-      {matcheWithLg ? (
-        <DrawerLg variant="permanent" open={open}>
-          <Toolbar></Toolbar>
-          {renderDrawerItem}
-        </DrawerLg>
-      ) : matcheWithsm ? (
+      {matcheWithSm && (
         <Drawer
-          variant={"temporary"}
+          anchor="left"
+          variant="temporary"
+          open={open}
+          onClose={toggleDrawer}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
           sx={
             theme.palette.mode === "dark"
               ? {
@@ -774,11 +768,8 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
                   },
                 }
           }
-          anchor="left"
-          open={open}
-          onClose={handleClose}
         >
-          <Toolbar>
+          {/* <Toolbar>
             <IconButton
               color="inherit"
               size="large"
@@ -795,15 +786,33 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
             <Typography variant="h6" component="h1">
               ube
             </Typography>
-          </Toolbar>
+          </Toolbar> */}
+          <Toolbar />
+          <Divider />
           {renderDrawerItem}
         </Drawer>
-      ) : (
-        <DrawerMd variant="permanent" open={open}>
-          <Toolbar></Toolbar>
-
+      )}
+      {matcheWithLg && (
+        <CoslDrawer variant="permanent" open={open}>
+          <DrawerHeader>
+            <IconButton onClick={toggleDrawer}>
+              {theme.direction === "rtl" ? <ChevronRight /> : <ChevronLeft />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
           {renderDrawerItem}
-        </DrawerMd>
+        </CoslDrawer>
+      )}
+      {!matcheWithLg && !matcheWithSm && (
+        <CosDrawer variant="permanent" open={open}>
+          <DrawerHeader>
+            <IconButton onClick={toggleDrawer}>
+              {theme.direction === "rtl" ? <ChevronRight /> : <ChevronLeft />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          {renderDrawerItem}
+        </CosDrawer>
       )}
       <Box
         component="main"
@@ -813,14 +822,10 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
               ? theme.palette.grey[100]
               : theme.palette.grey[900],
           flexGrow: 1,
-          height: "100vh",
-          overflow: "auto",
         }}
       >
         <Toolbar />
-        <Container>
-          <Outlet />
-        </Container>
+        <Outlet />
       </Box>
     </Box>
   );
