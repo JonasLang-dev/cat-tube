@@ -7,6 +7,7 @@ import SignUpScreen from "./screen/SignUpScreen";
 import Layout from "./screen/Layout";
 import { Route, Routes } from "react-router-dom";
 import HomeScreen from "./screen/HomeScreen";
+import DashbordScreen from "./screen/DashbordScreen";
 
 function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -40,6 +41,7 @@ function App() {
           <Route path="/watch" element={<p>test</p>} />
           <Route path="/profile" element={<p>test</p>} />
           <Route path="/studio" element={<p>test</p>} />
+          <Route path="/dashbord" element={<DashbordScreen />} />
         </Route>
         <Route
           path="/signin"

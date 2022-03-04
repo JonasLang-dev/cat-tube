@@ -99,7 +99,6 @@ interface AppBarProps extends MuiAppBarProps {
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -117,6 +116,7 @@ const AppBar = styled(MuiAppBar, {
 const CosDrawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
+  zIndex: theme.zIndex.appBar - 1,
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
@@ -134,6 +134,7 @@ const CosDrawer = styled(MuiDrawer, {
 const CoslDrawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
+  zIndex: theme.zIndex.appBar - 1,
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
@@ -704,7 +705,12 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton color="inherit" size="large">
+            <IconButton
+              color="inherit"
+              size="large"
+              component={Link}
+              to="/dashbord"
+            >
               <Dashboard />
             </IconButton>
             <IconButton color="inherit" size="large">
@@ -769,7 +775,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
                 }
           }
         >
-          {/* <Toolbar>
+          <Toolbar>
             <IconButton
               color="inherit"
               size="large"
@@ -786,9 +792,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
             <Typography variant="h6" component="h1">
               ube
             </Typography>
-          </Toolbar> */}
-          <Toolbar />
-          <Divider />
+          </Toolbar>
           {renderDrawerItem}
         </Drawer>
       )}
