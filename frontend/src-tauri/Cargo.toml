@@ -1,11 +1,11 @@
 [package]
-name = "app"
+name = "cat-tube"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
-default-run = "app"
+description = "Cat-tube was inspired by YouTube"
+authors = ["supercutcat", "Cat-Family"]
+license = "BSD-3-Clause"
+repository = "https://github.com/Cat-Family/cat-tube"
+default-run = "cat-tube"
 edition = "2021"
 rust-version = "1.57"
 
