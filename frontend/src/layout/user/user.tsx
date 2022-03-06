@@ -22,9 +22,10 @@ import {
   Button,
   ListItem,
   Drawer,
+  Badge,
 } from "@mui/material";
-import logo from "../logo.svg";
-import Copyright from "../components/Copyright";
+import logo from "../../assets/icons/logo.svg";
+import Copyright from "../../components/Copyright";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import {
   AccountCircleOutlined,
@@ -43,6 +44,7 @@ import {
   HomeOutlined,
   InfoOutlined,
   Logout,
+  Mail,
   MenuSharp,
   MoreVert,
   Settings,
@@ -151,12 +153,12 @@ const CoslDrawer = styled(MuiDrawer, {
 
 interface Layout {
   theme:
-    | {
-        palette: {
-          mode: PaletteMode;
-        };
-      }
-    | any;
+  | {
+    palette: {
+      mode: PaletteMode;
+    };
+  }
+  | any;
   setMode: Function;
 }
 
@@ -187,8 +189,8 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
             ? localStorage.setItem("theme", "light")
             : localStorage.setItem("theme", "dark")
           : prefersDarkMode
-          ? localStorage.setItem("theme", "light")
-          : localStorage.setItem("theme", "dark");
+            ? localStorage.setItem("theme", "light")
+            : localStorage.setItem("theme", "dark");
       },
       switchDarkMode: () => {
         setMode((prevMode: string) =>
@@ -664,12 +666,12 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
         sx={
           theme.palette.mode == "dark"
             ? {
-                backdropFilter: "blur(20px)",
-                background: "rgba(0,127,255, 0.6)",
-              }
+              backdropFilter: "blur(20px)",
+              background: "rgba(0,127,255, 0.6)",
+            }
             : {
-                backdropFilter: "blur(20px)",
-              }
+              backdropFilter: "blur(20px)",
+            }
         }
       >
         <Toolbar>
@@ -705,6 +707,11 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
+            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={4} color="error">
+                <Mail />
+              </Badge>
+            </IconButton>
             <IconButton
               color="inherit"
               size="large"
@@ -756,23 +763,23 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           sx={
             theme.palette.mode === "dark"
               ? {
+                width: drawerWidth,
+                flexShrink: 0,
+                [`& .MuiDrawer-paper`]: {
                   width: drawerWidth,
-                  flexShrink: 0,
-                  [`& .MuiDrawer-paper`]: {
-                    width: drawerWidth,
-                    boxSizing: "border-box",
-                    background: "rgba(18,18,18,0.7)",
-                    backdropFilter: "blur(20px)",
-                  },
-                }
+                  boxSizing: "border-box",
+                  background: "rgba(18,18,18,0.7)",
+                  backdropFilter: "blur(20px)",
+                },
+              }
               : {
+                width: drawerWidth,
+                flexShrink: 0,
+                [`& .MuiDrawer-paper`]: {
                   width: drawerWidth,
-                  flexShrink: 0,
-                  [`& .MuiDrawer-paper`]: {
-                    width: drawerWidth,
-                    boxSizing: "border-box",
-                  },
-                }
+                  boxSizing: "border-box",
+                },
+              }
           }
         >
           <Toolbar>

@@ -1,7 +1,5 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
-import CameraIcon from "@mui/icons-material/PhotoCamera";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -11,12 +9,15 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { Avatar, CardActionArea, CardHeader, IconButton } from "@mui/material";
+import { red } from "@mui/material/colors";
+import { GridMoreVertIcon } from "@mui/x-data-grid";
+import { Download, Favorite, PlayCircle, Share } from "@mui/icons-material";
 
-import { createTheme } from "@mui/material/styles";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-function HomeScreen() {
+function HomePage() {
   return (
     <main>
       <Box
@@ -69,11 +70,26 @@ function HomeScreen() {
                   flexDirection: "column",
                 }}
               >
-                <CardMedia
-                  component="img"
-                  image="https://source.unsplash.com/random"
-                  alt="random"
-                />
+                <CardHeader avatar={
+                  <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                    R
+                  </Avatar>}
+                  action={
+                    <IconButton aria-label="settings">
+                      <GridMoreVertIcon />
+                    </IconButton>
+                  }
+                  title="Shrimp and Chorizo Paella"
+                  subheader="September 14, 2016" />
+
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    image="https://source.unsplash.com/random"
+                    alt="random"
+                    sx={{ maxHeight: "320px", maxWidth: "auto" }}
+                  />
+                </CardActionArea>
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography gutterBottom variant="h5" component="h2">
                     Heading
@@ -84,8 +100,18 @@ function HomeScreen() {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small">View</Button>
-                  <Button size="small">Edit</Button>
+                  <IconButton aria-label="play">
+                    <PlayCircle />
+                  </IconButton>
+                  <IconButton aria-label="play">
+                    <Download />
+                  </IconButton>
+                  <IconButton aria-label="add to favorites">
+                    <Favorite color="error" />
+                  </IconButton>
+                  <IconButton aria-label="share">
+                    <Share />
+                  </IconButton>
                 </CardActions>
               </Card>
             </Grid>
@@ -96,4 +122,4 @@ function HomeScreen() {
   );
 }
 
-export default HomeScreen;
+export default HomePage;

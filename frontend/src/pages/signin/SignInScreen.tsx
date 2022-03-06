@@ -12,7 +12,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import Copyright from "../components/Copyright";
+import Copyright from "../../components/Copyright";
 import { Link as Links } from "react-router-dom";
 import { IconButton, PaletteMode } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
