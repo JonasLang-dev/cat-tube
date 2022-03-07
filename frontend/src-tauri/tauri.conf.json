@@ -15,7 +15,6 @@
       "targets": "all",
       "identifier": "com.cat-tube",
       "icon": [
-        "icons/logo.svg",
         "icons/logo.ico"
       ],
       "resources": [],

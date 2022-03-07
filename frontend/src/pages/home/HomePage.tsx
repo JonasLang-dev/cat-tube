@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { FC, useRef } from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -9,15 +9,32 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Avatar, CardActionArea, CardHeader, IconButton } from "@mui/material";
+import {
+  Avatar,
+  CardActionArea,
+  CardHeader,
+  IconButton,
+  Skeleton,
+} from "@mui/material";
 import { red } from "@mui/material/colors";
-import { GridMoreVertIcon } from "@mui/x-data-grid";
-import { Download, Favorite, PlayCircle, Share } from "@mui/icons-material";
+import {
+  Download,
+  Favorite,
+  MoreVert,
+  PlayCircle,
+  Share,
+} from "@mui/icons-material";
 
+// @ts-ignore
+import Image from "mui-image";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-function HomePage() {
+interface Home {
+  loading?: boolean;
+}
+
+const HomePage: FC<Home> = ({ loading = false }) => {
   return (
     <main>
       <Box
@@ -70,34 +87,86 @@ function HomePage() {
                   flexDirection: "column",
                 }}
               >
-                <CardHeader avatar={
-                  <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                    R
-                  </Avatar>}
-                  action={
-                    <IconButton aria-label="settings">
-                      <GridMoreVertIcon />
-                    </IconButton>
+                <CardHeader
+                  avatar={
+                    loading ? (
+                      <Skeleton
+                        animation="wave"
+                        variant="circular"
+                        width={40}
+                        height={40}
+                      />
+                    ) : (
+                      <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                        R
+                      </Avatar>
+                    )
                   }
-                  title="Shrimp and Chorizo Paella"
-                  subheader="September 14, 2016" />
-
+                  action={
+                    loading ? null : (
+                      <IconButton aria-label="settings">
+                        <MoreVert />
+                      </IconButton>
+                    )
+                  }
+                  title={
+                    loading ? (
+                      <Skeleton
+                        animation="wave"
+                        height={10}
+                        width="80%"
+                        style={{ marginBottom: 6 }}
+                      />
+                    ) : (
+                      "Shrimp"
+                    )
+                  }
+                  subheader={
+                    loading ? (
+                      <Skeleton animation="wave" height={10} width="40%" />
+                    ) : (
+                      "September 14, 2016"
+                    )
+                  }
+                />
                 <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                    sx={{ maxHeight: "320px", maxWidth: "auto" }}
+                  <Image
+                    src="https://source.unsplash.com/random"
+                    height="200px"
+                    width="auto"
+                    fit="cover"
+                    duration={300}
+                    easing="cubic-bezier(0.7, 0, 0.6, 1)"
+                    showLoading={
+                      <Skeleton
+                        variant="rectangular"
+                        width="100%"
+                        height="200px"
+                        animation="wave"
+                      />
+                    }
+                    errorIcon={true}
+                    shift={null}
+                    distanc="100px"
+                    shiftDuration={900}
+                    bgColor="inherit"
                   />
                 </CardActionArea>
                 <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Heading
-                  </Typography>
-                  <Typography>
-                    This is a media card. You can use this section to describe
-                    the content.
-                  </Typography>
+                  {loading ? (
+                    <React.Fragment>
+                      <Skeleton
+                        animation="wave"
+                        height={10}
+                        style={{ marginBottom: 6 }}
+                      />
+                      <Skeleton animation="wave" height={10} width="80%" />
+                    </React.Fragment>
+                  ) : (
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Heading
+                    </Typography>
+                  )}
                 </CardContent>
                 <CardActions>
                   <IconButton aria-label="play">
@@ -120,6 +189,6 @@ function HomePage() {
       </Container>
     </main>
   );
-}
+};
 
 export default HomePage;
