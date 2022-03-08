@@ -24,6 +24,17 @@ The functionality implemented by the project：
 <br />
 </P>
 
+### Dependencies
+
+``` shell
+# dependencies
+yarn add express zod config cors express mongoose pino pino-pretty dayjs bcrypt jsonwebtoken loadsh nanoid
+
+# dev dependencies
+yarn add @types/body-parser @types/config @types/cors @types/express @types/node @types/pino @types/mongoose @types/bcrypt @types/jsonwebtoken @types/lodash @types/nanoid ts-node-dev typescript -D
+
+```
+
 ## Frontend
 
 <p align="center">
@@ -38,12 +49,10 @@ The functionality implemented by the project：
 
 This is the progress of the current project.
 
-* Support toggle theme color -- dark/light/default mod
+- Support toggle theme color -- dark/light/default mod
 
-* Responsove sidebar
+- Responsove sidebar
 
-* Responsove Header
+- Responsove Header
 
-* Single page
-
-
+- Single page
