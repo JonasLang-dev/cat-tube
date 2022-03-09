@@ -2,7 +2,7 @@ export default {
   port: 5020,
   dbUri: "mongodb://localhost:27017/cat-tube",
   saltWorkFactor: 10,
-  accessTokenTtl: "1m",
+  accessTokenTtl: "15m",
   refreshTokenTtl: "1d",
   publicKey: `-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu7dwL0XMnAcZo7IwYExi
