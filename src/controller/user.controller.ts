@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { omit } from "lodash";
 import { CreateUserInput } from "../schema/user.schema";
 import { createUser } from "../service/user.service";
 import logger from "../utils/logger";
