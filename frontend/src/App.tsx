@@ -9,6 +9,7 @@ import { Route, Routes } from "react-router-dom";
 import DashbordScreen from "./pages/dashbard/DashbordPage";
 import HomePage from "./pages/home/HomePage";
 import Pricing from "./components/PricingContent";
+import Watch from "./pages/watch/index";
 
 function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -39,7 +40,7 @@ function App() {
           <Route path="/settings" element={<p>test</p>} />
           <Route path="/subscriptions" element={<p>test</p>} />
           <Route path="/premium" element={<Pricing />} />
-          <Route path="/watch" element={<p>test</p>} />
+          <Route path="/watch" element={<Watch />} />
           <Route path="/profile" element={<p>test</p>} />
           <Route path="/studio" element={<p>test</p>} />
           <Route path="/dashbord" element={<DashbordScreen />} />

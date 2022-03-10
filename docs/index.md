@@ -18,21 +18,21 @@ The functionality implemented by the project：
 ## Backend
 
 <p align="center">
-  <img alt="Express.js" src="https://img.shields.io/badge/express%20-%2320232a.svg?&style=for-the-badge&logo=express" style="margin:2px;"/>
-  <img alt="Typescript" src="https://img.shields.io/badge/typescript%20-%2320232a.svg?&style=for-the-badge&logo=typescript" style="margin:2px;"/>
-  <img alt="Mongodb" src="https://img.shields.io/badge/mongodb%20-%2320232a.svg?&style=for-the-badge&logo=mongodb" style="margin:2px;"/>
+    <img alt="Nodejs" src="https://img.shields.io/badge/nodejs%20-%2320232a.svg?&style=for-the-badge&logo=node.js" style="margin:2px;"/>  
+    <img alt="Typescript" src="https://img.shields.io/badge/typescript%20-%2320232a.svg?&style=for-the-badge&logo=typescript" style="margin:2px;"/>
+    <img alt="Express.js" src="https://img.shields.io/badge/express%20-%2320232a.svg?&style=for-the-badge&logo=express" style="margin:2px;"/>
+    <img alt="Mongodb" src="https://img.shields.io/badge/mongodb%20-%2320232a.svg?&style=for-the-badge&logo=mongodb" style="margin:2px;"/>
 <br />
 </P>
 
 ### Dependencies
 
-``` shell
+```shell
 # dependencies
 yarn add express zod config cors express mongoose pino pino-pretty dayjs bcrypt jsonwebtoken loadsh nanoid
 
 # dev dependencies
 yarn add @types/body-parser @types/config @types/cors @types/express @types/node @types/pino @types/mongoose @types/bcrypt @types/jsonwebtoken @types/lodash @types/nanoid ts-node-dev typescript -D
-
 ```
 
 ## Frontend
@@ -42,6 +42,7 @@ yarn add @types/body-parser @types/config @types/cors @types/express @types/node
   <img alt="MUI" src="https://img.shields.io/badge/mui%20-%2320232a.svg?&style=for-the-badge&logo=mui" style="margin:2px;"/>
   <img alt="Typescript" src="https://img.shields.io/badge/typescript%20-%2320232a.svg?&style=for-the-badge&logo=typescript" style="margin:2px;"/>
   <img alt="Vite.js" src="https://img.shields.io/badge/vite%20-%2320232a.svg?&style=for-the-badge&logo=vite" style="margin:2px;"/>
+  <img alt="Tauri" src="https://img.shields.io/badge/tauri%20-%2320232a.svg?&style=for-the-badge&logo=tauri"/>
 <br />
 </P>
 

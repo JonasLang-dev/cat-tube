@@ -27,6 +27,7 @@ import {
 
 // @ts-ignore
 import Image from "mui-image";
+import { Link } from "react-router-dom";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
@@ -125,11 +126,14 @@ const HomePage: FC<Home> = ({ loading = false }) => {
                     loading ? (
                       <Skeleton animation="wave" height={10} width="40%" />
                     ) : (
-                      "September 14, 2016"
+                      new Date().toDateString()
                     )
                   }
                 />
-                <CardActionArea>
+                <CardActionArea
+                  to={{ pathname: "/watch", search: `?v=${card}` }}
+                  component={Link}
+                >
                   <Image
                     src="https://source.unsplash.com/random"
                     height="200px"
