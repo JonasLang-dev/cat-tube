@@ -42,7 +42,7 @@ yarn add @types/body-parser @types/config @types/cors @types/express @types/node
   <img alt="MUI" src="https://img.shields.io/badge/mui%20-%2320232a.svg?&style=for-the-badge&logo=mui" style="margin:2px;"/>
   <img alt="Typescript" src="https://img.shields.io/badge/typescript%20-%2320232a.svg?&style=for-the-badge&logo=typescript" style="margin:2px;"/>
   <img alt="Vite.js" src="https://img.shields.io/badge/vite%20-%2320232a.svg?&style=for-the-badge&logo=vite" style="margin:2px;"/>
-  <img alt="Tauri" src="https://img.shields.io/badge/tauri%20-%2320232a.svg?&style=for-the-badge&logo=tauri"/>
+  <img alt="Tauri" src="https://img.shields.io/badge/tauri%20-%2320232a.svg?&style=for-the-badge&logo=tauri" style="margin:2px;"/>
 <br />
 </P>
 

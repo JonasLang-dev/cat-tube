@@ -5,13 +5,8 @@ import { CssBaseline, Grid, Paper } from "@mui/material";
 
 function watch() {
   return (
-    <Grid
-      display="grid"
-      gridTemplateColumns="repeat(12, 1fr)"
-      gap={2}
-      sx={{ p: 1 }}
-    >
-      <Grid gridColumn="span 8">
+    <Grid container gap={2}>
+      <Grid xs={12} sm={12} md={12} lg={8} xl={8}>
         <Plyr
           crossOrigin="true"
           source={{
@@ -54,10 +49,7 @@ function watch() {
           }}
         />
       </Grid>
-      <Grid gridColumn="span 4">
-        <Paper>xs=4</Paper>
-      </Grid>
-      <Grid gridColumn="span 8">
+      <Grid xs={12} sm={12} md={12} lg={4} xl={4}>
         <Paper>xs=4</Paper>
       </Grid>
     </Grid>
