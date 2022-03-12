@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { nanoid } from "nanoid";
 import { CreateUserInput, ForgetPasswordInput, ResetPasswordSchema, VerifyUserInput } from "../schema/user.schema";
-import { createUser, findUserById, fnidByEmail } from "../service/user.service";
+import { createUser, findUserById, fnidUserByEmail } from "../service/user.service";
 import log from "../utils/logger";
 import sendEmail from "../utils/mailer";
 
@@ -62,7 +62,7 @@ export async function forgetPasswordHandler(req: Request<{}, {}, ForgetPasswordI
     const message = "If a user with that is registerd yout will receive a password reset email"
 
     const { email } = req.body;
-    const user = await fnidByEmail(email)
+    const user = await fnidUserByEmail(email)
 
     if (!user) {
         log.debug(`User with email ${email} does not exists`)

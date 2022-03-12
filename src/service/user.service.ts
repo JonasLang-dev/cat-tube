@@ -8,6 +8,6 @@ export function findUserById(id: string) {
     return UserModel.findById(id)
 }
 
-export function fnidByEmail(email: string) {
+export function fnidUserByEmail(email: string) {
     return UserModel.findOne({ email })
 }

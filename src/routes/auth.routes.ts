@@ -1,5 +1,10 @@
 import express, { Request, Response } from "express"
+import { createSessionHandler } from "../controller/auth.controller"
+import validateResource from "../middleware/validateResourse"
+import { createSessionSchema } from "../schema/auth.schema"
 
-const auth = express.Router()
+const router = express.Router()
 
-export default auth
+router.post("/api/session", validateResource(createSessionSchema), createSessionHandler)
+
+export default router
