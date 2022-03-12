@@ -7,3 +7,7 @@ export const createUser = (input: Partial<User>) => {
 export function findUserById(id: string) {
     return UserModel.findById(id)
 }
+
+export function fnidByEmail(email: string) {
+    return UserModel.findOne({ email })
+}

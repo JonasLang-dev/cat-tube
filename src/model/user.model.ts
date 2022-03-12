@@ -3,14 +3,6 @@ import { nanoid } from "nanoid";
 import argon2 from "argon2"
 import log from "../utils/logger";
 
-@modelOptions({
-    schemaOptions: {
-        timestamps: true
-    },
-    options: {
-        allowMixed: Severity.ALLOW
-    }
-})
 
 @pre<User>("save", async function () {
     if (!this.isModified('password')) {
@@ -22,6 +14,15 @@ import log from "../utils/logger";
     this.password = hash;
 
     return;
+})
+@index({ email: 1 })
+@modelOptions({
+    schemaOptions: {
+        timestamps: true
+    },
+    options: {
+        allowMixed: Severity.ALLOW
+    }
 })
 
 export class User {
