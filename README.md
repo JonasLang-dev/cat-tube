@@ -6,11 +6,10 @@ See More infomation via [docs](docs/index.md)
 
 ## Dependencies
 
-``` shell
+```shell
 # dependencies
-yarn add express zod config cors express mongoose pino pino-pretty dayjs bcrypt jsonwebtoken loadsh nanoid
+yarn add express@5 mongoose @typegoose/typegoose config argon2 pino dayjs nanoid nodemailer lodash jsonwebtoken dotenv
 
 # dev dependencies
-yarn add @types/body-parser @types/config @types/cors @types/express @types/node @types/pino @types/mongoose @types/bcrypt @types/jsonwebtoken @types/lodash @types/nanoid ts-node-dev typescript -D
-
+yarn add typescript ts-node-dev @types/express @types/config pino-pretty @types/nodemailer @types/lodash @types/jsonwebtoken -D
 ```
