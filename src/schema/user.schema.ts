@@ -14,10 +14,19 @@ export const createUserSchema = object({
         email: string({
             required_error: "Email is required"
         }).email("Not a valid email"),
-    }).refine((data) => data.password === data.passwordConfirmation , {
+    }).refine((data) => data.password === data.passwordConfirmation, {
         message: "Password do not match",
         path: ["passwordConfirmation"]
     })
 })
 
+export const verifyUserSchema = object({
+    params: object({
+        id: string({ required_error: "Id is required." }),
+        verificationCode: string({ required_error: "verification code is required." })
+    })
+})
+
 export type CreateUserInput = TypeOf<typeof createUserSchema>["body"];
+
+export type VerifyUserInput = TypeOf<typeof verifyUserSchema>["params"]
