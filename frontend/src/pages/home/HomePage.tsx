@@ -35,7 +35,10 @@ interface Home {
   loading?: boolean;
 }
 
+
+
 const HomePage: FC<Home> = ({ loading = false }) => {
+  
   return (
     <main>
       <Box
@@ -71,7 +74,7 @@ const HomePage: FC<Home> = ({ loading = false }) => {
             spacing={2}
             justifyContent="center"
           >
-            <Button variant="contained">Main call to action</Button>
+            <Button  variant="contained">Main call to action</Button>
             <Button variant="outlined">Secondary action</Button>
           </Stack>
         </Container>

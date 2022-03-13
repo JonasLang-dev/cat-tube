@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
@@ -61,6 +61,8 @@ import {
 import { Outlet, Link } from "react-router-dom";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import { useAppDispatch, useAppSelector } from "../..//hooks/redux.hooks";
+import { currentUser, selectCurrentUserStatus } from "../../features/auth/currentUserSlice";
 
 const drawerWidth = 240;
 
@@ -153,16 +155,18 @@ const CoslDrawer = styled(MuiDrawer, {
 
 interface Layout {
   theme:
-    | {
-        palette: {
-          mode: PaletteMode;
-        };
-      }
-    | any;
+  | {
+    palette: {
+      mode: PaletteMode;
+    };
+  }
+  | any;
   setMode: Function;
 }
 
 const Layout: FC<Layout> = ({ theme, setMode }) => {
+  const dispatch = useAppDispatch()
+  const currentUserInfo = useAppSelector(selectCurrentUserStatus)
   const matcheWithLg = useMediaQuery("(min-width:1200px)");
   const matcheWithSm = useMediaQuery("(max-width:600px)");
   const profileMenuId = "primary-account-menu";
@@ -189,8 +193,8 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
             ? localStorage.setItem("theme", "light")
             : localStorage.setItem("theme", "dark")
           : prefersDarkMode
-          ? localStorage.setItem("theme", "light")
-          : localStorage.setItem("theme", "dark");
+            ? localStorage.setItem("theme", "light")
+            : localStorage.setItem("theme", "dark");
       },
       switchDarkMode: () => {
         setMode((prevMode: string) =>
@@ -261,7 +265,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
       <MenuItem onClick={handleProfileMenuClose} component={Link} to="/profile">
-        <Avatar /> &nbsp; supercat
+        <Avatar /> &nbsp; cat
       </MenuItem>
       <MenuItem onClick={handleProfileMenuClose} component={Link} to="/studio">
         <ListItemIcon>
@@ -666,12 +670,12 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
         sx={
           theme.palette.mode == "dark"
             ? {
-                backdropFilter: "blur(20px)",
-                background: "rgba(0,127,255, 0.6)",
-              }
+              backdropFilter: "blur(20px)",
+              background: "rgba(0,127,255, 0.6)",
+            }
             : {
-                backdropFilter: "blur(20px)",
-              }
+              backdropFilter: "blur(20px)",
+            }
         }
       >
         <Toolbar>
@@ -767,23 +771,23 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           sx={
             theme.palette.mode === "dark"
               ? {
+                width: drawerWidth,
+                flexShrink: 0,
+                [`& .MuiDrawer-paper`]: {
                   width: drawerWidth,
-                  flexShrink: 0,
-                  [`& .MuiDrawer-paper`]: {
-                    width: drawerWidth,
-                    boxSizing: "border-box",
-                    background: "rgba(18,18,18,0.7)",
-                    backdropFilter: "blur(20px)",
-                  },
-                }
+                  boxSizing: "border-box",
+                  background: "rgba(18,18,18,0.7)",
+                  backdropFilter: "blur(20px)",
+                },
+              }
               : {
+                width: drawerWidth,
+                flexShrink: 0,
+                [`& .MuiDrawer-paper`]: {
                   width: drawerWidth,
-                  flexShrink: 0,
-                  [`& .MuiDrawer-paper`]: {
-                    width: drawerWidth,
-                    boxSizing: "border-box",
-                  },
-                }
+                  boxSizing: "border-box",
+                },
+              }
           }
         >
           <Toolbar>

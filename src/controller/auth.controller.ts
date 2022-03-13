@@ -13,17 +13,17 @@ export async function createSessionHandler(req: Request<{}, {}, CreateSessionInp
     const user = await fnidUserByEmail(email);
 
     if (!user) {
-        return res.send(message)
+        return res.status(404).send({ message: message })
     }
 
     if (!user.verified) {
-        return res.send("Please verify your email")
+        return res.status(400).send({ message: "Please verify your email" })
     }
 
     const isValid = await user.validatePassword(password)
 
     if (!isValid) {
-        return res.send(message)
+        return res.status(400).send({ message: message })
     }
 
     // sign a access token
@@ -46,19 +46,19 @@ export async function refreshAccessTokenHandler(req: Request, res: Response) {
     const decoded = verifyJwt<{ session: string }>(refreshToken, "refreshTokenPublicKey")
 
     if (!decoded) {
-        return res.status(401).send("Could not refresh access token")
+        return res.status(401).send({ message: "Could not refresh access token" })
     }
 
     const session = await findSessionById(decoded.session)
 
     if (!session || !session.valid) {
-        return res.status(401).send("Could not refresh access token")
+        return res.status(401).send({ message: "Could not refresh access token" })
     }
 
     const user = await findUserById(String(session.user))
 
     if (!user) {
-        return res.status(401).send("Could not refresh token")
+        return res.status(401).send({ message: "Could not refresh token" })
     }
 
     const accessToken = signAccessToken(user)

@@ -1,7 +1,8 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useCallback, useEffect, useMemo } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import LoadingButton from '@mui/lab/LoadingButton';
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -13,12 +14,24 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Copyright from "../../components/Copyright";
-import { Link as Links } from "react-router-dom";
+import { Link as Links, useNavigate } from "react-router-dom";
 import { IconButton, PaletteMode } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useAppSelector, useAppDispatch } from "../../hooks/redux.hooks"
-import { selectAuthStatus, signIn } from "../../features/auth/authSlice";
+import { clearAuthState, selectAuthError, selectAuthStatus, signIn } from "../../features/auth/authSlice";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import { currentUser } from "../../features/auth/currentUserSlice";
+
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 
 interface SignIn {
   theme:
@@ -33,6 +46,7 @@ interface SignIn {
 
 const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
   const authStatus = useAppSelector(selectAuthStatus)
+  const authError = useAppSelector(selectAuthError)
   const dispatch = useAppDispatch()
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const colorMode = useMemo(
@@ -52,15 +66,52 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
     }),
     [prefersDarkMode]
   );
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    dispatch(clearAuthState());
     dispatch(signIn({
-      email: data.get("email"),
-      password: data.get("password")
+      email: data.get("email") as string,
+      password: data.get("password") as string
     }))
   };
+  const [successOpen, setSuccessOpen] = React.useState(false);
+  const [errorOpen, setErrorOpen] = React.useState(false);
+
+  const handleSuccess = () => {
+    setSuccessOpen(true);
+  };
+  const handleError = () => {
+    setErrorOpen(true);
+  };
+
+  const handleSuccessClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSuccessOpen(false);
+  };
+
+  const handleErrorClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setErrorOpen(false);
+  };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authStatus === "failed") {
+      handleError();
+      dispatch(clearAuthState());
+    }
+    if (authStatus === "success") {
+      handleSuccess();
+      dispatch(clearAuthState());
+      navigate("/", { replace: true })
+
+    }
+  }, [authStatus])
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
@@ -136,16 +187,18 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Button
+
+            <LoadingButton
               type="submit"
               fullWidth
+              loading={authStatus === "loading"}
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             // component={Links}
             // to="/"
             >
               Sign In
-            </Button>
+            </LoadingButton>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
@@ -162,6 +215,18 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
           </Box>
         </Box>
       </Grid>
+      <Snackbar open={successOpen} autoHideDuration={6000} onClose={handleSuccessClose}>
+        <Alert onClose={handleSuccessClose} severity="success" >
+          Sign In Success
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={errorOpen} autoHideDuration={6000} onClose={handleErrorClose}>
+        <Alert onClose={handleErrorClose} severity="error" >
+          Failed to sign in
+        </Alert>
+      </Snackbar>
+
     </Grid>
   );
 };
