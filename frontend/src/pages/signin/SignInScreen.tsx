@@ -17,19 +17,23 @@ import { Link as Links } from "react-router-dom";
 import { IconButton, PaletteMode } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { useAppSelector, useAppDispatch } from "../../hooks/redux.hooks"
+import { selectAuthStatus, signIn } from "../../features/auth/authSlice";
 
 interface SignIn {
   theme:
-    | {
-        palette: {
-          mode: PaletteMode;
-        };
-      }
-    | any;
+  | {
+    palette: {
+      mode: PaletteMode;
+    };
+  }
+  | any;
   setMode: Function;
 }
 
 const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
+  const authStatus = useAppSelector(selectAuthStatus)
+  const dispatch = useAppDispatch()
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const colorMode = useMemo(
     () => ({
@@ -42,8 +46,8 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
             ? localStorage.setItem("theme", "light")
             : localStorage.setItem("theme", "dark")
           : prefersDarkMode
-          ? localStorage.setItem("theme", "light")
-          : localStorage.setItem("theme", "dark");
+            ? localStorage.setItem("theme", "light")
+            : localStorage.setItem("theme", "dark");
       },
     }),
     [prefersDarkMode]
@@ -52,10 +56,10 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    dispatch(signIn({
       email: data.get("email"),
-      password: data.get("password"),
-    });
+      password: data.get("password")
+    }))
   };
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
@@ -137,8 +141,8 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              component={Links}
-              to="/"
+            // component={Links}
+            // to="/"
             >
               Sign In
             </Button>
