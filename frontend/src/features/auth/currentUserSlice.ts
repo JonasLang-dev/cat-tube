@@ -4,7 +4,7 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import Axios from "axios";
+import axios from "../../request";
 import type { RootState } from "../../store";
 
 // Define a type for the slice state
@@ -38,13 +38,12 @@ export const currentUser = createAsyncThunk(
   "user/current",
   async (data, { rejectWithValue }) => {
     try {
-      const { data } = await Axios.get("/api/users/current", {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
+      const { data } = await axios.get("/api/users/current");
+
       return data;
     } catch (error: any) {
+      console.log(error);
+
       return rejectWithValue(error.response.data);
     }
   }

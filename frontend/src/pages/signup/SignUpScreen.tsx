@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -18,6 +18,14 @@ import { IconButton, PaletteMode } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import axios from "axios";
+import { useSnackbar } from "notistack";
+import { useAppSelector, useAppDispatch } from "../../hooks/redux.hooks";
+import {
+  selectSignUpError,
+  selectSignUpStatus,
+  signUp,
+} from "../../features/auth/signUpSlice";
+import { LoadingButton } from "@mui/lab";
 
 interface SignUp {
   theme:
@@ -31,6 +39,10 @@ interface SignUp {
 }
 
 const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
+  const dispatch = useAppDispatch();
+  const signUpStatus = useAppSelector(selectSignUpStatus);
+  const signUpError = useAppSelector(selectSignUpError);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const colorMode = useMemo(
     () => ({
@@ -71,18 +83,28 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    try {
-      const res = await axios.post("/api/users", {
+    dispatch(
+      signUp({
         name: data.get("name"),
         email: data.get("email"),
         password: data.get("password"),
         passwordConfirmation: data.get("passwordConfirmation"),
-      });
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
-    }
+      })
+    );
   };
+
+  useEffect(() => {
+    if (signUpStatus === "failed") {
+      if (Array.isArray(signUpError)) {
+        signUpError.map((item) => {
+          enqueueSnackbar(item.message, { variant: "error" });
+        });
+      }
+    }
+    if (signUpStatus === "success") {
+      enqueueSnackbar("Sign up successfull", { variant: "success" });
+    }
+  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -162,16 +184,17 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
               />
             </Grid>
           </Grid>
-          <Button
+          <LoadingButton
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            loading={signUpStatus === "loading"}
             // component={Links}
             // to="/"
           >
             Sign Up
-          </Button>
+          </LoadingButton>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link component={Links} to="/signin" variant="body2">

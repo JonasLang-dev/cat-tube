@@ -26,6 +26,7 @@ import {
   signIn,
 } from "../../features/auth/authSlice";
 import { currentUser } from "../../features/auth/currentUserSlice";
+import { useSnackbar } from "notistack";
 
 interface SignIn {
   theme:
@@ -36,16 +37,10 @@ interface SignIn {
       }
     | any;
   setMode: Function;
-  handleError: Function;
-  handleSuccess: Function;
 }
 
-const SignInScreen: FC<SignIn> = ({
-  theme,
-  setMode,
-  handleError,
-  handleSuccess,
-}) => {
+const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const authStatus = useAppSelector(selectAuthStatus);
   const authError = useAppSelector(selectAuthError);
   const dispatch = useAppDispatch();
@@ -83,11 +78,15 @@ const SignInScreen: FC<SignIn> = ({
 
   useEffect(() => {
     if (authStatus === "failed") {
-      handleError();
+      if (Array.isArray(authError)) {
+        authError.map((item) => {
+          enqueueSnackbar(item.message, { variant: "error" });
+        });
+      }
       dispatch(clearAuthState());
     }
     if (authStatus === "success") {
-      handleSuccess();
+      enqueueSnackbar("I love hooks", { variant: "success" });
       dispatch(clearAuthState());
       navigate("/", { replace: true });
     }
