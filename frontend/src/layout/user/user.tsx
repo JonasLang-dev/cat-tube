@@ -58,11 +58,15 @@ import {
   WorkspacePremium,
   WorkspacePremiumOutlined,
 } from "@mui/icons-material";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { useAppDispatch, useAppSelector } from "../..//hooks/redux.hooks";
-import { currentUser, selectCurrentUserStatus } from "../../features/auth/currentUserSlice";
+import {
+  clearCurrentUsrState,
+  currentUser,
+  selectCurrentUserStatus,
+} from "../../features/auth/currentUserSlice";
 
 const drawerWidth = 240;
 
@@ -155,18 +159,19 @@ const CoslDrawer = styled(MuiDrawer, {
 
 interface Layout {
   theme:
-  | {
-    palette: {
-      mode: PaletteMode;
-    };
-  }
-  | any;
+    | {
+        palette: {
+          mode: PaletteMode;
+        };
+      }
+    | any;
   setMode: Function;
 }
 
 const Layout: FC<Layout> = ({ theme, setMode }) => {
-  const dispatch = useAppDispatch()
-  const currentUserInfo = useAppSelector(selectCurrentUserStatus)
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const currentUserInfo = useAppSelector(selectCurrentUserStatus);
   const matcheWithLg = useMediaQuery("(min-width:1200px)");
   const matcheWithSm = useMediaQuery("(max-width:600px)");
   const profileMenuId = "primary-account-menu";
@@ -193,8 +198,8 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
             ? localStorage.setItem("theme", "light")
             : localStorage.setItem("theme", "dark")
           : prefersDarkMode
-            ? localStorage.setItem("theme", "light")
-            : localStorage.setItem("theme", "dark");
+          ? localStorage.setItem("theme", "light")
+          : localStorage.setItem("theme", "dark");
       },
       switchDarkMode: () => {
         setMode((prevMode: string) =>
@@ -265,7 +270,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
       <MenuItem onClick={handleProfileMenuClose} component={Link} to="/profile">
-        <Avatar /> &nbsp; cat
+        <Avatar /> &nbsp; {currentUserInfo && currentUserInfo.name}
       </MenuItem>
       <MenuItem onClick={handleProfileMenuClose} component={Link} to="/studio">
         <ListItemIcon>
@@ -289,7 +294,16 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
         </ListItemIcon>
         Premium
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuClose} component={Link} to="/signin">
+      <MenuItem
+        onClick={() => {
+          handleProfileMenuClose();
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          dispatch(clearCurrentUsrState());
+        }}
+        component={Link}
+        to="/signin"
+      >
         <ListItemIcon>
           <Logout fontSize="small" />
         </ListItemIcon>
@@ -661,6 +675,13 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
     </>
   );
 
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      dispatch(currentUser());
+    } else {
+      navigate("/signin", { replace: true });
+    }
+  }, [localStorage]);
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -670,12 +691,12 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
         sx={
           theme.palette.mode == "dark"
             ? {
-              backdropFilter: "blur(20px)",
-              background: "rgba(0,127,255, 0.6)",
-            }
+                backdropFilter: "blur(20px)",
+                background: "rgba(0,127,255, 0.6)",
+              }
             : {
-              backdropFilter: "blur(20px)",
-            }
+                backdropFilter: "blur(20px)",
+              }
         }
       >
         <Toolbar>
@@ -711,49 +732,60 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={4} color="error">
-                <Mail />
-              </Badge>
-            </IconButton>
-            <IconButton
-              color="inherit"
-              size="large"
-              component={Link}
-              to="/dashbord"
-            >
-              <Dashboard />
-            </IconButton>
-            <IconButton color="inherit" size="large">
-              <VideoCameraFrontOutlined />
-            </IconButton>
-            <IconButton color="inherit" size="large" onClick={handleMenuOpen}>
-              <MoreVert />
-            </IconButton>
-            <Button
-              color="inherit"
-              variant="outlined"
-              startIcon={<AccountCircleOutlined />}
-              to="/signin"
-              component={Link}
-            >
-              SIGN IN
-            </Button>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={profileMenuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <Avatar />
-            </IconButton>
+            {currentUserInfo ? (
+              <>
+                <IconButton
+                  size="large"
+                  aria-label="show 4 new mails"
+                  color="inherit"
+                >
+                  <Badge badgeContent={4} color="error">
+                    <Mail />
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  color="inherit"
+                  size="large"
+                  component={Link}
+                  to="/dashbord"
+                >
+                  <Dashboard />
+                </IconButton>
+                <IconButton color="inherit" size="large">
+                  <VideoCameraFrontOutlined />
+                </IconButton>
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={profileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <Avatar />
+                </IconButton>
+              </>
+            ) : (
+              <>
+                <IconButton
+                  color="inherit"
+                  size="large"
+                  onClick={handleMenuOpen}
+                >
+                  <MoreVert />
+                </IconButton>
+                <Button
+                  color="inherit"
+                  variant="outlined"
+                  startIcon={<AccountCircleOutlined />}
+                  to="/signin"
+                  component={Link}
+                >
+                  SIGN IN
+                </Button>
+              </>
+            )}
           </Box>
         </Toolbar>
         {renderProfileMenu}
@@ -771,23 +803,23 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           sx={
             theme.palette.mode === "dark"
               ? {
-                width: drawerWidth,
-                flexShrink: 0,
-                [`& .MuiDrawer-paper`]: {
                   width: drawerWidth,
-                  boxSizing: "border-box",
-                  background: "rgba(18,18,18,0.7)",
-                  backdropFilter: "blur(20px)",
-                },
-              }
+                  flexShrink: 0,
+                  [`& .MuiDrawer-paper`]: {
+                    width: drawerWidth,
+                    boxSizing: "border-box",
+                    background: "rgba(18,18,18,0.7)",
+                    backdropFilter: "blur(20px)",
+                  },
+                }
               : {
-                width: drawerWidth,
-                flexShrink: 0,
-                [`& .MuiDrawer-paper`]: {
                   width: drawerWidth,
-                  boxSizing: "border-box",
-                },
-              }
+                  flexShrink: 0,
+                  [`& .MuiDrawer-paper`]: {
+                    width: drawerWidth,
+                    boxSizing: "border-box",
+                  },
+                }
           }
         >
           <Toolbar>

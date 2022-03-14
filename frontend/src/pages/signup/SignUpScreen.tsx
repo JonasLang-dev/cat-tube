@@ -17,6 +17,7 @@ import { Link as Links } from "react-router-dom";
 import { IconButton, PaletteMode } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
+import axios from "axios";
 
 interface SignUp {
   theme:
@@ -67,14 +68,20 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
     [prefersDarkMode]
   );
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    try {
+      const res = await axios.post("/api/users", {
+        name: data.get("name"),
+        email: data.get("email"),
+        password: data.get("password"),
+        passwordConfirmation: data.get("passwordConfirmation"),
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -106,25 +113,14 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="given-name"
-                name="firstName"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 required
                 fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="family-name"
+                id="name"
+                label="User Name"
+                name="name"
+                autoComplete="name"
               />
             </Grid>
             <Grid item xs={12}>
@@ -149,6 +145,17 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
               />
             </Grid>
             <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="passwordConfirmation"
+                label="Confirm Password"
+                type="passwordConfirmation"
+                id="passwordConfirmation"
+                autoComplete="confirm-password"
+              />
+            </Grid>
+            <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
@@ -160,8 +167,8 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            component={Links}
-            to="/"
+            // component={Links}
+            // to="/"
           >
             Sign Up
           </Button>

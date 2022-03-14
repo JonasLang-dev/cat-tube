@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect, useMemo } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import LoadingButton from '@mui/lab/LoadingButton';
+import LoadingButton from "@mui/lab/LoadingButton";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -18,36 +18,37 @@ import { Link as Links, useNavigate } from "react-router-dom";
 import { IconButton, PaletteMode } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import { useAppSelector, useAppDispatch } from "../../hooks/redux.hooks"
-import { clearAuthState, selectAuthError, selectAuthStatus, signIn } from "../../features/auth/authSlice";
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import { useAppSelector, useAppDispatch } from "../../hooks/redux.hooks";
+import {
+  clearAuthState,
+  selectAuthError,
+  selectAuthStatus,
+  signIn,
+} from "../../features/auth/authSlice";
 import { currentUser } from "../../features/auth/currentUserSlice";
-
-
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref,
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-
 
 interface SignIn {
   theme:
-  | {
-    palette: {
-      mode: PaletteMode;
-    };
-  }
-  | any;
+    | {
+        palette: {
+          mode: PaletteMode;
+        };
+      }
+    | any;
   setMode: Function;
+  handleError: Function;
+  handleSuccess: Function;
 }
 
-const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
-  const authStatus = useAppSelector(selectAuthStatus)
-  const authError = useAppSelector(selectAuthError)
-  const dispatch = useAppDispatch()
+const SignInScreen: FC<SignIn> = ({
+  theme,
+  setMode,
+  handleError,
+  handleSuccess,
+}) => {
+  const authStatus = useAppSelector(selectAuthStatus);
+  const authError = useAppSelector(selectAuthError);
+  const dispatch = useAppDispatch();
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const colorMode = useMemo(
     () => ({
@@ -60,8 +61,8 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
             ? localStorage.setItem("theme", "light")
             : localStorage.setItem("theme", "dark")
           : prefersDarkMode
-            ? localStorage.setItem("theme", "light")
-            : localStorage.setItem("theme", "dark");
+          ? localStorage.setItem("theme", "light")
+          : localStorage.setItem("theme", "dark");
       },
     }),
     [prefersDarkMode]
@@ -70,34 +71,14 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     dispatch(clearAuthState());
-    dispatch(signIn({
-      email: data.get("email") as string,
-      password: data.get("password") as string
-    }))
-  };
-  const [successOpen, setSuccessOpen] = React.useState(false);
-  const [errorOpen, setErrorOpen] = React.useState(false);
-
-  const handleSuccess = () => {
-    setSuccessOpen(true);
-  };
-  const handleError = () => {
-    setErrorOpen(true);
+    dispatch(
+      signIn({
+        email: data.get("email") as string,
+        password: data.get("password") as string,
+      })
+    );
   };
 
-  const handleSuccessClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setSuccessOpen(false);
-  };
-
-  const handleErrorClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setErrorOpen(false);
-  };
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -108,10 +89,9 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
     if (authStatus === "success") {
       handleSuccess();
       dispatch(clearAuthState());
-      navigate("/", { replace: true })
-
+      navigate("/", { replace: true });
     }
-  }, [authStatus])
+  }, [authStatus]);
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
@@ -194,8 +174,8 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
               loading={authStatus === "loading"}
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-            // component={Links}
-            // to="/"
+              // component={Links}
+              // to="/"
             >
               Sign In
             </LoadingButton>
@@ -215,18 +195,6 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
           </Box>
         </Box>
       </Grid>
-      <Snackbar open={successOpen} autoHideDuration={6000} onClose={handleSuccessClose}>
-        <Alert onClose={handleSuccessClose} severity="success" >
-          Sign In Success
-        </Alert>
-      </Snackbar>
-
-      <Snackbar open={errorOpen} autoHideDuration={6000} onClose={handleErrorClose}>
-        <Alert onClose={handleErrorClose} severity="error" >
-          Failed to sign in
-        </Alert>
-      </Snackbar>
-
     </Grid>
   );
 };
