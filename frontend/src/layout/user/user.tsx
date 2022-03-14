@@ -23,6 +23,7 @@ import {
   ListItem,
   Drawer,
   Badge,
+  SwipeableDrawer,
 } from "@mui/material";
 import logo from "../../logo.svg";
 import Copyright from "../../components/Copyright";
@@ -792,14 +793,10 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
         {renderMenu}
       </AppBar>
       {matcheWithSm && (
-        <Drawer
+        <SwipeableDrawer
           anchor="left"
-          variant="temporary"
           open={open}
           onClose={toggleDrawer}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
           sx={
             theme.palette.mode === "dark"
               ? {
@@ -821,6 +818,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
                   },
                 }
           }
+          onOpen={toggleDrawer}
         >
           <Toolbar>
             <IconButton
@@ -841,7 +839,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
             </Typography>
           </Toolbar>
           {renderDrawerItem}
-        </Drawer>
+        </SwipeableDrawer>
       )}
       {matcheWithLg && (
         <CoslDrawer variant="permanent" open={open}>
