@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
@@ -68,6 +68,7 @@ import {
   currentUser,
   selectCurrentUserStatus,
 } from "../../features/auth/currentUserSlice";
+import FormDialog from "../../components/FormDialog";
 
 const drawerWidth = 240;
 
@@ -177,6 +178,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
   const matcheWithSm = useMediaQuery("(max-width:600px)");
   const profileMenuId = "primary-account-menu";
   const menuId = "primary-not-signin-menu";
+  const postRef = useRef<any>();
 
   const [selectedIndex, setSelectedIndex] = useState(location.pathname);
   const [anchorProfileMenu, setAnchorProfileMenu] =
@@ -756,7 +758,13 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
                 >
                   <Dashboard />
                 </IconButton>
-                <IconButton color="inherit" size="large">
+                <IconButton
+                  color="inherit"
+                  onClick={() => {
+                    postRef.current.handleClickOpen();
+                  }}
+                  size="large"
+                >
                   <VideoCameraFrontOutlined />
                 </IconButton>
                 <IconButton
@@ -883,6 +891,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
         <Toolbar />
         <Outlet />
       </Box>
+      <FormDialog ref={postRef} />
     </Box>
   );
 };
