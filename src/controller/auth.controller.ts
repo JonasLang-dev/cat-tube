@@ -26,6 +26,10 @@ export async function createSessionHandler(
     return res.status(400).send([{ message: "Please verify your email" }]);
   }
 
+  if (user.isDelete) {
+    return res.status(400).send([{ message: message }]);
+  }
+
   const isValid = await user.validatePassword(password);
 
   if (!isValid) {

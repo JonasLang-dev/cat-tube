@@ -102,7 +102,8 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
       }
     }
     if (signUpStatus === "success") {
-      enqueueSnackbar("Sign up successfull", { variant: "success" });
+      enqueueSnackbar("User successfully created", { variant: "success" });
+      enqueueSnackbar("Please verify your account", { variant: "warning" });
     }
   });
 
@@ -172,7 +173,7 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
                 fullWidth
                 name="passwordConfirmation"
                 label="Confirm Password"
-                type="passwordConfirmation"
+                type="password"
                 id="passwordConfirmation"
                 autoComplete="confirm-password"
               />
