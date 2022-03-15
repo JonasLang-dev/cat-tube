@@ -271,7 +271,11 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
       <MenuItem onClick={handleProfileMenuClose} component={Link} to="/profile">
-        <Avatar /> &nbsp; {currentUserInfo && currentUserInfo.name}
+        <Avatar
+          alt={currentUserInfo && currentUserInfo.name}
+          src={currentUserInfo && currentUserInfo.avatar}
+        />
+        &nbsp; {currentUserInfo && currentUserInfo.name}
       </MenuItem>
       <MenuItem onClick={handleProfileMenuClose} component={Link} to="/studio">
         <ListItemIcon>
@@ -764,7 +768,10 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
                   onClick={handleProfileMenuOpen}
                   color="inherit"
                 >
-                  <Avatar />
+                  <Avatar
+                    alt={currentUserInfo && currentUserInfo.name}
+                    src={currentUserInfo && currentUserInfo.avatar}
+                  />
                 </IconButton>
               </>
             ) : (

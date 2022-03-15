@@ -23,6 +23,7 @@ interface CurrentUserState {
         updatedAt: Date;
         iat: number;
         exp: number;
+        avatar: string;
       }
     | undefined;
 }
