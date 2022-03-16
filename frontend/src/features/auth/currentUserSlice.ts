@@ -1,9 +1,4 @@
-import {
-  AsyncThunk,
-  createAsyncThunk,
-  createSlice,
-  PayloadAction,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios, { BASE_URL } from "../../request";
 import type { RootState } from "../../store";
 

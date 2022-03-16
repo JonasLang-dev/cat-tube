@@ -10,16 +10,7 @@ import DashbordScreen from "./pages/dashbard/DashbordPage";
 import HomePage from "./pages/home/HomePage";
 import Pricing from "./components/PricingContent";
 import Watch from "./pages/watch/index";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { SnackbarProvider } from "notistack";
-
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
 
 function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");

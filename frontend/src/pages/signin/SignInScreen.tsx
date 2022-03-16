@@ -30,6 +30,7 @@ import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { object, string, TypeOf } from "zod";
+import { useTranslation } from "react-i18next";
 
 const createSessionSchema = object({
   email: string()
@@ -54,6 +55,7 @@ interface SignIn {
 }
 
 const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
+  const { t, i18n } = useTranslation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const authStatus = useAppSelector(selectAuthStatus);
   const authError = useAppSelector(selectAuthError);
@@ -65,7 +67,6 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
   } = useForm<CreateSessionInput>({
     resolver: zodResolver(createSessionSchema),
   });
-
 
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const colorMode = useMemo(
@@ -112,6 +113,10 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
       navigate("/", { replace: true });
     }
   }, [authStatus]);
+
+  const changeLanguageHandler = (lang: string) => {
+    i18n.changeLanguage(lang);
+  };
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
@@ -155,8 +160,23 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            {t("title")}
           </Typography>
+          <Button
+            onClick={() => {
+              changeLanguageHandler("zh_CN");
+            }}
+          >
+            中文
+          </Button>
+          <Button
+            onClick={() => {
+              changeLanguageHandler("en_US");
+            }}
+          >
+            Engliash
+          </Button>
+          {i18n.language || window.localStorage.i18n}
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
