@@ -43,8 +43,6 @@ export const currentUser = createAsyncThunk(
 
       return data;
     } catch (error: any) {
-      console.log(error);
-
       return rejectWithValue(error.response.data);
     }
   }

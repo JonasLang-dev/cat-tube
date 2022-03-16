@@ -66,7 +66,6 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
     resolver: zodResolver(createSessionSchema),
   });
 
-  console.log(errors);
 
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const colorMode = useMemo(

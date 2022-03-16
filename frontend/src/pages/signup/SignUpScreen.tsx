@@ -129,7 +129,6 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
       enqueueSnackbar("Please verify your account", { variant: "warning" });
     }
   });
-  console.log(errors);
 
   return (
     <Container component="main" maxWidth="xs">

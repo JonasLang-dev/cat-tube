@@ -621,13 +621,13 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           </ListItemIcon>
           <ListItemText primary="Settings" />
         </ListItemButton>
-        <ListItemButton onClick={(event) => console.log(event)}>
+        <ListItemButton >
           <ListItemIcon>
             <FeedbackOutlined />
           </ListItemIcon>
           <ListItemText primary="Send feedback" />
         </ListItemButton>
-        <ListItemButton onClick={(event) => console.log(event)}>
+        <ListItemButton>
           <ListItemIcon>
             <InfoOutlined />
           </ListItemIcon>
