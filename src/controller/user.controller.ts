@@ -39,7 +39,7 @@ export async function createUserHandler(
       return res.status(409).send([{ message: "Account already exists" }]);
     }
 
-    return res.status(500).send(e);
+    return res.status(500).send([{ message: e.message }]);
   }
 }
 
