@@ -26,6 +26,33 @@ import {
   signUp,
 } from "../../features/auth/signUpSlice";
 import { LoadingButton } from "@mui/lab";
+import { object, string, TypeOf } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+const createUserSchema = object({
+  password: string()
+    .nonempty({
+      message: "Password is required",
+    })
+    .min(6, "Password is too short - should be min 6 chars"),
+  passwordConfirmation: string().nonempty({
+    message: "Password confirmation is required",
+  }),
+  email: string()
+    .nonempty({
+      message: "Email is required",
+    })
+    .email("Not a valid email"),
+  name: string().nonempty({
+    message: "User name is required",
+  }),
+}).refine((data) => data.password === data.passwordConfirmation, {
+  message: "Password do not match",
+  path: ["passwordConfirmation"],
+});
+
+type CreateSessionInput = TypeOf<typeof createUserSchema>;
 
 interface SignUp {
   theme:
@@ -79,18 +106,14 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
     }),
     [prefersDarkMode]
   );
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<CreateSessionInput>({ resolver: zodResolver(createUserSchema) });
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    dispatch(
-      signUp({
-        name: data.get("name"),
-        email: data.get("email"),
-        password: data.get("password"),
-        passwordConfirmation: data.get("passwordConfirmation"),
-      })
-    );
+  const onSubmit = (value: CreateSessionInput) => {
+    dispatch(signUp(value));
   };
 
   useEffect(() => {
@@ -106,6 +129,7 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
       enqueueSnackbar("Please verify your account", { variant: "warning" });
     }
   });
+  console.log(errors);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -134,43 +158,49 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
                 id="name"
                 label="User Name"
-                name="name"
+                autoFocus
+                {...register("name")}
+                error={errors.hasOwnProperty("name")}
+                helperText={errors.name?.message}
                 autoComplete="name"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
                 id="email"
                 label="Email Address"
-                name="email"
+                {...register("email")}
+                error={errors.hasOwnProperty("email")}
+                helperText={errors.email?.message}
                 autoComplete="email"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
-                name="password"
+                {...register("password")}
                 label="Password"
                 type="password"
+                error={errors.hasOwnProperty("password")}
+                helperText={errors.password?.message}
                 id="password"
                 autoComplete="new-password"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
+                {...register("passwordConfirmation")}
+                error={errors.hasOwnProperty("passwordConfirmation")}
+                helperText={errors.passwordConfirmation?.message}
                 name="passwordConfirmation"
                 label="Confirm Password"
                 type="password"

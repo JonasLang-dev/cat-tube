@@ -5,6 +5,7 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import Axios from "axios";
+import { BASE_URL } from "../../request";
 import type { RootState } from "../../store";
 
 // Define a type for the slice state
@@ -28,7 +29,7 @@ export const signIn = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await Axios.post("/api/session", user);
+      const { data } = await Axios.post(`${BASE_URL}/api/session`, user);
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
       return data;

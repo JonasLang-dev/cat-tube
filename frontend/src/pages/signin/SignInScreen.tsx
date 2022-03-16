@@ -27,6 +27,20 @@ import {
 } from "../../features/auth/authSlice";
 import { currentUser } from "../../features/auth/currentUserSlice";
 import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { object, string, TypeOf } from "zod";
+
+const createSessionSchema = object({
+  email: string()
+    .nonempty({ message: "Email is required" })
+    .email("No a valid email"),
+  password: string()
+    .nonempty({ message: "Password is required" })
+    .min(6, "Invalid email or password"),
+});
+
+type CreateSessionInput = TypeOf<typeof createSessionSchema>;
 
 interface SignIn {
   theme:
@@ -44,6 +58,16 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
   const authStatus = useAppSelector(selectAuthStatus);
   const authError = useAppSelector(selectAuthError);
   const dispatch = useAppDispatch();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<CreateSessionInput>({
+    resolver: zodResolver(createSessionSchema),
+  });
+
+  console.log(errors);
+
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const colorMode = useMemo(
     () => ({
@@ -62,14 +86,12 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
     }),
     [prefersDarkMode]
   );
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+  const onSubmit = (value: CreateSessionInput) => {
     dispatch(clearAuthState());
     dispatch(
       signIn({
-        email: data.get("email") as string,
-        password: data.get("password") as string,
+        email: value.email,
+        password: value.password,
       })
     );
   };
@@ -138,29 +160,30 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
           </Typography>
           <Box
             component="form"
-            noValidate
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             sx={{ mt: 1 }}
           >
             <TextField
               margin="normal"
-              required
               fullWidth
+              error={errors.hasOwnProperty("email")}
               id="email"
               label="Email Address"
-              name="email"
               autoComplete="email"
+              helperText={errors.email?.message}
               autoFocus
+              {...register("email")}
             />
             <TextField
               margin="normal"
-              required
               fullWidth
-              name="password"
               label="Password"
               type="password"
+              error={errors.hasOwnProperty("password")}
+              helperText={errors.password?.message}
               id="password"
               autoComplete="current-password"
+              {...register("password")}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

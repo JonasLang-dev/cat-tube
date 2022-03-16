@@ -4,7 +4,7 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import axios from "../../request";
+import axios, { BASE_URL } from "../../request";
 import type { RootState } from "../../store";
 
 // Define a type for the slice state
@@ -39,7 +39,7 @@ export const currentUser = createAsyncThunk(
   "user/current",
   async (data, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get("/api/users/current");
+      const { data } = await axios.get(`${BASE_URL}/api/users/current`);
 
       return data;
     } catch (error: any) {
