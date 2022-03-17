@@ -2,8 +2,6 @@ import React from "react";
 import { ThemeProvider } from "@mui/system";
 import { createTheme, PaletteMode } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import SignInPage from "./pages/signin/SignInPage";
-import SignUpPage from "./pages/signup/SignUpPage";
 import Layout from "./layout/user/user";
 import { Route, Routes } from "react-router-dom";
 import DashbordPage from "./pages/dashbard/DashbordPage";
@@ -11,6 +9,10 @@ import HomePage from "./pages/home/HomePage";
 import Pricing from "./components/PricingContent";
 import Watch from "./pages/watch/index";
 import { SnackbarProvider } from "notistack";
+import RestPassword from "./pages/users/password/new";
+import SuccessSignUp from "./pages/users/signup/successPage";
+import SignInPage from "./pages/users/signin/SignInPage";
+import SignUpPage from "./pages/users/signup/SignUpPage";
 
 function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -48,13 +50,15 @@ function App() {
             <Route path="/dashbord" element={<DashbordPage />} />
           </Route>
           <Route
-            path="/signin"
+            path="/users/signin"
             element={<SignInPage theme={theme} setMode={setMode} />}
           />
           <Route
-            path="/signup"
+            path="/users/signup"
             element={<SignUpPage theme={theme} setMode={setMode} />}
           />
+          <Route path="/users/signup/success" element={<SuccessSignUp />} />
+          <Route path="/users/password/new" element={<RestPassword />} />
         </Routes>
       </SnackbarProvider>
     </ThemeProvider>

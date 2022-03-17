@@ -43,6 +43,7 @@ yarn add typescript ts-node-dev @types/express @types/config pino-pretty @types/
   <img alt="Typescript" src="https://img.shields.io/badge/typescript%20-%2320232a.svg?&style=for-the-badge&logo=typescript" style="margin:2px;"/>
   <img alt="Vite.js" src="https://img.shields.io/badge/vite%20-%2320232a.svg?&style=for-the-badge&logo=vite" style="margin:2px;"/>
   <img alt="Tauri" src="https://img.shields.io/badge/tauri%20-%2320232a.svg?&style=for-the-badge&logo=tauri" style="margin:2px;"/>
+  <img alt="Redux" src="https://img.shields.io/badge/redux%20-%2320232a.svg?&style=for-the-badge&logo=redux" style="margin:2px;"/>
 <br />
 </P>
 

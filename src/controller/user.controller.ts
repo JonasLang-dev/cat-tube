@@ -23,6 +23,11 @@ export async function createUserHandler(
 ) {
   const body = req.body;
 
+  // const user = await fnidUserByEmail(body.email);
+  // if (user) {
+  //   return res.status(409).send([{ message: "Account already exists" }]);
+  // }
+
   try {
     const user = await createUser(body);
 

@@ -44,7 +44,7 @@ export const signUpSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    clearAuthState: (state) => {
+    clearSignUpState: (state) => {
       state.status = "idle";
       state.error = undefined;
     },
@@ -70,7 +70,7 @@ export const signUpSlice = createSlice({
   },
 });
 
-export const { clearAuthState } = signUpSlice.actions;
+export const { clearSignUpState } = signUpSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectSignUpStatus = (state: RootState) => state.signUp.status;

@@ -13,25 +13,25 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import Copyright from "../../components/Copyright";
+import Copyright from "../../../components/Copyright";
 import { Link as Links, useNavigate } from "react-router-dom";
 import { Autocomplete, IconButton, PaletteMode } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import { useAppSelector, useAppDispatch } from "../../hooks/redux.hooks";
+import { useAppSelector, useAppDispatch } from "../../../hooks/redux.hooks";
 import {
   clearAuthState,
   selectAuthError,
   selectAuthStatus,
   signIn,
-} from "../../features/auth/authSlice";
-import { currentUser } from "../../features/auth/currentUserSlice";
+} from "../../../features/auth/authSlice";
+import { currentUser } from "../../../features/auth/currentUserSlice";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { object, string, TypeOf } from "zod";
 import { useTranslation } from "react-i18next";
-import * as locales from "../../../locales";
+import * as locales from "../../../../locales";
 
 type SupportedLocales = keyof typeof locales;
 
@@ -57,7 +57,7 @@ interface SignIn {
   setMode: Function;
 }
 
-const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
+const SignInPage: FC<SignIn> = ({ theme, setMode }) => {
   const { t, i18n } = useTranslation();
   const [locale, setLocale] = React.useState<SupportedLocales>("zhCN");
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -230,12 +230,12 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
 
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="/users/password/new" variant="body2">
                   {t("findPassword")}
                 </Link>
               </Grid>
               <Grid item>
-                <Link component={Links} to="/signup" variant="body2">
+                <Link component={Links} to="/users/signup" variant="body2">
                   {t("register")}
                 </Link>
               </Grid>
@@ -248,4 +248,4 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
   );
 };
 
-export default SignInScreen;
+export default SignInPage;

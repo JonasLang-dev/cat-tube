@@ -309,7 +309,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           dispatch(clearCurrentUsrState());
         }}
         component={Link}
-        to="/signin"
+        to="/users/signin"
       >
         <ListItemIcon>
           <Logout fontSize="small" />
@@ -401,7 +401,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      <MenuItem to="/signin" onClick={handleMenuClose} component={Link}>
+      <MenuItem to="/users/signin" onClick={handleMenuClose} component={Link}>
         <ListItemIcon>
           <AccountCircleOutlined />
         </ListItemIcon>
@@ -686,7 +686,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
     if (localStorage.getItem("accessToken")) {
       dispatch(currentUser());
     } else {
-      navigate("/signin", { replace: true });
+      navigate("/users/signin", { replace: true });
     }
   }, [localStorage]);
   return (
@@ -795,7 +795,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
                   color="inherit"
                   variant="outlined"
                   startIcon={<AccountCircleOutlined />}
-                  to="/signin"
+                  to="/users/signin"
                   component={Link}
                 >
                   SIGN IN

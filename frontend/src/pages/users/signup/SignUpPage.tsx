@@ -12,24 +12,25 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Copyright from "../../components/Copyright";
-import { Link as Links } from "react-router-dom";
-import { IconButton, PaletteMode } from "@mui/material";
+import Copyright from "../../../components/Copyright";
+import { Link as Links, useNavigate } from "react-router-dom";
+import { Autocomplete, IconButton, PaletteMode } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import axios from "axios";
 import { useSnackbar } from "notistack";
-import { useAppSelector, useAppDispatch } from "../../hooks/redux.hooks";
+import { useAppSelector, useAppDispatch } from "../../../hooks/redux.hooks";
 import {
+  clearSignUpState,
   selectSignUpError,
   selectSignUpStatus,
   signUp,
-} from "../../features/auth/signUpSlice";
+} from "../../../features/auth/signUpSlice";
 import { LoadingButton } from "@mui/lab";
 import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as locales from "../../../locales";
+import * as locales from "../../../../locales";
 import { useTranslation } from "react-i18next";
 
 type SupportedLocales = keyof typeof locales;
@@ -69,7 +70,7 @@ interface SignUp {
   setMode: Function;
 }
 
-const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
+const SignUpPage: FC<SignUp> = ({ theme, setMode }) => {
   const { t, i18n } = useTranslation();
   const [locale, setLocale] = React.useState<SupportedLocales>("zhCN");
   const dispatch = useAppDispatch();
@@ -112,10 +113,13 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
     }),
     [prefersDarkMode]
   );
+  const navigate = useNavigate();
+
   const {
     register,
-    formState: { errors },
     handleSubmit,
+    reset,
+    formState: { errors },
   } = useForm<CreateSessionInput>({ resolver: zodResolver(createUserSchema) });
 
   const onSubmit = (value: CreateSessionInput) => {
@@ -129,12 +133,19 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
           enqueueSnackbar(item.message, { variant: "error" });
         });
       }
+      dispatch(clearSignUpState());
     }
     if (signUpStatus === "success") {
+      reset();
       enqueueSnackbar("User successfully created", { variant: "success" });
       enqueueSnackbar("Please verify your account", { variant: "warning" });
+      dispatch(clearSignUpState());
+      navigate("/users/signup/success", { replace: true });
     }
-  });
+  }, [signUpStatus]);
+  const changeLanguageHandler = (lang: SupportedLocales) => {
+    i18n.changeLanguage(lang);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -147,8 +158,25 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
           alignItems: "center",
         }}
       >
-        <IconButton
+        <Autocomplete
           sx={{ position: "absolute", right: "4vw", top: "4vh" }}
+          options={Object.keys(locales)}
+          getOptionLabel={(key) =>
+            `${key.substring(0, 2)}-${key.substring(2, 4)}`
+          }
+          style={{ width: 140 }}
+          value={i18n.language || window.localStorage.i18n}
+          disableClearable
+          onChange={(event: any, newValue: string | null) => {
+            setLocale(newValue as SupportedLocales);
+            changeLanguageHandler(newValue as SupportedLocales);
+          }}
+          renderInput={(params) => (
+            <TextField {...params} label="Locale" fullWidth />
+          )}
+        />
+        <IconButton
+          sx={{ position: "absolute", left: "4vw", top: "4vh" }}
           onClick={colorMode.toggleColorMode}
         >
           {theme.palette.mode === "dark" ? (
@@ -233,16 +261,16 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
           </LoadingButton>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link component={Links} to="/signin" variant="body2">
+              <Link component={Links} to="/users/signin" variant="body2">
                 {t("login")}
               </Link>
             </Grid>
           </Grid>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 5 }} />
+      <Copyright sx={{ mt: 2 }} />
     </Container>
   );
 };
 
-export default SignUpScreen;
+export default SignUpPage;
