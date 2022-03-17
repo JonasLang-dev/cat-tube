@@ -2,11 +2,11 @@ import React from "react";
 import { ThemeProvider } from "@mui/system";
 import { createTheme, PaletteMode } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import SignInScreen from "./pages/signin/SignInScreen";
-import SignUpScreen from "./pages/signup/SignUpScreen";
+import SignInPage from "./pages/signin/SignInPage";
+import SignUpPage from "./pages/signup/SignUpPage";
 import Layout from "./layout/user/user";
 import { Route, Routes } from "react-router-dom";
-import DashbordScreen from "./pages/dashbard/DashbordPage";
+import DashbordPage from "./pages/dashbard/DashbordPage";
 import HomePage from "./pages/home/HomePage";
 import Pricing from "./components/PricingContent";
 import Watch from "./pages/watch/index";
@@ -45,15 +45,15 @@ function App() {
             <Route path="/watch" element={<Watch />} />
             <Route path="/profile" element={<p>test</p>} />
             <Route path="/studio" element={<p>test</p>} />
-            <Route path="/dashbord" element={<DashbordScreen />} />
+            <Route path="/dashbord" element={<DashbordPage />} />
           </Route>
           <Route
             path="/signin"
-            element={<SignInScreen theme={theme} setMode={setMode} />}
+            element={<SignInPage theme={theme} setMode={setMode} />}
           />
           <Route
             path="/signup"
-            element={<SignUpScreen theme={theme} setMode={setMode} />}
+            element={<SignUpPage theme={theme} setMode={setMode} />}
           />
         </Routes>
       </SnackbarProvider>
