@@ -29,6 +29,10 @@ import { LoadingButton } from "@mui/lab";
 import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import * as locales from "../../../locales";
+import { useTranslation } from "react-i18next";
+
+type SupportedLocales = keyof typeof locales;
 
 const createUserSchema = object({
   password: string()
@@ -66,6 +70,8 @@ interface SignUp {
 }
 
 const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
+  const { t, i18n } = useTranslation();
+  const [locale, setLocale] = React.useState<SupportedLocales>("zhCN");
   const dispatch = useAppDispatch();
   const signUpStatus = useAppSelector(selectSignUpStatus);
   const signUpError = useAppSelector(selectSignUpError);
@@ -155,7 +161,7 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          {t("signUp")}
         </Typography>
         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -163,7 +169,7 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
               <TextField
                 fullWidth
                 id="name"
-                label="User Name"
+                label={t("userName")}
                 autoFocus
                 {...register("name")}
                 error={errors.hasOwnProperty("name")}
@@ -175,7 +181,7 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
               <TextField
                 fullWidth
                 id="email"
-                label="Email Address"
+                label={t("email")}
                 {...register("email")}
                 error={errors.hasOwnProperty("email")}
                 helperText={errors.email?.message}
@@ -186,7 +192,7 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
               <TextField
                 fullWidth
                 {...register("password")}
-                label="Password"
+                label={t("password")}
                 type="password"
                 error={errors.hasOwnProperty("password")}
                 helperText={errors.password?.message}
@@ -201,7 +207,7 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
                 error={errors.hasOwnProperty("passwordConfirmation")}
                 helperText={errors.passwordConfirmation?.message}
                 name="passwordConfirmation"
-                label="Confirm Password"
+                label={t("confirmPassword")}
                 type="password"
                 id="passwordConfirmation"
                 autoComplete="confirm-password"
@@ -210,7 +216,7 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                label={t("sub") as string}
               />
             </Grid>
           </Grid>
@@ -223,12 +229,12 @@ const SignUpScreen: FC<SignUp> = ({ theme, setMode }) => {
             // component={Links}
             // to="/"
           >
-            Sign Up
+            {t("signUp")}
           </LoadingButton>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link component={Links} to="/signin" variant="body2">
-                Already have an account? Sign in
+                {t("login")}
               </Link>
             </Grid>
           </Grid>

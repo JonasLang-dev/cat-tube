@@ -1,0 +1,15 @@
+{
+    "translation": {
+        "signIn": "登录",
+        "remenberMe": "免密登录",
+        "findPassword": "找回密码",
+        "register": "还没有账户?",
+        "password": "密码",
+        "email": "邮箱",
+        "signUp": "注册",
+        "confirmPassword": "确认密码",
+        "login": "已经有账户?",
+        "sub": "我希望通过电子邮件获得灵感、营销促销和更新。",
+        "userName": "用户名"
+    }
+}

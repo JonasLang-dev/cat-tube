@@ -8,13 +8,13 @@ import LanguageDetector from "i18next-browser-languagedetector";
 // have a look at the Quick start guide
 // for passing in lng and translations on init
 
-import zh_CN from "../locales/zh_CN/translation.json";
-import en_US from "../locales/en_US/translation.json";
+import zhCN from "../locales/zhCN/translation.json";
+import enUS from "../locales/enUS/translation.json";
 
-export const defaultNS = "en_US";
+export const defaultNS = "translation";
 export const resources = {
-  en_US,
-  zh_CN,
+  enUS,
+  zhCN,
 } as const;
 
 i18n
@@ -31,12 +31,16 @@ i18n
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
     resources,
+    fallbackLng: "enUS",
     defaultNS,
+
+    keySeparator: false,
+
     react: {
       useSuspense: false,
     },
     interpolation: {
-      escapeValue: false, // not needed for react as it escapes by default
+      escapeValue: true, // not needed for react as it escapes by default
     },
   });
 

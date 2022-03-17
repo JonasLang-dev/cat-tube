@@ -1,0 +1,15 @@
+{
+    "translation": {
+        "signIn": "Sign In",
+        "remenberMe": "Remember me",
+        "findPassword": "Forgot password?",
+        "register": "Don't have an account? Sign Up",
+        "password": "Password",
+        "email": "Email Address",
+        "signUp": "Sign Up",
+        "confirmPassword": "Confirm Password",
+        "login": "Already have an account? Sign in",
+        "sub": "I want to receive inspiration, marketing promotions and updates via email.",
+        "userName": "User Name"
+    }
+}

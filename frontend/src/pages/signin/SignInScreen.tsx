@@ -15,7 +15,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Copyright from "../../components/Copyright";
 import { Link as Links, useNavigate } from "react-router-dom";
-import { IconButton, PaletteMode } from "@mui/material";
+import { Autocomplete, IconButton, PaletteMode } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useAppSelector, useAppDispatch } from "../../hooks/redux.hooks";
@@ -31,6 +31,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { object, string, TypeOf } from "zod";
 import { useTranslation } from "react-i18next";
+import * as locales from "../../../locales";
+
+type SupportedLocales = keyof typeof locales;
 
 const createSessionSchema = object({
   email: string()
@@ -56,10 +59,12 @@ interface SignIn {
 
 const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
   const { t, i18n } = useTranslation();
+  const [locale, setLocale] = React.useState<SupportedLocales>("zhCN");
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const authStatus = useAppSelector(selectAuthStatus);
   const authError = useAppSelector(selectAuthError);
   const dispatch = useAppDispatch();
+
   const {
     register,
     formState: { errors },
@@ -108,13 +113,13 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
       dispatch(clearAuthState());
     }
     if (authStatus === "success") {
-      enqueueSnackbar("I love hooks", { variant: "success" });
+      enqueueSnackbar("Sign in successfull", { variant: "success" });
       dispatch(clearAuthState());
       navigate("/", { replace: true });
     }
   }, [authStatus]);
 
-  const changeLanguageHandler = (lang: string) => {
+  const changeLanguageHandler = (lang: SupportedLocales) => {
     i18n.changeLanguage(lang);
   };
   return (
@@ -137,6 +142,32 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
         }}
       />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Autocomplete
+          sx={{ position: "absolute", right: "4vw", top: "4vh" }}
+          options={Object.keys(locales)}
+          getOptionLabel={(key) =>
+            `${key.substring(0, 2)}-${key.substring(2, 4)}`
+          }
+          style={{ width: 140 }}
+          value={i18n.language || window.localStorage.i18n}
+          disableClearable
+          onChange={(event: any, newValue: string | null) => {
+            setLocale(newValue as SupportedLocales);
+            changeLanguageHandler(newValue as SupportedLocales);
+          }}
+          renderInput={(params) => (
+            <TextField {...params} label="Locale" fullWidth />
+          )}
+        />
+        <Box sx={{ mt: 5, ml: 5 }}>
+          <IconButton onClick={colorMode.toggleColorMode}>
+            {theme.palette.mode === "dark" ? (
+              <Brightness7Icon fontSize="small" />
+            ) : (
+              <Brightness4Icon fontSize="small" />
+            )}
+          </IconButton>
+        </Box>
         <Box
           sx={{
             my: 8,
@@ -146,37 +177,13 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
             alignItems: "center",
           }}
         >
-          <IconButton
-            sx={{ position: "absolute", right: "4vw", top: "4vh" }}
-            onClick={colorMode.toggleColorMode}
-          >
-            {theme.palette.mode === "dark" ? (
-              <Brightness7Icon fontSize="small" />
-            ) : (
-              <Brightness4Icon fontSize="small" />
-            )}
-          </IconButton>
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
+
           <Typography component="h1" variant="h5">
-            {t("title")}
+            {t("signIn")}
           </Typography>
-          <Button
-            onClick={() => {
-              changeLanguageHandler("zh_CN");
-            }}
-          >
-            中文
-          </Button>
-          <Button
-            onClick={() => {
-              changeLanguageHandler("en_US");
-            }}
-          >
-            Engliash
-          </Button>
-          {i18n.language || window.localStorage.i18n}
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
@@ -187,7 +194,7 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
               fullWidth
               error={errors.hasOwnProperty("email")}
               id="email"
-              label="Email Address"
+              label={t("email")}
               autoComplete="email"
               helperText={errors.email?.message}
               autoFocus
@@ -196,7 +203,7 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
             <TextField
               margin="normal"
               fullWidth
-              label="Password"
+              label={t("password")}
               type="password"
               error={errors.hasOwnProperty("password")}
               helperText={errors.password?.message}
@@ -206,7 +213,7 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label={t("remenberMe") as string}
             />
 
             <LoadingButton
@@ -218,17 +225,18 @@ const SignInScreen: FC<SignIn> = ({ theme, setMode }) => {
               // component={Links}
               // to="/"
             >
-              Sign In
+              {t("signIn")}
             </LoadingButton>
+
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Forgot password?
+                  {t("findPassword")}
                 </Link>
               </Grid>
               <Grid item>
                 <Link component={Links} to="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {t("register")}
                 </Link>
               </Grid>
             </Grid>
