@@ -14,20 +14,18 @@ import Toolbar from "@mui/material/Toolbar";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import {
-  Container,
   Link as Links,
   ListItemButton,
   Typography,
   PaletteMode,
   Button,
-  ListItem,
-  Drawer,
   Badge,
   SwipeableDrawer,
+  Switch,
 } from "@mui/material";
 import logo from "../../logo.svg";
 import Copyright from "../../components/Copyright";
-import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+import { styled, Theme, CSSObject } from "@mui/material/styles";
 import {
   AccountCircleOutlined,
   ChevronLeft,
@@ -621,7 +619,7 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
           </ListItemIcon>
           <ListItemText primary="Settings" />
         </ListItemButton>
-        <ListItemButton >
+        <ListItemButton>
           <ListItemIcon>
             <FeedbackOutlined />
           </ListItemIcon>
@@ -685,8 +683,6 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       dispatch(currentUser());
-    } else {
-      navigate("/users/signin", { replace: true });
     }
   }, [localStorage]);
   return (

@@ -12,7 +12,7 @@ import {
   createUser,
   findAllUser,
   findUserById,
-  fnidUserByEmail,
+  findUserByEmail,
 } from "../service/user.service";
 import log from "../utils/logger";
 import sendEmail from "../utils/mailer";

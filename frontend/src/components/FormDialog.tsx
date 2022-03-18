@@ -15,7 +15,6 @@ import { Button } from "@mui/material";
 
 const FormDialog = forwardRef((props, ref) => {
   const [open, setOpen] = useState(false);
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -27,15 +26,16 @@ const FormDialog = forwardRef((props, ref) => {
 
   return (
     <div>
-      <Dialog open={open}>
-        <DialogTitle>Subscribe</DialogTitle>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Find Password</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
+            To find your password, please enter your email address here. We will
+            send your a rest password code.
           </DialogContentText>
           <TextField
             autoFocus
+            required
             margin="dense"
             id="name"
             label="Email Address"

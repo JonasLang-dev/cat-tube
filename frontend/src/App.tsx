@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ThemeProvider } from "@mui/system";
 import { createTheme, PaletteMode } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -16,7 +16,7 @@ import SignUpPage from "./pages/users/signup/SignUpPage";
 
 function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const [mode, setMode] = React.useState(prefersDarkMode ? "dark" : "light");
+  const [mode, setMode] = useState(prefersDarkMode ? "dark" : "light");
   const theme = React.useMemo(
     () =>
       createTheme({
@@ -47,7 +47,7 @@ function App() {
             <Route path="/watch" element={<Watch />} />
             <Route path="/profile" element={<p>test</p>} />
             <Route path="/studio" element={<p>test</p>} />
-            <Route path="/dashbord" element={<DashbordPage />} />
+            <Route path="/dashboard" element={<DashbordPage />} />
           </Route>
           <Route
             path="/users/signin"

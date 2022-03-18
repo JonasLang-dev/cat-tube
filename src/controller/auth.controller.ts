@@ -6,7 +6,7 @@ import {
   signAccessToken,
   signRefreshToken,
 } from "../service/auth.service";
-import { findUserById, fnidUserByEmail } from "../service/user.service";
+import { findUserById, findUserByEmail } from "../service/user.service";
 import { verifyJwt } from "../utils/jwt";
 
 export async function createSessionHandler(
@@ -16,10 +16,10 @@ export async function createSessionHandler(
   const message = "Invalid email or password";
   const { email, password } = req.body;
 
-  const user = await fnidUserByEmail(email);
+  const user = await findUserByEmail(email);
 
   if (!user) {
-    return res.status(404).send([{ message: message }]);
+    return res.status(400).send([{ message: message }]);
   }
 
   if (!user.verified) {

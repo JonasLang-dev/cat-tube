@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo } from "react";
+import React, { FC, useCallback, useEffect, useMemo, useRef } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -32,6 +32,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { object, string, TypeOf } from "zod";
 import { useTranslation } from "react-i18next";
 import * as locales from "../../../../locales";
+import FormDialog from "../../../components/FormDialog";
 
 type SupportedLocales = keyof typeof locales;
 
@@ -102,7 +103,7 @@ const SignInPage: FC<SignIn> = ({ theme, setMode }) => {
   };
 
   const navigate = useNavigate();
-
+  const restPassRef = useRef<any>();
   useEffect(() => {
     if (authStatus === "failed") {
       if (Array.isArray(authError)) {
@@ -230,7 +231,13 @@ const SignInPage: FC<SignIn> = ({ theme, setMode }) => {
 
             <Grid container>
               <Grid item xs>
-                <Link href="/users/password/new" variant="body2">
+                <Link
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => {
+                    restPassRef.current.handleClickOpen();
+                  }}
+                  variant="body2"
+                >
                   {t("findPassword")}
                 </Link>
               </Grid>
@@ -242,6 +249,7 @@ const SignInPage: FC<SignIn> = ({ theme, setMode }) => {
             </Grid>
             <Copyright sx={{ mt: 5 }} />
           </Box>
+          <FormDialog ref={restPassRef} />
         </Box>
       </Grid>
     </Grid>

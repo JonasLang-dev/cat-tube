@@ -38,7 +38,9 @@
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
     "@vitejs/plugin-react": "^1.0.7",
+    "diagnostic-languageserver": "^1.14.2",
     "typescript": "^4.5.4",
+    "typescript-language-server": "^0.9.7",
     "vite": "^2.8.0"
   }
 }

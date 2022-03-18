@@ -1,3 +1,3 @@
-export declare const enUS;
+export declare const enUS: any;
 
-export declare const zhCN;
+export declare const zhCN: any;
