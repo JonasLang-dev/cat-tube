@@ -10,7 +10,6 @@ import Pricing from "./components/PricingContent";
 import Watch from "./pages/watch/index";
 import { SnackbarProvider } from "notistack";
 import RestPassword from "./pages/users/password/new";
-import SuccessSignUp from "./pages/users/signup/successPage";
 import SignInPage from "./pages/users/signin/SignInPage";
 import SignUpPage from "./pages/users/signup/SignUpPage";
 
@@ -57,8 +56,10 @@ function App() {
             path="/users/signup"
             element={<SignUpPage theme={theme} setMode={setMode} />}
           />
-          <Route path="/users/signup/success" element={<SuccessSignUp />} />
-          <Route path="/users/password/new" element={<RestPassword />} />
+          <Route
+            path="/users/password/new"
+            element={<RestPassword theme={theme} setMode={setMode} />}
+          />
         </Routes>
       </SnackbarProvider>
     </ThemeProvider>

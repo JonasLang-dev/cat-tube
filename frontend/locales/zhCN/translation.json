@@ -10,6 +10,16 @@
         "confirmPassword": "确认密码",
         "login": "已经有账户?",
         "sub": "我希望通过电子邮件获得灵感、营销促销和更新。",
-        "userName": "用户名"
+        "userName": "用户名",
+        "forgotPassword": "找回密码",
+        "cancel": "取消",
+        "send": "发送",
+        "forgetPasswordHelperText": "找回你的密码，请在此处输入您的电子邮件地址。我们会的向您发送重置密码。",
+        "id": "用户ID",
+        "resetPasswordCode": " 重置代码",
+        "resetPassword": "重置密码",
+        "reset": "重置",
+        "signInDirectly": "直接登录",
+        "signUpNew": "注册新的账户"
     }
 }

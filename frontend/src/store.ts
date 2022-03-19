@@ -2,14 +2,16 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
 import currentUserReduce from "./features/auth/currentUserSlice";
 import signUpReducer from "./features/auth/signUpSlice";
-import refreshTokenReducer from "./features/auth/refreshTokenSlice";
+import restEmailReducer from "./features/email/restSlice";
+import resetPasswordReducer from "./features/users/resetPasswordSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     signUp: signUpReducer,
     currentUser: currentUserReduce,
-    refreshToken: refreshTokenReducer
+    emailForPass: restEmailReducer,
+    resetPassword: resetPasswordReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -10,6 +10,16 @@
         "confirmPassword": "Confirm Password",
         "login": "Already have an account? Sign in",
         "sub": "I want to receive inspiration, marketing promotions and updates via email.",
-        "userName": "User Name"
+        "userName": "User Name",
+        "forgotPassword": "Forgot Password",
+        "cancel": "Cancel",
+        "send": "Send",
+        "forgetPasswordHelperText": "To find your password, please enter your email address here. We will send your a reset password code.",
+        "id": "User ID",
+        "resetPasswordCode": "Reset Password Code",
+        "resetPassword": "Reset Password",
+        "reset": "Rest",
+        "signInDirectly": "Sign in directly",
+        "signUpNew": "Sign up for a new account"
     }
 }

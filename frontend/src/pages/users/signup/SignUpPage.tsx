@@ -17,7 +17,6 @@ import { Link as Links, useNavigate } from "react-router-dom";
 import { Autocomplete, IconButton, PaletteMode } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import axios from "axios";
 import { useSnackbar } from "notistack";
 import { useAppSelector, useAppDispatch } from "../../../hooks/redux.hooks";
 import {
@@ -140,7 +139,7 @@ const SignUpPage: FC<SignUp> = ({ theme, setMode }) => {
       enqueueSnackbar("User successfully created", { variant: "success" });
       enqueueSnackbar("Please verify your account", { variant: "warning" });
       dispatch(clearSignUpState());
-      navigate("/users/signup/success", { replace: true });
+      navigate("/users/signin", { replace: true });
     }
   }, [signUpStatus]);
   const changeLanguageHandler = (lang: SupportedLocales) => {

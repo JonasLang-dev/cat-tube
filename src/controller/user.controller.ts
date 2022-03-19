@@ -88,11 +88,11 @@ export async function forgetPasswordHandler(
 
   if (!user) {
     log.debug(`User with email ${email} does not exists`);
-    return res.send(message);
+    return res.status(200).send([{ message: message }]);
   }
 
   if (!user.verified) {
-    return res.send("User is not verified");
+    return res.status(400).send([{ message: "User is not verified" }]);
   }
 
   const passwordResetCode = nanoid();
@@ -105,11 +105,13 @@ export async function forgetPasswordHandler(
     from: "1332969599@qq.com",
     to: user.email,
     subject: "Please verify your account",
-    text: `http://localhost:5020/api/users/verify/${user._id}/${user.passwordResetCode}`,
+    text:
+      `id:${user._id}
+reset code:${user.passwordResetCode}`,
   });
 
   log.debug(`Password is send to ${user.email}`);
-  return res.send(message);
+  return res.status(200).send([{ message: message }]);
 }
 
 export async function resetPasswordHandler(
@@ -120,14 +122,20 @@ export async function resetPasswordHandler(
 
   const { password } = req.body;
 
-  const user = await findUserById(id);
+  let user;
+
+  try {
+    user = await findUserById(id);
+  } catch (error) {
+    return res.status(400).send([{ message: "Could not reset user password" }]);
+  }
 
   if (
     !user ||
     !user.passwordResetCode ||
     user.passwordResetCode !== passwordResetCode
   ) {
-    return res.status(400).send("Could not reset user password");
+    return res.status(400).send([{ message: "Could not reset user password" }]);
   }
 
   user.passwordResetCode = null;

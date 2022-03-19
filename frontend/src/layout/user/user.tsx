@@ -68,7 +68,6 @@ import {
   selectCurrentUserStatus,
 } from "../../features/auth/currentUserSlice";
 import FormDialog from "../../components/FormDialog";
-import { clearRefreshTokenState, refreshToken, selectRefreshError, selectRefreshState } from "../../features/auth/refreshTokenSlice";
 import { useSnackbar } from "notistack";
 
 const drawerWidth = 240;
@@ -176,8 +175,6 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
   const navigate = useNavigate();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
   const currentUserState = useAppSelector(selectCurrentUserState);
-  const refreshError = useAppSelector(selectRefreshError);
-  const refreshState = useAppSelector(selectRefreshState);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const matcheWithLg = useMediaQuery("(min-width:1200px)");
   const matcheWithSm = useMediaQuery("(max-width:600px)");
@@ -688,10 +685,10 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
   );
 
   useEffect(() => {
-    // if (localStorage.getItem("accessToken")) {
+    if (localStorage.getItem("accessToken")) {
       dispatch(currentUser());
-    // }
-  }, [localStorage ]);
+    }
+  }, [localStorage]);
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
