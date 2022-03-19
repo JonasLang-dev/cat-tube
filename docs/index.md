@@ -58,3 +58,9 @@ This is the progress of the current project.
 - Responsove Header
 
 - Single page
+
+[LICENSE](../LICENSE)
+<br />
+[CODE_OF_CONDUCT](../CODE_OF_CONDUCT.md)
+<br />
+[CONTRIBUTING](../CONTRIBUTING.md)
