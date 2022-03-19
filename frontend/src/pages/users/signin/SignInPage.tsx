@@ -25,7 +25,6 @@ import {
   selectAuthStatus,
   signIn,
 } from "../../../features/auth/authSlice";
-import { currentUser } from "../../../features/auth/currentUserSlice";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -33,6 +32,7 @@ import { object, string, TypeOf } from "zod";
 import { useTranslation } from "react-i18next";
 import * as locales from "../../../../locales";
 import FormDialog from "../../../components/FormDialog";
+import { selectCurrentUserStatus } from "../../../features/auth/currentUserSlice";
 
 type SupportedLocales = keyof typeof locales;
 
@@ -64,6 +64,7 @@ const SignInPage: FC<SignIn> = ({ theme, setMode }) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const authStatus = useAppSelector(selectAuthStatus);
   const authError = useAppSelector(selectAuthError);
+  const currentUser = useAppSelector(selectCurrentUserStatus);
   const dispatch = useAppDispatch();
 
   const {
@@ -118,7 +119,7 @@ const SignInPage: FC<SignIn> = ({ theme, setMode }) => {
       dispatch(clearAuthState());
       navigate("/", { replace: true });
     }
-  }, [authStatus]);
+  }, [authStatus, currentUser]);
 
   const changeLanguageHandler = (lang: SupportedLocales) => {
     i18n.changeLanguage(lang);

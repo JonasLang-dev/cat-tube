@@ -84,7 +84,7 @@ export async function forgetPasswordHandler(
     "If a user with that is registerd yout will receive a password reset email";
 
   const { email } = req.body;
-  const user = await fnidUserByEmail(email);
+  const user = await findUserByEmail(email);
 
   if (!user) {
     log.debug(`User with email ${email} does not exists`);

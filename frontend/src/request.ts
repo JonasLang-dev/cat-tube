@@ -1,35 +1,53 @@
 import axios from "axios";
 
-export const BASE_URL = "http://localhost:5020";
+export const baseURL = "http://localhost:5020";
+
+const refreshToken = localStorage.getItem("refreshToken")
+let accessToken = localStorage.getItem("accessToken")
 
 // 创建 axios 实例
-const request = axios.create({
+const axiosInstance = axios.create({
   // API 请求的默认前缀
+  baseURL,
   timeout: 6000, // 请求超时时间
 });
 
-// 异常拦截处理器
-const errorHandler = (error: any) => {
-  return error;
-};
-
 // request interceptor
-request.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use((config) => {
   // 如果 token 存在
   // 让每个请求携带自定义 token 请根据实际情况自行修改
-  if (localStorage.getItem("accessToken")) {
+  
+  if (accessToken) {
     config.headers = {
-      authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      authorization: `Bearer ${accessToken}`,
     };
   }
   return config;
-}, errorHandler);
-
-// response interceptor
-request.interceptors.response.use((response) => {
-  return response;
+}, err => {
+  return Promise.reject(err)
 });
 
-export default request;
+// response interceptor
+axiosInstance.interceptors.response.use((res) => {
+  return res
+}, async (err) => {
+  if (err.response) {
+    if (err.response.status === 403 && refreshToken) {
+      try {
+        const res = await axios.get(`${baseURL}/api/session/refresh`, {
+          headers: {
+            "x-refresh": refreshToken
+          }
+        })
+        localStorage.setItem("accessToken", res.data.accessToken)
+        accessToken = res.data.accessToken
+        return axiosInstance.request(err.response.config)
+      } catch (error: any) {
+        return Promise.reject(error)
+      }
+    }
+  }
+  return Promise.reject(err)
+})
 
-export { request as axios };
+export default axiosInstance;

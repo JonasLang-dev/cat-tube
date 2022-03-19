@@ -4,7 +4,7 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { axios, BASE_URL } from "../../request";
+import axios from "../../request";
 import type { RootState } from "../../store";
 
 // Define a type for the slice state
@@ -31,7 +31,7 @@ export const signUp = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await axios.post(`${BASE_URL}/api/users`, user);
+      const { data } = await axios.post(`/api/users`, user);
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);

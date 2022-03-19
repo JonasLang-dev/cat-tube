@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios, { BASE_URL } from "../../request";
+import axios from "../../request";
 import type { RootState } from "../../store";
 
 // Define a type for the slice state
@@ -7,20 +7,20 @@ interface CurrentUserState {
   status: "idle" | "loading" | "failed" | "success";
   error: Array<object> | string | null;
   user:
-    | {
-        _id: string;
-        email: string;
-        name: string;
-        isAdmin: boolean;
-        isPremium: boolean;
-        isDelete: boolean;
-        createdAt: Date;
-        updatedAt: Date;
-        iat: number;
-        exp: number;
-        avatar: string;
-      }
-    | undefined;
+  | {
+    _id: string;
+    email: string;
+    name: string;
+    isAdmin: boolean;
+    isPremium: boolean;
+    isDelete: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    iat: number;
+    exp: number;
+    avatar: string;
+  }
+  | undefined;
 }
 
 // Define the initial state using that type
@@ -34,8 +34,8 @@ export const currentUser = createAsyncThunk(
   "user/current",
   async (data, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`${BASE_URL}/api/users/current`);
-
+      const { data } = await axios.get(`/api/users/current`);
+      
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -78,5 +78,6 @@ export const { clearCurrentUsrState } = currentUsreSlice.actions;
 // Other code such as selectors can use the imported `RootState` type
 export const selectCurrentUserStatus = (state: RootState) =>
   state.currentUser.user;
+export const selectCurrentUserState = (state: RootState) => state.currentUser.status
 
 export default currentUsreSlice.reducer;
