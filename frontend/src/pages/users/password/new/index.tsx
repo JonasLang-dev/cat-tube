@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC, useContext, useEffect, useMemo } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -36,6 +36,7 @@ import {
   selectResetPasswordErrors,
   selectResetPasswordStatus,
 } from "../../../../features/users/resetPasswordSlice";
+import { AppContext } from "../../../../App";
 type SupportedLocales = keyof typeof locales;
 
 const resetPasswordSchema = object({
@@ -58,19 +59,11 @@ const resetPasswordSchema = object({
 
 type ResetPasswordInput = TypeOf<typeof resetPasswordSchema>;
 
-interface RestPassword {
-  theme:
-    | {
-        palette: {
-          mode: PaletteMode;
-        };
-      }
-    | any;
-  setMode: Function;
-}
+interface RestPassword {}
 
-const RestPassword: FC<RestPassword> = ({ theme, setMode }) => {
+const RestPassword: FC<RestPassword> = () => {
   const { t, i18n } = useTranslation();
+  const { colorMode, theme } = useContext(AppContext);
   const [locale, setLocale] = React.useState<SupportedLocales>("zhCN");
   const dispatch = useAppDispatch();
   const {
@@ -84,42 +77,6 @@ const RestPassword: FC<RestPassword> = ({ theme, setMode }) => {
   const resetPasswordStatus = useAppSelector(selectResetPasswordStatus);
   const resetPasswordError = useAppSelector(selectResetPasswordErrors);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const colorMode = useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode: string) =>
-          prevMode === "light" ? "dark" : "light"
-        );
-        localStorage.getItem("theme")
-          ? localStorage.getItem("theme") === "dark"
-            ? localStorage.setItem("theme", "light")
-            : localStorage.setItem("theme", "dark")
-          : prefersDarkMode
-          ? localStorage.setItem("theme", "light")
-          : localStorage.setItem("theme", "dark");
-      },
-      switchDarkMode: () => {
-        setMode((prevMode: string) =>
-          prevMode === "light" ? "dark" : "light"
-        );
-        localStorage.setItem("theme", "dark");
-      },
-      switchLightMode: () => {
-        setMode((prevMode: string) =>
-          prevMode === "light" ? "dark" : "light"
-        );
-        localStorage.setItem("theme", "light");
-      },
-      switchDefault: () => {
-        setMode((prevMode: string) =>
-          prevMode === "light" ? "dark" : "light"
-        );
-        localStorage.removeItem("theme");
-      },
-    }),
-    [prefersDarkMode]
-  );
   const navigate = useNavigate();
   const changeLanguageHandler = (lang: SupportedLocales) => {
     i18n.changeLanguage(lang);

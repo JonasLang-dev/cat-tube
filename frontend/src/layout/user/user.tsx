@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useContext, useEffect, useRef, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
@@ -17,15 +17,12 @@ import {
   Link as Links,
   ListItemButton,
   Typography,
-  PaletteMode,
   Button,
   Badge,
   SwipeableDrawer,
-  Switch,
 } from "@mui/material";
 import logo from "../../logo.svg";
 import Copyright from "../../components/Copyright";
-import { styled, Theme, CSSObject } from "@mui/material/styles";
 import {
   AccountCircleOutlined,
   ChevronLeft,
@@ -57,125 +54,30 @@ import {
   WorkspacePremium,
   WorkspacePremiumOutlined,
 } from "@mui/icons-material";
-import { Outlet, Link, useNavigate } from "react-router-dom";
-import MuiDrawer from "@mui/material/Drawer";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import { Outlet, Link } from "react-router-dom";
+
 import { useAppDispatch, useAppSelector } from "../..//hooks/redux.hooks";
 import {
   clearCurrentUsrState,
   currentUser,
-  selectCurrentUserState,
   selectCurrentUserStatus,
 } from "../../features/auth/currentUserSlice";
 import FormDialog from "../../components/FormDialog";
-import { useSnackbar } from "notistack";
+import { AppContext } from "../../App";
+import {
+  AppBar,
+  CosDrawer,
+  CoslDrawer,
+  DrawerHeader,
+  drawerWidth,
+} from "./components";
 
-const drawerWidth = 240;
+interface Layout {}
 
-const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: "hidden",
-});
-
-const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(9)} + 1px)`,
-  },
-});
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
-
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})<AppBarProps>(({ theme, open }) => ({
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const CosDrawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.appBar - 1,
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  ...(open && {
-    ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
-  }),
-}));
-
-const CoslDrawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.appBar - 1,
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  ...(!open && {
-    ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
-  }),
-  ...(open && {
-    ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
-  }),
-}));
-
-interface Layout {
-  theme:
-    | {
-        palette: {
-          mode: PaletteMode;
-        };
-      }
-    | any;
-  setMode: Function;
-}
-
-const Layout: FC<Layout> = ({ theme, setMode }) => {
+const Layout: FC<Layout> = () => {
+  const { colorMode, theme } = useContext(AppContext);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
-  const currentUserState = useAppSelector(selectCurrentUserState);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const matcheWithLg = useMediaQuery("(min-width:1200px)");
   const matcheWithSm = useMediaQuery("(max-width:600px)");
   const profileMenuId = "primary-account-menu";
@@ -190,43 +92,6 @@ const Layout: FC<Layout> = ({ theme, setMode }) => {
   const isMenuOpen = Boolean(anchorMenu);
 
   const [open, setOpen] = React.useState(false);
-
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode: string) =>
-          prevMode === "light" ? "dark" : "light"
-        );
-        localStorage.getItem("theme")
-          ? localStorage.getItem("theme") === "dark"
-            ? localStorage.setItem("theme", "light")
-            : localStorage.setItem("theme", "dark")
-          : prefersDarkMode
-          ? localStorage.setItem("theme", "light")
-          : localStorage.setItem("theme", "dark");
-      },
-      switchDarkMode: () => {
-        setMode((prevMode: string) =>
-          prevMode === "light" ? "dark" : "light"
-        );
-        localStorage.setItem("theme", "dark");
-      },
-      switchLightMode: () => {
-        setMode((prevMode: string) =>
-          prevMode === "light" ? "dark" : "light"
-        );
-        localStorage.setItem("theme", "light");
-      },
-      switchDefault: () => {
-        setMode((prevMode: string) =>
-          prevMode === "light" ? "dark" : "light"
-        );
-        localStorage.removeItem("theme");
-      },
-    }),
-    [prefersDarkMode]
-  );
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) =>
     setAnchorProfileMenu(event.currentTarget);

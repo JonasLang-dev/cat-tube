@@ -1,4 +1,11 @@
-import React, { FC, useCallback, useEffect, useMemo, useRef } from "react";
+import React, {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -33,6 +40,7 @@ import { useTranslation } from "react-i18next";
 import * as locales from "../../../../locales";
 import FormDialog from "../../../components/FormDialog";
 import { selectCurrentUserStatus } from "../../../features/auth/currentUserSlice";
+import { AppContext } from "../../../App";
 
 type SupportedLocales = keyof typeof locales;
 
@@ -47,18 +55,10 @@ const createSessionSchema = object({
 
 type CreateSessionInput = TypeOf<typeof createSessionSchema>;
 
-interface SignIn {
-  theme:
-    | {
-        palette: {
-          mode: PaletteMode;
-        };
-      }
-    | any;
-  setMode: Function;
-}
+interface SignIn {}
 
-const SignInPage: FC<SignIn> = ({ theme, setMode }) => {
+const SignInPage: FC<SignIn> = () => {
+  const { theme, colorMode } = useContext(AppContext);
   const { t, i18n } = useTranslation();
   const [locale, setLocale] = React.useState<SupportedLocales>("zhCN");
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -75,24 +75,6 @@ const SignInPage: FC<SignIn> = ({ theme, setMode }) => {
     resolver: zodResolver(createSessionSchema),
   });
 
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const colorMode = useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode: string) =>
-          prevMode === "light" ? "dark" : "light"
-        );
-        localStorage.getItem("theme")
-          ? localStorage.getItem("theme") === "dark"
-            ? localStorage.setItem("theme", "light")
-            : localStorage.setItem("theme", "dark")
-          : prefersDarkMode
-          ? localStorage.setItem("theme", "light")
-          : localStorage.setItem("theme", "dark");
-      },
-    }),
-    [prefersDarkMode]
-  );
   const onSubmit = (value: CreateSessionInput) => {
     dispatch(clearAuthState());
     dispatch(

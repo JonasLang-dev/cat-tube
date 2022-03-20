@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC, useContext, useEffect, useMemo } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -31,6 +31,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as locales from "../../../../locales";
 import { useTranslation } from "react-i18next";
+import { AppContext } from "../../../App";
 
 type SupportedLocales = keyof typeof locales;
 
@@ -58,60 +59,17 @@ const createUserSchema = object({
 
 type CreateSessionInput = TypeOf<typeof createUserSchema>;
 
-interface SignUp {
-  theme:
-    | {
-        palette: {
-          mode: PaletteMode;
-        };
-      }
-    | any;
-  setMode: Function;
-}
+interface SignUp {}
 
-const SignUpPage: FC<SignUp> = ({ theme, setMode }) => {
+const SignUpPage: FC<SignUp> = () => {
   const { t, i18n } = useTranslation();
+  const { colorMode, theme } = useContext(AppContext);
   const [locale, setLocale] = React.useState<SupportedLocales>("zhCN");
   const dispatch = useAppDispatch();
   const signUpStatus = useAppSelector(selectSignUpStatus);
   const signUpError = useAppSelector(selectSignUpError);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const colorMode = useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode: string) =>
-          prevMode === "light" ? "dark" : "light"
-        );
-        localStorage.getItem("theme")
-          ? localStorage.getItem("theme") === "dark"
-            ? localStorage.setItem("theme", "light")
-            : localStorage.setItem("theme", "dark")
-          : prefersDarkMode
-          ? localStorage.setItem("theme", "light")
-          : localStorage.setItem("theme", "dark");
-      },
-      switchDarkMode: () => {
-        setMode((prevMode: string) =>
-          prevMode === "light" ? "dark" : "light"
-        );
-        localStorage.setItem("theme", "dark");
-      },
-      switchLightMode: () => {
-        setMode((prevMode: string) =>
-          prevMode === "light" ? "dark" : "light"
-        );
-        localStorage.setItem("theme", "light");
-      },
-      switchDefault: () => {
-        setMode((prevMode: string) =>
-          prevMode === "light" ? "dark" : "light"
-        );
-        localStorage.removeItem("theme");
-      },
-    }),
-    [prefersDarkMode]
-  );
+
   const navigate = useNavigate();
 
   const {
