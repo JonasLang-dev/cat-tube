@@ -8,10 +8,10 @@ export class Post {
   @prop({ required: true })
   postName: string;
 
-  @prop({ required: true })
+  @prop({})
   postUrl: string;
 
-  @prop({ required: true })
+  @prop()
   posterUrl: string;
 
   @prop({ required: true })
