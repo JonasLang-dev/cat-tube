@@ -9,7 +9,7 @@ export class Post {
     postName: string
 
     @prop({ required: true })
-    postUrl: string
+    postUrl: object
 
     @prop({ required: true })
     posterUrl: string

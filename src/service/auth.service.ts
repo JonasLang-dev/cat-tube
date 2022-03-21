@@ -37,3 +37,4 @@ export function signAccessToken(user: DocumentType<User>) {
 
     return accessToken;
 }
+
