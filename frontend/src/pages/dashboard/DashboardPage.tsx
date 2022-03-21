@@ -50,7 +50,7 @@ const rows = [
   { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
 ];
 
-function DashbordPage() {
+function DashboardPage() {
   return (
     <div style={{ height: 500, padding: "2rem" }}>
       <DataGrid
@@ -66,4 +66,4 @@ function DashbordPage() {
   );
 }
 
-export default DashbordPage;
+export default DashboardPage;

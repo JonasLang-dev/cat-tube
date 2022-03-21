@@ -71,10 +71,12 @@ import {
   DrawerHeader,
   drawerWidth,
 } from "./components";
+import { useTranslation } from "react-i18next";
 
 interface Layout {}
 
 const Layout: FC<Layout> = () => {
+  const {t} = useTranslation()
   const { colorMode, theme } = useContext(AppContext);
   const dispatch = useAppDispatch();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
@@ -362,7 +364,7 @@ const Layout: FC<Layout> = () => {
           <ListItemIcon>
             {selectedIndex === "/" ? <Home /> : <HomeOutlined />}
           </ListItemIcon>
-          <ListItemText primary="Home" />
+          <ListItemText primary={t("home")} />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -376,7 +378,7 @@ const Layout: FC<Layout> = () => {
           <ListItemIcon>
             {selectedIndex === "/explore" ? <Explore /> : <ExploreOutlined />}
           </ListItemIcon>
-          <ListItemText primary="Explore" />
+          <ListItemText primary={t("explore")} />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -619,7 +621,7 @@ const Layout: FC<Layout> = () => {
                   color="inherit"
                   size="large"
                   component={Link}
-                  to="/dashbord"
+                  to="/dashboard"
                 >
                   <Dashboard />
                 </IconButton>

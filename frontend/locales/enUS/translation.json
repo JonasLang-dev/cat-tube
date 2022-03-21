@@ -20,6 +20,8 @@
         "resetPassword": "Reset Password",
         "reset": "Rest",
         "signInDirectly": "Sign in directly",
-        "signUpNew": "Sign up for a new account"
+        "signUpNew": "Sign up for a new account",
+        "home": "Home",
+        "explore":"Explore"
     }
 }

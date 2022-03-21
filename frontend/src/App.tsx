@@ -4,7 +4,7 @@ import { createTheme, PaletteMode } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Layout from "./layout/user/user";
 import { Route, Routes } from "react-router-dom";
-import DashbordPage from "./pages/dashbard/DashbordPage";
+import DashboardPage from "./pages/dashboard/DashboardPage";
 import HomePage from "./pages/home/HomePage";
 import Pricing from "./components/PricingContent";
 import Watch from "./pages/watch/index";
@@ -87,7 +87,7 @@ function App() {
               <Route path="/watch" element={<Watch />} />
               <Route path="/profile" element={<p>test</p>} />
               <Route path="/studio" element={<p>test</p>} />
-              <Route path="/dashboard" element={<DashbordPage />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
             </Route>
             <Route path="/users/signin" element={<SignInPage />} />
             <Route path="/users/signup" element={<SignUpPage />} />

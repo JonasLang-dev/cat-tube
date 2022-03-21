@@ -20,6 +20,8 @@
         "resetPassword": "重置密码",
         "reset": "重置",
         "signInDirectly": "直接登录",
-        "signUpNew": "注册新的账户"
+        "signUpNew": "注册新的账户",
+        "home": "首页",
+        "explore":"探索"
     }
 }

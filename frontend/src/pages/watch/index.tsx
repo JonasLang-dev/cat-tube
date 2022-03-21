@@ -6,7 +6,7 @@ import { CssBaseline, Grid, Paper } from "@mui/material";
 function watch() {
   return (
     <Grid container gap={2}>
-      <Grid xs={12} sm={12} md={12} lg={8} xl={8}>
+      <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
         <Plyr
           crossOrigin="true"
           source={{
@@ -49,7 +49,7 @@ function watch() {
           }}
         />
       </Grid>
-      <Grid xs={12} sm={12} md={12} lg={4} xl={4}>
+      <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
         <Paper>xs=4</Paper>
       </Grid>
     </Grid>
