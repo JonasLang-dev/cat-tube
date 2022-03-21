@@ -551,7 +551,7 @@ const Layout: FC<Layout> = () => {
 
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
-      dispatch(currentUser());
+      dispatch(currentUser(localStorage.getItem("accessToken") as string));
     }
   }, [localStorage]);
   return (

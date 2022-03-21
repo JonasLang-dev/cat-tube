@@ -33,9 +33,13 @@ const initialState: CurrentUserState = {
 
 export const currentUser = createAsyncThunk(
   "user/current",
-  async (data, { rejectWithValue }) => {
+  async (accessToken: string, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/users/current`);
+      const { data } = await axios.get(`/api/users/current`,{
+        headers: {
+          "Authorization": `Bearer ${accessToken}`,
+        }
+      });
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
