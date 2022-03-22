@@ -12,6 +12,8 @@ import { SnackbarProvider } from "notistack";
 import RestPassword from "./pages/users/password/new";
 import SignInPage from "./pages/users/signin/SignInPage";
 import SignUpPage from "./pages/users/signup/SignUpPage";
+import Explore from "./pages/explore";
+import Subscriptions from "./pages/subscriptions";
 
 export const AppContext = createContext<any>(null);
 
@@ -77,12 +79,12 @@ function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<HomePage />} />
-              <Route path="/explore" element={<p>test</p>} />
+              <Route path="/explore" element={<Explore />} />
               <Route path="/library" element={<p>test</p>} />
               <Route path="/history" element={<p>test</p>} />
               <Route path="/download" element={<p>test</p>} />
               <Route path="/settings" element={<p>test</p>} />
-              <Route path="/subscriptions" element={<p>test</p>} />
+              <Route path="/subscriptions" element={<Subscriptions />} />
               <Route path="/premium" element={<Pricing />} />
               <Route path="/watch" element={<Watch />} />
               <Route path="/profile" element={<p>test</p>} />

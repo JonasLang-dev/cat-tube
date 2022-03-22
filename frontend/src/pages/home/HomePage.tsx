@@ -1,4 +1,4 @@
-import React, { FC, useRef } from "react";
+import React, { FC, useContext, useRef } from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -28,6 +28,7 @@ import {
 // @ts-ignore
 import Image from "mui-image";
 import { Link } from "react-router-dom";
+import { AppContext } from "../../App";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
@@ -35,18 +36,27 @@ interface Home {
   loading?: boolean;
 }
 
-
-
 const HomePage: FC<Home> = ({ loading = false }) => {
-  
+  const { colorMode, theme } = useContext(AppContext);
+  console.log(theme);
+
   return (
     <main>
       <Box
-        sx={{
-          bgcolor: "background.paper",
-          pt: 8,
-          pb: 6,
-        }}
+        sx={
+          theme.palette.mode === "dark"
+            ? {
+                pt: 8,
+                pb: 6,
+                background:
+                  "url(src/assets/img/login-the-crown_2-1500x1000.jpg) no-repeat right #000",
+              }
+            : {
+                bgcolor: "background.paper",
+                pt: 8,
+                pb: 6,
+              }
+        }
       >
         <Container maxWidth="sm">
           <Typography
@@ -56,7 +66,7 @@ const HomePage: FC<Home> = ({ loading = false }) => {
             color="text.primary"
             gutterBottom
           >
-            Album layout
+            The Chrown
           </Typography>
           <Typography
             variant="h5"
@@ -64,9 +74,9 @@ const HomePage: FC<Home> = ({ loading = false }) => {
             color="text.secondary"
             paragraph
           >
-            Something short and leading about the collection below—its contents,
-            the creator, etc. Make it short and sweet, but not too short so
-            folks don&apos;t simply skip over it entirely.
+            Adapted from historical events, the play dramatically tells the
+            story of Queen Elizabeth II, as well as the political events and
+            personal experiences of her reign.
           </Typography>
           <Stack
             sx={{ pt: 4 }}
@@ -74,8 +84,8 @@ const HomePage: FC<Home> = ({ loading = false }) => {
             spacing={2}
             justifyContent="center"
           >
-            <Button  variant="contained">Main call to action</Button>
-            <Button variant="outlined">Secondary action</Button>
+            <Button variant="contained">Watch Now</Button>
+            <Button variant="outlined">Add to Library</Button>
           </Stack>
         </Container>
       </Box>
