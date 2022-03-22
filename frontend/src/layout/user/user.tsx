@@ -76,7 +76,7 @@ import { useTranslation } from "react-i18next";
 interface Layout {}
 
 const Layout: FC<Layout> = () => {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const { colorMode, theme } = useContext(AppContext);
   const dispatch = useAppDispatch();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
@@ -177,8 +177,6 @@ const Layout: FC<Layout> = () => {
           localStorage.removeItem("refreshToken");
           dispatch(clearCurrentUsrState());
         }}
-        component={Link}
-        to="/users/signin"
       >
         <ListItemIcon>
           <Logout fontSize="small" />
@@ -197,21 +195,21 @@ const Layout: FC<Layout> = () => {
         {t("theme")}:&nbsp;
         {localStorage.getItem("theme")
           ? localStorage.getItem("theme") === "dark"
-            ? t("dark mode")
-            : t("light mode")
-          : t("default mode")}
+            ? t("dark")
+            : t("light")
+          : t("default")}
       </MenuItem>
       <MenuItem onClick={colorMode.switchDarkMode}>
         <ListItemIcon></ListItemIcon>
-        {t("dark mode")}
+        {t("dark")}
       </MenuItem>
       <MenuItem onClick={colorMode.switchLightMode}>
         <ListItemIcon></ListItemIcon>
-        {t("light mode")}
+        {t("light")}
       </MenuItem>
       <MenuItem onClick={colorMode.switchDefault}>
         <ListItemIcon></ListItemIcon>
-        {t("default mode")}
+        {t("default")}
       </MenuItem>
       <Divider />
       <MenuItem>
@@ -275,7 +273,7 @@ const Layout: FC<Layout> = () => {
         <ListItemIcon>
           <AccountCircleOutlined />
         </ListItemIcon>
-        {t("sign in")}
+        {t("signIn")}
       </MenuItem>
       <MenuItem to="/settings" onClick={handleMenuClose} component={Link}>
         <ListItemIcon>
@@ -301,21 +299,21 @@ const Layout: FC<Layout> = () => {
         {t("theme")}:&nbsp;
         {localStorage.getItem("theme")
           ? localStorage.getItem("theme") === "dark"
-            ? t("dark mode")
-            : t("light mode")
-          : t("default mode")}
+            ? t("dark")
+            : t("light")
+          : t("default")}
       </MenuItem>
       <MenuItem onClick={colorMode.switchDarkMode}>
         <ListItemIcon></ListItemIcon>
-        {t("dark mode")}
+        {t("dark")}
       </MenuItem>
       <MenuItem onClick={colorMode.switchLightMode}>
         <ListItemIcon></ListItemIcon>
-        {t("light mode")}
+        {t("light")}
       </MenuItem>
       <MenuItem onClick={colorMode.switchDefault}>
         <ListItemIcon></ListItemIcon>
-        {t("default mode")}
+        {t("default")}
       </MenuItem>
       <Divider />
       <MenuItem>
@@ -496,7 +494,7 @@ const Layout: FC<Layout> = () => {
           <ListItemIcon>
             <FeedbackOutlined />
           </ListItemIcon>
-          <ListItemText primary={t("send feedback")} />
+          <ListItemText primary={t("feedback")} />
         </ListItemButton>
         <ListItemButton>
           <ListItemIcon>
@@ -667,7 +665,7 @@ const Layout: FC<Layout> = () => {
                   to="/users/signin"
                   component={Link}
                 >
-                  SIGN IN
+                  {t("signIn")}
                 </Button>
               </>
             )}

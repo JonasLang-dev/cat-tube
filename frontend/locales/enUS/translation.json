@@ -28,16 +28,14 @@
         "history":"History",
         "download":"Download",
         "settings":"Settings",
-        "send feedback":"Send feedback",
         "about":"About",
         "studio":"Studio",
         "logout":"Logout",
         "theme":"Theme",
-        "dark mode":"Dark mode",
-        "light mode":"Light mode",
-        "default mode":"Default mode",
-        "feedback":"Feedback",
-        "sign in":"Sign In"
+        "dark":"Dark mode",
+        "light":"Light mode",
+        "default":"Default mode",
+        "feedback":"Feedback"
         
     }
 }
