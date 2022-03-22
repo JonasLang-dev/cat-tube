@@ -122,7 +122,7 @@ const SignUpPage: FC<SignUp> = () => {
             `${key.substring(0, 2)}-${key.substring(2, 4)}`
           }
           style={{ width: 140 }}
-          value={i18n.language || window.localStorage.i18n}
+          value={i18n.language.replace(/\-/, "") || window.localStorage.i18n}
           disableClearable
           onChange={(event: any, newValue: string | null) => {
             setLocale(newValue as SupportedLocales);
