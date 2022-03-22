@@ -22,6 +22,21 @@
         "signInDirectly": "直接登录",
         "signUpNew": "注册新的账户",
         "home": "首页",
-        "explore":"探索"
+        "explore":"探索",
+        "subscriptions":"订阅",
+        "library":"收藏",
+        "history":"历史",
+        "download":"下载",
+        "settings":"设置",
+        "send feedback":"发送反馈",
+        "about":"关于",
+        "studio":"创意工坊",
+        "logout":"退出账号",
+        "theme":"外观：设备主题",
+        "dark mode":"夜间",
+        "light mode":"白天",
+        "default mode":"默认",
+        "feedback":"反馈",
+        "sign in":"登   录"
     }
 }

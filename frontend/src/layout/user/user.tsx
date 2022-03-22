@@ -152,7 +152,7 @@ const Layout: FC<Layout> = () => {
         <ListItemIcon>
           <VideoSettings fontSize="small" />
         </ListItemIcon>
-        Studio
+        {t("studio")}
       </MenuItem>
       <MenuItem
         onClick={handleProfileMenuClose}
@@ -162,7 +162,7 @@ const Layout: FC<Layout> = () => {
         <ListItemIcon>
           <Settings fontSize="small" />
         </ListItemIcon>
-        Settings
+        {t("settings")}
       </MenuItem>
       <MenuItem component={Link} to="/premium" onClick={handleProfileMenuClose}>
         <ListItemIcon>
@@ -183,7 +183,7 @@ const Layout: FC<Layout> = () => {
         <ListItemIcon>
           <Logout fontSize="small" />
         </ListItemIcon>
-        Logout
+        {t("logout")}
       </MenuItem>
       <Divider />
       <MenuItem onClick={colorMode.toggleColorMode}>
@@ -194,36 +194,37 @@ const Layout: FC<Layout> = () => {
             <Brightness4Icon fontSize="small" />
           )}
         </ListItemIcon>
-        Theme:&nbsp;
+        {t("theme")}:&nbsp;
         {localStorage.getItem("theme")
           ? localStorage.getItem("theme") === "dark"
-            ? "Dark mode"
-            : "Light mode"
-          : "Default mode"}
+            ? t("dark mode")
+            : t("light mode")
+          : t("default mode")}
       </MenuItem>
       <MenuItem onClick={colorMode.switchDarkMode}>
         <ListItemIcon></ListItemIcon>
-        Dark mode
+        {t("dark mode")}
       </MenuItem>
       <MenuItem onClick={colorMode.switchLightMode}>
         <ListItemIcon></ListItemIcon>
-        Light mode
+        {t("light mode")}
       </MenuItem>
       <MenuItem onClick={colorMode.switchDefault}>
-        <ListItemIcon></ListItemIcon>Default mode
+        <ListItemIcon></ListItemIcon>
+        {t("default mode")}
       </MenuItem>
       <Divider />
       <MenuItem>
         <ListItemIcon>
           <FeedbackOutlined fontSize="small" />
         </ListItemIcon>
-        Feedback
+        {t("feedback")}
       </MenuItem>
       <MenuItem>
         <ListItemIcon>
           <InfoOutlined fontSize="small" />
         </ListItemIcon>
-        About
+        {t("about")}
       </MenuItem>
       <MenuItem href="https://github.com/Cat-Family/cat-tube" component={Links}>
         <ListItemIcon>
@@ -274,13 +275,13 @@ const Layout: FC<Layout> = () => {
         <ListItemIcon>
           <AccountCircleOutlined />
         </ListItemIcon>
-        Sign In
+        {t("sign in")}
       </MenuItem>
       <MenuItem to="/settings" onClick={handleMenuClose} component={Link}>
         <ListItemIcon>
           <Settings />
         </ListItemIcon>
-        Settings
+        {t("settings")}
       </MenuItem>
       <MenuItem to="/premium" onClick={handleMenuClose} component={Link}>
         <ListItemIcon>
@@ -297,36 +298,37 @@ const Layout: FC<Layout> = () => {
             <Brightness4Icon fontSize="small" />
           )}
         </ListItemIcon>
-        Theme:&nbsp;
+        {t("theme")}:&nbsp;
         {localStorage.getItem("theme")
           ? localStorage.getItem("theme") === "dark"
-            ? "Dark mode"
-            : "Light mode"
-          : "Default mode"}
+            ? t("dark mode")
+            : t("light mode")
+          : t("default mode")}
       </MenuItem>
       <MenuItem onClick={colorMode.switchDarkMode}>
         <ListItemIcon></ListItemIcon>
-        Dark mode
+        {t("dark mode")}
       </MenuItem>
       <MenuItem onClick={colorMode.switchLightMode}>
         <ListItemIcon></ListItemIcon>
-        Light mode
+        {t("light mode")}
       </MenuItem>
       <MenuItem onClick={colorMode.switchDefault}>
-        <ListItemIcon></ListItemIcon>Default mode
+        <ListItemIcon></ListItemIcon>
+        {t("default mode")}
       </MenuItem>
       <Divider />
       <MenuItem>
         <ListItemIcon>
           <FeedbackOutlined fontSize="small" />
         </ListItemIcon>
-        Feedback
+        {t("feedback")}
       </MenuItem>
       <MenuItem>
         <ListItemIcon>
           <InfoOutlined fontSize="small" />
         </ListItemIcon>
-        About
+        {t("about")}
       </MenuItem>
       <MenuItem href="https://github.com/Cat-Family/cat-tube" component={Links}>
         <ListItemIcon>
@@ -396,7 +398,7 @@ const Layout: FC<Layout> = () => {
               <SubscriptionsOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary="Subscriptions" />
+          <ListItemText primary={t("subscriptions")} />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -414,7 +416,7 @@ const Layout: FC<Layout> = () => {
               <WorkspacePremiumOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary="Premium" />
+          <ListItemText primary="Preium" />
         </ListItemButton>
       </List>
       <Divider />
@@ -435,7 +437,7 @@ const Layout: FC<Layout> = () => {
               <VideoLibraryOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary="Library" />
+          <ListItemText primary={t("library")} />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -449,7 +451,7 @@ const Layout: FC<Layout> = () => {
           <ListItemIcon>
             {selectedIndex === "/history" ? <History /> : <HistoryOutlined />}
           </ListItemIcon>
-          <ListItemText primary="History" />
+          <ListItemText primary={t("history")} />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -467,7 +469,7 @@ const Layout: FC<Layout> = () => {
               <DownloadOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary="Download" />
+          <ListItemText primary={t("download")} />
         </ListItemButton>
       </List>
       <Divider />
@@ -488,19 +490,19 @@ const Layout: FC<Layout> = () => {
               <SettingsOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary="Settings" />
+          <ListItemText primary={t("settings")} />
         </ListItemButton>
         <ListItemButton>
           <ListItemIcon>
             <FeedbackOutlined />
           </ListItemIcon>
-          <ListItemText primary="Send feedback" />
+          <ListItemText primary={t("send feedback")} />
         </ListItemButton>
         <ListItemButton>
           <ListItemIcon>
             <InfoOutlined />
           </ListItemIcon>
-          <ListItemText primary="About" />
+          <ListItemText primary={t("about")} />
         </ListItemButton>
         <ListItemButton
           href="https://github.com/Cat-Family/cat-tube"

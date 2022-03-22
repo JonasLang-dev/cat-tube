@@ -22,6 +22,22 @@
         "signInDirectly": "Sign in directly",
         "signUpNew": "Sign up for a new account",
         "home": "Home",
-        "explore":"Explore"
+        "explore":"Explore",
+        "subscriptions":"Subscriptions",
+        "library":"Library",
+        "history":"History",
+        "download":"Download",
+        "settings":"Settings",
+        "send feedback":"Send feedback",
+        "about":"About",
+        "studio":"Studio",
+        "logout":"Logout",
+        "theme":"Theme",
+        "dark mode":"Dark mode",
+        "light mode":"Light mode",
+        "default mode":"Default mode",
+        "feedback":"Feedback",
+        "sign in":"Sign In"
+        
     }
 }
