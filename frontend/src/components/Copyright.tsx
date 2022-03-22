@@ -10,7 +10,7 @@ function Copyright(props: any) {
       </Link>
       &nbsp;
       {"©"}
-      <Link color="inherit" href="https://cat.supercatcut.com/">
+      <Link color="inherit" href="https://supercutcat.com" target="_blank">
         supercutcat
       </Link>
       &nbsp;

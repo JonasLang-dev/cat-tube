@@ -30,7 +30,7 @@ import {
   SubscriptionsOutlined,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { selectCurrentUserStatus } from "../../features/auth/currentUserSlice";
 import { useAppSelector } from "../../hooks/redux.hooks";
 // @ts-ignore
@@ -43,6 +43,7 @@ interface Home {
 }
 
 function Subscriptions({ loading = false }) {
+  const location = useLocation();
   const { t } = useTranslation();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
 
@@ -269,7 +270,7 @@ function Subscriptions({ loading = false }) {
                   color="inherit"
                   variant="outlined"
                   startIcon={<AccountCircleOutlined />}
-                  to="/users/signin"
+                  to={`/users/signin?redirect=${location.pathname}`}
                   component={Link}
                   sx={{ width: "200px" }}
                 >

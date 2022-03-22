@@ -21,7 +21,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Copyright from "../../../components/Copyright";
-import { Link as Links, useNavigate } from "react-router-dom";
+import { Link as Links, useLocation, useNavigate } from "react-router-dom";
 import { Autocomplete, IconButton, PaletteMode } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
@@ -66,6 +66,7 @@ const SignInPage: FC<SignIn> = () => {
   const authError = useAppSelector(selectAuthError);
   const currentUser = useAppSelector(selectCurrentUserStatus);
   const dispatch = useAppDispatch();
+  const location = useLocation();
 
   const {
     register,
@@ -99,7 +100,7 @@ const SignInPage: FC<SignIn> = () => {
     if (authStatus === "success") {
       enqueueSnackbar("Sign in successfull", { variant: "success" });
       dispatch(clearAuthState());
-      navigate("/", { replace: true });
+      navigate(location.search.replace("?redirect=", ""), { replace: true });
     }
   }, [authStatus, currentUser]);
 

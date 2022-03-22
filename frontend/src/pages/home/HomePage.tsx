@@ -38,7 +38,6 @@ interface Home {
 
 const HomePage: FC<Home> = ({ loading = false }) => {
   const { colorMode, theme } = useContext(AppContext);
-  console.log(theme);
 
   return (
     <main>

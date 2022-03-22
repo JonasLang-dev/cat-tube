@@ -54,7 +54,7 @@ import {
   WorkspacePremium,
   WorkspacePremiumOutlined,
 } from "@mui/icons-material";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useParams, useLocation } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../..//hooks/redux.hooks";
 import {
@@ -90,6 +90,7 @@ const Layout: FC<Layout> = () => {
   const postRef = useRef<any>();
   const aboutRef = useRef<any>();
   const feedbackRef = useRef<any>();
+  const location = useLocation();
 
   const [selectedIndex, setSelectedIndex] = useState(location.pathname);
   const [anchorProfileMenu, setAnchorProfileMenu] =
@@ -286,7 +287,11 @@ const Layout: FC<Layout> = () => {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      <MenuItem to="/users/signin" onClick={handleMenuClose} component={Link}>
+      <MenuItem
+        to={`/users/signin?redirect=${location.pathname}`}
+        onClick={handleMenuClose}
+        component={Link}
+      >
         <ListItemIcon>
           <AccountCircleOutlined />
         </ListItemIcon>
@@ -700,7 +705,7 @@ const Layout: FC<Layout> = () => {
                   color="inherit"
                   variant="outlined"
                   startIcon={<AccountCircleOutlined />}
-                  to="/users/signin"
+                  to={`/users/signin?redirect=${location.pathname}`}
                   component={Link}
                 >
                   {t("signIn")}
