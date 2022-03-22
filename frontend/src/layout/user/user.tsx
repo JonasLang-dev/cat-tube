@@ -72,6 +72,9 @@ import {
   drawerWidth,
 } from "./components";
 import { useTranslation } from "react-i18next";
+import PostDialog from "../../components/PostDialog";
+import AboutDialog from "../../components/AboutDialog";
+import FeedbackDialog from "../../components/FeedbackDialog";
 
 interface Layout {}
 
@@ -85,6 +88,8 @@ const Layout: FC<Layout> = () => {
   const profileMenuId = "primary-account-menu";
   const menuId = "primary-not-signin-menu";
   const postRef = useRef<any>();
+  const aboutRef = useRef<any>();
+  const feedbackRef = useRef<any>();
 
   const [selectedIndex, setSelectedIndex] = useState(location.pathname);
   const [anchorProfileMenu, setAnchorProfileMenu] =
@@ -212,19 +217,31 @@ const Layout: FC<Layout> = () => {
         {t("default")}
       </MenuItem>
       <Divider />
-      <MenuItem>
+      <MenuItem
+        onClick={() => {
+          feedbackRef.current.handleClickOpen();
+        }}
+      >
         <ListItemIcon>
           <FeedbackOutlined fontSize="small" />
         </ListItemIcon>
         {t("feedback")}
       </MenuItem>
-      <MenuItem>
+      <MenuItem
+        onClick={() => {
+          aboutRef.current.handleClickOpen();
+        }}
+      >
         <ListItemIcon>
           <InfoOutlined fontSize="small" />
         </ListItemIcon>
         {t("about")}
       </MenuItem>
-      <MenuItem href="https://github.com/Cat-Family/cat-tube" component={Links}>
+      <MenuItem
+        href="https://github.com/Cat-Family/cat-tube"
+        target="_blank"
+        component={Links}
+      >
         <ListItemIcon>
           <GitHub fontSize="small" />
         </ListItemIcon>
@@ -316,19 +333,31 @@ const Layout: FC<Layout> = () => {
         {t("default")}
       </MenuItem>
       <Divider />
-      <MenuItem>
+      <MenuItem
+        onClick={() => {
+          feedbackRef.current.handleClickOpen();
+        }}
+      >
         <ListItemIcon>
           <FeedbackOutlined fontSize="small" />
         </ListItemIcon>
         {t("feedback")}
       </MenuItem>
-      <MenuItem>
+      <MenuItem
+        onClick={() => {
+          aboutRef.current.handleClickOpen();
+        }}
+      >
         <ListItemIcon>
           <InfoOutlined fontSize="small" />
         </ListItemIcon>
         {t("about")}
       </MenuItem>
-      <MenuItem href="https://github.com/Cat-Family/cat-tube" component={Links}>
+      <MenuItem
+        href="https://github.com/Cat-Family/cat-tube"
+        target="_blank"
+        component={Links}
+      >
         <ListItemIcon>
           <GitHub fontSize="small" />
         </ListItemIcon>
@@ -490,13 +519,21 @@ const Layout: FC<Layout> = () => {
           </ListItemIcon>
           <ListItemText primary={t("settings")} />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton
+          onClick={() => {
+            feedbackRef.current.handleClickOpen();
+          }}
+        >
           <ListItemIcon>
             <FeedbackOutlined />
           </ListItemIcon>
           <ListItemText primary={t("feedback")} />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton
+          onClick={() => {
+            aboutRef.current.handleClickOpen();
+          }}
+        >
           <ListItemIcon>
             <InfoOutlined />
           </ListItemIcon>
@@ -504,6 +541,7 @@ const Layout: FC<Layout> = () => {
         </ListItemButton>
         <ListItemButton
           href="https://github.com/Cat-Family/cat-tube"
+          target="_blank"
           component={Links}
         >
           <ListItemIcon>
@@ -758,7 +796,9 @@ const Layout: FC<Layout> = () => {
         <Toolbar />
         <Outlet />
       </Box>
-      <FormDialog ref={postRef} />
+      <PostDialog ref={postRef} />
+      <AboutDialog ref={aboutRef} />
+      <FeedbackDialog ref={feedbackRef} />
     </Box>
   );
 };
