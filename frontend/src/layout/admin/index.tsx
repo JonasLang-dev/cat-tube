@@ -256,7 +256,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
               <SupervisedUserCircleOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("manager.user")} />
+          <ListItemText primary={t("admin.user")} />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -274,7 +274,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
               <VerifiedUserOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("manager.auth")} />
+          <ListItemText primary={t("admin.auth")} />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -292,7 +292,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
               <CopyrightOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("manager.copyright")} />
+          <ListItemText primary={t("admin.copyright")} />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -310,7 +310,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
               <VideoFileOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("manager.video")} />
+          <ListItemText primary={t("admin.video")} />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -328,7 +328,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
               <PriceChangeOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("manager.price")} />
+          <ListItemText primary={t("admin.price")} />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -346,7 +346,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
               <BusinessOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("manager.ad")} />
+          <ListItemText primary={t("admin.ad")} />
         </ListItemButton>
       </List>
 

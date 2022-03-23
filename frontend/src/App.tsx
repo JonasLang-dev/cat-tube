@@ -108,7 +108,7 @@ function App() {
               <Route path="/admin/price" element={<DashboardPage />} />
               <Route path="/admin/ad" element={<DashboardPage />} />
             </Route>
-            <Route path="/dashboard" element={<StudioLayout />}></Route>
+            <Route path="/studio" element={<StudioLayout />}></Route>
             <Route
               path="/users/signin"
               element={<SignInPage theme={theme} colorMode={colorMode} />}

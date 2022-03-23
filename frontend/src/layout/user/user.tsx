@@ -450,7 +450,7 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
               <WorkspacePremiumOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary="Preium" />
+          <ListItemText primary={t("Premium")} />
         </ListItemButton>
       </List>
       <Divider />
@@ -674,14 +674,6 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
                 )}
                 <IconButton
                   color="inherit"
-                  size="large"
-                  component={Link}
-                  to="/dashboard"
-                >
-                  <Dashboard />
-                </IconButton>
-                <IconButton
-                  color="inherit"
                   onClick={() => {
                     postRef.current.handleClickOpen();
                   }}
@@ -778,7 +770,7 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
           {renderDrawerItem}
         </SwipeableDrawer>
       )}
-      {matcheWithLg && (
+      {matcheWithLg && location.pathname !== "/watch" && (
         <CoslDrawer variant="permanent" open={open}>
           <DrawerHeader>
             <IconButton onClick={toggleDrawer}>
@@ -789,7 +781,7 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
           {renderDrawerItem}
         </CoslDrawer>
       )}
-      {!matcheWithLg && !matcheWithSm && (
+      {!matcheWithLg && location.pathname !== "/watch" && !matcheWithSm && (
         <CosDrawer variant="permanent" open={open}>
           <DrawerHeader>
             <IconButton onClick={toggleDrawer}>

@@ -35,6 +35,13 @@
         "dark": "深色主题",
         "light": "浅色主题",
         "default": "设备主题",
-        "feedback": "反馈"
+        "feedback": "反馈",
+        "admin.user": "用户管理",
+        "admin.auth": "权限管理",
+        "admin.copyright": "版权管理",
+        "admin.video": "视频管理",
+        "admin.price": "收费管理",
+        "admin.ad": "广告管理",
+        "Premium": "Premium"
     }
 }
