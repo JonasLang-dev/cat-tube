@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Avatar from "@mui/material/Avatar";
@@ -40,7 +41,6 @@ import { useTranslation } from "react-i18next";
 import * as locales from "../../../../locales";
 import FormDialog from "../../../components/FormDialog";
 import { selectCurrentUserStatus } from "../../../features/auth/currentUserSlice";
-import { AppContext } from "../../../App";
 
 type SupportedLocales = keyof typeof locales;
 
@@ -55,10 +55,12 @@ const createSessionSchema = object({
 
 type CreateSessionInput = TypeOf<typeof createSessionSchema>;
 
-interface SignIn {}
+interface SignIn {
+  theme: any;
+  colorMode: any;
+}
 
-const SignInPage: FC<SignIn> = () => {
-  const { theme, colorMode } = useContext(AppContext);
+const SignInPage: FC<SignIn> = ({ theme, colorMode }) => {
   const { t, i18n } = useTranslation();
   const [locale, setLocale] = React.useState<SupportedLocales>("zhCN");
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();

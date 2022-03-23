@@ -58,6 +58,7 @@ function Subscriptions({ loading = false }) {
               pb: 6,
               pr: 2,
               pl: 2,
+              display: { md: "none", lg: "none", xl: "none" },
             }}
           >
             <Box

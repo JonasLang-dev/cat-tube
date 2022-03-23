@@ -14,6 +14,8 @@ import SignInPage from "./pages/users/signin/SignInPage";
 import SignUpPage from "./pages/users/signup/SignUpPage";
 import Explore from "./pages/explore";
 import Subscriptions from "./pages/subscriptions";
+import AdminLayout from "./layout/admin";
+import StudioLayout from "./layout/studio";
 
 export const AppContext = createContext<any>(null);
 
@@ -77,8 +79,14 @@ function App() {
           value={{ setMode, theme, prefersDarkMode, colorMode }}
         >
           <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<HomePage />} />
+            <Route
+              path="/"
+              element={<Layout theme={theme} colorMode={colorMode} />}
+            >
+              <Route
+                index
+                element={<HomePage theme={theme} colorMode={colorMode} />}
+              />
               <Route path="/explore" element={<Explore />} />
               <Route path="/library" element={<p>test</p>} />
               <Route path="/history" element={<p>test</p>} />
@@ -88,12 +96,31 @@ function App() {
               <Route path="/premium" element={<Pricing />} />
               <Route path="/watch" element={<Watch />} />
               <Route path="/profile" element={<p>test</p>} />
-              <Route path="/studio" element={<p>test</p>} />
-              <Route path="/dashboard" element={<DashboardPage />} />
             </Route>
-            <Route path="/users/signin" element={<SignInPage />} />
-            <Route path="/users/signup" element={<SignUpPage />} />
-            <Route path="/users/password/new" element={<RestPassword />} />
+            <Route
+              path="/admin"
+              element={<AdminLayout theme={theme} colorMode={colorMode} />}
+            >
+              <Route index element={<DashboardPage />} />
+              <Route path="/admin/auth" element={<DashboardPage />} />
+              <Route path="/admin/copyright" element={<DashboardPage />} />
+              <Route path="/admin/video" element={<DashboardPage />} />
+              <Route path="/admin/price" element={<DashboardPage />} />
+              <Route path="/admin/ad" element={<DashboardPage />} />
+            </Route>
+            <Route path="/dashboard" element={<StudioLayout />}></Route>
+            <Route
+              path="/users/signin"
+              element={<SignInPage theme={theme} colorMode={colorMode} />}
+            />
+            <Route
+              path="/users/signup"
+              element={<SignUpPage theme={theme} colorMode={colorMode} />}
+            />
+            <Route
+              path="/users/password/new"
+              element={<RestPassword theme={theme} colorMode={colorMode} />}
+            />
           </Routes>
         </AppContext.Provider>
       </SnackbarProvider>

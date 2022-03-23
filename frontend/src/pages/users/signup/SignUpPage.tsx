@@ -31,7 +31,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as locales from "../../../../locales";
 import { useTranslation } from "react-i18next";
-import { AppContext } from "../../../App";
 
 type SupportedLocales = keyof typeof locales;
 
@@ -59,11 +58,13 @@ const createUserSchema = object({
 
 type CreateSessionInput = TypeOf<typeof createUserSchema>;
 
-interface SignUp {}
+interface SignUp {
+  colorMode: any;
+  theme: any;
+}
 
-const SignUpPage: FC<SignUp> = () => {
+const SignUpPage: FC<SignUp> = ({ theme, colorMode }) => {
   const { t, i18n } = useTranslation();
-  const { colorMode, theme } = useContext(AppContext);
   const [locale, setLocale] = React.useState<SupportedLocales>("zhCN");
   const dispatch = useAppDispatch();
   const signUpStatus = useAppSelector(selectSignUpStatus);

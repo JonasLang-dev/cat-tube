@@ -28,17 +28,16 @@ import {
 // @ts-ignore
 import Image from "mui-image";
 import { Link } from "react-router-dom";
-import { AppContext } from "../../App";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 interface Home {
   loading?: boolean;
+  colorMode: any;
+  theme: any;
 }
 
-const HomePage: FC<Home> = ({ loading = false }) => {
-  const { colorMode, theme } = useContext(AppContext);
-
+const HomePage: FC<Home> = ({ loading = false, colorMode, theme }) => {
   return (
     <main>
       <Box

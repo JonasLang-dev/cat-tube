@@ -13,7 +13,9 @@ const axiosInstance: AxiosInstance = axios.create({
 });
 
 if (accessToken) {
-  axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  axiosInstance.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${accessToken}`;
 }
 
 // request interceptor
@@ -45,7 +47,7 @@ axiosInstance.interceptors.response.use(
             },
           });
           localStorage.setItem("accessToken", res.data.accessToken);
-          axios.defaults.headers.common[
+          axiosInstance.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${res.data.accessToken}`;
           return axiosInstance.request(err.response.config);

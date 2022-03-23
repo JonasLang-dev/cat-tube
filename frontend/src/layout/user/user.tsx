@@ -25,6 +25,7 @@ import logo from "../../logo.svg";
 import Copyright from "../../components/Copyright";
 import {
   AccountCircleOutlined,
+  AdminPanelSettings,
   ChevronLeft,
   ChevronRight,
   Dashboard,
@@ -62,8 +63,7 @@ import {
   currentUser,
   selectCurrentUserStatus,
 } from "../../features/auth/currentUserSlice";
-import FormDialog from "../../components/FormDialog";
-import { AppContext } from "../../App";
+
 import {
   AppBar,
   CosDrawer,
@@ -76,11 +76,13 @@ import PostDialog from "../../components/PostDialog";
 import AboutDialog from "../../components/AboutDialog";
 import FeedbackDialog from "../../components/FeedbackDialog";
 
-interface Layout {}
+interface Layout {
+  colorMode: any;
+  theme: any;
+}
 
-const Layout: FC<Layout> = () => {
+const Layout: FC<Layout> = ({ theme, colorMode }) => {
   const { t } = useTranslation();
-  const { colorMode, theme } = useContext(AppContext);
   const dispatch = useAppDispatch();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
   const matcheWithLg = useMediaQuery("(min-width:1200px)");
@@ -485,7 +487,7 @@ const Layout: FC<Layout> = () => {
           </ListItemIcon>
           <ListItemText primary={t("history")} />
         </ListItemButton>
-        <ListItemButton
+        {/* <ListItemButton
           component={Link}
           to="/download"
           selected={selectedIndex === "/download"}
@@ -502,10 +504,10 @@ const Layout: FC<Layout> = () => {
             )}
           </ListItemIcon>
           <ListItemText primary={t("download")} />
-        </ListItemButton>
+        </ListItemButton> */}
       </List>
       <Divider />
-      <List component="nav" aria-label="library history download">
+      <List component="nav" aria-label="settings feedback about Github">
         <ListItemButton
           component={Link}
           to="/settings"
@@ -660,6 +662,16 @@ const Layout: FC<Layout> = () => {
                     <Mail />
                   </Badge>
                 </IconButton>
+                {currentUserInfo.isAdmin && (
+                  <IconButton
+                    color="inherit"
+                    size="large"
+                    component={Link}
+                    to="/admin"
+                  >
+                    <AdminPanelSettings />
+                  </IconButton>
+                )}
                 <IconButton
                   color="inherit"
                   size="large"

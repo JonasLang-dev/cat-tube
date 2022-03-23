@@ -36,7 +36,7 @@ import {
   selectResetPasswordErrors,
   selectResetPasswordStatus,
 } from "../../../../features/users/resetPasswordSlice";
-import { AppContext } from "../../../../App";
+
 type SupportedLocales = keyof typeof locales;
 
 const resetPasswordSchema = object({
@@ -59,11 +59,13 @@ const resetPasswordSchema = object({
 
 type ResetPasswordInput = TypeOf<typeof resetPasswordSchema>;
 
-interface RestPassword {}
+interface RestPassword {
+  theme: any;
+  colorMode: any;
+}
 
-const RestPassword: FC<RestPassword> = () => {
+const RestPassword: FC<RestPassword> = ({ theme, colorMode }) => {
   const { t, i18n } = useTranslation();
-  const { colorMode, theme } = useContext(AppContext);
   const [locale, setLocale] = React.useState<SupportedLocales>("zhCN");
   const dispatch = useAppDispatch();
   const {
