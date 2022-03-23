@@ -100,7 +100,9 @@ const SignInPage: FC<SignIn> = () => {
     if (authStatus === "success") {
       enqueueSnackbar("Sign in successfull", { variant: "success" });
       dispatch(clearAuthState());
-      navigate(location.search.replace("?redirect=", ""), { replace: true });
+      navigate(location.search.replace("?redirect=", "") || "/", {
+        replace: true,
+      });
     }
   }, [authStatus, currentUser]);
 

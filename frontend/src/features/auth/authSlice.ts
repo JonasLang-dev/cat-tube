@@ -1,7 +1,4 @@
-import {
-  createAsyncThunk,
-  createSlice
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../request";
 import type { RootState } from "../../store";
 
@@ -27,6 +24,9 @@ export const signIn = createAsyncThunk(
   ) => {
     try {
       const { data } = await axios.post(`/api/session`, user);
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${data.accessToken}`;
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
       return data;
