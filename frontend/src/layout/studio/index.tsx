@@ -17,13 +17,12 @@ import {
   Link as Links,
   ListItemButton,
   Typography,
-  Button,
-  Badge,
   SwipeableDrawer,
 } from "@mui/material";
 import logo from "../../logo.svg";
 import Copyright from "../../components/Copyright";
 import {
+  AdminPanelSettings,
   ChevronLeft,
   ChevronRight,
   DashboardCustomize,
@@ -35,7 +34,7 @@ import {
   MenuSharp,
   VideoFile,
   VideoFileOutlined,
-  VideoSettings,
+  YouTube,
 } from "@mui/icons-material";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -56,7 +55,6 @@ import {
 import { useTranslation } from "react-i18next";
 import PostDialog from "../../components/PostDialog";
 import AboutDialog from "../../components/AboutDialog";
-import FeedbackDialog from "../../components/FeedbackDialog";
 
 interface Studio {
   colorMode: any;
@@ -72,7 +70,6 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
   const profileMenuId = "primary-account-menu";
   const postRef = useRef<any>();
   const aboutRef = useRef<any>();
-  const feedbackRef = useRef<any>();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -132,12 +129,20 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
         />
         &nbsp; {currentUserInfo && currentUserInfo.name}
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuClose} component={Link} to="/studio">
+      <MenuItem onClick={handleProfileMenuClose} component={Link} to="/">
         <ListItemIcon>
-          <VideoSettings fontSize="small" />
+          <YouTube fontSize="small" />
         </ListItemIcon>
-        {t("studio")}
+        {t("logo")}
       </MenuItem>
+      {currentUserInfo?.isAdmin && (
+        <MenuItem onClick={handleProfileMenuClose} component={Link} to="/admin">
+          <ListItemIcon>
+            <AdminPanelSettings fontSize="small" />
+          </ListItemIcon>
+          {t("admin")}
+        </MenuItem>
+      )}
       <MenuItem
         onClick={() => {
           handleProfileMenuClose();
@@ -182,9 +187,8 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
       </MenuItem>
       <Divider />
       <MenuItem
-        onClick={() => {
-          feedbackRef.current.handleClickOpen();
-        }}
+        href="mailto:supercutcat@outlook.com?subject=feedback"
+        component={Links}
       >
         <ListItemIcon>
           <FeedbackOutlined fontSize="small" />
@@ -249,7 +253,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
         </ListItemButton>
         <ListItemButton
           component={Link}
-          to="/studio"
+          to="/studio/video"
           selected={selectedIndex === "/studio/video"}
           onClick={() => {
             handleListItemClick("/studio/video");
@@ -270,9 +274,8 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
       <Divider />
       <List component="nav" aria-label="feedback about Github">
         <ListItemButton
-          onClick={() => {
-            feedbackRef.current.handleClickOpen();
-          }}
+          href="mailto:supercutcat@outlook.com?subject=feedback"
+          component={Links}
         >
           <ListItemIcon>
             <FeedbackOutlined />
@@ -500,7 +503,6 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
       </Box>
       <PostDialog ref={postRef} />
       <AboutDialog ref={aboutRef} />
-      <FeedbackDialog ref={feedbackRef} />
     </Box>
   );
 };

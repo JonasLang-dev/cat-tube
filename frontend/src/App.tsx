@@ -113,6 +113,7 @@ function App() {
               element={<StudioLayout theme={theme} colorMode={colorMode} />}
             >
               <Route index element={<DashboardPage />} />
+              <Route path="/studio/video" element={<DashboardPage />} />
             </Route>
             <Route
               path="/users/signin"

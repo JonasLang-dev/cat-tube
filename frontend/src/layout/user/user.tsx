@@ -74,7 +74,6 @@ import {
 import { useTranslation } from "react-i18next";
 import PostDialog from "../../components/PostDialog";
 import AboutDialog from "../../components/AboutDialog";
-import FeedbackDialog from "../../components/FeedbackDialog";
 
 interface Layout {
   colorMode: any;
@@ -91,9 +90,7 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
   const menuId = "primary-not-signin-menu";
   const postRef = useRef<any>();
   const aboutRef = useRef<any>();
-  const feedbackRef = useRef<any>();
   const location = useLocation();
-
   const [selectedIndex, setSelectedIndex] = useState(location.pathname);
   const [anchorProfileMenu, setAnchorProfileMenu] =
     useState<null | HTMLElement>(null);
@@ -221,9 +218,8 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
       </MenuItem>
       <Divider />
       <MenuItem
-        onClick={() => {
-          feedbackRef.current.handleClickOpen();
-        }}
+        href="mailto:supercutcat@outlook.com?subject=feedback"
+        component={Links}
       >
         <ListItemIcon>
           <FeedbackOutlined fontSize="small" />
@@ -289,6 +285,7 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
+      {}
       <MenuItem
         to={`/users/signin?redirect=${location.pathname}`}
         onClick={handleMenuClose}
@@ -341,9 +338,8 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
       </MenuItem>
       <Divider />
       <MenuItem
-        onClick={() => {
-          feedbackRef.current.handleClickOpen();
-        }}
+        href="mailto:supercutcat@outlook.com?subject=feedback"
+        component={Links}
       >
         <ListItemIcon>
           <FeedbackOutlined fontSize="small" />
@@ -527,9 +523,8 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
           <ListItemText primary={t("settings")} />
         </ListItemButton>
         <ListItemButton
-          onClick={() => {
-            feedbackRef.current.handleClickOpen();
-          }}
+          href="mailto:supercutcat@outlook.com?subject=feedback"
+          component={Links}
         >
           <ListItemIcon>
             <FeedbackOutlined />
@@ -807,7 +802,6 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
       </Box>
       <PostDialog ref={postRef} />
       <AboutDialog ref={aboutRef} />
-      <FeedbackDialog ref={feedbackRef} />
     </Box>
   );
 };

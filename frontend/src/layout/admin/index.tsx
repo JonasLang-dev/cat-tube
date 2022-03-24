@@ -45,6 +45,7 @@ import {
   VideoFile,
   VideoFileOutlined,
   VideoSettings,
+  YouTube,
 } from "@mui/icons-material";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -65,7 +66,6 @@ import {
 import { useTranslation } from "react-i18next";
 import PostDialog from "../../components/PostDialog";
 import AboutDialog from "../../components/AboutDialog";
-import FeedbackDialog from "../../components/FeedbackDialog";
 
 interface Admin {
   colorMode: any;
@@ -81,7 +81,6 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
   const profileMenuId = "primary-account-menu";
   const postRef = useRef<any>();
   const aboutRef = useRef<any>();
-  const feedbackRef = useRef<any>();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -141,6 +140,12 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
         />
         &nbsp; {currentUserInfo && currentUserInfo.name}
       </MenuItem>
+      <MenuItem onClick={handleProfileMenuClose} component={Link} to="/">
+        <ListItemIcon>
+          <YouTube fontSize="small" />
+        </ListItemIcon>
+        {t("logo")}
+      </MenuItem>
       <MenuItem onClick={handleProfileMenuClose} component={Link} to="/studio">
         <ListItemIcon>
           <VideoSettings fontSize="small" />
@@ -191,9 +196,8 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
       </MenuItem>
       <Divider />
       <MenuItem
-        onClick={() => {
-          feedbackRef.current.handleClickOpen();
-        }}
+        href="mailto:supercutcat@outlook.com?subject=feedback"
+        component={Links}
       >
         <ListItemIcon>
           <FeedbackOutlined fontSize="small" />
@@ -351,9 +355,8 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
       <Divider />
       <List component="nav" aria-label="feedback about Github">
         <ListItemButton
-          onClick={() => {
-            feedbackRef.current.handleClickOpen();
-          }}
+          href="mailto:supercutcat@outlook.com?subject=feedback"
+          component={Links}
         >
           <ListItemIcon>
             <FeedbackOutlined />
@@ -581,7 +584,6 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
       </Box>
       <PostDialog ref={postRef} />
       <AboutDialog ref={aboutRef} />
-      <FeedbackDialog ref={feedbackRef} />
     </Box>
   );
 };
