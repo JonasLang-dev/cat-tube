@@ -32,7 +32,7 @@ app.use(
 
 app.use(express.json());
 
-// app.use("/api", apiLimiter);
+app.use("/api", apiLimiter);
 
 app.use(deserializeUser);
 

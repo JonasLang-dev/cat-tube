@@ -420,6 +420,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
               }
             : {
                 backdropFilter: "blur(20px)",
+                background: theme.palette.primary.main,
               }
         }
       >
@@ -427,11 +428,10 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
           <EdgeTrigger target={{ anchor: "left", field: "open" }}>
             {(open, setOpen) => (
               <IconButton
-                color="inherit"
                 size="large"
                 edge="start"
                 aria-label="open drawer"
-                sx={{ mr: 2 }}
+                sx={{ mr: 2, color: "#EAF3FB" }}
                 onClick={() => setOpen(!open)}
               >
                 {open ? <KeyboardArrowLeft /> : <MenuSharp />}
@@ -444,15 +444,15 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
           </Link>
 
           {matcheWithLg ? (
-            <Typography variant="h6" component="h1">
+            <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
               ube Video
             </Typography>
           ) : matcheWithSm ? (
-            <Typography variant="h6" component="h1">
+            <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
               <></>
             </Typography>
           ) : (
-            <Typography variant="h6" component="h1">
+            <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
               ube
             </Typography>
           )}
