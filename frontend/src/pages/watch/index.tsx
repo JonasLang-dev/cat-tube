@@ -76,7 +76,7 @@ function watch() {
           </Grid>
         </Grid>
       </Grid>
-      <Copyright sx={{ p: 4, textAlign: "right" }} />
+      <Copyright sx={{ pr: 10, pb: 1, textAlign: "right" }} />
     </main>
   );
 }

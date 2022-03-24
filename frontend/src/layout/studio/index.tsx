@@ -416,6 +416,9 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           <Outlet />
         </Box>
       </Content>
+      <Footer>
+        <Copyright sx={{ pt: 4, pr: 10, textAlign: "right" }} />
+      </Footer>
       <PostDialog ref={postRef} />
       <AboutDialog ref={aboutRef} />
     </Root>

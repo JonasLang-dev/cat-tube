@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
@@ -17,19 +17,13 @@ import {
   Link as Links,
   ListItemButton,
   Typography,
-  Button,
-  Badge,
-  SwipeableDrawer,
   ButtonBase,
 } from "@mui/material";
 import logo from "../../logo.svg";
 import Copyright from "../../components/Copyright";
 import {
-  Adb,
   Business,
   BusinessOutlined,
-  ChevronLeft,
-  ChevronRight,
   CopyrightOutlined,
   CopyrightRounded,
   FeedbackOutlined,
@@ -57,13 +51,6 @@ import {
   selectCurrentUserStatus,
 } from "../../features/auth/currentUserSlice";
 
-import {
-  AppBar,
-  CosDrawer,
-  CoslDrawer,
-  DrawerHeader,
-  drawerWidth,
-} from "./components";
 import { useTranslation } from "react-i18next";
 import PostDialog from "../../components/PostDialog";
 import AboutDialog from "../../components/AboutDialog";
@@ -78,7 +65,6 @@ import {
   getCozyScheme,
 } from "@mui-treasury/layout";
 
-import MenuIcon from "@mui/icons-material/Menu";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
@@ -519,6 +505,9 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
           <Toolbar />
           <Outlet />
         </Box>
+        <Footer>
+          <Copyright sx={{ pt: 4, pr: 10, textAlign: "right" }} />
+        </Footer>
       </Content>
       <PostDialog ref={postRef} />
       <AboutDialog ref={aboutRef} />
