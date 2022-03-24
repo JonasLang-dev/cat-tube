@@ -42,6 +42,8 @@
         "admin.video": "Video Manager",
         "admin.price": "Price Manager",
         "admin.ad": "Ads Manager",
-        "Premium": "Premium"
+        "Premium": "Premium",
+        "studio.video": "Video Manager",
+        "studio.dashboard": "Dashboard"
     }
 }

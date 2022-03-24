@@ -42,7 +42,6 @@ import {
   SupervisedUserCircleOutlined,
   VerifiedUser,
   VerifiedUserOutlined,
-  VerifiedUserRounded,
   VideoFile,
   VideoFileOutlined,
   VideoSettings,
@@ -80,7 +79,6 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
   const matcheWithLg = useMediaQuery("(min-width:1200px)");
   const matcheWithSm = useMediaQuery("(max-width:600px)");
   const profileMenuId = "primary-account-menu";
-  const menuId = "primary-not-signin-menu";
   const postRef = useRef<any>();
   const aboutRef = useRef<any>();
   const feedbackRef = useRef<any>();
