@@ -18,6 +18,7 @@ import {
   ListItemButton,
   Typography,
   SwipeableDrawer,
+  AppBar,
 } from "@mui/material";
 import logo from "../../logo.svg";
 import Copyright from "../../components/Copyright";
@@ -45,16 +46,26 @@ import {
   selectCurrentUserStatus,
 } from "../../features/auth/currentUserSlice";
 
-import {
-  AppBar,
-  CosDrawer,
-  CoslDrawer,
-  DrawerHeader,
-  drawerWidth,
-} from "./components";
 import { useTranslation } from "react-i18next";
 import PostDialog from "../../components/PostDialog";
 import AboutDialog from "../../components/AboutDialog";
+import ButtonBase from "@mui/material/ButtonBase";
+import Container from "@mui/material/Container";
+
+import {
+  Root,
+  Header,
+  EdgeTrigger,
+  EdgeSidebar,
+  SidebarContent,
+  Content,
+  Footer,
+  getCozyScheme,
+} from "@mui-treasury/layout";
+
+import MenuIcon from "@mui/icons-material/Menu";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
 interface Studio {
   colorMode: any;
@@ -78,8 +89,6 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
     useState<null | HTMLElement>(null);
 
   const isProfileMenuOpen = Boolean(anchorProfileMenu);
-
-  const [open, setOpen] = React.useState(false);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) =>
     setAnchorProfileMenu(event.currentTarget);
@@ -218,14 +227,6 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
     </Menu>
   );
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
-
   const handleListItemClick = (index: string) => {
     setSelectedIndex(index);
   };
@@ -239,7 +240,6 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           selected={selectedIndex === "/studio"}
           onClick={() => {
             handleListItemClick("/studio");
-            !matcheWithLg && handleDrawerClose();
           }}
         >
           <ListItemIcon>
@@ -249,7 +249,10 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
               <DashboardCustomizeOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("studio.dashboard")} />
+          <ListItemText
+            sx={{ whiteSpace: "nowrap" }}
+            primary={t("studio.dashboard")}
+          />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -257,7 +260,6 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           selected={selectedIndex === "/studio/video"}
           onClick={() => {
             handleListItemClick("/studio/video");
-            !matcheWithLg && handleDrawerClose();
           }}
         >
           <ListItemIcon>
@@ -267,7 +269,10 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
               <VideoFileOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("studio.video")} />
+          <ListItemText
+            sx={{ whiteSpace: "nowrap" }}
+            primary={t("studio.video")}
+          />
         </ListItemButton>
       </List>
 
@@ -280,7 +285,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           <ListItemIcon>
             <FeedbackOutlined />
           </ListItemIcon>
-          <ListItemText primary={t("feedback")} />
+          <ListItemText sx={{ whiteSpace: "nowrap" }} primary={t("feedback")} />
         </ListItemButton>
         <ListItemButton
           onClick={() => {
@@ -290,7 +295,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           <ListItemIcon>
             <InfoOutlined />
           </ListItemIcon>
-          <ListItemText primary={t("about")} />
+          <ListItemText sx={{ whiteSpace: "nowrap" }} primary={t("about")} />
         </ListItemButton>
         <ListItemButton
           href="https://github.com/Cat-Family/cat-tube"
@@ -300,48 +305,12 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           <ListItemIcon>
             <GitHub />
           </ListItemIcon>
-          <ListItemText primary="Github" />
+          <ListItemText sx={{ whiteSpace: "nowrap" }} primary="Github" />
         </ListItemButton>
       </List>
-      {matcheWithLg && !open && (
-        <>
-          <Typography variant="body2" pl={2} mt={1}>
-            About Press Copyright
-            <br />
-            Contact us Creators
-            <br />
-            Advertise Developers
-            <br />
-            Terms Privacy Policy & Safety
-            <br />
-            How Cat Tube works
-            <br />
-            Test new features
-          </Typography>
-          <Copyright sx={{ pt: 2 }} />{" "}
-        </>
-      )}
-      {!matcheWithLg && !matcheWithSm && open && (
-        <>
-          <Typography variant="body2" pl={2} mt={1}>
-            About Press Copyright
-            <br />
-            Contact us Creators
-            <br />
-            Advertise Developers
-            <br />
-            Terms Privacy Policy & Safety
-            <br />
-            How Cat Tube works
-            <br />
-            Test new features
-          </Typography>
-          <Copyright sx={{ pt: 2 }} />{" "}
-        </>
-      )}
     </>
   );
-
+  const scheme = getCozyScheme();
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       dispatch(currentUser(localStorage.getItem("accessToken") as string));
@@ -350,11 +319,9 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
     }
   }, [localStorage]);
   return (
-    <Box sx={{ display: "flex" }}>
+    <Root scheme={scheme}>
       <CssBaseline />
-      <AppBar
-        open={matcheWithLg ? !open : matcheWithSm ? false : open}
-        position="fixed"
+      <Header
         sx={
           theme.palette.mode == "dark"
             ? {
@@ -367,16 +334,20 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
         }
       >
         <Toolbar>
-          <IconButton
-            color="inherit"
-            size="large"
-            edge="start"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            onClick={toggleDrawer}
-          >
-            <MenuSharp />
-          </IconButton>
+          <EdgeTrigger target={{ anchor: "left", field: "open" }}>
+            {(open, setOpen) => (
+              <IconButton
+                color="inherit"
+                size="large"
+                edge="start"
+                aria-label="open drawer"
+                sx={{ mr: 2 }}
+                onClick={() => setOpen(!open)}
+              >
+                {open ? <KeyboardArrowLeft /> : <MenuSharp />}
+              </IconButton>
+            )}
+          </EdgeTrigger>
 
           <Link to="/">
             <img className="logo" src={logo} alt="logo" />
@@ -416,94 +387,38 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           </Box>
         </Toolbar>
         {renderProfileMenu}
-      </AppBar>
-      {matcheWithSm && (
-        <SwipeableDrawer
-          anchor="left"
-          open={open}
-          onClose={toggleDrawer}
-          sx={
-            theme.palette.mode === "dark"
-              ? {
-                  width: drawerWidth,
-                  flexShrink: 0,
-                  [`& .MuiDrawer-paper`]: {
-                    width: drawerWidth,
-                    boxSizing: "border-box",
-                    background: "rgba(18,18,18,0.7)",
-                    backdropFilter: "blur(20px)",
-                  },
-                }
-              : {
-                  width: drawerWidth,
-                  flexShrink: 0,
-                  [`& .MuiDrawer-paper`]: {
-                    width: drawerWidth,
-                    boxSizing: "border-box",
-                  },
-                }
-          }
-          onOpen={toggleDrawer}
-        >
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              size="large"
-              edge="start"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-              onClick={toggleDrawer}
+      </Header>
+      <EdgeSidebar anchor="left">
+        <SidebarContent>{renderDrawerItem}</SidebarContent>
+        <EdgeTrigger target={{ anchor: "left", field: "collapsed" }}>
+          {(collapsed, setCollapsed) => (
+            <ButtonBase
+              onClick={() => setCollapsed(!collapsed)}
+              sx={{ flexGrow: 1, height: 48 }}
             >
-              <MenuSharp />
-            </IconButton>
-            <Link to="/">
-              <img className="logo" src={logo} alt="logo" />
-            </Link>
-            <Typography variant="h6" component="h1">
-              ube
-            </Typography>
-          </Toolbar>
-          {renderDrawerItem}
-        </SwipeableDrawer>
-      )}
-      {matcheWithLg && (
-        <CoslDrawer variant="permanent" open={open}>
-          <DrawerHeader>
-            <IconButton onClick={toggleDrawer}>
-              {theme.direction === "rtl" ? <ChevronRight /> : <ChevronLeft />}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          {renderDrawerItem}
-        </CoslDrawer>
-      )}
-      {!matcheWithLg && !matcheWithSm && (
-        <CosDrawer variant="permanent" open={open}>
-          <DrawerHeader>
-            <IconButton onClick={toggleDrawer}>
-              {theme.direction === "rtl" ? <ChevronRight /> : <ChevronLeft />}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          {renderDrawerItem}
-        </CosDrawer>
-      )}
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === "light"
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
-          flexGrow: 1,
-        }}
-      >
-        <Toolbar />
-        <Outlet />
-      </Box>
+              {collapsed ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+            </ButtonBase>
+          )}
+        </EdgeTrigger>
+      </EdgeSidebar>
+      <Content>
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            minHeight: "100%",
+          }}
+        >
+          <Toolbar />
+          <Outlet />
+        </Box>
+      </Content>
       <PostDialog ref={postRef} />
       <AboutDialog ref={aboutRef} />
-    </Box>
+    </Root>
   );
 };
 

@@ -3,17 +3,13 @@ import Plyr from "plyr-react";
 import "plyr-react/dist/plyr.css";
 import { Avatar, Grid, IconButton, Stack, Typography } from "@mui/material";
 import { Download, Favorite, Share } from "@mui/icons-material";
-// @ts-ignore
-import Image from "mui-image";
-import { Link } from "react-router-dom";
 import Copyright from "../../components/Copyright";
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 function watch() {
   return (
     <main style={{ background: "background.main" }}>
-      <Grid sx={{ p: 2 }} container gap={6}>
-        <Grid item xs={12} sm={12} md={12} lg={7} xl={7}>
+      <Grid sx={{ p: 1 }} container gap={6}>
+        <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
           <Plyr
             crossOrigin="true"
             source={{
@@ -56,7 +52,7 @@ function watch() {
             }}
           />
         </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
+        <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
           <Grid container gap={2} flexDirection="column">
             <Grid container gap={2} flexDirection="row">
               <Avatar>cat</Avatar>

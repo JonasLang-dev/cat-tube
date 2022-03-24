@@ -600,7 +600,15 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
-        open={matcheWithLg ? !open : matcheWithSm ? false : open}
+        open={
+          location.pathname === "/watch"
+            ? false
+            : matcheWithLg
+            ? !open
+            : matcheWithSm
+            ? false
+            : open
+        }
         position="fixed"
         sx={
           theme.palette.mode == "dark"
@@ -717,6 +725,55 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
         {renderMenu}
       </AppBar>
       {matcheWithSm && (
+        <SwipeableDrawer
+          anchor="left"
+          open={open}
+          onClose={toggleDrawer}
+          sx={
+            theme.palette.mode === "dark"
+              ? {
+                  width: drawerWidth,
+                  flexShrink: 0,
+                  [`& .MuiDrawer-paper`]: {
+                    width: drawerWidth,
+                    boxSizing: "border-box",
+                    background: "rgba(18,18,18,0.7)",
+                    backdropFilter: "blur(20px)",
+                  },
+                }
+              : {
+                  width: drawerWidth,
+                  flexShrink: 0,
+                  [`& .MuiDrawer-paper`]: {
+                    width: drawerWidth,
+                    boxSizing: "border-box",
+                  },
+                }
+          }
+          onOpen={toggleDrawer}
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              size="large"
+              edge="start"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}
+              onClick={toggleDrawer}
+            >
+              <MenuSharp />
+            </IconButton>
+            <Link to="/">
+              <img className="logo" src={logo} alt="logo" />
+            </Link>
+            <Typography variant="h6" component="h1">
+              ube
+            </Typography>
+          </Toolbar>
+          {renderDrawerItem}
+        </SwipeableDrawer>
+      )}
+      {location.pathname === "/watch" && (
         <SwipeableDrawer
           anchor="left"
           open={open}

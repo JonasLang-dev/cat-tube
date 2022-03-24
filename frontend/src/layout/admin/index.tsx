@@ -20,6 +20,7 @@ import {
   Button,
   Badge,
   SwipeableDrawer,
+  ButtonBase,
 } from "@mui/material";
 import logo from "../../logo.svg";
 import Copyright from "../../components/Copyright";
@@ -66,6 +67,20 @@ import {
 import { useTranslation } from "react-i18next";
 import PostDialog from "../../components/PostDialog";
 import AboutDialog from "../../components/AboutDialog";
+import {
+  Root,
+  Header,
+  EdgeTrigger,
+  EdgeSidebar,
+  SidebarContent,
+  Content,
+  Footer,
+  getCozyScheme,
+} from "@mui-treasury/layout";
+
+import MenuIcon from "@mui/icons-material/Menu";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
 interface Admin {
   colorMode: any;
@@ -231,10 +246,6 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
     setOpen(false);
   };
 
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
-
   const handleListItemClick = (index: string) => {
     setSelectedIndex(index);
   };
@@ -258,7 +269,10 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
               <SupervisedUserCircleOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("admin.user")} />
+          <ListItemText
+            sx={{ whiteSpace: "nowrap" }}
+            primary={t("admin.user")}
+          />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -276,7 +290,10 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
               <VerifiedUserOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("admin.auth")} />
+          <ListItemText
+            sx={{ whiteSpace: "nowrap" }}
+            primary={t("admin.auth")}
+          />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -294,7 +311,10 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
               <CopyrightOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("admin.copyright")} />
+          <ListItemText
+            sx={{ whiteSpace: "nowrap" }}
+            primary={t("admin.copyright")}
+          />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -312,7 +332,10 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
               <VideoFileOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("admin.video")} />
+          <ListItemText
+            sx={{ whiteSpace: "nowrap" }}
+            primary={t("admin.video")}
+          />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -330,7 +353,10 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
               <PriceChangeOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("admin.price")} />
+          <ListItemText
+            sx={{ whiteSpace: "nowrap" }}
+            primary={t("admin.price")}
+          />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -348,7 +374,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
               <BusinessOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("admin.ad")} />
+          <ListItemText sx={{ whiteSpace: "nowrap" }} primary={t("admin.ad")} />
         </ListItemButton>
       </List>
 
@@ -361,7 +387,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
           <ListItemIcon>
             <FeedbackOutlined />
           </ListItemIcon>
-          <ListItemText primary={t("feedback")} />
+          <ListItemText sx={{ whiteSpace: "nowrap" }} primary={t("feedback")} />
         </ListItemButton>
         <ListItemButton
           onClick={() => {
@@ -371,7 +397,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
           <ListItemIcon>
             <InfoOutlined />
           </ListItemIcon>
-          <ListItemText primary={t("about")} />
+          <ListItemText sx={{ whiteSpace: "nowrap" }} primary={t("about")} />
         </ListItemButton>
         <ListItemButton
           href="https://github.com/Cat-Family/cat-tube"
@@ -381,45 +407,9 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
           <ListItemIcon>
             <GitHub />
           </ListItemIcon>
-          <ListItemText primary="Github" />
+          <ListItemText sx={{ whiteSpace: "nowrap" }} primary="Github" />
         </ListItemButton>
       </List>
-      {matcheWithLg && !open && (
-        <>
-          <Typography variant="body2" pl={2} mt={1}>
-            About Press Copyright
-            <br />
-            Contact us Creators
-            <br />
-            Advertise Developers
-            <br />
-            Terms Privacy Policy & Safety
-            <br />
-            How Cat Tube works
-            <br />
-            Test new features
-          </Typography>
-          <Copyright sx={{ pt: 2 }} />{" "}
-        </>
-      )}
-      {!matcheWithLg && !matcheWithSm && open && (
-        <>
-          <Typography variant="body2" pl={2} mt={1}>
-            About Press Copyright
-            <br />
-            Contact us Creators
-            <br />
-            Advertise Developers
-            <br />
-            Terms Privacy Policy & Safety
-            <br />
-            How Cat Tube works
-            <br />
-            Test new features
-          </Typography>
-          <Copyright sx={{ pt: 2 }} />{" "}
-        </>
-      )}
     </>
   );
 
@@ -430,12 +420,12 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
       navigate("/users/signin", { replace: true });
     }
   }, [localStorage]);
+  const scheme = getCozyScheme();
+
   return (
-    <Box sx={{ display: "flex" }}>
+    <Root scheme={scheme}>
       <CssBaseline />
-      <AppBar
-        open={matcheWithLg ? !open : matcheWithSm ? false : open}
-        position="fixed"
+      <Header
         sx={
           theme.palette.mode == "dark"
             ? {
@@ -448,16 +438,20 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
         }
       >
         <Toolbar>
-          <IconButton
-            color="inherit"
-            size="large"
-            edge="start"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            onClick={toggleDrawer}
-          >
-            <MenuSharp />
-          </IconButton>
+          <EdgeTrigger target={{ anchor: "left", field: "open" }}>
+            {(open, setOpen) => (
+              <IconButton
+                color="inherit"
+                size="large"
+                edge="start"
+                aria-label="open drawer"
+                sx={{ mr: 2 }}
+                onClick={() => setOpen(!open)}
+              >
+                {open ? <KeyboardArrowLeft /> : <MenuSharp />}
+              </IconButton>
+            )}
+          </EdgeTrigger>
 
           <Link to="/">
             <img className="logo" src={logo} alt="logo" />
@@ -497,94 +491,38 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
           </Box>
         </Toolbar>
         {renderProfileMenu}
-      </AppBar>
-      {matcheWithSm && (
-        <SwipeableDrawer
-          anchor="left"
-          open={open}
-          onClose={toggleDrawer}
-          sx={
-            theme.palette.mode === "dark"
-              ? {
-                  width: drawerWidth,
-                  flexShrink: 0,
-                  [`& .MuiDrawer-paper`]: {
-                    width: drawerWidth,
-                    boxSizing: "border-box",
-                    background: "rgba(18,18,18,0.7)",
-                    backdropFilter: "blur(20px)",
-                  },
-                }
-              : {
-                  width: drawerWidth,
-                  flexShrink: 0,
-                  [`& .MuiDrawer-paper`]: {
-                    width: drawerWidth,
-                    boxSizing: "border-box",
-                  },
-                }
-          }
-          onOpen={toggleDrawer}
-        >
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              size="large"
-              edge="start"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-              onClick={toggleDrawer}
+      </Header>
+      <EdgeSidebar anchor="left">
+        <SidebarContent>{renderDrawerItem}</SidebarContent>
+        <EdgeTrigger target={{ anchor: "left", field: "collapsed" }}>
+          {(collapsed, setCollapsed) => (
+            <ButtonBase
+              onClick={() => setCollapsed(!collapsed)}
+              sx={{ flexGrow: 1, height: 48 }}
             >
-              <MenuSharp />
-            </IconButton>
-            <Link to="/">
-              <img className="logo" src={logo} alt="logo" />
-            </Link>
-            <Typography variant="h6" component="h1">
-              ube
-            </Typography>
-          </Toolbar>
-          {renderDrawerItem}
-        </SwipeableDrawer>
-      )}
-      {matcheWithLg && (
-        <CoslDrawer variant="permanent" open={open}>
-          <DrawerHeader>
-            <IconButton onClick={toggleDrawer}>
-              {theme.direction === "rtl" ? <ChevronRight /> : <ChevronLeft />}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          {renderDrawerItem}
-        </CoslDrawer>
-      )}
-      {!matcheWithLg && !matcheWithSm && (
-        <CosDrawer variant="permanent" open={open}>
-          <DrawerHeader>
-            <IconButton onClick={toggleDrawer}>
-              {theme.direction === "rtl" ? <ChevronRight /> : <ChevronLeft />}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          {renderDrawerItem}
-        </CosDrawer>
-      )}
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === "light"
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
-          flexGrow: 1,
-        }}
-      >
-        <Toolbar />
-        <Outlet />
-      </Box>
+              {collapsed ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+            </ButtonBase>
+          )}
+        </EdgeTrigger>
+      </EdgeSidebar>
+      <Content>
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            minHeight: "100%",
+          }}
+        >
+          <Toolbar />
+          <Outlet />
+        </Box>
+      </Content>
       <PostDialog ref={postRef} />
       <AboutDialog ref={aboutRef} />
-    </Box>
+    </Root>
   );
 };
 
