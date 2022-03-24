@@ -1,8 +1,13 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from "axios";
 
 export const baseURL: string = "http://localhost:5020";
 
-const refreshToken = localStorage.getItem("refreshToken");
+let refreshToken = localStorage.getItem("refreshToken");
 let accessToken = localStorage.getItem("accessToken");
 
 // 创建 axios 实例
@@ -30,7 +35,12 @@ axiosInstance.interceptors.request.use(
 
 // response interceptor
 axiosInstance.interceptors.response.use(
-  (responseConfig: AxiosRequestConfig) => {
+  (responseConfig: AxiosResponse) => {
+    if (responseConfig.config.url === "/api/session") {
+      accessToken = responseConfig.data.accessToken;
+      refreshToken = responseConfig.data.refreshToken;
+    }
+
     return responseConfig;
   },
   async (err: AxiosError) => {
@@ -46,6 +56,7 @@ axiosInstance.interceptors.response.use(
           accessToken = res.data.accessToken;
           return axiosInstance.request(err.response.config);
         } catch (error: any) {
+          refreshToken = null;
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           return Promise.reject(error);
