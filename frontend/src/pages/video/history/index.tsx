@@ -1,6 +1,6 @@
+import React from "react";
 import { ExploreOutlined, HistoryOutlined } from "@mui/icons-material";
 import { Button, Container, Grid, Stack, Typography } from "@mui/material";
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -30,7 +30,7 @@ function History() {
               color="inherit"
               variant="outlined"
               startIcon={<ExploreOutlined />}
-              to={`/explore}`}
+              to={`/explore`}
               component={Link}
               sx={{ width: "200px" }}
             >

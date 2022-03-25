@@ -592,6 +592,10 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
   );
 
   useEffect(() => {
+    setSelectedIndex(location.pathname);
+  }, [location]);
+
+  useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       dispatch(currentUser(localStorage.getItem("accessToken") as string));
     }
