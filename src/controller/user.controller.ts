@@ -105,8 +105,8 @@ export async function forgetPasswordHandler(
     from: "1332969599@qq.com",
     to: user.email,
     subject: "Please verify your account",
-    text:
-      `id:${user._id}
+    text: `http://localhost:3000/users/password/new
+id:${user._id}
 reset code:${user.passwordResetCode}`,
   });
 

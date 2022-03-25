@@ -1,11 +1,4 @@
-import {
-  useState,
-  FC,
-  forwardRef,
-  useImperativeHandle,
-  useCallback,
-  useEffect,
-} from "react";
+import { useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -25,7 +18,6 @@ import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
 
 const sendEmailForPassSchema = object({
   email: string()
@@ -41,11 +33,10 @@ const FormDialog = forwardRef((props, ref) => {
   const emailForPassErrors = useAppSelector(selectEmailForPassErrors);
   const emailForPassStatus = useAppSelector(selectEmailForPassStatus);
   const { enqueueSnackbar } = useSnackbar();
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    reset,
+    resetField,
     formState: { errors },
   } = useForm<SendEmailForPassInput>({
     resolver: zodResolver(sendEmailForPassSchema),
@@ -74,13 +65,13 @@ const FormDialog = forwardRef((props, ref) => {
       dispatch(clearEmailForPassState());
     }
     if (emailForPassStatus === "success") {
-      reset();
       enqueueSnackbar(
         "If a user with that is registerd yout will receive a password reset email",
         { variant: "info" }
       );
       dispatch(clearEmailForPassState());
-      navigate("/users/password/new", { replace: true });
+      resetField("email");
+      handleClose();
     }
   }, [emailForPassStatus]);
   return (
@@ -88,9 +79,7 @@ const FormDialog = forwardRef((props, ref) => {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{t("forgotPassword")}</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            {t("forgetPasswordHelperText")}
-          </DialogContentText>
+          <DialogContentText>{t("forgetPasswordHelperText")}</DialogContentText>
           <TextField
             autoFocus
             required

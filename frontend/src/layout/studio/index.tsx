@@ -17,15 +17,11 @@ import {
   Link as Links,
   ListItemButton,
   Typography,
-  SwipeableDrawer,
-  AppBar,
 } from "@mui/material";
 import logo from "../../logo.svg";
 import Copyright from "../../components/Copyright";
 import {
   AdminPanelSettings,
-  ChevronLeft,
-  ChevronRight,
   DashboardCustomize,
   DashboardCustomizeOutlined,
   FeedbackOutlined,
@@ -38,20 +34,16 @@ import {
   YouTube,
 } from "@mui/icons-material";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
-
 import { useAppDispatch, useAppSelector } from "../..//hooks/redux.hooks";
 import {
   clearCurrentUsrState,
   currentUser,
   selectCurrentUserStatus,
 } from "../../features/auth/currentUserSlice";
-
 import { useTranslation } from "react-i18next";
 import PostDialog from "../../components/PostDialog";
 import AboutDialog from "../../components/AboutDialog";
 import ButtonBase from "@mui/material/ButtonBase";
-import Container from "@mui/material/Container";
-
 import {
   Root,
   Header,
@@ -62,8 +54,6 @@ import {
   Footer,
   getCozyScheme,
 } from "@mui-treasury/layout";
-
-import MenuIcon from "@mui/icons-material/Menu";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 

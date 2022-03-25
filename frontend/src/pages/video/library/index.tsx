@@ -1,52 +1,43 @@
-import React, { FC, useRef } from "react";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import {
-  Avatar,
-  CardActionArea,
-  CardHeader,
-  IconButton,
-  Skeleton,
-} from "@mui/material";
-import { red } from "@mui/material/colors";
-import {
+  AccountCircleOutlined,
   Download,
   Favorite,
-  MoreRounded,
-  MoreSharp,
   MoreVert,
   PlayCircle,
   Share,
+  VideoLibraryOutlined,
 } from "@mui/icons-material";
 import {
-  AccountCircleOutlined,
-  SubscriptionsOutlined,
-} from "@mui/icons-material";
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Container,
+  Grid,
+  IconButton,
+  Skeleton,
+  Stack,
+  Typography,
+} from "@mui/material";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
-import { selectCurrentUserStatus } from "../../features/auth/currentUserSlice";
-import { useAppSelector } from "../../hooks/redux.hooks";
+import { selectCurrentUserStatus } from "../../../features/auth/currentUserSlice";
+import { useAppSelector } from "../../../hooks/redux.hooks";
 // @ts-ignore
 import Image from "mui-image";
+import { red } from "@mui/material/colors";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-interface Home {
-  loading?: boolean;
-}
-
-function Subscriptions({ loading = false }) {
+function Library({ loading = false }) {
   const location = useLocation();
   const { t } = useTranslation();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
-
   return (
     <>
       {currentUserInfo ? (
@@ -123,9 +114,6 @@ function Subscriptions({ loading = false }) {
                 component={Link}
                 to="#"
               />
-              <Avatar component={Link} to="#">
-                <MoreVert />
-              </Avatar>
             </Box>
           </Box>
           <Container maxWidth="lg" sx={{ pt: 2, pb: 2 }}>
@@ -258,7 +246,7 @@ function Subscriptions({ loading = false }) {
           <Container maxWidth="xs">
             <Stack spacing={1}>
               <Typography variant="h1" align="center">
-                <SubscriptionsOutlined fontSize="large" />
+                <VideoLibraryOutlined fontSize="large" />
               </Typography>
               <Typography variant="h5" align="center">
                 Don’t miss new videos
@@ -286,4 +274,4 @@ function Subscriptions({ loading = false }) {
   );
 }
 
-export default Subscriptions;
+export default Library;

@@ -7,9 +7,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -23,7 +21,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Copyright from "../../../components/Copyright";
 import { Link as Links, useLocation, useNavigate } from "react-router-dom";
-import { Autocomplete, IconButton, PaletteMode } from "@mui/material";
+import { Autocomplete, IconButton } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useAppSelector, useAppDispatch } from "../../../hooks/redux.hooks";

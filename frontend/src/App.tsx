@@ -16,13 +16,18 @@ import Explore from "./pages/explore";
 import Subscriptions from "./pages/subscriptions";
 import AdminLayout from "./layout/admin";
 import StudioLayout from "./layout/studio";
+import Settings from "./pages/settings";
+import Profile from "./pages/users/profile";
+import History from "./pages/video/history";
+import Library from "./pages/video/library";
+import Download from "./pages/video/download";
 
 export const AppContext = createContext<any>(null);
 
 function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [mode, setMode] = useState(prefersDarkMode ? "dark" : "light");
-  const theme = React.useMemo(
+  const theme = useMemo(
     () =>
       createTheme({
         palette: {
@@ -36,7 +41,7 @@ function App() {
     [prefersDarkMode, mode]
   );
 
-  const colorMode = React.useMemo(
+  const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
         setMode((prevMode: string) =>
@@ -88,14 +93,14 @@ function App() {
                 element={<HomePage theme={theme} colorMode={colorMode} />}
               />
               <Route path="/explore" element={<Explore />} />
-              <Route path="/library" element={<p>test</p>} />
-              <Route path="/history" element={<p>test</p>} />
-              <Route path="/download" element={<p>test</p>} />
-              <Route path="/settings" element={<p>test</p>} />
+              <Route path="/library" element={<Library />} />
+              <Route path="/history" element={<History />} />
+              <Route path="/download" element={<Download />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/subscriptions" element={<Subscriptions />} />
               <Route path="/premium" element={<Pricing />} />
               <Route path="/watch" element={<Watch />} />
-              <Route path="/profile" element={<p>test</p>} />
+              <Route path="/profile" element={<Profile />} />
             </Route>
             <Route
               path="/admin"
