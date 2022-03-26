@@ -34,13 +34,13 @@ jobs:
         run: |
           cd frontend 
           npm run build
-      - name: copy dist file with scp
-        uses: appleboy/scp-action@v0.0.1
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          password: ${{ secrets.REMOTE_PASS }}
-          port: 22
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           source: 'frontend/dist'
           target: ${{ secrets.REMOTE_TARGET }}
       
