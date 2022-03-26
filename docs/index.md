@@ -2,6 +2,22 @@
 
 **Cat Tube is in the pre-alpha stage.**
 
+<p align="left"> 
+ <img src="https://komarev.com/ghpvc/?username=Cat-Family&label=Profile%20views&color=0e75b6&style=flat" alt="dey-sumit" /> 
+  <a href="https://github.com/Cat-Family/cat-tube/issues">
+    <img src="https://img.shields.io/github/issues/Cat-Family/cat-tube"/> 
+  </a>
+  <a href="https://github.com/Cat-Family/cat-tube/network/members">
+    <img src="https://img.shields.io/github/forks/Cat-Family/cat-tube"/> 
+  </a>  
+  <a href="https://github.com/Cat-Family/cat-tube/stargazers">
+    <img src="https://img.shields.io/github/stars/Cat-Family/cat-tube"/> 
+  </a>
+    <a href="https://github.com/Cat-Family/cat-tube/LICENSE">
+    <img src="https://img.shields.io/github/license/Cat-Family/cat-tube"/> 
+  </a>
+</p>
+
 The functionality implemented by the project：
 
 - [ ] User Management
