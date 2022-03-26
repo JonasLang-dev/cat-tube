@@ -36,7 +36,8 @@ yarn add typescript ts-node-dev @types/express @types/config pino-pretty @types/
 ```
 
 ## Frontend
-
+[![deploy-server](https://github.com/Cat-Family/cat-tube/actions/workflows/main.yml/badge.svg?event=deployment_status)](https://github.com/Cat-Family/cat-tube/actions/workflows/main.yml)
+[![CodeQL](https://github.com/Cat-Family/cat-tube/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Cat-Family/cat-tube/actions/workflows/codeql-analysis.yml)
 <p align="center">
   <img alt="React" src="https://img.shields.io/badge/react%20-%2320232a.svg?&style=for-the-badge&logo=react" style="margin:2px;"/>
   <img alt="MUI" src="https://img.shields.io/badge/mui%20-%2320232a.svg?&style=for-the-badge&logo=mui" style="margin:2px;"/>
