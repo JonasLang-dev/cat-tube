@@ -1,9 +1,7 @@
 import {
   useState,
-  FC,
   forwardRef,
   useImperativeHandle,
-  useCallback,
   useEffect,
 } from "react";
 import TextField from "@mui/material/TextField";
@@ -36,7 +34,7 @@ const sendEmailForPassSchema = object({
 type SendEmailForPassInput = TypeOf<typeof sendEmailForPassSchema>;
 
 const PostDialog = forwardRef((props, ref) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const emailForPassErrors = useAppSelector(selectEmailForPassErrors);
   const emailForPassStatus = useAppSelector(selectEmailForPassStatus);
@@ -67,7 +65,7 @@ const PostDialog = forwardRef((props, ref) => {
   useEffect(() => {
     if (emailForPassStatus === "failed") {
       if (Array.isArray(emailForPassErrors)) {
-        emailForPassErrors.map((item) => {
+        emailForPassErrors.forEach((item) => {
           enqueueSnackbar(item.message, { variant: "error" });
         });
       }

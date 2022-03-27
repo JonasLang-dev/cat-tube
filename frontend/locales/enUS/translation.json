@@ -46,6 +46,9 @@
         "studio.video": "Video Manager",
         "studio.dashboard": "Dashboard",
         "logo": "Cat Tube",
-        "admin": "Admin"
+        "admin": "Admin",
+        "upload.video": "Upload Video",
+        "submit": "Submit",
+        "upload.dropzone": "Drag and drop files here or click to upload"
     }
 }

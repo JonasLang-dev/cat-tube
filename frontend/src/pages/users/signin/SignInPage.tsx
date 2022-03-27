@@ -45,10 +45,10 @@ type SupportedLocales = keyof typeof locales;
 const createSessionSchema = object({
   email: string()
     .nonempty({ message: "Email is required" })
-    .email("No a valid email"),
+    .email("Not a valid email"),
   password: string()
     .nonempty({ message: "Password is required" })
-    .min(6, "Invalid email or password"),
+    .min(6, "Invalid password"),
 });
 
 type CreateSessionInput = TypeOf<typeof createSessionSchema>;
@@ -91,14 +91,16 @@ const SignInPage: FC<SignIn> = ({ theme, colorMode }) => {
   useEffect(() => {
     if (authStatus === "failed") {
       if (Array.isArray(authError)) {
-        authError.map((item) => {
-          enqueueSnackbar(item.message, { variant: "error" });
+        authError.forEach((item) => {
+          enqueueSnackbar(t(item.message), { variant: "error" });
         });
+      } else {
+        enqueueSnackbar(t("Network Error"), { variant: "error" });
       }
       dispatch(clearAuthState());
     }
     if (authStatus === "success") {
-      enqueueSnackbar("Sign in successfull", { variant: "success" });
+      enqueueSnackbar(t("Sign In Success"), { variant: "success" });
       dispatch(clearAuthState());
       navigate(location.search.replace("?redirect=", "") || "/", {
         replace: true,
@@ -183,7 +185,7 @@ const SignInPage: FC<SignIn> = ({ theme, colorMode }) => {
               id="email"
               label={t("email")}
               autoComplete="email"
-              helperText={errors.email?.message}
+              helperText={t(errors.email?.message as string)}
               autoFocus
               {...register("email")}
             />
@@ -193,7 +195,7 @@ const SignInPage: FC<SignIn> = ({ theme, colorMode }) => {
               label={t("password")}
               type="password"
               error={errors.hasOwnProperty("password")}
-              helperText={errors.password?.message}
+              helperText={t(errors.password?.message as string)}
               id="password"
               autoComplete="current-password"
               {...register("password")}
@@ -209,8 +211,6 @@ const SignInPage: FC<SignIn> = ({ theme, colorMode }) => {
               loading={authStatus === "loading"}
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              // component={Links}
-              // to="/"
             >
               {t("signIn")}
             </LoadingButton>

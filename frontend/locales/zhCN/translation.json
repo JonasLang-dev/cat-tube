@@ -46,6 +46,17 @@
         "studio.video": "视频管理",
         "studio.dashboard": "仪表盘",
         "logo": "Cat Tube",
-        "admin": "管理员"
+        "admin": "管理员",
+        "upload.video": "上传视频",
+        "submit": "提交",
+        "upload.dropzone": "拖拽视频文件到这里",
+        "Network Error": "网络错误",
+        "Sign In Success": "登录成功",
+        "If a user with that is registerd yout will receive a password reset email": "如果该用户存在，你将收到密码重置邮件",
+        "Email is required": "邮箱是必需的",
+        "Not a valid email": "邮箱不合法",
+        "Password is required": "密码是必需的",
+        "Invalid password": "密码无效",
+        "Invalid email or password": "邮箱或密码无效"
     }
 }

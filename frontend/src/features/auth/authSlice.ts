@@ -5,15 +5,15 @@ import type { RootState } from "../../store";
 // Define a type for the slice state
 interface AuthState {
   status: "idle" | "loading" | "failed" | "success";
-  error: Array<any> | { message: string } | null;
-  token: {} | null;
+  error: Array<any> | { message: string } | undefined;
+  token: {} | null | undefined;
 }
 
 // Define the initial state using that type
 const initialState: AuthState = {
   status: "idle",
-  error: [],
-  token: {},
+  error:undefined,
+  token: undefined,
 };
 
 export const signIn = createAsyncThunk(
@@ -31,7 +31,7 @@ export const signIn = createAsyncThunk(
       localStorage.setItem("refreshToken", data.refreshToken);
       return data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response.data || [{ message: "Unknown error" }]);
     }
   }
 );
@@ -43,16 +43,16 @@ export const authSlice = createSlice({
   reducers: {
     clearAuthState: (state) => {
       state.status = "idle";
-      state.error = null;
-      state.token = null;
+      state.error = undefined;
+      state.token = undefined;
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
   },
   extraReducers: (builder) => {
     builder
       .addCase(signIn.pending, (state) => {
-        state.error = null;
-        state.token = null;
+        state.error = undefined;
+        state.token = undefined;
         state.status = "loading";
       })
       .addCase(signIn.fulfilled, (state, action) => {
@@ -62,12 +62,12 @@ export const authSlice = createSlice({
       .addCase(signIn.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload as Array<any>;
-        state.token = null;
+        state.token = undefined;
       })
       .addDefaultCase((state) => {
         state.status = "idle";
-        state.error = [];
-        state.token = {};
+        state.error = undefined;
+        state.token = undefined;
       });
   },
 });

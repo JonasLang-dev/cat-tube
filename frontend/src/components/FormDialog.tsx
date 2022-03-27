@@ -18,6 +18,7 @@ import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoadingButton } from "@mui/lab";
 
 const sendEmailForPassSchema = object({
   email: string()
@@ -28,7 +29,7 @@ const sendEmailForPassSchema = object({
 type SendEmailForPassInput = TypeOf<typeof sendEmailForPassSchema>;
 
 const FormDialog = forwardRef((props, ref) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const emailForPassErrors = useAppSelector(selectEmailForPassErrors);
   const emailForPassStatus = useAppSelector(selectEmailForPassStatus);
@@ -58,7 +59,7 @@ const FormDialog = forwardRef((props, ref) => {
   useEffect(() => {
     if (emailForPassStatus === "failed") {
       if (Array.isArray(emailForPassErrors)) {
-        emailForPassErrors.map((item) => {
+        emailForPassErrors.forEach((item) => {
           enqueueSnackbar(item.message, { variant: "error" });
         });
       }
@@ -66,7 +67,9 @@ const FormDialog = forwardRef((props, ref) => {
     }
     if (emailForPassStatus === "success") {
       enqueueSnackbar(
-        "If a user with that is registerd yout will receive a password reset email",
+        t(
+          "If a user with that is registerd yout will receive a password reset email"
+        ),
         { variant: "info" }
       );
       dispatch(clearEmailForPassState());
@@ -90,13 +93,18 @@ const FormDialog = forwardRef((props, ref) => {
             fullWidth
             {...register("email")}
             error={errors.hasOwnProperty("email")}
-            helperText={errors.email?.message}
+            helperText={t(errors.email?.message as string)}
             variant="standard"
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>{t("cancel")}</Button>
-          <Button onClick={handleSubmit(onSubmit)}>{t("send")}</Button>
+          <LoadingButton
+            loading={emailForPassStatus === "loading"}
+            onClick={handleSubmit(onSubmit)}
+          >
+            {t("send")}
+          </LoadingButton>
         </DialogActions>
       </Dialog>
     </div>

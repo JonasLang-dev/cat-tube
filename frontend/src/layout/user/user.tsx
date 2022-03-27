@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
@@ -28,9 +28,6 @@ import {
   AdminPanelSettings,
   ChevronLeft,
   ChevronRight,
-  Dashboard,
-  Download,
-  DownloadOutlined,
   Explore,
   ExploreOutlined,
   FeedbackOutlined,
@@ -55,7 +52,7 @@ import {
   WorkspacePremium,
   WorkspacePremiumOutlined,
 } from "@mui/icons-material";
-import { Outlet, Link, useParams, useLocation } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../..//hooks/redux.hooks";
 import {
@@ -74,13 +71,18 @@ import {
 import { useTranslation } from "react-i18next";
 import PostDialog from "../../components/PostDialog";
 import AboutDialog from "../../components/AboutDialog";
+import {
+  DropzoneDialog,
+  DropzoneDialogBase,
+  FileObject,
+} from "mui-file-dropzone";
 
 interface Layout {
   colorMode: any;
   theme: any;
 }
 
-const Layout: FC<Layout> = ({ theme, colorMode }) => {
+const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
@@ -97,6 +99,8 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
   const [anchorMenu, setAnchorMenu] = useState<null | HTMLElement>(null);
   const isProfileMenuOpen = Boolean(anchorProfileMenu);
   const isMenuOpen = Boolean(anchorMenu);
+  const [showAddVideosForm, setShowAddVideosForm] = useState(false);
+  const [uploadFiles, setUploadFiles] = useState<any>([]);
 
   const [open, setOpen] = React.useState(false);
 
@@ -591,6 +595,10 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
     </>
   );
 
+  const handleSave = () => {
+    console.log("save");
+  };
+
   useEffect(() => {
     setSelectedIndex(location.pathname);
   }, [location]);
@@ -682,7 +690,8 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
                 <IconButton
                   color="inherit"
                   onClick={() => {
-                    postRef.current.handleClickOpen();
+                    // postRef.current.handleClickOpen();
+                    setShowAddVideosForm(true);
                   }}
                   size="large"
                 >
@@ -861,10 +870,36 @@ const Layout: FC<Layout> = ({ theme, colorMode }) => {
         <Toolbar />
         <Outlet />
       </Box>
+      <DropzoneDialogBase
+        open={showAddVideosForm}
+        maxFileSize={5000000000}
+        dialogTitle={t("upload.video")}
+        fileObjects={uploadFiles}
+        cancelButtonText={t("cancel")}
+        submitButtonText={t("submit")}
+        filesLimit={1}
+        acceptedFiles={["video/mp4"]}
+        onAdd={(newFile) => {
+          console.log("onAdd", newFile);
+          setUploadFiles([...uploadFiles, ...newFile]);
+          
+        }}
+        onDelete={(deleteFile) => {
+          console.log("onDelete", deleteFile);
+          const fileList = [...uploadFiles];
+          fileList.splice(deleteFile, 1);
+          setUploadFiles(fileList);
+        }}
+        dropzoneText={t("upload.dropzone")}
+        onClose={() => setShowAddVideosForm(false)}
+        onSave={handleSave}
+        showPreviews={true}
+        showFileNamesInPreview={true}
+      />
       <PostDialog ref={postRef} />
       <AboutDialog ref={aboutRef} />
     </Box>
   );
 };
 
-export default Layout;
+export default UserLayout;
