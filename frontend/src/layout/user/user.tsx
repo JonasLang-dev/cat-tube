@@ -52,7 +52,7 @@ import {
   WorkspacePremium,
   WorkspacePremiumOutlined,
 } from "@mui/icons-material";
-import { Outlet, Link, useLocation } from "react-router-dom";
+import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../..//hooks/redux.hooks";
 import {
@@ -84,6 +84,7 @@ interface Layout {
 
 const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
   const matcheWithLg = useMediaQuery("(min-width:1200px)");
@@ -670,7 +671,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
               <>
                 <IconButton
                   size="large"
-                  aria-label="show 4 new mails"
+                  aria-label="show user info"
                   color="inherit"
                 >
                   <Badge badgeContent={4} color="error">
@@ -690,8 +691,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
                 <IconButton
                   color="inherit"
                   onClick={() => {
-                    // postRef.current.handleClickOpen();
-                    setShowAddVideosForm(true);
+                    navigate("/studio/video?upload=video", { replace: true });
                   }}
                   size="large"
                 >
@@ -870,32 +870,6 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
         <Toolbar />
         <Outlet />
       </Box>
-      <DropzoneDialogBase
-        open={showAddVideosForm}
-        maxFileSize={5000000000}
-        dialogTitle={t("upload.video")}
-        fileObjects={uploadFiles}
-        cancelButtonText={t("cancel")}
-        submitButtonText={t("submit")}
-        filesLimit={1}
-        acceptedFiles={["video/mp4"]}
-        onAdd={(newFile) => {
-          console.log("onAdd", newFile);
-          setUploadFiles([...uploadFiles, ...newFile]);
-          
-        }}
-        onDelete={(deleteFile) => {
-          console.log("onDelete", deleteFile);
-          const fileList = [...uploadFiles];
-          fileList.splice(deleteFile, 1);
-          setUploadFiles(fileList);
-        }}
-        dropzoneText={t("upload.dropzone")}
-        onClose={() => setShowAddVideosForm(false)}
-        onSave={handleSave}
-        showPreviews={true}
-        showFileNamesInPreview={true}
-      />
       <PostDialog ref={postRef} />
       <AboutDialog ref={aboutRef} />
     </Box>

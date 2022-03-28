@@ -11,7 +11,7 @@ export const store = configureStore({
     signUp: signUpReducer,
     currentUser: currentUserReduce,
     emailForPass: restEmailReducer,
-    resetPassword: resetPasswordReducer
+    resetPassword: resetPasswordReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

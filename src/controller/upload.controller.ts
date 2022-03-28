@@ -41,7 +41,8 @@ export const uploadAvatarHandler: RequestHandler = (
         },
       });
     }
-    console.log(avatarField);
+    res.status(400);
+  } else {
+    res.status(400).send({ message: "No file uploaded" });
   }
-  res.status(400);
 };

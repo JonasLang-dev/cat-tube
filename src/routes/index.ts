@@ -3,6 +3,7 @@ import user from "./user.routes";
 import auth from "./auth.routes";
 import post from "./post.routes";
 import upload from "./upload.routes";
+import bodyParser from "body-parser";
 
 const router = express.Router();
 

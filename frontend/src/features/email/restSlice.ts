@@ -1,7 +1,4 @@
-import {
-  createAsyncThunk,
-  createSlice
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../request";
 import { RootState } from "../../store";
 
@@ -14,17 +11,17 @@ interface EmailState {
 // Define the initial state using that type
 const initialState: EmailState = {
   status: "idle",
-  error: undefined
+  error: undefined,
 };
 
 export const emailForPass = createAsyncThunk(
   "email/password/new",
-  async (
-    user: { email: string  },
-    { rejectWithValue }
-  ) => {
+  async (user: { email: string }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post(`/api/users/forgotpassword`, user);
+      const { data } = await axiosInstance.post(
+        `/api/users/forgotpassword`,
+        user
+      );
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -66,7 +63,9 @@ export const emailForPassSlice = createSlice({
 export const { clearEmailForPassState } = emailForPassSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectEmailForPassStatus = (state: RootState) => state.emailForPass.status;
-export const selectEmailForPassErrors = (state: RootState) => state.emailForPass.error;
+export const selectEmailForPassStatus = (state: RootState) =>
+  state.emailForPass.status;
+export const selectEmailForPassErrors = (state: RootState) =>
+  state.emailForPass.error;
 
 export default emailForPassSlice.reducer;

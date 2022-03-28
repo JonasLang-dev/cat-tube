@@ -1,4 +1,11 @@
-import React, { FC, useContext, useEffect, useRef, useState } from "react";
+import React, {
+  FC,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
@@ -13,11 +20,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import {
-  Link as Links,
-  ListItemButton,
-  Typography,
-} from "@mui/material";
+import { Link as Links, ListItemButton, Typography } from "@mui/material";
 import logo from "../../logo.svg";
 import Copyright from "../../components/Copyright";
 import {
@@ -29,11 +32,18 @@ import {
   InfoOutlined,
   Logout,
   MenuSharp,
+  VideoCameraFrontOutlined,
   VideoFile,
   VideoFileOutlined,
   YouTube,
 } from "@mui/icons-material";
-import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Outlet,
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../..//hooks/redux.hooks";
 import {
   clearCurrentUsrState,
@@ -56,6 +66,8 @@ import {
 } from "@mui-treasury/layout";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import { DropzoneDialogBase } from "mui-file-dropzone";
+import axiosInstance from "../../request";
 
 interface Studio {
   colorMode: any;
@@ -82,7 +94,8 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) =>
     setAnchorProfileMenu(event.currentTarget);
-
+  const [showAddVideosForm, setShowAddVideosForm] = useState(false);
+  const [uploadFiles, setUploadFiles] = useState<any>([]);
   const handleProfileMenuClose = () => setAnchorProfileMenu(null);
 
   const renderProfileMenu = (
@@ -301,6 +314,26 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
     </>
   );
   const scheme = getCozyScheme();
+
+  const uploadVideoHandler = async () => {
+    // const bodyFormData = new FormData();
+    // bodyFormData.append("video", uploadFiles[0].data);
+    try {
+      const { data } = await axiosInstance.post(
+        "/api/upload/video",
+        { video: uploadFiles[0].data },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       dispatch(currentUser(localStorage.getItem("accessToken") as string));
@@ -308,6 +341,13 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
       navigate("/users/signin", { replace: true });
     }
   }, [localStorage]);
+
+  useLayoutEffect(() => {
+    if (location.search === "?upload=video") {
+      setShowAddVideosForm(true);
+    }
+  }, [location.search]);
+
   return (
     <Root scheme={scheme}>
       <CssBaseline />
@@ -325,7 +365,6 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
         }
       >
         <Toolbar>
-          {console.log(theme.palette.text.primary)}
           <EdgeTrigger target={{ anchor: "left", field: "open" }}>
             {(open, setOpen) => (
               <IconButton
@@ -361,6 +400,17 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
+            <IconButton
+              color="inherit"
+              onClick={() => {
+                // postRef.current.handleClickOpen();
+
+                setShowAddVideosForm(true);
+              }}
+              size="large"
+            >
+              <VideoCameraFrontOutlined />
+            </IconButton>
             <IconButton
               size="large"
               edge="end"
@@ -410,6 +460,29 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
       <Footer>
         <Copyright sx={{ pt: 4, pr: 10, textAlign: "right" }} />
       </Footer>
+      <DropzoneDialogBase
+        open={showAddVideosForm}
+        maxFileSize={5000000000}
+        dialogTitle={t("upload.video")}
+        fileObjects={uploadFiles}
+        cancelButtonText={t("cancel")}
+        submitButtonText={t("submit")}
+        filesLimit={1}
+        // acceptedFiles={["video/mp4"]}
+        onAdd={(newFileObjs) => {
+          setUploadFiles([].concat(uploadFiles, newFileObjs));
+        }}
+        onDelete={(deleteFileObj) => {
+        }}
+        dropzoneText={t("upload.dropzone")}
+        onClose={() => {
+          setShowAddVideosForm(false);
+          setUploadFiles([]);
+        }}
+        onSave={uploadVideoHandler}
+        showPreviews={true}
+        showFileNamesInPreview={true}
+      />
       <PostDialog ref={postRef} />
       <AboutDialog ref={aboutRef} />
     </Root>
