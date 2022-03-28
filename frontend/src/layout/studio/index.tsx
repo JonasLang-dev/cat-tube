@@ -20,7 +20,13 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import { Link as Links, ListItemButton, Typography } from "@mui/material";
+import {
+  Backdrop,
+  CircularProgress,
+  Link as Links,
+  ListItemButton,
+  Typography,
+} from "@mui/material";
 import logo from "../../logo.svg";
 import Copyright from "../../components/Copyright";
 import {
@@ -37,13 +43,7 @@ import {
   VideoFileOutlined,
   YouTube,
 } from "@mui/icons-material";
-import {
-  Outlet,
-  Link,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../..//hooks/redux.hooks";
 import {
   clearCurrentUsrState,
@@ -85,6 +85,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
   const aboutRef = useRef<any>();
   const location = useLocation();
   const navigate = useNavigate();
+  const [videoPath, setVideoPath] = useState<string>("");
 
   const [selectedIndex, setSelectedIndex] = useState(location.pathname);
   const [anchorProfileMenu, setAnchorProfileMenu] =
@@ -96,6 +97,8 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
     setAnchorProfileMenu(event.currentTarget);
   const [showAddVideosForm, setShowAddVideosForm] = useState(false);
   const [uploadFiles, setUploadFiles] = useState<any>([]);
+  const [showBackdrop, setShowBackdrop] = useState<boolean>(false);
+
   const handleProfileMenuClose = () => setAnchorProfileMenu(null);
 
   const renderProfileMenu = (
@@ -318,6 +321,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
   const uploadVideoHandler = async () => {
     // const bodyFormData = new FormData();
     // bodyFormData.append("video", uploadFiles[0].data);
+    setShowBackdrop(true);
     try {
       const { data } = await axiosInstance.post(
         "/api/upload/video",
@@ -328,8 +332,12 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           },
         }
       );
-      console.log(data);
+      setVideoPath(data.message);
+      setUploadFiles([]);
+      setShowBackdrop(false);
+      postRef.current.handleClickOpen();
     } catch (error) {
+      setShowBackdrop(false);
       console.log(error);
     }
   };
@@ -404,7 +412,6 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
               color="inherit"
               onClick={() => {
                 // postRef.current.handleClickOpen();
-
                 setShowAddVideosForm(true);
               }}
               size="large"
@@ -460,6 +467,17 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
       <Footer>
         <Copyright sx={{ pt: 4, pr: 10, textAlign: "right" }} />
       </Footer>
+
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.modal + 1 }}
+        open={showBackdrop}
+        onClick={() => {
+          setShowBackdrop(false);
+        }}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
       <DropzoneDialogBase
         open={showAddVideosForm}
         maxFileSize={5000000000}
@@ -472,18 +490,17 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
         onAdd={(newFileObjs) => {
           setUploadFiles([].concat(uploadFiles, newFileObjs));
         }}
-        onDelete={(deleteFileObj) => {
-        }}
+        onDelete={(deleteFileObj) => {}}
         dropzoneText={t("upload.dropzone")}
         onClose={() => {
-          setShowAddVideosForm(false);
           setUploadFiles([]);
+          setShowAddVideosForm(false);
         }}
         onSave={uploadVideoHandler}
         showPreviews={true}
         showFileNamesInPreview={true}
       />
-      <PostDialog ref={postRef} />
+      <PostDialog videoPath={videoPath} ref={postRef} />
       <AboutDialog ref={aboutRef} />
     </Root>
   );

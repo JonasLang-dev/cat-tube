@@ -8,31 +8,22 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../hooks/redux.hooks";
-import {
-  clearEmailForPassState,
-  emailForPass,
-  selectEmailForPassErrors,
-  selectEmailForPassStatus,
-} from "../features/email/restSlice";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 
-const sendEmailForPassSchema = object({
-  email: string()
-    .nonempty({ message: "Email is required" })
-    .email("Not a valid email"),
+const postSchema = object({
+  title: string().nonempty({ message: "Title is required" }),
+  description: string().nonempty({ message: "Title is required" }),
 });
 
-type SendEmailForPassInput = TypeOf<typeof sendEmailForPassSchema>;
+type PostInput = TypeOf<typeof postSchema>;
 
-const PostDialog = forwardRef((props, ref) => {
+const PostDialog = forwardRef((props: { videoPath: string }, ref) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const emailForPassErrors = useAppSelector(selectEmailForPassErrors);
-  const emailForPassStatus = useAppSelector(selectEmailForPassStatus);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const {
@@ -40,8 +31,8 @@ const PostDialog = forwardRef((props, ref) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<SendEmailForPassInput>({
-    resolver: zodResolver(sendEmailForPassSchema),
+  } = useForm<PostInput>({
+    resolver: zodResolver(postSchema),
   });
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -53,52 +44,54 @@ const PostDialog = forwardRef((props, ref) => {
     },
   }));
 
-  const onSubmit = (value: SendEmailForPassInput) => {
-    dispatch(emailForPass(value));
+  const onSubmit = (value: PostInput) => {
+    // dispatch(emailForPass(value));
+    console.log(value);
   };
 
-  useEffect(() => {
-    if (emailForPassStatus === "failed") {
-      if (Array.isArray(emailForPassErrors)) {
-        emailForPassErrors.forEach((item) => {
-          enqueueSnackbar(item.message, { variant: "error" });
-        });
-      }
-      dispatch(clearEmailForPassState());
-    }
-    if (emailForPassStatus === "success") {
-      reset();
-      enqueueSnackbar(
-        "If a user with that is registerd yout will receive a password reset email",
-        { variant: "info" }
-      );
-      dispatch(clearEmailForPassState());
-      navigate("/users/password/new", { replace: true });
-    }
-  }, [emailForPassStatus]);
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{t("forgotPassword")}</DialogTitle>
+        <DialogTitle>{t("Post")}</DialogTitle>
         <DialogContent>
-          <DialogContentText>{t("forgetPasswordHelperText")}</DialogContentText>
           <TextField
             autoFocus
             required
             margin="dense"
-            id="name"
-            label={t("email")}
-            type="email"
+            id="title"
+            label={t("Title")}
+            type="string"
             fullWidth
-            {...register("email")}
-            error={errors.hasOwnProperty("email")}
-            helperText={errors.email?.message}
-            variant="standard"
+            {...register("title")}
+            error={errors.hasOwnProperty("title")}
+            helperText={errors.title?.message}
           />
+          <TextField
+            required
+            margin="dense"
+            id="description"
+            multiline
+            rows={4}
+            label={t("Description")}
+            type="string"
+            fullWidth
+            {...register("description")}
+            error={errors.hasOwnProperty("description")}
+            helperText={errors.description?.message}
+          />
+          <TextField
+            required
+            margin="dense"
+            type="string"
+            fullWidth
+            disabled
+            value={props.videoPath}
+          />
+          <video controls style={{ width: "100%" }} src={props.videoPath} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>{t("cancel")}</Button>
-          <Button onClick={handleSubmit(onSubmit)}>{t("send")}</Button>
+          <Button onClick={handleSubmit(onSubmit)}>{t("submit")}</Button>
         </DialogActions>
       </Dialog>
     </div>

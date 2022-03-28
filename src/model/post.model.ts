@@ -6,10 +6,10 @@ export class Post {
   user: Ref<User>;
 
   @prop({ required: true })
-  postName: string;
+  title: string;
 
   @prop({})
-  postUrl: string;
+  videoUrl: string;
 
   @prop()
   posterUrl: string;
