@@ -21,7 +21,7 @@ const postSchema = object({
 
 type PostInput = TypeOf<typeof postSchema>;
 
-const PostDialog = forwardRef((props: { videoPath: string }, ref) => {
+const PostDialog = forwardRef((props, ref) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -35,12 +35,17 @@ const PostDialog = forwardRef((props: { videoPath: string }, ref) => {
     resolver: zodResolver(postSchema),
   });
   const [open, setOpen] = useState(false);
+  const [videUrl, setVideoUrl] = useState<string>("");
   const handleClose = () => {
     setOpen(false);
   };
+
   useImperativeHandle(ref, () => ({
     handleClickOpen() {
       setOpen(true);
+    },
+    setVideoUrl(url: string) {
+      setVideoUrl(url);
     },
   }));
 
@@ -85,9 +90,9 @@ const PostDialog = forwardRef((props: { videoPath: string }, ref) => {
             type="string"
             fullWidth
             disabled
-            value={props.videoPath}
+            value={videUrl}
           />
-          <video controls style={{ width: "100%" }} src={props.videoPath} />
+          <video controls style={{ width: "100%" }} src={videUrl} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>{t("cancel")}</Button>

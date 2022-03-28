@@ -85,7 +85,6 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
   const aboutRef = useRef<any>();
   const location = useLocation();
   const navigate = useNavigate();
-  const [videoPath, setVideoPath] = useState<string>("");
 
   const [selectedIndex, setSelectedIndex] = useState(location.pathname);
   const [anchorProfileMenu, setAnchorProfileMenu] =
@@ -332,9 +331,10 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           },
         }
       );
-      setVideoPath(data.message);
+      postRef.current.setVideoUrl(data.message);
       setUploadFiles([]);
       setShowBackdrop(false);
+      setShowAddVideosForm(false);
       postRef.current.handleClickOpen();
     } catch (error) {
       setShowBackdrop(false);
@@ -486,11 +486,10 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
         cancelButtonText={t("cancel")}
         submitButtonText={t("submit")}
         filesLimit={1}
-        // acceptedFiles={["video/mp4"]}
+        acceptedFiles={["video/mp4"]}
         onAdd={(newFileObjs) => {
-          setUploadFiles([].concat(uploadFiles, newFileObjs));
+          setUploadFiles(uploadFiles.concat(newFileObjs));
         }}
-        onDelete={(deleteFileObj) => {}}
         dropzoneText={t("upload.dropzone")}
         onClose={() => {
           setUploadFiles([]);
@@ -500,7 +499,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
         showPreviews={true}
         showFileNamesInPreview={true}
       />
-      <PostDialog videoPath={videoPath} ref={postRef} />
+      <PostDialog ref={postRef} />
       <AboutDialog ref={aboutRef} />
     </Root>
   );
