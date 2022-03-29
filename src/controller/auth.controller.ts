@@ -3,16 +3,17 @@ import { get } from "lodash";
 import { CreateSessionInput } from "../schema/auth.schema";
 import {
   findSessionById,
+  findSessions,
   signAccessToken,
   signRefreshToken,
 } from "../service/auth.service";
 import { findUserById, findUserByEmail } from "../service/user.service";
 import { verifyJwt } from "../utils/jwt";
 
-export async function createSessionHandler(
+export const createSessionHandler = async (
   req: Request<{}, {}, CreateSessionInput>,
   res: Response
-) {
+) => {
   const message = "Invalid email or password";
   const { email, password } = req.body;
 
@@ -49,7 +50,7 @@ export async function createSessionHandler(
   });
 }
 
-export async function refreshAccessTokenHandler(req: Request, res: Response) {
+export const refreshAccessTokenHandler = async (req: Request, res: Response) => {
   const refreshToken = get(req, "headers.x-refresh");
 
   const decoded = verifyJwt<{ session: string }>(
@@ -80,4 +81,13 @@ export async function refreshAccessTokenHandler(req: Request, res: Response) {
   const accessToken = signAccessToken(user);
 
   return res.send({ accessToken });
+}
+
+export const getSessionHandler = async (req: Request, res: Response) => {
+  if(res.locals.user) {
+    const sessions = await findSessions({});
+    return res.send(sessions);
+  } else {
+    return res.send([{message: "Unauthorized"}]).status(401);
+  }
 }

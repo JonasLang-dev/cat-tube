@@ -1,5 +1,6 @@
 import PostModel, { Post } from "../model/post.model";
 import { FilterQuery, QueryOptions, UpdateQuery } from "mongoose";
+import { _PrivateFields } from "../model/user.model";
 
 export const createPost = (input: Partial<Post>) => {
   return PostModel.create(input);
@@ -13,18 +14,11 @@ export const findAndUpdatePost = (
   return PostModel.findOneAndUpdate(query, update, options);
 };
 
-export const findPost = (
-  query: FilterQuery<Post>,
-  options: QueryOptions = { lean: true }
-) => {
-  return PostModel.findOne(query, {}, options);
-};
-
 export const findPosts = (
   query: FilterQuery<Post>,
   options: QueryOptions = { lean: true }
 ) => {
-  return PostModel.find(query, {}, options);
+  return PostModel.find(query, {}, options).populate("user", _PrivateFields);
 };
 
 export const deletePost = (query: FilterQuery<Post>) => {

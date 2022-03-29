@@ -19,6 +19,14 @@ export const privateFields = [
   "verified",
 ];
 
+export const _PrivateFields = [
+  "-password",
+  "-__v",
+  "-verificationCode",
+  "-passwordResetCode",
+  "-verified",
+];
+
 @pre<User>("save", async function () {
   if (!this.isModified("password")) {
     return;

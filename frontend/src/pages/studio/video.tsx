@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar, GridActionsCellItem, GridRenderCellParams } from "@mui/x-data-grid";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
 import { selectCurrentUserStatus } from "../../features/auth/currentUserSlice";
 import {
@@ -49,7 +49,14 @@ function StudioVideo() {
         type: "dateTime",
         flex: 2,
       },
-      { field: "user", headerName: "User", flex: 2, hide: true },
+      {
+        field: "user",
+        headerName: "User",
+        flex: 2,
+        renderCell: ( params: GridRenderCellParams) => {
+          return params.value.name
+        },
+      },
       {
         field: "actions",
         type: "actions",

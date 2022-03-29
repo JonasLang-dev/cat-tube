@@ -1,15 +1,17 @@
 import { DocumentType } from "@typegoose/typegoose";
-import SessionModel from "../model/session.models";
+import SessionModel, { Session } from "../model/session.models";
 import { omit } from "lodash";
-import { privateFields, User } from "../model/user.model";
+import { _PrivateFields, privateFields, User } from "../model/user.model";
 import { signJwt } from "../utils/jwt";
+import { FilterQuery, QueryOptions, UpdateQuery } from "mongoose";
 
-export async function createSession({ userId }: { userId: string }) {
-    return SessionModel.create({ user: userId })
+export const createSession = async({ userId }: { userId: string }) => {
+    const seesion = await SessionModel.create({ user: userId })
+    return seesion;
 }
 
-export async function findSessionById(id: string) {
-    return SessionModel.findById(id)
+export const findSessionById = async (id: string) => {
+    return SessionModel.findById(id);
 }
 
 export async function signRefreshToken({ userId }: { userId: string }) {
@@ -38,3 +40,9 @@ export function signAccessToken(user: DocumentType<User>) {
     return accessToken;
 }
 
+export const findSessions = async (
+    query: FilterQuery<Session>,
+    options: QueryOptions = { lean: true }
+) => {
+    return SessionModel.find(query, {}, options).populate('user', _PrivateFields);
+};

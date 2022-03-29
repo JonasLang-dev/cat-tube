@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { CreatePostInput } from "../schema/post.schema";
-import { createPost, findPost, findPosts } from "../service/psot.service";
-import { findUserByEmail } from "../service/user.service";
+import { createPost, findPosts } from "../service/post.service";
 
 export const createPosttHanler = async (
   req: Request<{}, {}, CreatePostInput>,

@@ -10,7 +10,7 @@ import {
 } from "../schema/user.schema";
 import {
   createUser,
-  findAllUser,
+  findUsers,
   findUserById,
   findUserByEmail,
 } from "../service/user.service";
@@ -22,12 +22,7 @@ export async function createUserHandler(
   res: Response
 ) {
   const body = req.body;
-
-  // const user = await fnidUserByEmail(body.email);
-  // if (user) {
-  //   return res.status(409).send([{ message: "Account already exists" }]);
-  // }
-
+  
   try {
     const user = await createUser(body);
 
@@ -152,7 +147,7 @@ export async function getCurrentUserHandler(req: Request, res: Response) {
 }
 
 export async function getAllUserHandler(req: Request, res: Response) {
-  const users = await findAllUser();
+  const users = await findUsers({});
 
   return res.send(users);
 }
