@@ -399,6 +399,25 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
     </>
   );
 
+  const getHeader = () => {
+    switch (location.pathname) {
+      case "/admin":
+        return "User Management";
+      case t("/admin/auth"):
+        return "Auth Management";
+      case t("/admin/copyright"):
+        return "Copyright Management";
+      case t("/admin/video"):
+        return "Video Management";
+      case t("/admin/price"):
+        return "Price Management";
+      case t("/admin/ad"):
+        return t("Ad Management");
+      default:
+        return t("Admin");
+    }
+  };
+
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       dispatch(currentUser(localStorage.getItem("accessToken") as string));
@@ -502,7 +521,9 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
             minHeight: "100%",
           }}
         >
-          <Toolbar />
+          <Toolbar>
+            <Typography variant="h5">{getHeader()}</Typography>
+          </Toolbar>
           <Outlet />
         </Box>
         <Footer>

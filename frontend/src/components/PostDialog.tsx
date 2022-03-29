@@ -3,20 +3,17 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Button, IconButton, InputAdornment } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../hooks/redux.hooks";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
-import { any, object, string, TypeOf } from "zod";
+import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
-import { AccountCircle, PhotoCamera } from "@mui/icons-material";
+import { PhotoCamera } from "@mui/icons-material";
 import styled from "@emotion/styled";
 import axiosInstance from "../request";
-import { selectCurrentUserStatus } from "../features/auth/currentUserSlice";
 import {
   clearPostState,
   post,
@@ -38,12 +35,10 @@ type PostInput = TypeOf<typeof postSchema>;
 const PostDialog = forwardRef((props, ref) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const currentUserInfo = useAppSelector(selectCurrentUserStatus);
   const postStatus = useAppSelector(selectPostStatus);
   const postError = useAppSelector(selectPostError);
 
   const { enqueueSnackbar } = useSnackbar();
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -101,7 +96,6 @@ const PostDialog = forwardRef((props, ref) => {
         ...value,
         postUrl: image,
         videoUrl,
-        email: currentUserInfo?.email || "",
       })
     );
   };
@@ -121,7 +115,11 @@ const PostDialog = forwardRef((props, ref) => {
       enqueueSnackbar(t("Success release a post"), { variant: "success" });
       dispatch(clearPostState());
     }
-  });
+
+    return () => {
+      dispatch(clearPostState());
+    };
+  }, [postStatus, postError]);
 
   return (
     <div>

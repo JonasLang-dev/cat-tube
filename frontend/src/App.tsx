@@ -21,6 +21,7 @@ import Profile from "./pages/users/profile";
 import History from "./pages/video/history";
 import Library from "./pages/video/library";
 import Download from "./pages/video/download";
+import StudioVideo from "./pages/studio/video";
 
 export const AppContext = createContext<any>(null);
 
@@ -118,7 +119,7 @@ function App() {
               element={<StudioLayout theme={theme} colorMode={colorMode} />}
             >
               <Route index element={<DashboardPage />} />
-              <Route path="/studio/video" element={<DashboardPage />} />
+              <Route path="/studio/video" element={<StudioVideo />} />
             </Route>
             <Route
               path="/users/signin"

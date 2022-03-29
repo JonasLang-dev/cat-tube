@@ -7,16 +7,14 @@ export const createPosttHanler = async (
   req: Request<{}, {}, CreatePostInput>,
   res: Response
 ) => {
-  const { email, description, title, videoUrl, posterUrl } = req.body;
+  const { description, title, videoUrl, postUrl } = req.body;
 
-  const user = await findUserByEmail(email);
+  const user = res.locals.user;
+
+  console.log(user);
 
   if (!user) {
     return res.status(401).send([{ message: "Unauthorized" }]);
-  }
-
-  if (!user.verified) {
-    return res.status(400).send([{ message: "Please verify your email" }]);
   }
 
   if (user.isDelete) {
@@ -28,7 +26,7 @@ export const createPosttHanler = async (
     description,
     title,
     videoUrl,
-    posterUrl,
+    postUrl,
   });
 
   return res.send(post);
@@ -38,7 +36,19 @@ export const removePostHandler = async (req: Request, res: Response) => {};
 
 export const updatePostHandler = async (req: Request, res: Response) => {};
 
-export const findAllPostsHandler = async (req: Request, res: Response) => {
-  const posts = await findPosts({});
+export const findUserPostsHandler = async (req: Request, res: Response) => {
+  if (res.locals.user._id !== req.params.id) {
+    return res.status(401).send([{ message: "Unauthorized" }]);
+  }
+  const posts = await findPosts({ user: res.locals.user._id });
   return res.send(posts);
+};
+
+export const findAllPostsHandler = async (req: Request, res: Response) => {
+  if (res.locals.user.isAdmin) {
+    const posts = await findPosts({});
+    return res.send(posts);
+  } else {
+    return res.status(401).send([{ message: "Unauthorized" }]);
+  }
 };

@@ -347,6 +347,17 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
     }
   };
 
+  const getHeader = () => {
+    switch (location.pathname) {
+      case "/studio":
+        return t("Dashboard");
+      case "/studio/video":
+        return t("Video Managerment");
+      default:
+        return t("Studio");
+    }
+  };
+
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       dispatch(currentUser(localStorage.getItem("accessToken") as string));
@@ -462,10 +473,11 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
               theme.palette.mode === "light"
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
-            minHeight: "100%",
           }}
         >
-          <Toolbar />
+          <Toolbar>
+            <Typography variant="h5">{getHeader()}</Typography>
+          </Toolbar>
           <Outlet />
         </Box>
       </Content>

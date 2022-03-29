@@ -6,7 +6,7 @@ import type { RootState } from "../../store";
 interface SignUpState {
   status: "idle" | "loading" | "failed" | "success";
   error: any | undefined;
-  data: object | undefined;
+  data: any | undefined;
 }
 
 // Define the initial state using that type
@@ -16,19 +16,11 @@ const initialState: SignUpState = {
   data: undefined,
 };
 
-export const post = createAsyncThunk(
-  "user/signUp",
-  async (
-    post: {
-      title: string;
-      description: string;
-      postUrl: string;
-      videoUrl: string;
-    },
-    { rejectWithValue }
-  ) => {
+export const getPost = createAsyncThunk(
+  "post",
+  async (id: string, { rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`/api/posts`, post);
+      const { data } = await axios.get(`/api/posts/${id}`);
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -36,11 +28,11 @@ export const post = createAsyncThunk(
   }
 );
 
-export const postSlice = createSlice({
-  name: "post",
+export const getPostSlice = createSlice({
+  name: "posts/user",
   initialState,
   reducers: {
-    clearPostState: (state) => {
+    clearGetPostState: (state) => {
       state.status = "idle";
       state.error = undefined;
       state.data = undefined;
@@ -48,15 +40,15 @@ export const postSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(post.pending, (state) => {
+      .addCase(getPost.pending, (state) => {
         state.error = undefined;
         state.status = "loading";
       })
-      .addCase(post.fulfilled, (state, action) => {
+      .addCase(getPost.fulfilled, (state, action) => {
         state.status = "success";
         state.data = action.payload;
       })
-      .addCase(post.rejected, (state, action) => {
+      .addCase(getPost.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
@@ -67,10 +59,10 @@ export const postSlice = createSlice({
   },
 });
 
-export const { clearPostState } = postSlice.actions;
+export const { clearGetPostState } = getPostSlice.actions;
 
-export const selectPostStatus = (state: RootState) => state.post.status;
-export const selectPostError = (state: RootState) => state.post.error;
-export const selectPostData = (state: RootState) => state.post.data;
+export const selectGetPostStatus = (state: RootState) => state.getPost.status;
+export const selectGetPostError = (state: RootState) => state.getPost.error;
+export const selectGetPostData = (state: RootState) => state.getPost.data;
 
-export default postSlice.reducer;
+export default getPostSlice.reducer;

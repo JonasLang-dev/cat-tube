@@ -20,7 +20,7 @@ export function verifyJwt<T>(
     const pulicKey = Buffer.from(config.get<string>(keyName), "base64").toString("ascii")
 
     try {
-        const decoded = jwt.verify(token, pulicKey) as T
+        const decoded = jwt.verify(token, pulicKey) as unknown as T
         return decoded
     } catch (e) {
         return null
