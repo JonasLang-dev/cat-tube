@@ -8,17 +8,16 @@ const port = config.get<number>("port");
 
 const router = express.Router();
 
-// const storage = multer.diskStorage({
-//   destination(req, file, cb) {
-//     cb(null, `uploads/`);
-//   },
-//   filename(req, file, cb) {
+const storage = multer.diskStorage({
+  destination(req: Request, file: Express.Multer.File, cb) {
+    cb(null, `uploads/`);
+  },
+  filename(req: Request, file: Express.Multer.File, cb) {
+    cb(null, `${Date.now()}.${file.mimetype.split("/")[1]}`);
+  },
+});
 
-//     cb(null, `${Date.now()}.${file.mimetype.split("/")[1]}`);
-//   },
-// });
-
-// const upload = multer({ storage });
+const upload = multer({ storage });
 
 router.post("/api/upload/video", async (req: Request, res: Response) => {
   try {
@@ -33,11 +32,23 @@ router.post("/api/upload/video", async (req: Request, res: Response) => {
     fs.writeFileSync(path, base64Data, { encoding: "base64" });
 
     return res.send({
-      message: `http://localhost:${port}/${fileName}`,
+      message: `/${fileName}`,
     });
   } catch (e) {
     return res.status(400).send({ message: "Error while uploading" });
   }
 });
+
+router.post(
+  "/api/upload/poster",
+  upload.single("poster"),
+  (req: Request, res: Response) => {
+    if (req.file) {
+      res.send(`/${req.file.path.split("/")[1]}`);
+    } else {
+      res.send({ message: "Error while uploading" });
+    }
+  }
+);
 
 export default router;

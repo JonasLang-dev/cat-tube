@@ -5,9 +5,9 @@ export const createPostSchema = object({
     email: string({ required_error: "Email is required." }).email(
       "No a valid email"
     ),
-    postName: string({ required_error: "post name is required" }),
-    postUrl: string({ required_error: "post url is required" }),
-    posterUrl: string({ required_error: "poster url is required" }),
+    title: string({ required_error: "post title is required" }),
+    videoUrl: string({ required_error: "post video url is required" }),
+    postUrl: string(),
     description: string({ required_error: "description is required" }),
   }),
 });

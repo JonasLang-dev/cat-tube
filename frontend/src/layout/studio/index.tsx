@@ -66,8 +66,9 @@ import {
 } from "@mui-treasury/layout";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import { DropzoneDialogBase } from "mui-file-dropzone";
+import { DropzoneDialogBase, FileObject } from "mui-file-dropzone";
 import axiosInstance from "../../request";
+import { useSnackbar } from "notistack";
 
 interface Studio {
   colorMode: any;
@@ -81,6 +82,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
   const matcheWithLg = useMediaQuery("(min-width:1200px)");
   const matcheWithSm = useMediaQuery("(max-width:600px)");
   const profileMenuId = "primary-account-menu";
+  const { enqueueSnackbar } = useSnackbar();
   const postRef = useRef<any>();
   const aboutRef = useRef<any>();
   const location = useLocation();
@@ -336,7 +338,10 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
       setShowBackdrop(false);
       setShowAddVideosForm(false);
       postRef.current.handleClickOpen();
-    } catch (error) {
+    } catch (error: any) {
+      enqueueSnackbar(error.response.data.message || error.message, {
+        variant: "error",
+      });
       setShowBackdrop(false);
       console.log(error);
     }
@@ -409,7 +414,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <IconButton
-              color="inherit"
+              sx={{ color: "#EAF3FB" }}
               onClick={() => {
                 // postRef.current.handleClickOpen();
                 setShowAddVideosForm(true);
@@ -487,8 +492,11 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
         submitButtonText={t("submit")}
         filesLimit={1}
         acceptedFiles={["video/mp4"]}
-        onAdd={(newFileObjs) => {
-          setUploadFiles(uploadFiles.concat(newFileObjs));
+        onAdd={(newFileObjs: any) => {
+          setUploadFiles([].concat(newFileObjs));
+        }}
+        onDelete={(file) => {
+          setUploadFiles(uploadFiles.filter((f: FileObject) => f !== file));
         }}
         dropzoneText={t("upload.dropzone")}
         onClose={() => {

@@ -7,7 +7,7 @@ export const createPosttHanler = async (
   req: Request<{}, {}, CreatePostInput>,
   res: Response
 ) => {
-  const { email, description, postName, postUrl, posterUrl } = req.body;
+  const { email, description, title, videoUrl, posterUrl } = req.body;
 
   const user = await findUserByEmail(email);
 
@@ -26,8 +26,8 @@ export const createPosttHanler = async (
   const post = await createPost({
     user: user._id,
     description,
-    postName,
-    postUrl,
+    title,
+    videoUrl,
     posterUrl,
   });
 

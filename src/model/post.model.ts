@@ -12,7 +12,7 @@ export class Post {
   videoUrl: string;
 
   @prop()
-  posterUrl: string;
+  postUrl: string;
 
   @prop({ required: true })
   description: string;

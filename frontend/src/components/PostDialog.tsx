@@ -5,14 +5,28 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Button } from "@mui/material";
+import { Button, IconButton, InputAdornment } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../hooks/redux.hooks";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
-import { object, string, TypeOf } from "zod";
+import { any, object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
+import { AccountCircle, PhotoCamera } from "@mui/icons-material";
+import styled from "@emotion/styled";
+import axiosInstance from "../request";
+import { selectCurrentUserStatus } from "../features/auth/currentUserSlice";
+import {
+  clearPostState,
+  post,
+  selectPostError,
+  selectPostStatus,
+} from "../features/post/postSlice";
+
+const Input = styled("input")({
+  display: "none",
+});
 
 const postSchema = object({
   title: string().nonempty({ message: "Title is required" }),
@@ -24,19 +38,31 @@ type PostInput = TypeOf<typeof postSchema>;
 const PostDialog = forwardRef((props, ref) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const currentUserInfo = useAppSelector(selectCurrentUserStatus);
+  const postStatus = useAppSelector(selectPostStatus);
+  const postError = useAppSelector(selectPostError);
+
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    reset,
+    resetField,
     formState: { errors },
   } = useForm<PostInput>({
     resolver: zodResolver(postSchema),
   });
   const [open, setOpen] = useState(false);
-  const [videUrl, setVideoUrl] = useState<string>("");
+  const [image, setImage] = useState<string>("");
+  const [videoUrl, setVideoUrl] = useState<string>("");
+  const [loadingPostUpload, setLoadingPostUpload] = useState<boolean>(false);
   const handleClose = () => {
+    dispatch(clearPostState());
+    setLoadingPostUpload(false);
+    setVideoUrl("");
+    setImage("");
+    resetField("title");
+    resetField("description");
     setOpen(false);
   };
 
@@ -49,10 +75,53 @@ const PostDialog = forwardRef((props, ref) => {
     },
   }));
 
-  const onSubmit = (value: PostInput) => {
-    // dispatch(emailForPass(value));
-    console.log(value);
+  const uploadPosterHandler = async (e: any) => {
+    const file = e.target.files[0];
+    const bodyFormData = new FormData();
+    bodyFormData.append("poster", file);
+    setLoadingPostUpload(true);
+    try {
+      const { data } = await axiosInstance.post(
+        "/api/upload/poster",
+        bodyFormData
+      );
+      setImage(data);
+      setLoadingPostUpload(false);
+    } catch (error: any) {
+      enqueueSnackbar(error.response.data.message || error.message, {
+        variant: "error",
+      });
+      setLoadingPostUpload(false);
+    }
   };
+
+  const onSubmit = (value: PostInput) => {
+    dispatch(
+      post({
+        ...value,
+        postUrl: image,
+        videoUrl,
+        email: currentUserInfo?.email || "",
+      })
+    );
+  };
+
+  useEffect(() => {
+    if (postStatus === "failed") {
+      if (Array.isArray(postError)) {
+        postError.forEach((item) => {
+          enqueueSnackbar(t(item.message), { variant: "error" });
+        });
+      } else {
+        enqueueSnackbar(t("Network Error"), { variant: "error" });
+      }
+      dispatch(clearPostState());
+    }
+    if (postStatus === "success") {
+      enqueueSnackbar(t("Success release a post"), { variant: "success" });
+      dispatch(clearPostState());
+    }
+  });
 
   return (
     <div>
@@ -73,6 +142,37 @@ const PostDialog = forwardRef((props, ref) => {
           />
           <TextField
             required
+            disabled
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <label htmlFor="icon-button-file">
+                    <Input
+                      accept="image/*"
+                      id="icon-button-file"
+                      type="file"
+                      onChange={uploadPosterHandler}
+                    />
+                    <IconButton
+                      color="primary"
+                      aria-label="upload picture"
+                      component="span"
+                    >
+                      <PhotoCamera />
+                    </IconButton>
+                  </label>
+                </InputAdornment>
+              ),
+            }}
+            margin="dense"
+            id="poster"
+            label={t("Poster Url")}
+            type="url"
+            fullWidth
+            value={image}
+          />
+          <TextField
+            required
             margin="dense"
             id="description"
             multiline
@@ -87,12 +187,16 @@ const PostDialog = forwardRef((props, ref) => {
           <TextField
             required
             margin="dense"
-            type="string"
+            type="url"
             fullWidth
             disabled
-            value={videUrl}
+            value={videoUrl}
           />
-          <video controls style={{ width: "100%" }} src={videUrl} />
+          <video
+            controls
+            style={{ width: "100%" }}
+            src={`http://localhost:5020${videoUrl}`}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>{t("cancel")}</Button>
