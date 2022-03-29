@@ -3,28 +3,27 @@ import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
 import { selectCurrentUserStatus } from "../../features/auth/currentUserSlice";
 import {
-  clearUserPostState,
-  userPost,
-  selectUserPostData,
-  selectUserPostError,
-  selectUserPostStatus,
-} from "../../features/post/userPostSlice";
+  clearAdminPostState,
+  adminPost,
+  selectAdminPostError,
+  selectAdminPostData,
+  selectAdminPostStatus,
+} from "../../features/post/adminPostSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsSuggestOutlinedIcon from "@mui/icons-material/SettingsSuggestOutlined";
-import { Skeleton } from "@mui/material";
 
-function StudioVideo() {
+function AdminVideo() {
   const dispatch = useAppDispatch();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
-  const postStatus = useAppSelector(selectUserPostStatus);
-  const postError = useAppSelector(selectUserPostError);
-  const postData = useAppSelector(selectUserPostData);
+  const adminPostStatus = useAppSelector(selectAdminPostStatus);
+  const adminPostError = useAppSelector(selectAdminPostError);
+  const adminPostData = useAppSelector(selectAdminPostData);
 
   const deletePost = (id: string) => {};
 
   const updatePost = (id: string) => {};
 
-  const columns = React.useMemo(
+  const adminColumns = React.useMemo(
     () => [
       { field: "_id", headerName: "ID", flex: 2, hide: true },
       { field: "title", headerName: "Title", type: "string", flex: 2 },
@@ -73,26 +72,25 @@ function StudioVideo() {
   );
 
   useLayoutEffect(() => {
-    if (currentUserInfo?._id) {
-      dispatch(userPost(currentUserInfo._id));
-    }
+    dispatch(adminPost());
     return () => {
-      dispatch(clearUserPostState());
+      dispatch(clearAdminPostState());
     };
   }, [currentUserInfo]);
+
   return (
     <div style={{ height: "75vh", minWidth: "100%", padding: "0 1rem" }}>
       <DataGrid
         getRowId={(data) => data._id}
-        rows={postData || []}
-        columns={columns}
+        rows={adminPostData || []}
+        columns={adminColumns}
         rowsPerPageOptions={[5, 10, 20, 50, 100]}
+        loading={adminPostStatus === "loading"}
         checkboxSelection
-        loading={postStatus === "loading"}
         components={{ Toolbar: GridToolbar }}
       />
     </div>
   );
 }
 
-export default StudioVideo;
+export default AdminVideo;

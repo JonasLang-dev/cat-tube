@@ -5,7 +5,8 @@ import signUpReducer from "./features/auth/signUpSlice";
 import restEmailReducer from "./features/email/restSlice";
 import resetPasswordReducer from "./features/users/resetPasswordSlice";
 import postReducer from "./features/post/postSlice";
-import getpostReducer from "./features/post/getPostSlice";
+import userPostReducer from "./features/post/userPostSlice";
+import adminPostReducer from "./features/post/adminPostSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,7 +15,8 @@ export const store = configureStore({
     currentUser: currentUserReduce,
     emailForPass: restEmailReducer,
     resetPassword: resetPasswordReducer,
-    getPost: getpostReducer,
+    adminPost: adminPostReducer,
+    userPost: userPostReducer,
     post: postReducer,
   },
   middleware: (getDefaultMiddleware) =>

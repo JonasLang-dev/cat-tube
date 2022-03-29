@@ -22,6 +22,7 @@ import History from "./pages/video/history";
 import Library from "./pages/video/library";
 import Download from "./pages/video/download";
 import StudioVideo from "./pages/studio/video";
+import AdminVideo from "./pages/admin/video";
 
 export const AppContext = createContext<any>(null);
 
@@ -110,7 +111,7 @@ function App() {
               <Route index element={<DashboardPage />} />
               <Route path="/admin/auth" element={<DashboardPage />} />
               <Route path="/admin/copyright" element={<DashboardPage />} />
-              <Route path="/admin/video" element={<DashboardPage />} />
+              <Route path="/admin/video" element={<AdminVideo />} />
               <Route path="/admin/price" element={<DashboardPage />} />
               <Route path="/admin/ad" element={<DashboardPage />} />
             </Route>

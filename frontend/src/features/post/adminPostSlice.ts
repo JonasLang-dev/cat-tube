@@ -3,32 +3,24 @@ import axios from "../../request";
 import type { RootState } from "../../store";
 
 // Define a type for the slice state
-interface SignUpState {
+interface AdminPostState {
   status: "idle" | "loading" | "failed" | "success";
   error: any | undefined;
-  data: object | undefined;
+  data: any | undefined;
 }
 
 // Define the initial state using that type
-const initialState: SignUpState = {
+const initialState: AdminPostState = {
   status: "idle",
   error: undefined,
   data: undefined,
 };
 
-export const post = createAsyncThunk(
-  "post",
-  async (
-    post: {
-      title: string;
-      description: string;
-      postUrl: string;
-      videoUrl: string;
-    },
-    { rejectWithValue }
-  ) => {
+export const adminPost = createAsyncThunk(
+  "post/admin",
+  async (data, { rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`/api/posts`, post);
+      const { data } = await axios.get(`/api/posts`);
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -36,11 +28,11 @@ export const post = createAsyncThunk(
   }
 );
 
-export const postSlice = createSlice({
-  name: "post",
+export const adminPostSlice = createSlice({
+  name: "post/admin",
   initialState,
   reducers: {
-    clearPostState: (state) => {
+    clearAdminPostState: (state) => {
       state.status = "idle";
       state.error = undefined;
       state.data = undefined;
@@ -48,15 +40,15 @@ export const postSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(post.pending, (state) => {
+      .addCase(adminPost.pending, (state) => {
         state.error = undefined;
         state.status = "loading";
       })
-      .addCase(post.fulfilled, (state, action) => {
+      .addCase(adminPost.fulfilled, (state, action) => {
         state.status = "success";
         state.data = action.payload;
       })
-      .addCase(post.rejected, (state, action) => {
+      .addCase(adminPost.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
@@ -67,10 +59,11 @@ export const postSlice = createSlice({
   },
 });
 
-export const { clearPostState } = postSlice.actions;
+export const { clearAdminPostState } = adminPostSlice.actions;
 
-export const selectPostStatus = (state: RootState) => state.post.status;
-export const selectPostError = (state: RootState) => state.post.error;
-export const selectPostData = (state: RootState) => state.post.data;
+export const selectAdminPostStatus = (state: RootState) =>
+  state.adminPost.status;
+export const selectAdminPostError = (state: RootState) => state.adminPost.error;
+export const selectAdminPostData = (state: RootState) => state.adminPost.data;
 
-export default postSlice.reducer;
+export default adminPostSlice.reducer;
