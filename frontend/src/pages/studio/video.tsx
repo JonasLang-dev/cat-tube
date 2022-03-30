@@ -1,5 +1,10 @@
 import React, { useLayoutEffect } from "react";
-import { DataGrid, GridToolbar, GridActionsCellItem, GridRenderCellParams } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridToolbar,
+  GridActionsCellItem,
+  GridRenderCellParams,
+} from "@mui/x-data-grid";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
 import { selectCurrentUserStatus } from "../../features/auth/currentUserSlice";
 import {
@@ -11,19 +16,21 @@ import {
 } from "../../features/post/userPostSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsSuggestOutlinedIcon from "@mui/icons-material/SettingsSuggestOutlined";
-import { Skeleton } from "@mui/material";
+import { Avatar, Skeleton } from "@mui/material";
+import { post, selectPostData } from "../../features/post/postSlice";
 
 function StudioVideo() {
   const dispatch = useAppDispatch();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
   const postStatus = useAppSelector(selectUserPostStatus);
   const postError = useAppSelector(selectUserPostError);
-  const postData = useAppSelector(selectUserPostData);
+  const postsData = useAppSelector(selectUserPostData);
+  const postData = useAppSelector(selectPostData);
 
   const deletePost = (id: string) => {};
 
   const updatePost = (id: string) => {};
-
+  console.log(post);
   const columns = React.useMemo(
     () => [
       { field: "_id", headerName: "ID", flex: 2, hide: true },
@@ -35,8 +42,42 @@ function StudioVideo() {
         flex: 2,
       },
       { field: "isActive", headerName: "isActive", type: "boolean", flex: 1 },
-      { field: "videoUrl", headerName: "Video Url", type: "string", flex: 2 },
-      { field: "postUrl", headerName: "Post Url", type: "string", flex: 2 },
+      {
+        field: "videoUrl",
+        headerName: "Video Url",
+        renderCell: (params: GridRenderCellParams) => {
+          return (
+            <video
+              width="100%"
+              height="auto"
+              src={
+                params.value
+                  ? `http://localhost:5020${params.value}`
+                  : "http://localhost:5020/avatar.png"
+              }
+            />
+          );
+        },
+        flex: 2,
+      },
+      {
+        field: "postUrl",
+        headerName: "Post Url",
+        renderCell: (params: GridRenderCellParams) => {
+          return (
+            <img
+              width="100%"
+              height="auto"
+              src={
+                params.value
+                  ? `http://localhost:5020${params.value}`
+                  : "http://localhost:5020/avatar.png"
+              }
+            />
+          );
+        },
+        flex: 2,
+      },
       {
         field: "createdAt",
         headerName: "CreatedAt",
@@ -53,8 +94,17 @@ function StudioVideo() {
         field: "user",
         headerName: "User",
         flex: 2,
-        renderCell: ( params: GridRenderCellParams) => {
-          return params.value.name
+        renderCell: (params: GridRenderCellParams) => {
+          return (
+            <Avatar
+              alt={params.value.name}
+              src={
+                params.value.avatar
+                  ? `http://localhost:5020${params.value.avatar}`
+                  : "http://localhost:5020/avatar.png"
+              }
+            />
+          );
         },
       },
       {
@@ -76,7 +126,7 @@ function StudioVideo() {
         ],
       },
     ],
-    [deletePost, updatePost]
+    [deletePost, updatePost, post]
   );
 
   useLayoutEffect(() => {
@@ -86,17 +136,18 @@ function StudioVideo() {
     return () => {
       dispatch(clearUserPostState());
     };
-  }, [currentUserInfo]);
+  }, [currentUserInfo, postData]);
   return (
     <div style={{ height: "75vh", minWidth: "100%", padding: "0 1rem" }}>
       <DataGrid
         getRowId={(data) => data._id}
-        rows={postData || []}
+        rows={postsData || []}
         columns={columns}
         rowsPerPageOptions={[5, 10, 20, 50, 100]}
         checkboxSelection
         loading={postStatus === "loading"}
         components={{ Toolbar: GridToolbar }}
+        autoHeight
       />
     </div>
   );

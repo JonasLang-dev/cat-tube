@@ -7,6 +7,7 @@ import resetPasswordReducer from "./features/users/resetPasswordSlice";
 import postReducer from "./features/post/postSlice";
 import userPostReducer from "./features/post/userPostSlice";
 import adminPostReducer from "./features/post/adminPostSlice";
+import adminUserReducer from "./features/users/adminUserSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     adminPost: adminPostReducer,
     userPost: userPostReducer,
     post: postReducer,
+    adminUser: adminUserReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

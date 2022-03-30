@@ -23,6 +23,8 @@ import Library from "./pages/video/library";
 import Download from "./pages/video/download";
 import StudioVideo from "./pages/studio/video";
 import AdminVideo from "./pages/admin/video";
+import AdminAuth from "./pages/admin/auth";
+import AdminUser from "./pages/admin/user";
 
 export const AppContext = createContext<any>(null);
 
@@ -108,8 +110,8 @@ function App() {
               path="/admin"
               element={<AdminLayout theme={theme} colorMode={colorMode} />}
             >
-              <Route index element={<DashboardPage />} />
-              <Route path="/admin/auth" element={<DashboardPage />} />
+              <Route index element={<AdminUser />} />
+              <Route path="/admin/auth" element={<AdminAuth />} />
               <Route path="/admin/copyright" element={<DashboardPage />} />
               <Route path="/admin/video" element={<AdminVideo />} />
               <Route path="/admin/price" element={<DashboardPage />} />

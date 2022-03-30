@@ -262,6 +262,27 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
         </ListItemButton>
         <ListItemButton
           component={Link}
+          to="/admin/video"
+          selected={selectedIndex === "/admin/video"}
+          onClick={() => {
+            handleListItemClick("/admin/video");
+            !matcheWithLg && handleDrawerClose();
+          }}
+        >
+          <ListItemIcon>
+            {selectedIndex === "/admin/video" ? (
+              <VideoFile />
+            ) : (
+              <VideoFileOutlined />
+            )}
+          </ListItemIcon>
+          <ListItemText
+            sx={{ whiteSpace: "nowrap" }}
+            primary={t("Video Manager")}
+          />
+        </ListItemButton>
+        <ListItemButton
+          component={Link}
           to="/admin/auth"
           selected={selectedIndex === "/admin/auth"}
           onClick={() => {
@@ -300,27 +321,6 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
           <ListItemText
             sx={{ whiteSpace: "nowrap" }}
             primary={t("admin.copyright")}
-          />
-        </ListItemButton>
-        <ListItemButton
-          component={Link}
-          to="/admin/video"
-          selected={selectedIndex === "/admin/video"}
-          onClick={() => {
-            handleListItemClick("/admin/video");
-            !matcheWithLg && handleDrawerClose();
-          }}
-        >
-          <ListItemIcon>
-            {selectedIndex === "/admin/video" ? (
-              <VideoFile />
-            ) : (
-              <VideoFileOutlined />
-            )}
-          </ListItemIcon>
-          <ListItemText
-            sx={{ whiteSpace: "nowrap" }}
-            primary={t("admin.video")}
           />
         </ListItemButton>
         <ListItemButton

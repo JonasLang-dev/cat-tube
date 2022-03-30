@@ -113,11 +113,11 @@ const PostDialog = forwardRef((props, ref) => {
     }
     if (postStatus === "success") {
       enqueueSnackbar(t("Success release a post"), { variant: "success" });
-      dispatch(clearPostState());
+      handleClose();
     }
 
     return () => {
-      dispatch(clearPostState());
+      handleClose();
     };
   }, [postStatus, postError]);
 
