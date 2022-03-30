@@ -40,7 +40,7 @@ export const signUp = createAsyncThunk(
 );
 
 export const signUpSlice = createSlice({
-  name: "auth",
+  name: "user/signUp",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {

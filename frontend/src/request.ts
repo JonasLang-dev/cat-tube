@@ -22,10 +22,10 @@ axiosInstance.interceptors.request.use(
   (requestConfig: AxiosRequestConfig) => {
     // 如果 token 存在
     // 让每个请求携带自定义 token 请根据实际情况自行修改
+    console.log("accessToken", accessToken);
     if (accessToken) {
       requestConfig.headers = { authorization: `Bearer ${accessToken}` };
     }
-
     return requestConfig;
   },
   (err: AxiosError) => {
@@ -36,7 +36,10 @@ axiosInstance.interceptors.request.use(
 // response interceptor
 axiosInstance.interceptors.response.use(
   (responseConfig: AxiosResponse) => {
-    if (responseConfig.config.url === "/api/session") {
+    if (
+      responseConfig.config.url === "/api/session" &&
+      responseConfig.config.method === "post"
+    ) {
       accessToken = responseConfig.data.accessToken;
       refreshToken = responseConfig.data.refreshToken;
     }

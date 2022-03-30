@@ -82,11 +82,13 @@ function StudioVideo() {
         field: "createdAt",
         headerName: "CreatedAt",
         type: "dateTime",
+        valueGetter: ({ value }: { value: string }) => value && new Date(value),
         flex: 2,
       },
       {
         field: "updatedAt",
         headerName: "updatedAt",
+        valueGetter: ({ value }: { value: string }) => value && new Date(value),
         type: "dateTime",
         flex: 2,
       },

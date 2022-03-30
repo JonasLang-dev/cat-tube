@@ -12,7 +12,7 @@ interface AuthState {
 // Define the initial state using that type
 const initialState: AuthState = {
   status: "idle",
-  error:undefined,
+  error: undefined,
   token: undefined,
 };
 
@@ -31,13 +31,15 @@ export const signIn = createAsyncThunk(
       localStorage.setItem("refreshToken", data.refreshToken);
       return data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data || [{ message: "Unknown error" }]);
+      return rejectWithValue(
+        error.response.data || [{ message: "Unknown error" }]
+      );
     }
   }
 );
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: "auth/signIn",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {

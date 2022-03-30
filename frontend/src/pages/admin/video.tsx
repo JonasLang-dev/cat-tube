@@ -1,5 +1,10 @@
 import React, { useLayoutEffect } from "react";
-import { DataGrid, GridToolbar, GridActionsCellItem, GridRenderCellParams } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridToolbar,
+  GridActionsCellItem,
+  GridRenderCellParams,
+} from "@mui/x-data-grid";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
 import { selectCurrentUserStatus } from "../../features/auth/currentUserSlice";
 import {
@@ -40,11 +45,13 @@ function AdminVideo() {
         field: "createdAt",
         headerName: "CreatedAt",
         type: "dateTime",
+        valueGetter: ({ value }: { value: string }) => value && new Date(value),
         flex: 2,
       },
       {
         field: "updatedAt",
         headerName: "updatedAt",
+        valueGetter: ({ value }: { value: string }) => value && new Date(value),
         type: "dateTime",
         flex: 2,
       },

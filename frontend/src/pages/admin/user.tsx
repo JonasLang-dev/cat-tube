@@ -52,12 +52,14 @@ function AdminAuth() {
       {
         field: "createdAt",
         headerName: "CreatedAt",
+        valueGetter: ({ value }: { value: string }) => value && new Date(value),
         type: "dateTime",
         flex: 2,
       },
       {
         field: "updatedAt",
         headerName: "updatedAt",
+        valueGetter: ({ value }: { value: string }) => value && new Date(value),
         type: "dateTime",
         flex: 2,
       },
