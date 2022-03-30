@@ -2,23 +2,23 @@ import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
 import { User } from "./user.model";
 
 export class Post {
-  @prop({ ref: () => User })
-  user: Ref<User>;
+  @prop({ ref: () => User, type: () => User })
+  public user: Ref<User>;
 
   @prop({ required: true })
-  title: string;
+  public title: string;
 
   @prop({})
-  videoUrl: string;
+  public videoUrl: string;
 
   @prop()
-  postUrl: string;
+  public postUrl: string;
 
   @prop({ required: true })
-  description: string;
+  public description: string;
 
   @prop({ default: false })
-  isActive: boolean;
+  public isActive: boolean;
 }
 
 const PostModel = getModelForClass(Post, {

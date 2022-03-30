@@ -15,7 +15,7 @@ import {
   selectUserPostStatus,
 } from "../../features/post/userPostSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
-import SettingsSuggestOutlinedIcon from "@mui/icons-material/SettingsSuggestOutlined";
+import EditIcon from "@mui/icons-material/Edit";
 import { Avatar, Skeleton } from "@mui/material";
 import { post, selectPostData } from "../../features/post/postSlice";
 
@@ -33,32 +33,29 @@ function StudioVideo() {
   console.log(post);
   const columns = React.useMemo(
     () => [
-      { field: "_id", headerName: "ID", flex: 2, hide: true },
-      { field: "title", headerName: "Title", type: "string", flex: 2 },
-      {
-        field: "description",
-        headerName: "Description",
-        type: "string",
-        flex: 2,
-      },
-      { field: "isActive", headerName: "isActive", type: "boolean", flex: 1 },
+      { field: "_id", headerName: "ID", hide: true },
       {
         field: "videoUrl",
         headerName: "Video Url",
+        width: 270,
         renderCell: (params: GridRenderCellParams) => {
           return (
             <video
-              width="100%"
-              height="auto"
-              src={
-                params.value
-                  ? `http://localhost:5020${params.value}`
-                  : "http://localhost:5020/avatar.png"
-              }
-            />
+              controls
+              preload="metadata"
+              controlsList="nodownload nofullscreen noremoteplayback"
+              style={{ objectFit: "contain", width: "100%" }}
+            >
+              <source
+                src={
+                  params.value
+                    ? `http://localhost:5020${params.value}`
+                    : "http://localhost:5020/avatar.png"
+                }
+              />
+            </video>
           );
         },
-        flex: 2,
       },
       {
         field: "postUrl",
@@ -66,8 +63,7 @@ function StudioVideo() {
         renderCell: (params: GridRenderCellParams) => {
           return (
             <img
-              width="100%"
-              height="auto"
+              style={{ objectFit: "contain", width: "100%" }}
               src={
                 params.value
                   ? `http://localhost:5020${params.value}`
@@ -76,46 +72,61 @@ function StudioVideo() {
             />
           );
         },
-        flex: 2,
+        width: 200,
       },
+      {
+        field: "user",
+        headerName: "User",
+        width: 160,
+        renderCell: (params: GridRenderCellParams) => {
+          return (
+            <>
+              <Avatar
+                alt={params.value.name}
+                src={
+                  params.value.avatar
+                    ? `http://localhost:5020${params.value.avatar}`
+                    : "http://localhost:5020/avatar.png"
+                }
+              />{" "}
+              &nbsp; {params.value.name}
+            </>
+          );
+        },
+      },
+      { field: "title", headerName: "Title", type: "string", width: 160 },
+      {
+        field: "description",
+        headerName: "Description",
+        type: "string",
+        width: 200,
+      },
+      {
+        field: "isActive",
+        headerName: "Visibility",
+        type: "boolean",
+      },
+
       {
         field: "createdAt",
         headerName: "CreatedAt",
         type: "dateTime",
         valueGetter: ({ value }: { value: string }) => value && new Date(value),
-        flex: 2,
+        width: 160,
       },
       {
         field: "updatedAt",
         headerName: "updatedAt",
         valueGetter: ({ value }: { value: string }) => value && new Date(value),
         type: "dateTime",
-        flex: 2,
-      },
-      {
-        field: "user",
-        headerName: "User",
-        flex: 2,
-        renderCell: (params: GridRenderCellParams) => {
-          return (
-            <Avatar
-              alt={params.value.name}
-              src={
-                params.value.avatar
-                  ? `http://localhost:5020${params.value.avatar}`
-                  : "http://localhost:5020/avatar.png"
-              }
-            />
-          );
-        },
+        width: 160,
       },
       {
         field: "actions",
         type: "actions",
-        flex: 2,
         getActions: (params: any) => [
           <GridActionsCellItem
-            icon={<SettingsSuggestOutlinedIcon />}
+            icon={<EditIcon />}
             label="Update"
             onClick={() => updatePost(params.id)}
           />,
@@ -140,16 +151,17 @@ function StudioVideo() {
     };
   }, [currentUserInfo, postData]);
   return (
-    <div style={{ height: "75vh", minWidth: "100%", padding: "0 1rem" }}>
+    <div style={{ height: "80vh", padding: "0 1rem" }}>
       <DataGrid
         getRowId={(data) => data._id}
         rows={postsData || []}
         columns={columns}
-        rowsPerPageOptions={[5, 10, 20, 50, 100]}
+        pageSize={5}
         checkboxSelection
         loading={postStatus === "loading"}
         components={{ Toolbar: GridToolbar }}
-        autoHeight
+        error={postError}
+        rowHeight={200}
       />
     </div>
   );

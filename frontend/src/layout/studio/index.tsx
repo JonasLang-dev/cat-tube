@@ -343,7 +343,6 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
         variant: "error",
       });
       setShowBackdrop(false);
-      console.log(error);
     }
   };
 

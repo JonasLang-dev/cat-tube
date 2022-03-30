@@ -597,7 +597,6 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
   );
 
   const handleSave = () => {
-    console.log("save");
   };
 
   useEffect(() => {

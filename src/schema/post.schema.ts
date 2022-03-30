@@ -9,4 +9,17 @@ export const createPostSchema = object({
   }),
 });
 
+export const updatePostSchema = object({
+  body: object({
+    title: string(),
+    videoUrl: string(),
+    postUrl: string(),
+    description: string(),
+  }),
+  params: object({
+    id: string({ required_error: "post id is required" }),
+  }),
+});
+
 export type CreatePostInput = TypeOf<typeof createPostSchema>["body"];
+export type UpdatePostInput = TypeOf<typeof updatePostSchema>;

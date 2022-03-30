@@ -1,6 +1,12 @@
 import { Request, Response } from "express";
-import { CreatePostInput } from "../schema/post.schema";
-import { createPost, findPosts } from "../service/post.service";
+import { CreatePostInput, UpdatePostInput } from "../schema/post.schema";
+import {
+  createPost,
+  deletePost,
+  findbyId,
+  findPosts,
+  updatePost,
+} from "../service/post.service";
 
 export const createPosttHanler = async (
   req: Request<{}, {}, CreatePostInput>,
@@ -9,8 +15,6 @@ export const createPosttHanler = async (
   const { description, title, videoUrl, postUrl } = req.body;
 
   const user = res.locals.user;
-
-  console.log(user);
 
   if (!user) {
     return res.status(401).send([{ message: "Unauthorized" }]);
@@ -31,10 +35,6 @@ export const createPosttHanler = async (
   return res.send(post);
 };
 
-export const removePostHandler = async (req: Request, res: Response) => {};
-
-export const updatePostHandler = async (req: Request, res: Response) => {};
-
 export const findUserPostsHandler = async (req: Request, res: Response) => {
   if (res.locals.user._id !== req.params.id) {
     return res.status(401).send([{ message: "Unauthorized" }]);
@@ -49,5 +49,70 @@ export const findAllPostsHandler = async (req: Request, res: Response) => {
     return res.send(posts);
   } else {
     return res.status(401).send([{ message: "Unauthorized" }]);
+  }
+};
+
+export const deletePostHandler = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const user = res.locals.user;
+
+  const post = await findbyId(id);
+
+  if (!post) {
+    return res.status(404).send([{ message: "Post not found" }]);
+  }
+
+  if (user.isAdmin) {
+    const deletedPost = await deletePost({ _id: id });
+    return res.send(deletedPost);
+  }
+
+  // @ts-ignore
+  if (post.user?._id != user._id) {
+    return res.status(401).send([{ message: "Unauthorized" }]);
+  }
+
+  const deletedPost = await deletePost({ _id: id });
+
+  res.send(deletedPost);
+};
+
+export const updatePostHandler = async (
+  req: Request<UpdatePostInput["params"], {}, UpdatePostInput["body"]>,
+  res: Response
+) => {
+  const { id } = req.params;
+  const data = req.body;
+  const user = res.locals.user;
+
+  const post = await findbyId(id);
+
+  if (!post) {
+    return res.status(404).send([{ message: "Post not found" }]);
+  }
+
+  if (!user.isAdmin && data.hasOwnProperty("isActive")) {
+    return res.status(401).send([{ message: "Unauthorized" }]);
+  }
+
+  if (user.isAdmin) {
+    try {
+      const updatedPost = await updatePost({ _id: id }, data, { new: true });
+      res.send(updatedPost);
+    } catch (error: any) {
+      res.status(400).send([{ message: error.message }]);
+    }
+  }
+  
+  // @ts-ignore
+  if (post.user?._id != user._id) {
+    return res.status(401).send([{ message: "Unauthorized" }]);
+  }
+
+  try {
+    const updatedPost = await updatePost({ _id: id }, data, { new: true });
+    res.send(updatedPost);
+  } catch (error: any) {
+    res.status(400).send([{ message: error.message }]);
   }
 };
