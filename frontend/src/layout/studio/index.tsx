@@ -351,7 +351,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
       case "/studio":
         return t("Dashboard");
       case "/studio/video":
-        return t("Video Managerment");
+        return t("Channel content");
       default:
         return t("Studio");
     }

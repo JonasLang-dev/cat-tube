@@ -48,9 +48,12 @@ export const createSessionHandler = async (
     accessToken,
     refreshToken,
   });
-}
+};
 
-export const refreshAccessTokenHandler = async (req: Request, res: Response) => {
+export const refreshAccessTokenHandler = async (
+  req: Request,
+  res: Response
+) => {
   const refreshToken = get(req, "headers.x-refresh");
 
   const decoded = verifyJwt<{ session: string }>(
@@ -81,13 +84,13 @@ export const refreshAccessTokenHandler = async (req: Request, res: Response) => 
   const accessToken = signAccessToken(user);
 
   return res.send({ accessToken });
-}
+};
 
 export const getSessionHandler = async (req: Request, res: Response) => {
-  if(res.locals.user) {
+  if (res.locals.user) {
     const sessions = await findSessions({});
     return res.send(sessions);
   } else {
-    return res.send([{message: "Unauthorized"}]).status(401);
+    return res.send([{ message: "Unauthorized" }]).status(401);
   }
-}
+};

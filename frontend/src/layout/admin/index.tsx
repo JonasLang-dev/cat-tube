@@ -408,7 +408,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
       case t("/admin/copyright"):
         return "Copyright Management";
       case t("/admin/video"):
-        return "Video Management";
+        return "Channel content";
       case t("/admin/price"):
         return "Price Management";
       case t("/admin/ad"):

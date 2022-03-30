@@ -22,4 +22,4 @@ export const updatePostSchema = object({
 });
 
 export type CreatePostInput = TypeOf<typeof createPostSchema>["body"];
-export type UpdatePostInput = TypeOf<typeof updatePostSchema>;
+export type UpdatePostSchema = TypeOf<typeof updatePostSchema>;

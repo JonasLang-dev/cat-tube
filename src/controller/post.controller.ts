@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreatePostInput, UpdatePostInput } from "../schema/post.schema";
+import { CreatePostInput, UpdatePostSchema } from "../schema/post.schema";
 import {
   createPost,
   deletePost,
@@ -78,7 +78,7 @@ export const deletePostHandler = async (req: Request, res: Response) => {
 };
 
 export const updatePostHandler = async (
-  req: Request<UpdatePostInput["params"], {}, UpdatePostInput["body"]>,
+  req: Request<UpdatePostSchema["params"], {}, UpdatePostSchema["body"]>,
   res: Response
 ) => {
   const { id } = req.params;

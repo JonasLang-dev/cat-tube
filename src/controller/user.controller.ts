@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import { privateFields } from "../model/user.model";
 import {
   CreateUserInput,
+  deleteUserInput,
   ForgetPasswordInput,
   ResetPasswordSchema,
   VerifyUserInput,
@@ -13,6 +14,7 @@ import {
   findUsers,
   findUserById,
   findUserByEmail,
+  findWithUpdateUser,
 } from "../service/user.service";
 import log from "../utils/logger";
 import sendEmail from "../utils/mailer";
@@ -22,7 +24,7 @@ export async function createUserHandler(
   res: Response
 ) {
   const body = req.body;
-  
+
   try {
     const user = await createUser(body);
 
@@ -150,4 +152,41 @@ export async function getAllUserHandler(req: Request, res: Response) {
   const users = await findUsers({});
 
   return res.send(users);
+}
+
+export async function deleteUserHandler(
+  req: Request<deleteUserInput, {}, {}>,
+  res: Response
+) {
+  const { id } = req.params;
+
+  const actionUser = res.locals.user;
+
+  let user;
+
+  try {
+    user = await findUserById(id);
+  } catch (error) {
+    return res.status(400).send([{ message: "User does not exists" }]);
+  }
+
+  if (!user || user.isDelete) {
+    return res.status(400).send([{ message: "User does not exists" }]);
+  }
+
+  if (actionUser.isAdmin) {
+    user.isDelete = true;
+    await user.save();
+    res.send("User successfully deleted");
+  }
+
+  if (actionUser._id == id) {
+    user.isDelete = true;
+    await user.save();
+    res.send("User successfully deleted");
+  }
+
+  res
+    .status(401)
+    .send([{ message: "You are not authorized to delete this user" }]);
 }

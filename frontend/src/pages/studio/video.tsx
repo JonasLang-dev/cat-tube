@@ -30,7 +30,6 @@ function StudioVideo() {
   const deletePost = (id: string) => {};
 
   const updatePost = (id: string) => {};
-  console.log(post);
   const columns = React.useMemo(
     () => [
       { field: "_id", headerName: "ID", hide: true },
