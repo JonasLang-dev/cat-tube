@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useId } from "react";
 import {
   DataGrid,
   GridToolbar,
@@ -23,6 +23,8 @@ function AdminAuth() {
   const adminAuthStatus = useAppSelector(selectAdminAuthStatus);
   const adminAuthError = useAppSelector(selectAdminAuthError);
   const adminAuthData = useAppSelector(selectAdminAuthData);
+  const id = useId();
+  console.log(id);
 
   const deleteAuth = (id: string) => {};
 
