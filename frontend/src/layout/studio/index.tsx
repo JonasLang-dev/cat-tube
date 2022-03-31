@@ -258,7 +258,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           </ListItemIcon>
           <ListItemText
             sx={{ whiteSpace: "nowrap" }}
-            primary={t("studio.dashboard")}
+            primary={t("Dashboard")}
           />
         </ListItemButton>
         <ListItemButton
@@ -276,10 +276,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
               <VideoFileOutlined />
             )}
           </ListItemIcon>
-          <ListItemText
-            sx={{ whiteSpace: "nowrap" }}
-            primary={t("studio.video")}
-          />
+          <ListItemText sx={{ whiteSpace: "nowrap" }} primary={t("Content")} />
         </ListItemButton>
       </List>
 
@@ -408,7 +405,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
 
           {matcheWithLg ? (
             <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
-              ube Video
+              ube Studio
             </Typography>
           ) : matcheWithSm ? (
             <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
@@ -416,7 +413,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
             </Typography>
           ) : (
             <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
-              ube
+              &nbsp;Studio
             </Typography>
           )}
 

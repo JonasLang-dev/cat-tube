@@ -25,6 +25,7 @@ import {
   Share,
 } from "@mui/icons-material";
 
+import AvatarGroup from "@mui/material/AvatarGroup";
 // @ts-ignore
 import Image from "mui-image";
 import { Link } from "react-router-dom";
@@ -94,109 +95,45 @@ const HomePage: FC<Home> = ({ loading = false, colorMode, theme }) => {
             <Grid item key={card} xs={12} sm={6} md={4} lg={3} xl={3}>
               <Card
                 sx={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
+                  width: 320,
+                  maxWidth: "100%",
+                  boxShadow:
+                    "0 2px 4px -2px rgba(0,0,0,0.24), 0 4px 24px -2px rgba(0, 0, 0, 0.2)",
                 }}
               >
-                <CardHeader
-                  avatar={
-                    loading ? (
-                      <Skeleton
-                        animation="wave"
-                        variant="circular"
-                        width={40}
-                        height={40}
-                      />
-                    ) : (
-                      <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        R
-                      </Avatar>
-                    )
-                  }
-                  action={
-                    loading ? null : (
-                      <IconButton aria-label="settings">
-                        <MoreVert />
-                      </IconButton>
-                    )
-                  }
-                  title={
-                    loading ? (
-                      <Skeleton
-                        animation="wave"
-                        height={10}
-                        width="80%"
-                        style={{ marginBottom: 6 }}
-                      />
-                    ) : (
-                      "Shrimp"
-                    )
-                  }
-                  subheader={
-                    loading ? (
-                      <Skeleton animation="wave" height={10} width="40%" />
-                    ) : (
-                      new Date().toDateString()
-                    )
-                  }
-                />
                 <CardActionArea
                   to={{ pathname: "/watch", search: `?v=${card}` }}
                   component={Link}
                 >
-                  <Image
-                    src="https://source.unsplash.com/random"
-                    height="200px"
-                    width="auto"
-                    fit="cover"
-                    duration={300}
-                    easing="cubic-bezier(0.7, 0, 0.6, 1)"
-                    showLoading={
-                      <Skeleton
-                        variant="rectangular"
-                        width="100%"
-                        height="200px"
-                        animation="wave"
-                      />
+                  <CardMedia
+                    image={
+                      "https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
                     }
-                    errorIcon={true}
-                    shift={null}
-                    distanc="100px"
-                    shiftDuration={900}
-                    bgColor="inherit"
+                    sx={{
+                      width: "100%",
+                      height: 0,
+                      paddingBottom: "min(56.25%, 200px)",
+                      bgcolor: "rgba(0, 0, 0, 0.08)",
+                    }}
                   />
                 </CardActionArea>
-                <CardContent sx={{ flexGrow: 1 }}>
-                  {loading ? (
-                    <React.Fragment>
-                      <Skeleton
-                        animation="wave"
-                        height={10}
-                        style={{ marginBottom: 6 }}
-                      />
-                      <Skeleton animation="wave" height={10} width="80%" />
-                    </React.Fragment>
-                  ) : (
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                  )}
+                <CardContent
+                  display="grid"
+                  gridTemplateColumns="repeat(12, 1fr)"
+                  component={Grid}
+                >
+                  <Box gridColumn="span 4">
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="https://i.pravatar.cc/300?img=1"
+                    />
+                  </Box>
+                  <Box gridColumn="span 8">Title</Box>
+                  <Box gridColumn="span 8">Remy Sharp</Box>
+                  <Box gridColumn="span 8">
+                    {new Date().toLocaleDateString()}
+                  </Box>
                 </CardContent>
-                <CardActions>
-                  <IconButton aria-label="play">
-                    <PlayCircle />
-                  </IconButton>
-                  <IconButton aria-label="play">
-                    <Download />
-                  </IconButton>
-                  <IconButton aria-label="add to favorites">
-                    <Favorite color="error" />
-                  </IconButton>
-                  <IconButton aria-label="share">
-                    <Share />
-                  </IconButton>
-                </CardActions>
               </Card>
             </Grid>
           ))}
