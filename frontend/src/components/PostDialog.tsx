@@ -80,7 +80,7 @@ const PostDialog = forwardRef((props, ref) => {
         "/api/upload/poster",
         bodyFormData
       );
-      setImage(data);
+      setImage(data.message);
       setLoadingPostUpload(false);
     } catch (error: any) {
       enqueueSnackbar(error.response.data.message || error.message, {

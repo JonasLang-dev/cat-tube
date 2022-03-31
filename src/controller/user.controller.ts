@@ -1,20 +1,19 @@
 import { Request, Response } from "express";
-import { omit } from "lodash";
 import { nanoid } from "nanoid";
-import { privateFields } from "../model/user.model";
 import {
   CreateUserInput,
   deleteUserInput,
   ForgetPasswordInput,
   ResetPasswordSchema,
+  updateUserSchema,
   VerifyUserInput,
 } from "../schema/user.schema";
+import { signAccessToken, signRefreshToken } from "../service/auth.service";
 import {
   createUser,
   findUsers,
   findUserById,
   findUserByEmail,
-  findWithUpdateUser,
 } from "../service/user.service";
 import log from "../utils/logger";
 import sendEmail from "../utils/mailer";
@@ -189,4 +188,55 @@ export async function deleteUserHandler(
   res
     .status(401)
     .send([{ message: "You are not authorized to delete this user" }]);
+}
+
+export async function updateUserHandler(
+  req: Request<updateUserSchema["params"], {}, updateUserSchema["body"]>,
+  res: Response
+) {
+  const { id } = req.params;
+  const actionUser = res.locals.user;
+
+  let updateUser: updateUserSchema["body"] = {};
+
+  const { name, email, avatar } = req.body;
+
+  if (name) {
+    updateUser["name"] = name;
+  }
+
+  if (email) {
+    updateUser["email"] = email;
+  }
+
+  if (avatar) {
+    updateUser["avatar"] = avatar;
+  }
+
+  let user;
+
+  try {
+    user = await findUserById(id);
+  } catch (error) {
+    return res.status(400).send([{ message: "Could not change user" }]);
+  }
+
+  if (!user) {
+    return res.status(400).send([{ message: "Could not change user" }]);
+  }
+
+  if (actionUser._id == id) {
+    // update user
+    Object.assign(user, updateUser);
+    await user.save();
+    // sign new token
+
+    const accessToken = signAccessToken(user);
+
+    const refresh = await signRefreshToken({ userId: user._id });
+
+    return res.send({ accessToken, refresh });
+  }
+
+  return res.status(400).send([{ message: "Could not change user" }]);
 }

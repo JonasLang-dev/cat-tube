@@ -7,6 +7,7 @@ import {
   resetPasswordHandler,
   verifyUserHandler,
   deleteUserHandler,
+  updateUserHandler,
 } from "../controller/user.controller";
 import requireUser from "../middleware/requireUser";
 import validateResource from "../middleware/validateResourse";
@@ -16,6 +17,7 @@ import {
   forgetPasswordSchema,
   resetPasswordSchema,
   verifyUserSchema,
+  updateUserSchema,
 } from "../schema/user.schema";
 
 const router = express.Router();
@@ -55,6 +57,11 @@ router.delete(
   deleteUserHandler
 );
 
-router.post("/api/users/:id", requireUser);
+router.post(
+  "/api/users/:id",
+  requireUser,
+  validateResource(updateUserSchema),
+  updateUserHandler
+);
 
 export default router;

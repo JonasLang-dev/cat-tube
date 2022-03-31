@@ -4,17 +4,17 @@ export const createPostSchema = object({
   body: object({
     title: string({ required_error: "post title is required" }),
     videoUrl: string({ required_error: "post video url is required" }),
-    postUrl: string(),
+    postUrl: string().optional(),
     description: string({ required_error: "description is required" }),
   }),
 });
 
 export const updatePostSchema = object({
   body: object({
-    title: string(),
-    videoUrl: string(),
-    postUrl: string(),
-    description: string(),
+    title: string().optional(),
+    videoUrl: string().optional(),
+    postUrl: string().optional(),
+    description: string().optional(),
   }),
   params: object({
     id: string({ required_error: "post id is required" }),
