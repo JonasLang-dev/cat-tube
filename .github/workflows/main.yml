@@ -25,15 +25,17 @@ jobs:
       - name: install nodejs
         uses: actions/setup-node@v2
         with:
-          node-version: "16.X"
+          node-version: "17.X"
+      - name: Yarn CLI
+        uses: CultureHQ/actions-yarn@v1.0.1
       - name: install deps
         run: |
           cd frontend
-          npm install
+          yarn
       - name: buil app
         run: |
           cd frontend 
-          npm run build
+          yarn build
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
         with:
