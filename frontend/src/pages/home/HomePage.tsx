@@ -46,6 +46,7 @@ const HomePage: FC<Home> = ({ loading = false, colorMode, theme }) => {
       >
         <Container maxWidth="md">
           <Carousel
+            key="carousel"
             autoPlay={false}
             animation="fade"
             indicators={true}

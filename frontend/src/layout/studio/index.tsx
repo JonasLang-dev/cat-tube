@@ -30,6 +30,7 @@ import {
 import logo from "../../logo.svg";
 import Copyright from "../../components/Copyright";
 import {
+  GTranslateOutlined,
   AdminPanelSettings,
   DashboardCustomize,
   DashboardCustomizeOutlined,
@@ -42,6 +43,11 @@ import {
   VideoFile,
   VideoFileOutlined,
   YouTube,
+  CheckOutlined,
+  ArrowBack,
+  ArrowForwardIosOutlined,
+  Brightness7Outlined,
+  Brightness4Outlined,
 } from "@mui/icons-material";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../..//hooks/redux.hooks";
@@ -69,6 +75,8 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import { DropzoneDialogBase, FileObject } from "mui-file-dropzone";
 import axiosInstance from "../../request";
 import { useSnackbar } from "notistack";
+import * as locales from "../../../locales";
+type SupportedLocales = keyof typeof locales;
 
 interface Studio {
   colorMode: any;
@@ -76,7 +84,7 @@ interface Studio {
 }
 
 const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useAppDispatch();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
   const matcheWithLg = useMediaQuery("(min-width:1200px)");
@@ -91,14 +99,22 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
   const [selectedIndex, setSelectedIndex] = useState(location.pathname);
   const [anchorProfileMenu, setAnchorProfileMenu] =
     useState<null | HTMLElement>(null);
+  const [anchorThemeMenu, setThemeMenu] = useState<null | HTMLElement>(null);
+  const [anchorLangMenu, setLangMenu] = useState<null | HTMLElement>(null);
 
   const isProfileMenuOpen = Boolean(anchorProfileMenu);
+  const isThemeMenuOpen = Boolean(anchorThemeMenu);
+  const isLangMenuOpen = Boolean(anchorLangMenu);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) =>
     setAnchorProfileMenu(event.currentTarget);
   const [showAddVideosForm, setShowAddVideosForm] = useState(false);
   const [uploadFiles, setUploadFiles] = useState<any>([]);
   const [showBackdrop, setShowBackdrop] = useState<boolean>(false);
+
+  const changeLanguageHandler = (lang: SupportedLocales) => {
+    i18n.changeLanguage(lang);
+  };
 
   const handleProfileMenuClose = () => setAnchorProfileMenu(null);
 
@@ -112,6 +128,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
       PaperProps={{
         elevation: 0,
         sx: {
+          width: "298px",
           overflow: "visible",
           filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
           mt: 1.5,
@@ -174,32 +191,49 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
         {t("logout")}
       </MenuItem>
       <Divider />
-      <MenuItem onClick={colorMode.toggleColorMode}>
+      <MenuItem
+        sx={{ display: "flex", justifyContent: "space-between" }}
+        onClick={() => {
+          setThemeMenu(anchorProfileMenu);
+          handleProfileMenuClose();
+        }}
+      >
         <ListItemIcon>
           {theme.palette.mode === "dark" ? (
-            <Brightness7Icon fontSize="small" />
+            <Brightness7Outlined fontSize="small" />
           ) : (
-            <Brightness4Icon fontSize="small" />
+            <Brightness4Outlined fontSize="small" />
           )}
         </ListItemIcon>
-        {t("theme")}:&nbsp;
-        {localStorage.getItem("theme")
-          ? localStorage.getItem("theme") === "dark"
-            ? t("dark")
-            : t("light")
-          : t("default")}
+        <Typography sx={{ flexGrow: "1" }}>
+          {t("Appearance")}:&nbsp;
+          {localStorage.getItem("theme")
+            ? localStorage.getItem("theme") === "dark"
+              ? t("Dark")
+              : t("Light")
+            : t("Device theme")}
+        </Typography>
+
+        <ListItemIcon sx={{ justifyContent: "end" }}>
+          <ArrowForwardIosOutlined fontSize="small" />
+        </ListItemIcon>
       </MenuItem>
-      <MenuItem onClick={colorMode.switchDarkMode}>
-        <ListItemIcon></ListItemIcon>
-        {t("dark")}
-      </MenuItem>
-      <MenuItem onClick={colorMode.switchLightMode}>
-        <ListItemIcon></ListItemIcon>
-        {t("light")}
-      </MenuItem>
-      <MenuItem onClick={colorMode.switchDefault}>
-        <ListItemIcon></ListItemIcon>
-        {t("default")}
+      <MenuItem
+        sx={{ display: "flex" }}
+        onClick={() => {
+          setLangMenu(anchorProfileMenu);
+          handleProfileMenuClose();
+        }}
+      >
+        <ListItemIcon>
+          <GTranslateOutlined />
+        </ListItemIcon>
+        <Typography sx={{ flexGrow: "1" }}>
+          {t("Language")}:&nbsp; {i18n.language === "zhCN" ? "中文" : "English"}
+        </Typography>
+        <ListItemIcon sx={{ justifyContent: "end" }}>
+          <ArrowForwardIosOutlined fontSize="small" />
+        </ListItemIcon>
       </MenuItem>
       <Divider />
       <MenuItem
@@ -230,6 +264,161 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           <GitHub fontSize="small" />
         </ListItemIcon>
         Github
+      </MenuItem>
+    </Menu>
+  );
+
+  const renderThemeMenu = (
+    <Menu
+      anchorEl={anchorThemeMenu}
+      id="theme-menu"
+      keepMounted
+      open={isThemeMenuOpen}
+      onClose={() => setThemeMenu(null)}
+      PaperProps={{
+        elevation: 0,
+        sx: {
+          width: "298px",
+          overflow: "visible",
+          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+          mt: 1.5,
+          "& .MuiAvatar-root": {
+            width: 32,
+            height: 32,
+            ml: -0.5,
+            mr: 1,
+          },
+          "&:before": {
+            content: '""',
+            display: "block",
+            position: "absolute",
+            top: 0,
+            right: 14,
+            width: 10,
+            height: 10,
+            bgcolor: "background.paper",
+            transform: "translateY(-50%) rotate(45deg)",
+            zIndex: 0,
+          },
+        },
+      }}
+      transformOrigin={{ horizontal: "right", vertical: "top" }}
+      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+    >
+      <MenuItem
+        onClick={() => {
+          setAnchorProfileMenu(anchorThemeMenu);
+          setThemeMenu(null);
+        }}
+      >
+        <ListItemIcon>
+          <ArrowBack fontSize="small" />
+        </ListItemIcon>
+        {t("Appearance")}
+      </MenuItem>
+      <Divider />
+      <Typography textAlign="center" fontSize="0.4rem" variant="body2">
+        {t("Setting applies to this browser only")}
+      </Typography>
+      <MenuItem onClick={colorMode.switchDefault}>
+        <ListItemIcon>
+          {!localStorage.getItem("theme") && <CheckOutlined fontSize="small" />}
+        </ListItemIcon>
+        {t("Use device theme")}
+      </MenuItem>
+      <MenuItem onClick={colorMode.switchLightMode}>
+        <ListItemIcon>
+          {localStorage.getItem("theme") && theme.palette.mode === "light" && (
+            <CheckOutlined fontSize="small" />
+          )}
+        </ListItemIcon>
+        {t("Light theme")}
+      </MenuItem>
+      <MenuItem onClick={colorMode.switchDarkMode}>
+        <ListItemIcon>
+          {localStorage.getItem("theme") && theme.palette.mode === "dark" && (
+            <CheckOutlined fontSize="small" />
+          )}
+        </ListItemIcon>
+        {t("Dark theme")}
+      </MenuItem>
+    </Menu>
+  );
+
+  const renderLangMenu = (
+    <Menu
+      anchorEl={anchorLangMenu}
+      id="lang-menu"
+      keepMounted
+      open={isLangMenuOpen}
+      onClose={() => setLangMenu(null)}
+      PaperProps={{
+        elevation: 0,
+        sx: {
+          width: "298px",
+          overflow: "visible",
+          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+          mt: 1.5,
+          "& .MuiAvatar-root": {
+            width: 32,
+            height: 32,
+            ml: -0.5,
+            mr: 1,
+          },
+          "&:before": {
+            content: '""',
+            display: "block",
+            position: "absolute",
+            top: 0,
+            right: 14,
+            width: 10,
+            height: 10,
+            bgcolor: "background.paper",
+            transform: "translateY(-50%) rotate(45deg)",
+            zIndex: 0,
+          },
+        },
+      }}
+      transformOrigin={{ horizontal: "right", vertical: "top" }}
+      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+    >
+      <MenuItem
+        onClick={() => {
+          setAnchorProfileMenu(anchorLangMenu);
+          setLangMenu(null);
+        }}
+      >
+        <IconButton>
+          <ArrowBack fontSize="small" />
+        </IconButton>
+        {t("Choose your language")}
+      </MenuItem>
+      <Divider />
+      <MenuItem
+        onClick={() => changeLanguageHandler("zhCN" as SupportedLocales)}
+      >
+        <ListItemIcon>
+          {(i18n.language.replace(/\-/, "") === "zhCN" && (
+            <CheckOutlined fontSize="small" />
+          )) ||
+            (window.localStorage.i18n === "zhCN" && (
+              <CheckOutlined fontSize="small" />
+            ))}
+        </ListItemIcon>
+        {t("中文 (简体)")}
+      </MenuItem>
+      <MenuItem
+        onClick={() => changeLanguageHandler("enUS" as SupportedLocales)}
+      >
+        <ListItemIcon>
+          {(i18n.language.replace(/\-/, "") === "enUS" && (
+            <CheckOutlined fontSize="small" />
+          )) ||
+            (window.localStorage.i18n === "enUS" && (
+              <CheckOutlined fontSize="small" />
+            ))}
+        </ListItemIcon>
+        {t("English (US)")}
       </MenuItem>
     </Menu>
   );
@@ -447,6 +636,8 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           </Box>
         </Toolbar>
         {renderProfileMenu}
+        {renderLangMenu}
+        {renderThemeMenu}
       </Header>
       <EdgeSidebar anchor="left">
         <SidebarContent>{renderDrawerItem}</SidebarContent>
