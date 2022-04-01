@@ -35,6 +35,7 @@ import { selectCurrentUserStatus } from "../../features/auth/currentUserSlice";
 import { useAppSelector } from "../../hooks/redux.hooks";
 // @ts-ignore
 import Image from "mui-image";
+import VideoCard from "../../components/VideoCard";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
@@ -129,120 +130,16 @@ function Subscriptions({ loading = false }) {
             </Box>
           </Box>
           <Container maxWidth="lg" sx={{ pt: 2, pb: 2 }}>
-            {/* End hero unit */}
             <Grid container spacing={4}>
               {cards.map((card) => (
-                <Grid item key={card} xs={12} sm={6} md={4} lg={3} xl={3}>
-                  <Card
-                    sx={{
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <CardHeader
-                      avatar={
-                        loading ? (
-                          <Skeleton
-                            animation="wave"
-                            variant="circular"
-                            width={40}
-                            height={40}
-                          />
-                        ) : (
-                          <Avatar
-                            sx={{ bgcolor: red[500] }}
-                            aria-label="recipe"
-                          >
-                            R
-                          </Avatar>
-                        )
-                      }
-                      action={
-                        loading ? null : (
-                          <IconButton aria-label="settings">
-                            <MoreVert />
-                          </IconButton>
-                        )
-                      }
-                      title={
-                        loading ? (
-                          <Skeleton
-                            animation="wave"
-                            height={10}
-                            width="80%"
-                            style={{ marginBottom: 6 }}
-                          />
-                        ) : (
-                          "Shrimp"
-                        )
-                      }
-                      subheader={
-                        loading ? (
-                          <Skeleton animation="wave" height={10} width="40%" />
-                        ) : (
-                          new Date().toDateString()
-                        )
-                      }
-                    />
-                    <CardActionArea
-                      to={{ pathname: "/watch", search: `?v=${card}` }}
-                      component={Link}
-                    >
-                      <Image
-                        src="https://source.unsplash.com/random"
-                        height="200px"
-                        width="auto"
-                        fit="cover"
-                        duration={300}
-                        easing="cubic-bezier(0.7, 0, 0.6, 1)"
-                        showLoading={
-                          <Skeleton
-                            variant="rectangular"
-                            width="100%"
-                            height="200px"
-                            animation="wave"
-                          />
-                        }
-                        errorIcon={true}
-                        shift={null}
-                        distanc="100px"
-                        shiftDuration={900}
-                        bgColor="inherit"
-                      />
-                    </CardActionArea>
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      {loading ? (
-                        <React.Fragment>
-                          <Skeleton
-                            animation="wave"
-                            height={10}
-                            style={{ marginBottom: 6 }}
-                          />
-                          <Skeleton animation="wave" height={10} width="80%" />
-                        </React.Fragment>
-                      ) : (
-                        <Typography gutterBottom variant="h5" component="h2">
-                          Heading
-                        </Typography>
-                      )}
-                    </CardContent>
-                    <CardActions>
-                      <IconButton aria-label="play">
-                        <PlayCircle />
-                      </IconButton>
-                      <IconButton aria-label="play">
-                        <Download />
-                      </IconButton>
-                      <IconButton aria-label="add to favorites">
-                        <Favorite color="error" />
-                      </IconButton>
-                      <IconButton aria-label="share">
-                        <Share />
-                      </IconButton>
-                    </CardActions>
-                  </Card>
-                </Grid>
+                <VideoCard
+                  key={card}
+                  poster={card}
+                  path={card}
+                  avatar={card}
+                  title={card}
+                  name={card}
+                />
               ))}
             </Grid>
           </Container>

@@ -45,6 +45,7 @@ const VideoCard: FC<VideoCardType> = ({
           maxWidth: 320,
           boxShadow:
             "0 2px 4px -2px rgba(0,0,0,0.24), 0 4px 24px -2px rgba(0, 0, 0, 0.2)",
+          borderRadius: "0.8rem",
         }}
       >
         <CardActionArea
@@ -95,7 +96,13 @@ const VideoCard: FC<VideoCardType> = ({
           <Box alignSelf="center" gridArea="title">
             <Typography>Title</Typography>
           </Box>
-          <Box gridArea="info">
+          <Box
+            gridArea="info"
+            sx={{
+              borderTop: "1px solid rgba(0, 0, 0, 0.12)",
+              paddingTop: "0.5rem",
+            }}
+          >
             <Typography
               variant="body2"
               color="textSecondary"

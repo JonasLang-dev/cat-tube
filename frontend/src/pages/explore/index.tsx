@@ -27,6 +27,8 @@ import {
 // @ts-ignore
 import Image from "mui-image";
 import { Link } from "react-router-dom";
+import GameCard from "../../components/SolidGameCard";
+import VideoCard from "../../components/VideoCard";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
@@ -44,268 +46,72 @@ function Explore({ loading = false }) {
           pb: 6,
           display: "grid",
           placeItems: "center",
+          borderRadius: "0.8rem",
         }}
       >
         <Grid
-          maxWidth="md"
           container
-          spacing={2}
-          sx={{ display: "flex", justifyContent: "center" }}
+          sx={{
+            justifyItems: "center",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          spacing={4}
         >
-          <Grid item xs={8} sm={6} md={4} lg={4} xl={4}>
-            <Card sx={{ borderRadius: "8px", maxWitdh: "210px" }}>
-              <CardActionArea>
-                <CardHeader
-                  avatar={
-                    <img
-                      id="img"
-                      className="style-scope yt-img-shadow"
-                      alt=""
-                      src="src/assets/img/fashion_and_beauty_color_32.png"
-                      width="32"
-                      height="32"
-                    />
-                  }
-                ></CardHeader>
-                <Typography gutterBottom variant="h6" component="h2">
-                  &nbsp;Fashion & Beauty
-                </Typography>
-              </CardActionArea>
-            </Card>
+          <Grid item>
+            <GameCard
+              color={"#203f52"}
+              title={"Dota 2"}
+              subtitle={"Be a Legend!"}
+              image={
+                "https://steamcdn-a.akamaihd.net/apps/dota2/images/blog/play/dota_heroes.png"
+              }
+            />
           </Grid>
-
-          <Grid item xs={8} sm={6} md={4} lg={4} xl={4}>
-            <Card sx={{ borderRadius: "8px", maxWitdh: "210px" }}>
-              <CardActionArea>
-                <CardHeader
-                  avatar={
-                    <img
-                      id="img"
-                      className="style-scope yt-img-shadow"
-                      alt=""
-                      src="src/assets/img/gaming_color_32.png"
-                      width="32"
-                      height="32"
-                    />
-                  }
-                ></CardHeader>
-                <Typography gutterBottom variant="h6" component="h2">
-                  &nbsp;Gaming
-                </Typography>
-              </CardActionArea>
-            </Card>
+          <Grid item>
+            <GameCard
+              color="#4d137f"
+              title={"Fortnite"}
+              subtitle={"Time to choose side!"}
+              image={
+                "https://static1.millenium.org/articles/0/31/21/20/@/713589-calamity-article_list_m-1.jpg"
+              }
+            />
           </Grid>
-
-          <Grid item xs={8} sm={6} md={4} lg={4} xl={4}>
-            <Card sx={{ borderRadius: "8px", maxWitdh: "210px" }}>
-              <CardActionArea>
-                <CardHeader
-                  avatar={
-                    <img
-                      id="img"
-                      className="style-scope yt-img-shadow"
-                      alt=""
-                      src="src/assets/img/movies_color_32.png"
-                      width="32"
-                      height="32"
-                    />
-                  }
-                ></CardHeader>
-                <Typography gutterBottom variant="h6" component="h2">
-                  &nbsp;Movies
-                </Typography>
-              </CardActionArea>
-            </Card>
+          <Grid item>
+            <GameCard
+              color="#ff9900"
+              title={"Overwatch"}
+              subtitle={"What are you waiting?"}
+              image={
+                "https://images5.alphacoders.com/690/thumb-1920-690653.png"
+              }
+            />
           </Grid>
-
-          <Grid item xs={8} sm={6} md={4} lg={4} xl={4}>
-            <Card sx={{ borderRadius: "8px", maxWitdh: "210px" }}>
-              <CardActionArea>
-                <CardHeader
-                  avatar={
-                    <img
-                      id="img"
-                      className="style-scope yt-img-shadow"
-                      alt=""
-                      src="src/assets/img/music_color_32.png"
-                      width="32"
-                      height="32"
-                    />
-                  }
-                ></CardHeader>
-                <Typography gutterBottom variant="h6" component="h2">
-                  &nbsp;Music
-                </Typography>
-              </CardActionArea>
-            </Card>
-          </Grid>
-
-          <Grid item xs={8} sm={6} md={4} lg={4} xl={4}>
-            <Card sx={{ borderRadius: "8px", maxWitdh: "210px" }}>
-              <CardActionArea>
-                <CardHeader
-                  avatar={
-                    <img
-                      id="img"
-                      className="style-scope yt-img-shadow"
-                      alt=""
-                      src="src/assets/img/sports_color_32.png"
-                      width="32"
-                      height="32"
-                    />
-                  }
-                ></CardHeader>
-                <Typography gutterBottom variant="h6" component="h2">
-                  &nbsp;Sports
-                </Typography>
-              </CardActionArea>
-            </Card>
-          </Grid>
-
-          <Grid item xs={8} sm={6} md={4} lg={4} xl={4}>
-            <Card sx={{ borderRadius: "8px", maxWitdh: "210px" }}>
-              <CardActionArea>
-                <CardHeader
-                  avatar={
-                    <img
-                      id="img"
-                      className="style-scope yt-img-shadow"
-                      alt=""
-                      src="src/assets/img/trending_color_32.png"
-                      width="32"
-                      height="32"
-                    />
-                  }
-                ></CardHeader>
-                <Typography gutterBottom variant="h6" component="h2">
-                  &nbsp;Tranding
-                </Typography>
-              </CardActionArea>
-            </Card>
+          <Grid item>
+            <GameCard
+              color="#34241e"
+              title={"PUBG"}
+              subtitle={"Are you ready?"}
+              image={
+                "https://www.itp.net/public/styles/full_img_sml/public/images/2019/05/27/44485-pubg_base1.jpg?itok=EF911Xan"
+              }
+            />
           </Grid>
         </Grid>
       </Box>
 
-      <Container maxWidth="lg">
-        <Typography
-          sx={{ pt: 2, pb: 2 }}
-          gutterBottom
-          variant="h5"
-          component="h2"
-        >
-          Tranding:
-        </Typography>
-        {/* End hero unit */}
+      <Container maxWidth="lg" sx={{ pt: 2 }}>
         <Grid container spacing={4}>
           {cards.map((card) => (
-            <Grid item key={card} xs={12} sm={6} md={4} lg={3} xl={3}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <CardHeader
-                  avatar={
-                    loading ? (
-                      <Skeleton
-                        animation="wave"
-                        variant="circular"
-                        width={40}
-                        height={40}
-                      />
-                    ) : (
-                      <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        R
-                      </Avatar>
-                    )
-                  }
-                  action={
-                    loading ? null : (
-                      <IconButton aria-label="settings">
-                        <MoreVert />
-                      </IconButton>
-                    )
-                  }
-                  title={
-                    loading ? (
-                      <Skeleton
-                        animation="wave"
-                        height={10}
-                        width="80%"
-                        style={{ marginBottom: 6 }}
-                      />
-                    ) : (
-                      "Shrimp"
-                    )
-                  }
-                  subheader={
-                    loading ? (
-                      <Skeleton animation="wave" height={10} width="40%" />
-                    ) : (
-                      new Date().toDateString()
-                    )
-                  }
-                />
-                <CardActionArea
-                  to={{ pathname: "/watch", search: `?v=${card}` }}
-                  component={Link}
-                >
-                  <Image
-                    src="https://source.unsplash.com/random"
-                    height="200px"
-                    width="auto"
-                    fit="cover"
-                    duration={300}
-                    easing="cubic-bezier(0.7, 0, 0.6, 1)"
-                    showLoading={
-                      <Skeleton
-                        variant="rectangular"
-                        width="100%"
-                        height="200px"
-                        animation="wave"
-                      />
-                    }
-                    errorIcon={true}
-                    shift={null}
-                    distanc="100px"
-                    shiftDuration={900}
-                    bgColor="inherit"
-                  />
-                </CardActionArea>
-                <CardContent sx={{ flexGrow: 1 }}>
-                  {loading ? (
-                    <React.Fragment>
-                      <Skeleton
-                        animation="wave"
-                        height={10}
-                        style={{ marginBottom: 6 }}
-                      />
-                      <Skeleton animation="wave" height={10} width="80%" />
-                    </React.Fragment>
-                  ) : (
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                  )}
-                </CardContent>
-                <CardActions>
-                  <IconButton aria-label="play">
-                    <PlayCircle />
-                  </IconButton>
-                  <IconButton aria-label="play">
-                    <Download />
-                  </IconButton>
-                  <IconButton aria-label="add to favorites">
-                    <Favorite color="error" />
-                  </IconButton>
-                  <IconButton aria-label="share">
-                    <Share />
-                  </IconButton>
-                </CardActions>
-              </Card>
-            </Grid>
+            <VideoCard
+              key={card}
+              poster={card}
+              path={card}
+              avatar={card}
+              title={card}
+              name={card}
+            />
           ))}
         </Grid>
       </Container>

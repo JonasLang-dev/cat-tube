@@ -596,8 +596,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
     </>
   );
 
-  const handleSave = () => {
-  };
+  const handleSave = () => {};
 
   useEffect(() => {
     setSelectedIndex(location.pathname);

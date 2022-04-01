@@ -6,6 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="0ad2c4ba-117f-4493-861d-79b80b9fdbbe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/img/fashion_and_beauty_color_32.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/img/gaming_color_32.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/img/movies_color_32.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/img/music_color_32.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/img/sports_color_32.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/img/trending_color_32.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/VideoCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/VideoCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/explore/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/explore/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/HomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/HomePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -8,6 +8,7 @@ import Carousel from "react-material-ui-carousel";
 import Image from "mui-image";
 import Skeleton from "@mui/material/Skeleton";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { Button } from "@mui/material";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
@@ -40,6 +41,7 @@ const HomePage: FC<Home> = ({ loading = false, colorMode, theme }) => {
           bgcolor: "background.paper",
           pt: 4,
           pb: 3,
+          borderRadius: "0.8rem",
         }}
       >
         <Container maxWidth="md">
@@ -54,32 +56,34 @@ const HomePage: FC<Home> = ({ loading = false, colorMode, theme }) => {
             fullHeightHover={true}
             swipe={true}
             sx={{
-              borderRadius: "1rem",
+              borderRadius: "0.8rem",
             }}
             height={matchem ? 400 : matches ? 300 : 240}
           >
             {mdImgs.map((item, index) => {
               return (
-                <Grid item xs={4} key={item.Name}>
-                  <Image
-                    src={item.Image}
-                    sx={{ overflow: "hidden", width: "100%" }}
-                    duration={300}
-                    easing="cubic-bezier(0.7, 0, 0.6, 1)"
-                    showLoading={
-                      <Skeleton
-                        variant="rectangular"
-                        width="100%"
-                        height="200px"
-                        animation="wave"
-                      />
-                    }
-                    errorIcon={true}
-                    shift={null}
-                    distanc="100px"
-                    shiftDuration={900}
-                  />
-                </Grid>
+                <>
+                  <Grid item xs={4} key={item.Name}>
+                    <Image
+                      src={item.Image}
+                      sx={{ overflow: "hidden", width: "100%" }}
+                      duration={300}
+                      easing="cubic-bezier(0.7, 0, 0.6, 1)"
+                      showLoading={
+                        <Skeleton
+                          variant="rectangular"
+                          width="100%"
+                          height="200px"
+                          animation="wave"
+                        />
+                      }
+                      errorIcon={true}
+                      shift={null}
+                      distanc="100px"
+                      shiftDuration={900}
+                    />
+                  </Grid>
+                </>
               );
             })}
           </Carousel>
