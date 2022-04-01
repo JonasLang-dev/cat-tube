@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useLayoutEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -7,6 +7,7 @@ import Carousel from "react-material-ui-carousel";
 // @ts-ignore
 import Image from "mui-image";
 import Skeleton from "@mui/material/Skeleton";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
@@ -17,6 +18,21 @@ interface Home {
 }
 
 const HomePage: FC<Home> = ({ loading = false, colorMode, theme }) => {
+  const matchem = useMediaQuery(theme.breakpoints.up("md"));
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
+
+  const mdImgs = [
+    {
+      Name: "E",
+      Image: "http://localhost:5020/login-the-crown_2-1500x1000.jpg",
+    },
+
+    {
+      Name: "B",
+      Image: "https://source.unsplash.com/featured/?vacuum,cleaner",
+    },
+  ];
+
   return (
     <main>
       <Box
@@ -28,7 +44,7 @@ const HomePage: FC<Home> = ({ loading = false, colorMode, theme }) => {
       >
         <Container maxWidth="md">
           <Carousel
-            autoPlay={true}
+            autoPlay={false}
             animation="fade"
             indicators={true}
             duration={500}
@@ -37,30 +53,17 @@ const HomePage: FC<Home> = ({ loading = false, colorMode, theme }) => {
             cycleNavigation={true}
             fullHeightHover={true}
             swipe={true}
-            height={400}
             sx={{
               borderRadius: "1rem",
             }}
+            height={matchem ? 400 : matches ? 300 : 240}
           >
-            {[
-              {
-                Name: "A",
-                Image: "https://source.unsplash.com/featured/?macbook",
-              },
-              {
-                Name: "B",
-                Image: "https://source.unsplash.com/featured/?vacuum,cleaner",
-              },
-              {
-                Name: "C",
-                Image: "https://source.unsplash.com/featured/?iphone",
-              },
-            ].map((item, index) => {
+            {mdImgs.map((item, index) => {
               return (
                 <Grid item xs={4} key={item.Name}>
                   <Image
                     src={item.Image}
-                    sx={{ overflow: "hidden",  height: "100%" }}
+                    sx={{ overflow: "hidden", width: "100%" }}
                     duration={300}
                     easing="cubic-bezier(0.7, 0, 0.6, 1)"
                     showLoading={
