@@ -48,6 +48,7 @@ import {
   ArrowForwardIosOutlined,
   Brightness7Outlined,
   Brightness4Outlined,
+  PostAddOutlined,
 } from "@mui/icons-material";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../..//hooks/redux.hooks";
@@ -609,16 +610,6 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton
-              sx={{ color: "#EAF3FB" }}
-              onClick={() => {
-                // postRef.current.handleClickOpen();
-                setShowAddVideosForm(true);
-              }}
-              size="large"
-            >
-              <VideoCameraFrontOutlined />
-            </IconButton>
             <IconButton
               size="large"
               edge="end"

@@ -1,9 +1,9 @@
-import express, { NextFunction, Request, Response, urlencoded } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import multer from "multer";
 import fs from "fs";
 import config from "config";
-import bodyParser from "body-parser";
 import requireUser from "../middleware/requireUser";
+import { logger } from "@typegoose/typegoose/lib/logSettings";
 
 const port = config.get<number>("port");
 
@@ -14,7 +14,9 @@ const storage = multer.diskStorage({
     cb(null, `uploads/`);
   },
   filename(req: Request, file: Express.Multer.File, cb) {
-    cb(null, `${Date.now()}.${file.mimetype.split("/")[1]}`);
+    console.log(file);
+    
+    cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
@@ -49,8 +51,10 @@ router.post(
   upload.single("poster"),
   requireUser,
   (req: Request, res: Response) => {
+    logger.log(req.file);
+
     if (req.file) {
-      res.send({ message: `/${req.file.path.split("/")[1]}` });
+      res.send(req.file);
     } else {
       res.send({ message: "Error while uploading" });
     }

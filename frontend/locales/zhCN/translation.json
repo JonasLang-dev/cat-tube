@@ -57,6 +57,8 @@
         "Not a valid email": "邮箱不合法",
         "Password is required": "密码是必需的",
         "Invalid password": "密码无效",
-        "Invalid email or password": "邮箱或密码无效"
+        "Invalid email or password": "邮箱或密码无效",
+        "Content": "内容",
+        "Channel content": "频道内容"
     }
 }

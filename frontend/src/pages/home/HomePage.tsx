@@ -63,28 +63,26 @@ const HomePage: FC<Home> = ({ loading = false, colorMode, theme }) => {
           >
             {mdImgs.map((item, index) => {
               return (
-                <>
-                  <Grid item xs={4} key={item.Name}>
-                    <Image
-                      src={item.Image}
-                      sx={{ overflow: "hidden", width: "100%" }}
-                      duration={300}
-                      easing="cubic-bezier(0.7, 0, 0.6, 1)"
-                      showLoading={
-                        <Skeleton
-                          variant="rectangular"
-                          width="100%"
-                          height="200px"
-                          animation="wave"
-                        />
-                      }
-                      errorIcon={true}
-                      shift={null}
-                      distanc="100px"
-                      shiftDuration={900}
-                    />
-                  </Grid>
-                </>
+                <Grid item xs={4} key={item.Name}>
+                  <Image
+                    src={item.Image}
+                    sx={{ overflow: "hidden", width: "100%" }}
+                    duration={300}
+                    easing="cubic-bezier(0.7, 0, 0.6, 1)"
+                    showLoading={
+                      <Skeleton
+                        variant="rectangular"
+                        width="100%"
+                        height="200px"
+                        animation="wave"
+                      />
+                    }
+                    errorIcon={true}
+                    shift={null}
+                    distanc="100px"
+                    shiftDuration={900}
+                  />
+                </Grid>
               );
             })}
           </Carousel>
