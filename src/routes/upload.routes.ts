@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
   },
   filename(req: Request, file: Express.Multer.File, cb) {
     console.log(file);
-    
+
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
@@ -54,7 +54,7 @@ router.post(
     logger.log(req.file);
 
     if (req.file) {
-      res.send(req.file);
+      res.send({ payload: req.file });
     } else {
       res.send({ message: "Error while uploading" });
     }

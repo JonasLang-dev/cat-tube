@@ -611,6 +611,16 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <IconButton
+              sx={{ color: "#EAF3FB" }}
+              onClick={() => {
+                // postRef.current.handleClickOpen();
+                setShowAddVideosForm(true);
+              }}
+              size="large"
+            >
+              <VideoCameraFrontOutlined />
+            </IconButton>
+            <IconButton
               size="large"
               edge="end"
               aria-label="account of current user"

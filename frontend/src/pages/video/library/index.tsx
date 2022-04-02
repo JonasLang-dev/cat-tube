@@ -28,7 +28,6 @@ import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import { selectCurrentUserStatus } from "../../../features/auth/currentUserSlice";
 import { useAppSelector } from "../../../hooks/redux.hooks";
-// @ts-ignore
 import Image from "mui-image";
 import { red } from "@mui/material/colors";
 
@@ -42,80 +41,6 @@ function Library({ loading = false }) {
     <>
       {currentUserInfo ? (
         <main>
-          <Box
-            sx={{
-              bgcolor: "background.paper",
-              pt: 8,
-              pb: 6,
-              pr: 2,
-              pl: 2,
-              display: { md: "none", lg: "none", xl: "none" },
-            }}
-          >
-            <Box
-              sx={{
-                overflow: "auto",
-                display: "flex",
-                minWidth: "100%",
-                maxWidth: "80vw",
-              }}
-            >
-              <Avatar
-                alt="Remy Sharp"
-                src="/static/images/avatar/1.jpg"
-                component={Link}
-                to="#"
-              />
-              <Avatar
-                alt="Travis Howard"
-                src="/static/images/avatar/2.jpg"
-                component={Link}
-                to="#"
-              />
-              <Avatar
-                alt="Cindy Baker"
-                src="/static/images/avatar/3.jpg"
-                component={Link}
-                to="#"
-              />
-              <Avatar
-                alt="Remy Sharp"
-                src="/static/images/avatar/1.jpg"
-                component={Link}
-                to="#"
-              />
-              <Avatar
-                alt="Travis Howard"
-                src="/static/images/avatar/2.jpg"
-                component={Link}
-                to="#"
-              />
-              <Avatar
-                alt="Cindy Baker"
-                src="/static/images/avatar/3.jpg"
-                component={Link}
-                to="#"
-              />
-              <Avatar
-                alt="Remy Sharp"
-                src="/static/images/avatar/1.jpg"
-                component={Link}
-                to="#"
-              />
-              <Avatar
-                alt="Travis Howard"
-                src="/static/images/avatar/2.jpg"
-                component={Link}
-                to="#"
-              />
-              <Avatar
-                alt="Cindy Baker"
-                src="/static/images/avatar/3.jpg"
-                component={Link}
-                to="#"
-              />
-            </Box>
-          </Box>
           <Container maxWidth="lg" sx={{ pt: 2, pb: 2 }}>
             {/* End hero unit */}
             <Grid container spacing={4}>

@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import VideoCard from "../../components/VideoCard";
 import Carousel from "react-material-ui-carousel";
-// @ts-ignore
 import Image from "mui-image";
 import Skeleton from "@mui/material/Skeleton";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -25,7 +24,7 @@ const HomePage: FC<Home> = ({ loading = false, colorMode, theme }) => {
   const mdImgs = [
     {
       Name: "E",
-      Image: "http://localhost:5020/login-the-crown_2-1500x1000.jpg",
+      Image: "/static/img/login-the-crown_2-1500x1000.jpg",
     },
 
     {

@@ -1,12 +1,10 @@
 import React from "react";
-// @ts-ignore
-import Color from "color"; // v3.2.1
+import Color from "color"; 
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 const CardActionAreaActionArea = styled(CardActionArea)(() => ({

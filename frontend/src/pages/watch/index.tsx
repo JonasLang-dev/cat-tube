@@ -1,15 +1,26 @@
 import React from "react";
 import Plyr from "plyr-react";
 import "plyr-react/dist/plyr.css";
-import { Avatar, Grid, IconButton, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Grid,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { Download, Favorite, Share } from "@mui/icons-material";
 import Copyright from "../../components/Copyright";
 
 function watch() {
   return (
     <main style={{ background: "background.main" }}>
-      <Grid sx={{ p: 1 }} container gap={6}>
-        <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
+      <Grid sx={{ pt: "24px" }} container gap={6}>
+        <Grid
+          sx={{
+            maxWidth: "1100px",
+          }}
+        >
           <Plyr
             crossOrigin="true"
             source={{

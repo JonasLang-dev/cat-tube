@@ -8,7 +8,6 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
-// @ts-ignore
 import Image from "mui-image";
 import Skeleton from "@mui/material/Skeleton";
 
