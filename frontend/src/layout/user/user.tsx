@@ -185,7 +185,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
         <ListItemIcon>
           <Settings fontSize="small" />
         </ListItemIcon>
-        {t("settings")}
+        {t("Settings")}
       </MenuItem>
       <MenuItem component={Link} to="/premium" onClick={handleProfileMenuClose}>
         <ListItemIcon>
@@ -259,7 +259,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
         <ListItemIcon>
           <FeedbackOutlined fontSize="small" />
         </ListItemIcon>
-        {t("feedback")}
+        {t("Feedback")}
       </MenuItem>
       <MenuItem
         onClick={() => {
@@ -608,7 +608,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
           <ListItemIcon>
             {selectedIndex === "/explore" ? <Explore /> : <ExploreOutlined />}
           </ListItemIcon>
-          <ListItemText primary={t("explore")} />
+          <ListItemText primary={t("Explore")} />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -626,7 +626,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
               <SubscriptionsOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("subscriptions")} />
+          <ListItemText primary={t("Subscriptions")} />
         </ListItemButton>
         <ListItemButton
           component={Link}
@@ -718,7 +718,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
               <SettingsOutlined />
             )}
           </ListItemIcon>
-          <ListItemText primary={t("settings")} />
+          <ListItemText primary={t("Settings")} />
         </ListItemButton>
         <ListItemButton
           href="mailto:supercutcat@outlook.com?subject=feedback"
@@ -727,7 +727,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
           <ListItemIcon>
             <FeedbackOutlined />
           </ListItemIcon>
-          <ListItemText primary={t("feedback")} />
+          <ListItemText primary={t("Feedback")} />
         </ListItemButton>
         <ListItemButton
           onClick={() => {
@@ -919,7 +919,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
                   to={`/users/signin?redirect=${location.pathname}`}
                   component={Link}
                 >
-                  {t("signIn")}
+                  {t("Sign In")}
                 </Button>
               </>
             )}

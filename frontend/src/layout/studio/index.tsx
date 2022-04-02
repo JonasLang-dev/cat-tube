@@ -244,7 +244,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
         <ListItemIcon>
           <FeedbackOutlined fontSize="small" />
         </ListItemIcon>
-        {t("feedback")}
+        {t("Feedback")}
       </MenuItem>
       <MenuItem
         onClick={() => {
@@ -479,7 +479,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           <ListItemIcon>
             <FeedbackOutlined />
           </ListItemIcon>
-          <ListItemText sx={{ whiteSpace: "nowrap" }} primary={t("feedback")} />
+          <ListItemText sx={{ whiteSpace: "nowrap" }} primary={t("Feedback")} />
         </ListItemButton>
         <ListItemButton
           onClick={() => {
@@ -536,7 +536,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
   const getHeader = () => {
     switch (location.pathname) {
       case "/studio":
-        return t("Dashboard");
+        return t("Channel dashboard");
       case "/studio/video":
         return t("Channel content");
       default:

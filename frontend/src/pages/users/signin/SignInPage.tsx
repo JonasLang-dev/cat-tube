@@ -171,7 +171,7 @@ const SignInPage: FC<SignIn> = ({ theme, colorMode }) => {
           </Avatar>
 
           <Typography component="h1" variant="h5">
-            {t("signIn")}
+            {t("Sign In")}
           </Typography>
           <Box
             component="form"
@@ -212,7 +212,7 @@ const SignInPage: FC<SignIn> = ({ theme, colorMode }) => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              {t("signIn")}
+              {t("Sign In")}
             </LoadingButton>
 
             <Grid container>

@@ -76,7 +76,7 @@ const Subscriptions: FC<SubscriptionsType> = ({ loading = false }) => {
                   component={Link}
                   sx={{ width: "200px" }}
                 >
-                  {t("signIn")}
+                  {t("Sign In")}
                 </Button>
               </Grid>
             </Stack>
