@@ -4,12 +4,12 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import Image from "mui-image";
 import Skeleton from "@mui/material/Skeleton";
+import { Circle } from "@mui/icons-material";
 
 interface VideoCardType {
   path: any;
@@ -80,9 +80,9 @@ const VideoCard: FC<VideoCardType> = ({
         </CardActionArea>
         <CardContent
           display="grid"
-          gridTemplateAreas="'avatar title' 'avatar info'"
+          gridTemplateAreas="'avatar title title' 'name info time'"
           gridTemplateRows="1fr 1fr"
-          gridTemplateColumns="1fr 2fr"
+          gridTemplateColumns="1fr 1fr 1fr"
           component={Grid}
         >
           <Box gridArea="avatar">
@@ -93,16 +93,14 @@ const VideoCard: FC<VideoCardType> = ({
             />
           </Box>
           <Box alignSelf="center" gridArea="title">
-            <Typography>Title</Typography>
+            <Typography variant="body1" color="textPrimary">
+              This is the title
+            </Typography>
           </Box>
-          <Box
-            gridArea="info"
-            sx={{
-              borderTop: "1px solid rgba(0, 0, 0, 0.12)",
-              paddingTop: "0.5rem",
-            }}
-          >
+
+          <Box alignSelf="center" gridArea="name">
             <Typography
+              noWrap
               variant="body2"
               color="textSecondary"
               component="p"
@@ -110,12 +108,28 @@ const VideoCard: FC<VideoCardType> = ({
             >
               Remy Sharp
             </Typography>
+          </Box>
+          <Box alignSelf="center" gridArea="info">
             <Typography
+              noWrap
+              textAlign="center"
+              variant="body2"
+              alignItems="center"
+              color="textSecondary"
+            >
+              11 views
+            </Typography>
+          </Box>
+          <Box alignSelf="center" gridArea="time">
+            <Typography
+              noWrap
               textAlign="end"
               variant="body2"
               alignItems="center"
               color="textSecondary"
             >
+              <Circle sx={{ fontSize: "5px", height: 10 }} />
+              &nbsp;
               {new Date().toLocaleDateString()}
             </Typography>
           </Box>
