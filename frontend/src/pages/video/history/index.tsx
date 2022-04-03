@@ -81,7 +81,9 @@ function History() {
           container
           spacing={3}
           direction={matchSm ? "row-reverse" : "row"}
-          height="94vh"
+          minHeight="94vh"
+          maxWidth="100vw"
+          margin="0"
         >
           <Grid
             item
