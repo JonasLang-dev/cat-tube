@@ -1,8 +1,19 @@
-import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
+import { getModelForClass, modelOptions, prop, Ref } from "@typegoose/typegoose";
 import { User } from "./user.model";
+import { Category } from "./category.model";
+import { Feeling } from "./feeling.model";
+import { Comment } from "./comment.model";
+
+@modelOptions({
+  schemaOptions: {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+    timestamps: true,
+  }
+})
 
 export class Post {
-  @prop({ ref: () => User, type: () => User })
+  @prop({ ref: () => User })
   public user: Ref<User>;
 
   @prop({ required: true })
@@ -19,6 +30,46 @@ export class Post {
 
   @prop({ default: false })
   public isActive: boolean;
+
+  @prop({ default: false })
+  public isPublic: boolean;
+
+  @prop({ type: Number, default: 0 })
+  public views: number;
+
+  @prop({ ref: () => Category })
+  public category: Ref<Category>;
+
+  @prop({
+    ref: () => Feeling,
+    localField: "_id",
+    foreignField: "post",
+    match: { isLike: true },
+    justOne: false,
+    count: true
+  })
+  public likes: Ref<Feeling>[];
+
+  @prop({
+    ref: () => Feeling,
+    localField: "_id",
+    foreignField: "post",
+    match: { isLike: false },
+    justOne: false,
+    count: true
+  })
+  public dislikes: Ref<Feeling>[];
+
+  @prop({
+    ref: () => Comment,
+    localField: "_id",
+    foreignField: "postId",
+    justOne: false,
+    count: true
+  })
+  public comments: Ref<Comment>[];
+
+
 }
 
 const PostModel = getModelForClass(Post, {

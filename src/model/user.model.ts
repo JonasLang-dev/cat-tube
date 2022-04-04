@@ -10,6 +10,7 @@ import {
 import { nanoid } from "nanoid";
 import argon2 from "argon2";
 import log from "../utils/logger";
+import { Post } from "./post.model";
 
 export const privateFields = [
   "password",
@@ -38,15 +39,20 @@ export const _PrivateFields = [
 
   return;
 })
-// @index({ email: 1 }) required is not work
+
+@index({ email: 1 }, { unique: true })
+
 @modelOptions({
   schemaOptions: {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
     timestamps: true,
   },
   options: {
     allowMixed: Severity.ALLOW,
   },
 })
+
 export class User {
   @prop({ lowercase: true, required: true, unique: true })
   email: string;
@@ -77,6 +83,14 @@ export class User {
 
   @prop({ default: false })
   isDelete: boolean;
+
+  @prop({
+    ref: () => Post,
+    localField: "_id",
+    foreignField: "user",
+    justOne: false,
+    count: true
+  })
 
   async validatePassword(this: DocumentType<User>, candidatePassword: string) {
     try {
