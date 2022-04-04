@@ -1,4 +1,4 @@
-import { getModelForClass, modelOptions, prop, Ref } from "@typegoose/typegoose";
+import { modelOptions, prop, Ref } from "@typegoose/typegoose";
 import { Post } from "./post.model";
 import { Reply } from "./reply.model";
 import { User } from "./user.model";
@@ -21,12 +21,12 @@ export class Comment {
     @prop({ required: true, minlength: 3 })
     content: string;
 
-    @prop({ 
-        ref: () => Reply, 
-        localField: "_id", 
-        foreignField: "comment", 
-        justOne: false, 
-        options: { sort: { createdAt: -1 } } 
+    @prop({
+        ref: () => Reply,
+        localField: "_id",
+        foreignField: "comment",
+        justOne: false,
+        options: { sort: { createdAt: -1 } }
     })
     replies: Ref<Reply>[];
 }

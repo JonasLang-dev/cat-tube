@@ -1,4 +1,4 @@
-import { getModelForClass, modelOptions, prop, Ref } from "@typegoose/typegoose";
+import { modelOptions, prop, Ref } from "@typegoose/typegoose";
 import { Category } from "./category.model";
 import { Feeling } from "./feeling.model";
 import { Comment } from "./comment.model";

@@ -1,6 +1,12 @@
-import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
+import { modelOptions, prop, Ref } from "@typegoose/typegoose";
 import { Post } from "./post.model";
 import { User } from "./user.model";
+
+@modelOptions({
+    schemaOptions: {
+        timestamps: true,
+    }
+})
 
 export class Feeling {
     @prop({ ref: () => User })
