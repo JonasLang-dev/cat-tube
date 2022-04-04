@@ -12,22 +12,21 @@ import { User } from "./user.model";
 })
 
 export class Comment {
-    @prop({ ref: () => User, required: true })
+    @prop({ ref: () => User })
     user: Ref<User>;
 
-    @prop({ ref: () => Post, required: true })
+    @prop({ ref: () => Post })
+    post: Ref<Post>;
 
     @prop({ required: true, minlength: 3 })
     content: string;
 
-    @prop({ ref: () => Reply, localField: "_id", foreignField: "comment", justOne: false, options: { sort: { createdAt: -1 } } })
+    @prop({ 
+        ref: () => Reply, 
+        localField: "_id", 
+        foreignField: "comment", 
+        justOne: false, 
+        options: { sort: { createdAt: -1 } } 
+    })
     replies: Ref<Reply>[];
 }
-
-const CommentModel = getModelForClass(Comment, {
-    schemaOptions: {
-        timestamps: true,
-    },
-});
-
-export default CommentModel;

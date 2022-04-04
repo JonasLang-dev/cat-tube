@@ -10,13 +10,5 @@ export class Feeling {
     isLike: boolean;
 
     @prop({ ref: () => Post })
-    post: string;
+    post: Ref<Post>;
 }
-
-const FeelingModel = getModelForClass(Feeling, {
-    schemaOptions: {
-        timestamps: true,
-    },
-});
-
-export default FeelingModel;

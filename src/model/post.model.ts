@@ -1,8 +1,8 @@
 import { getModelForClass, modelOptions, prop, Ref } from "@typegoose/typegoose";
-import { User } from "./user.model";
 import { Category } from "./category.model";
 import { Feeling } from "./feeling.model";
 import { Comment } from "./comment.model";
+import { User } from "./user.model";
 
 @modelOptions({
   schemaOptions: {
@@ -68,14 +68,5 @@ export class Post {
     count: true
   })
   public comments: Ref<Comment>[];
-
-
 }
 
-const PostModel = getModelForClass(Post, {
-  schemaOptions: {
-    timestamps: true,
-  },
-});
-
-export default PostModel;

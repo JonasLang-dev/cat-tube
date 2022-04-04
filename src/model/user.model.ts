@@ -6,6 +6,7 @@ import {
   index,
   prop,
   Severity,
+  Ref,
 } from "@typegoose/typegoose";
 import { nanoid } from "nanoid";
 import argon2 from "argon2";
@@ -91,6 +92,7 @@ export class User {
     justOne: false,
     count: true
   })
+  public posts: Ref<Post>[];
 
   async validatePassword(this: DocumentType<User>, candidatePassword: string) {
     try {
@@ -102,6 +104,4 @@ export class User {
   }
 }
 
-const UserModel = getModelForClass(User);
 
-export default UserModel;

@@ -1,7 +1,17 @@
-import { getModelForClass, modelOptions, prop, Ref } from "@typegoose/typegoose";
+import { getModelForClass, modelOptions, pre, prop, Ref } from "@typegoose/typegoose";
 import { Comment } from "./comment.model";
-import { Post } from "./post.model";
 import { User } from "./user.model";
+
+@pre<Reply>("find", async function () {
+    this.populate({
+        path: "user",
+        select: "username avatar",
+        options: {
+            sort: "+createdAt",
+        }
+    })
+})
+
 
 @modelOptions({
     schemaOptions: {
@@ -16,16 +26,8 @@ export class Reply {
     user: Ref<User>;
 
     @prop({ ref: () => Comment })
+    comment: Ref<Comment>;
 
     @prop({ required: true, minlength: 3 })
     content: string;
-
 }
-
-const ReplyModel = getModelForClass(Reply, {
-    schemaOptions: {
-        timestamps: true,
-    },
-});
-
-export default ReplyModel;

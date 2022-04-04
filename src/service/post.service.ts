@@ -1,6 +1,7 @@
-import PostModel, { Post } from "../model/post.model";
+import { Post } from "../model/post.model";
 import { FilterQuery, QueryOptions, UpdateQuery } from "mongoose";
 import { _PrivateFields } from "../model/user.model";
+import { PostModel } from "../model";
 
 export const createPost = (input: Partial<Post>) => {
   return PostModel.create(input);
