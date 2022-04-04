@@ -1,9 +1,5 @@
-import React from "react";
-import {
-  CropSquare,
-  ExploreOutlined,
-  HistoryOutlined,
-} from "@mui/icons-material";
+import React, { FC } from "react";
+import { ExploreOutlined, HistoryOutlined } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../hooks/redux.hooks";
@@ -27,13 +23,15 @@ import { IconButton, List, ListItem, Skeleton } from "@mui/material";
 import Box from "@mui/system/Box";
 import Image from "mui-image";
 import ClearIcon from "@mui/icons-material/Clear";
-import VideoInfoCard from "../../../components/VideoInfoCard";
 
-function History() {
+interface HistoryType {
+  theme: any;
+}
+
+const History: FC<HistoryType> = ({ theme }) => {
   const { t } = useTranslation();
   const userInfo = useAppSelector(selectCurrentUserStatus);
   const matchSm = useMediaQuery("(min-width:600px)");
-  const matchMd = useMediaQuery("(min-width:900px)");
   const [value, setValue] = React.useState<"watch" | "search">("watch");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,21 +136,22 @@ function History() {
                   fullWidth={false}
                   startIcon={<DeleteIcon />}
                 >
-                  {t("Clear all watch history")}
+                  {t("Clear history")}
                 </Button>
               </Box>
             </Stack>
           </Grid>
           <Grid item xs={12} sm={8} md={8} lg={8} xl={8}>
             <Container>
-              <Box sx={{ pt: "1rem" }}>
+              <Box sx={{ pt: "1rem", pb: 2 }}>
                 <Typography variant="h5">
                   {value === "watch" ? t("Watch History") : t("Search History")}
                 </Typography>
               </Box>
-              <List>
+              <Divider />
+              <List sx={{ pt: 4 }}>
                 <ListItem>
-                  <Box height={138} width={226}>
+                  <Box height={138} width={246}>
                     <Image
                       src={
                         "https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
@@ -185,15 +184,26 @@ function History() {
                       </Typography>
                       <Typography variant="body2">supercutcat</Typography>
                       <Typography variant="body2">10k views</Typography>
-                      <Typography variant="body2">This is desc</Typography>
+                      <Typography
+                        sx={{
+                          [theme.breakpoints.down("md")]: {
+                            display: "none",
+                          },
+                        }}
+                        variant="body2"
+                      >
+                        This is desc
+                      </Typography>
                     </Stack>
                   </Box>
                   <Box height="100px" sx={{ pl: "1rem" }}>
-                    <ClearIcon />
+                    <IconButton>
+                      <ClearIcon />
+                    </IconButton>
                   </Box>
                 </ListItem>
                 <ListItem>
-                  <Box height={138} width={226}>
+                  <Box height={138} width={246}>
                     <Image
                       src={
                         "https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
@@ -226,11 +236,22 @@ function History() {
                       </Typography>
                       <Typography variant="body2">supercutcat</Typography>
                       <Typography variant="body2">10k views</Typography>
-                      <Typography variant="body2">This is desc</Typography>
+                      <Typography
+                        sx={{
+                          [theme.breakpoints.down("md")]: {
+                            display: "none",
+                          },
+                        }}
+                        variant="body2"
+                      >
+                        This is desc
+                      </Typography>
                     </Stack>
                   </Box>
                   <Box height="100px" sx={{ pl: "1rem" }}>
-                    <ClearIcon />
+                    <IconButton>
+                      <ClearIcon />
+                    </IconButton>
                   </Box>
                 </ListItem>
                 <ListItem>
@@ -241,7 +262,7 @@ function History() {
                       borderRadius: ".4rem",
                     }}
                     height={138}
-                    width={226}
+                    width={246}
                   >
                     <Image
                       src={
@@ -271,11 +292,22 @@ function History() {
                       </Typography>
                       <Typography variant="body2">supercutcat</Typography>
                       <Typography variant="body2">10k views</Typography>
-                      <Typography variant="body2">This is desc</Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          [theme.breakpoints.down("md")]: {
+                            display: "none",
+                          },
+                        }}
+                      >
+                        This is desc
+                      </Typography>
                     </Stack>
                   </Box>
                   <Box height="100px" sx={{ pl: "1rem" }}>
-                    <ClearIcon />
+                    <IconButton>
+                      <ClearIcon />
+                    </IconButton>
                   </Box>
                 </ListItem>
               </List>
@@ -285,6 +317,6 @@ function History() {
       )}
     </>
   );
-}
+};
 
 export default History;

@@ -98,7 +98,7 @@ function App() {
               />
               <Route path="/explore" element={<Explore />} />
               <Route path="/library" element={<Library />} />
-              <Route path="/history" element={<History />} />
+              <Route path="/history" element={<History theme={theme} />} />
               <Route path="/download" element={<Download />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/subscriptions" element={<Subscriptions />} />
