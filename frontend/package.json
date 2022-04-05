@@ -18,7 +18,7 @@
     "@mui/icons-material": "^5.5.1",
     "@mui/lab": "^5.0.0-alpha.75",
     "@mui/material": "^5.5.3",
-    "@mui/x-data-grid": "^5.7.0",
+    "@mui/x-data-grid": "^5.8.0",
     "@reduxjs/toolkit": "^1.8.1",
     "@tauri-apps/api": "^1.0.0-rc.3",
     "axios": "^0.26.1",
