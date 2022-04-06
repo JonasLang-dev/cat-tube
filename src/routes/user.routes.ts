@@ -1,67 +1,74 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import {
   createUserHandler,
   forgetPasswordHandler,
-  getAllUserHandler,
+  getUserHandler,
   getCurrentUserHandler,
   resetPasswordHandler,
   verifyUserHandler,
   deleteUserHandler,
   updateUserHandler,
+  updateAvatarHandler,
+  updatePasswordHandler,
 } from "../controller/user.controller";
 import requireUser from "../middleware/requireUser";
 import validateResource from "../middleware/validateResourse";
 import {
   createUserSchema,
-  deleteUserSchema,
   forgetPasswordSchema,
   resetPasswordSchema,
   verifyUserSchema,
   updateUserSchema,
+  updatePasswordSchema,
 } from "../schema/user.schema";
+import { upload } from "../utils/multer";
 
 const router = express.Router();
 
+router.get("/", requireUser, getUserHandler);
+
 router.post(
-  "/api/users",
+  "/",
   validateResource(createUserSchema),
   createUserHandler
 );
 
+router.put("/", validateResource(updateUserSchema), updateUserHandler);
+
+router.delete("/", deleteUserHandler);
+
+router.get("/current", requireUser, getCurrentUserHandler);
+
 router.get(
-  "/api/users/verify/:id/:verificationCode",
+  "/verify/:id/:verificationCode",
   validateResource(verifyUserSchema),
   verifyUserHandler
 );
 
-router.post(
-  "/api/users/forgotpassword",
+router.put(
+  "/forgotpassword",
   validateResource(forgetPasswordSchema),
   forgetPasswordHandler
 );
 
-router.post(
-  "/api/users/resetpassword/:id/:passwordResetCode",
+router.put(
+  "/resetpassword/:id/:passwordResetCode",
   validateResource(resetPasswordSchema),
   resetPasswordHandler
 );
 
-router.get("/api/users/current", requireUser, getCurrentUserHandler);
-
-router.get("/api/users", getAllUserHandler);
-
-router.delete(
-  "/api/users/:id",
+router.put(
+  "/avatar",
   requireUser,
-  validateResource(deleteUserSchema),
-  deleteUserHandler
+  upload.single("avatar"),
+  updateAvatarHandler
 );
 
-router.post(
-  "/api/users/:id",
+router.put(
+  "/password/new",
   requireUser,
-  validateResource(updateUserSchema),
-  updateUserHandler
+  validateResource(updatePasswordSchema),
+  updatePasswordHandler
 );
 
 export default router;

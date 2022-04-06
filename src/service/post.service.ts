@@ -14,7 +14,7 @@ export const findPosts = (
   return PostModel.find(query, {}, options).populate("user", _PrivateFields);
 };
 
-export const findbyId = (id: string) => {
+export const findPostbyId = async (id: string) => {
   return PostModel.findById(id).populate("user");
 };
 

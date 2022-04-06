@@ -7,4 +7,11 @@ export const createSessionSchema = object({
     })
 })
 
+export const removeSessionSchema = object({
+    params: object({
+        id: string({ required_error: "Id is required." })
+    })
+})
+
 export type CreateSessionInput = TypeOf<typeof createSessionSchema>["body"]
+export type RemoveSessionInput = TypeOf<typeof removeSessionSchema>["params"]

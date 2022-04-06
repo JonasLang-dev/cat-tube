@@ -1062,7 +1062,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
       <Box
         component="main"
         sx={{
-          backgroundColor: (theme) =>
+          backgroundColor: () =>
             theme.palette.mode === "light"
               ? theme.palette.grey[100]
               : theme.palette.grey[900],

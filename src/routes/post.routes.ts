@@ -1,7 +1,6 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import {
   createPosttHanler,
-  findUserPostsHandler,
   findAllPostsHandler,
   deletePostHandler,
   updatePostHandler,
@@ -12,16 +11,16 @@ import { createPostSchema, updatePostSchema } from "../schema/post.schema";
 
 const router = express.Router();
 
-router.get("/api/posts/:id", requireUser, findUserPostsHandler);
-router.get("/api/posts", requireUser, findAllPostsHandler);
+
+router.get("/", findAllPostsHandler);
 router.put(
-  "/api/posts",
+  "/",
   requireUser,
   validateResource(createPostSchema),
   createPosttHanler
 );
 router.post(
-  "/api/posts/:id",
+  "/:id",
   requireUser,
   validateResource(updatePostSchema),
   updatePostHandler

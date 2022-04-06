@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { get } from "lodash";
-import { CreateSessionInput } from "../schema/auth.schema";
+import { CreateSessionInput, RemoveSessionInput } from "../schema/auth.schema";
 import {
   findSessionById,
   findSessions,
@@ -86,11 +86,27 @@ export const refreshAccessTokenHandler = async (
   return res.send({ accessToken });
 };
 
-export const getSessionHandler = async (req: Request, res: Response) => {
-  if (res.locals.user) {
-    const sessions = await findSessions({});
-    return res.send(sessions);
-  } else {
-    return res.send([{ message: "Unauthorized" }]).status(401);
-  }
+export const getSessionHandler = async (_req: Request, res: Response) => {
+  const sessions = await findSessions({ "user": res.locals.user._id });
+  return res.send(sessions);
+
 };
+
+export const removeSessionHandler = async (req: Request<RemoveSessionInput, {}, {}>, res: Response) => {
+  const session = await findSessionById(req.params.id);
+
+  if (!session || !session.valid) {
+    return res.status(400).send({ message: "Could not remove session" });
+  }
+
+  if (session.user != res.locals.user._id) {
+    res.status(400).send({ message: "Could not remove session" });
+  }
+
+  session.valid = false;
+
+  session.save()
+
+  return res.send({ message: "Session removed" });
+
+}

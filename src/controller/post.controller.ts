@@ -3,7 +3,7 @@ import { CreatePostInput, UpdatePostSchema } from "../schema/post.schema";
 import {
   createPost,
   deletePost,
-  findbyId,
+  findPostbyId,
   findPosts,
   updatePost,
 } from "../service/post.service";
@@ -43,20 +43,18 @@ export const findUserPostsHandler = async (req: Request, res: Response) => {
   return res.send(posts);
 };
 
-export const findAllPostsHandler = async (req: Request, res: Response) => {
-  if (res.locals.user.isAdmin) {
-    const posts = await findPosts({});
-    return res.send(posts);
-  } else {
-    return res.status(401).send([{ message: "Unauthorized" }]);
-  }
+export const findAllPostsHandler = async (__req: Request, res: Response) => {
+
+  const posts = await findPosts({});
+  return res.send({ data: posts });
+
 };
 
 export const deletePostHandler = async (req: Request, res: Response) => {
   const { id } = req.params;
   const user = res.locals.user;
 
-  const post = await findbyId(id);
+  const post = await findPostbyId(id);
 
   if (!post) {
     return res.status(404).send([{ message: "Post not found" }]);
@@ -85,7 +83,7 @@ export const updatePostHandler = async (
   const data = req.body;
   const user = res.locals.user;
 
-  const post = await findbyId(id);
+  const post = await findPostbyId(id);
 
   if (!post) {
     return res.status(404).send([{ message: "Post not found" }]);
@@ -98,12 +96,12 @@ export const updatePostHandler = async (
   if (user.isAdmin) {
     try {
       const updatedPost = await updatePost({ _id: id }, data, { new: true });
-      res.send(updatedPost);
+      res.send({ data: updatedPost });
     } catch (error: any) {
       res.status(400).send([{ message: error.message }]);
     }
   }
-  
+
   // @ts-ignore
   if (post.user?._id != user._id) {
     return res.status(401).send([{ message: "Unauthorized" }]);

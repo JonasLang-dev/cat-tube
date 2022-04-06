@@ -1,6 +1,6 @@
 import { modelOptions, prop, Ref } from "@typegoose/typegoose";
 import { Category } from "./category.model";
-import { Feeling } from "./feeling.model";
+import { Like } from "./like.model";
 import { Comment } from "./comment.model";
 import { User } from "./user.model";
 
@@ -19,7 +19,7 @@ export class Post {
   @prop({ required: true })
   public title: string;
 
-  @prop({})
+  @prop()
   public videoUrl: string;
 
   @prop()
@@ -41,24 +41,24 @@ export class Post {
   public category: Ref<Category>;
 
   @prop({
-    ref: () => Feeling,
+    ref: () => Like,
     localField: "_id",
     foreignField: "post",
     match: { isLike: true },
     justOne: false,
     count: true
   })
-  public likes: Ref<Feeling>[];
+  public likes: Ref<Like>[];
 
   @prop({
-    ref: () => Feeling,
+    ref: () => Like,
     localField: "_id",
     foreignField: "post",
     match: { isLike: false },
     justOne: false,
     count: true
   })
-  public dislikes: Ref<Feeling>[];
+  public dislikes: Ref<Like>[];
 
   @prop({
     ref: () => Comment,

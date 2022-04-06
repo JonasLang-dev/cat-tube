@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import multer from "multer";
 import fs from "fs";
 import config from "config";
@@ -10,12 +10,10 @@ const port = config.get<number>("port");
 const router = express.Router();
 
 const storage = multer.diskStorage({
-  destination(req: Request, file: Express.Multer.File, cb) {
+  destination(_req: Request, _file: Express.Multer.File, cb) {
     cb(null, `uploads/`);
   },
-  filename(req: Request, file: Express.Multer.File, cb) {
-    console.log(file);
-
+  filename(_req: Request, file: Express.Multer.File, cb) {
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });

@@ -8,7 +8,7 @@ import { User } from "./user.model";
     }
 })
 
-export class Feeling {
+export class Like {
     @prop({ ref: () => User })
     user: Ref<User>;
 

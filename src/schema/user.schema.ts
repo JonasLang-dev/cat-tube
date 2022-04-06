@@ -59,21 +59,30 @@ export const resetPasswordSchema = object({
   }),
 });
 
-export const deleteUserSchema = object({
-  params: object({
-    id: string({ required_error: "Id is required." }),
-  }),
-});
-
 export const updateUserSchema = object({
-  params: object({
-    id: string({ required_error: "Id is required." }),
-  }),
   body: object({
     name: string().optional(),
     email: string().email("Not a valid email").optional(),
     avatar: string().optional(),
   }),
+});
+
+export const updatePasswordSchema = object({
+  body: object({
+    oldPassword: string({ required_error: "Old password is required" }),
+    newPassword: string({ required_error: "New password is required" }),
+    passwordConfirmation: string({
+      required_error: "Password confirmation is required",
+    }),
+  })
+    .refine((data) => data.newPassword === data.passwordConfirmation, {
+      message: "Password do not match",
+      path: ["passwordConfirmation"],
+    })
+    .refine((data) => data.oldPassword !== data.newPassword, {
+      message: "Old password and new password should not be the same",
+      path: ["newPassword"],
+    }),
 });
 
 export type CreateUserInput = TypeOf<typeof createUserSchema>["body"];
@@ -84,6 +93,6 @@ export type ForgetPasswordInput = TypeOf<typeof forgetPasswordSchema>["body"];
 
 export type ResetPasswordSchema = TypeOf<typeof resetPasswordSchema>;
 
-export type deleteUserInput = TypeOf<typeof deleteUserSchema>["params"];
+export type UpdateUserInput = TypeOf<typeof updateUserSchema>["body"];
 
-export type updateUserSchema = TypeOf<typeof updateUserSchema>;
+export type UpdatePasswordInput = TypeOf<typeof updatePasswordSchema>["body"];
