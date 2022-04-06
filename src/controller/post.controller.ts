@@ -44,12 +44,10 @@ export const findUserPostsHandler = async (req: Request, res: Response) => {
 };
 
 export const findAllPostsHandler = async (req: Request, res: Response) => {
-  if (res.locals.user.isAdmin) {
-    const posts = await findPosts({});
-    return res.send(posts);
-  } else {
-    return res.status(401).send([{ message: "Unauthorized" }]);
-  }
+
+  const posts = await findPosts({});
+  return res.send(posts);
+
 };
 
 export const deletePostHandler = async (req: Request, res: Response) => {
@@ -103,7 +101,7 @@ export const updatePostHandler = async (
       res.status(400).send([{ message: error.message }]);
     }
   }
-  
+
   // @ts-ignore
   if (post.user?._id != user._id) {
     return res.status(401).send([{ message: "Unauthorized" }]);

@@ -30,7 +30,7 @@ app.use("/api", apiLimiter);
 
 app.use(deserializeUser);
 
-app.use(router);
+app.use("/api", router);
 
 app.use(express.static("uploads"));
 

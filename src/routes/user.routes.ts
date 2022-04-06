@@ -25,47 +25,47 @@ import { upload } from "../utils/multer";
 
 const router = express.Router();
 
-router.get("/api/users", requireUser, getUserHandler);
+router.get("/", requireUser, getUserHandler);
 
 router.post(
-  "/api/users",
+  "/",
   validateResource(createUserSchema),
   createUserHandler
 );
 
-router.put("/api/users", validateResource(updateUserSchema), updateUserHandler);
+router.put("/", validateResource(updateUserSchema), updateUserHandler);
 
-router.delete("/api/users", deleteUserHandler);
+router.delete("/", deleteUserHandler);
 
-router.get("/api/users/current", requireUser, getCurrentUserHandler);
+router.get("/current", requireUser, getCurrentUserHandler);
 
 router.get(
-  "/api/users/verify/:id/:verificationCode",
+  "/verify/:id/:verificationCode",
   validateResource(verifyUserSchema),
   verifyUserHandler
 );
 
 router.put(
-  "/api/users/forgotpassword",
+  "/forgotpassword",
   validateResource(forgetPasswordSchema),
   forgetPasswordHandler
 );
 
 router.put(
-  "/api/users/resetpassword/:id/:passwordResetCode",
+  "/resetpassword/:id/:passwordResetCode",
   validateResource(resetPasswordSchema),
   resetPasswordHandler
 );
 
 router.put(
-  "/api/users/avatar",
+  "/avatar",
   requireUser,
   upload.single("avatar"),
   updateAvatarHandler
 );
 
 router.put(
-  "/api/users/password/new",
+  "/password/new",
   requireUser,
   validateResource(updatePasswordSchema),
   updatePasswordHandler
