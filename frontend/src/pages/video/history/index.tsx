@@ -81,6 +81,7 @@ const History: FC<HistoryType> = ({ theme }) => {
           direction={matchSm ? "row-reverse" : "row"}
           minHeight="94vh"
           maxWidth="100vw"
+          width="100%"
           margin="0"
         >
           <Grid

@@ -11,8 +11,6 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
 import {
   Link as Links,
   ListItemButton,
@@ -73,11 +71,15 @@ import {
   CoslDrawer,
   DrawerHeader,
   drawerWidth,
+  Search,
+  SearchIconWrapper,
+  StyledInputBase,
 } from "./components";
 import { useTranslation } from "react-i18next";
 import PostDialog from "../../components/PostDialog";
 import AboutDialog from "../../components/AboutDialog";
 import * as locales from "../../../locales";
+import SearchIcon from "@mui/icons-material/Search";
 type SupportedLocales = keyof typeof locales;
 
 interface Layout {
@@ -789,8 +791,6 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
     </>
   );
 
-  const handleSave = () => {};
-
   useEffect(() => {
     setSelectedIndex(location.pathname);
   }, [location]);
@@ -831,7 +831,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
             size="large"
             edge="start"
             aria-label="open drawer"
-            sx={{ mr: 2 }}
+            sx={{ mr: 1 }}
             onClick={toggleDrawer}
           >
             <MenuSharp />
@@ -854,7 +854,16 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
               ube
             </Typography>
           )}
-
+          <Box sx={{ flexGrow: 1, minWidth: "1rem" }} />
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search>
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: "flex", alignItems: "center" }}>

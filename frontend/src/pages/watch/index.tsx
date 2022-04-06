@@ -15,53 +15,55 @@ import Copyright from "../../components/Copyright";
 function watch() {
   return (
     <main style={{ background: "background.main" }}>
-      <Grid sx={{ pt: "24px" }} container gap={6}>
-        <Grid
-          sx={{
-            maxWidth: "1100px",
-          }}
-        >
-          <Plyr
-            crossOrigin="true"
-            source={{
-              type: "video",
-              title: "test",
-              poster:
-                "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg",
-              sources: [
-                {
-                  size: 576,
-                  src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4",
-                  type: "video/mp4",
-                },
-                {
-                  size: 720,
-                  src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4",
-                  type: "video/mp4",
-                },
-                {
-                  size: 1080,
-                  src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4",
-                  type: "video/mp4",
-                },
-              ],
-              tracks: [
-                {
-                  default: true,
-                  kind: "captions",
-                  label: "English captions",
-                  src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt",
-                  srcLang: "en",
-                },
-                {
-                  kind: "captions",
-                  label: "Légendes en français",
-                  src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt",
-                  srcLang: "fr",
-                },
-              ],
+      <Grid sx={{ p: "1rem" }} container gap={6}>
+        <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
+          <Box
+            sx={{
+              maxWidth: "1000px",
             }}
-          />
+          >
+            <Plyr
+              crossOrigin="true"
+              source={{
+                type: "video",
+                title: "test",
+                poster:
+                  "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg",
+                sources: [
+                  {
+                    size: 576,
+                    src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4",
+                    type: "video/mp4",
+                  },
+                  {
+                    size: 720,
+                    src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4",
+                    type: "video/mp4",
+                  },
+                  {
+                    size: 1080,
+                    src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4",
+                    type: "video/mp4",
+                  },
+                ],
+                tracks: [
+                  {
+                    default: true,
+                    kind: "captions",
+                    label: "English captions",
+                    src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt",
+                    srcLang: "en",
+                  },
+                  {
+                    kind: "captions",
+                    label: "Légendes en français",
+                    src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt",
+                    srcLang: "fr",
+                  },
+                ],
+              }}
+            />
+          </Box>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
           <Grid container gap={2} flexDirection="column">

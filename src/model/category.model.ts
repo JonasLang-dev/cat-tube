@@ -1,5 +1,12 @@
-import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
+import { modelOptions, prop, Ref } from "@typegoose/typegoose";
 import { User } from "./user.model";
+
+
+@modelOptions({
+  schemaOptions: {
+    timestamps: true,
+  }
+})
 
 export class Category {
   @prop({ ref: () => User })

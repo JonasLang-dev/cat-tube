@@ -1,6 +1,5 @@
 import {
   DocumentType,
-  getModelForClass,
   modelOptions,
   pre,
   index,
@@ -12,6 +11,7 @@ import { nanoid } from "nanoid";
 import argon2 from "argon2";
 import log from "../utils/logger";
 import { Post } from "./post.model";
+import { Subscription } from "./subscription.model";
 
 export const privateFields = [
   "password",
@@ -93,6 +93,14 @@ export class User {
     count: true
   })
   public posts: Ref<Post>[];
+
+  @prop({
+    ref: () => Subscription,
+    localField: "_id",
+    foreignField: "subscriber",
+    justOne: false,
+  })
+  public subscribers: Ref<Subscription>[];
 
   async validatePassword(this: DocumentType<User>, candidatePassword: string) {
     try {

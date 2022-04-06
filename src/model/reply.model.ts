@@ -1,4 +1,4 @@
-import { getModelForClass, modelOptions, pre, prop, Ref } from "@typegoose/typegoose";
+import { modelOptions, pre, prop, Ref } from "@typegoose/typegoose";
 import { Comment } from "./comment.model";
 import { User } from "./user.model";
 
@@ -12,11 +12,8 @@ import { User } from "./user.model";
     })
 })
 
-
 @modelOptions({
     schemaOptions: {
-        toJSON: { virtuals: true },
-        toObject: { virtuals: true },
         timestamps: true,
     }
 })
@@ -29,5 +26,5 @@ export class Reply {
     comment: Ref<Comment>;
 
     @prop({ required: true, minlength: 3 })
-    content: string;
+    content: string;   
 }
