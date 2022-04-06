@@ -46,7 +46,7 @@ export const removeLikeHandler = async (req: Request<RemoveLikeInput>, res: Resp
     }
 }
 
-export const getLickPostsHandler = async (req: Request, res: Response) => {
+export const getLickPostsHandler = async (_req: Request, res: Response) => {
     const { _id } = res.locals.user
 
     const likes = await findLikes({ user: _id })

@@ -1,5 +1,4 @@
 import { _PrivateFields, User } from "../model/user.model";
-import { FilterQuery, QueryOptions, UpdateQuery } from "mongoose";
 import { UserModel } from "../model";
 
 export const createUser = async (input: Partial<User>) => {

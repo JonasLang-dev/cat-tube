@@ -1,6 +1,6 @@
 import { LikeModel } from "../model";
 import { Like } from "../model/like.model";
-import { FilterQuery, QueryOptions, UpdateQuery } from "mongoose";
+import { FilterQuery, QueryOptions } from "mongoose";
 
 
 export const createLike = async (input: Partial<Like>) => {

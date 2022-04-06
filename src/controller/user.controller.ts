@@ -142,17 +142,17 @@ export async function resetPasswordHandler(
   return res.send("Successfully updated password");
 }
 
-export async function getCurrentUserHandler(req: Request, res: Response) {
+export async function getCurrentUserHandler(_req: Request, res: Response) {
   return res.send(res.locals.user);
 }
 
-export async function getUserHandler(req: Request, res: Response) {
+export async function getUserHandler(_req: Request, res: Response) {
   const user = await findUserById(res.locals.user._id, "posts subscribers");
 
   return res.send(user);
 }
 
-export async function deleteUserHandler(req: Request, res: Response) {
+export async function deleteUserHandler(_req: Request, res: Response) {
   const actionUser = res.locals.user;
 
   const user = await findUserById(actionUser._id);
