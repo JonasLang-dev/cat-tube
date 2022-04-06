@@ -40,9 +40,7 @@ export const _PrivateFields = [
 
   return;
 })
-
 @index({ email: 1 }, { unique: true })
-
 @modelOptions({
   schemaOptions: {
     toJSON: { virtuals: true },
@@ -53,7 +51,6 @@ export const _PrivateFields = [
     allowMixed: Severity.ALLOW,
   },
 })
-
 export class User {
   @prop({ lowercase: true, required: true, unique: true })
   email: string;
@@ -90,7 +87,7 @@ export class User {
     localField: "_id",
     foreignField: "user",
     justOne: false,
-    count: true
+    count: true,
   })
   public posts: Ref<Post>[];
 
@@ -111,5 +108,3 @@ export class User {
     }
   }
 }
-
-

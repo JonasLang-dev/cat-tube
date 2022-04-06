@@ -14,8 +14,6 @@ const storage = multer.diskStorage({
     cb(null, `uploads/`);
   },
   filename(req: Request, file: Express.Multer.File, cb) {
-    console.log(file);
-
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });

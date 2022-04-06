@@ -12,7 +12,7 @@ import { createPostSchema, updatePostSchema } from "../schema/post.schema";
 
 const router = express.Router();
 
-router.get("/api/posts/:id", requireUser, findUserPostsHandler);
+
 router.get("/api/posts", requireUser, findAllPostsHandler);
 router.put(
   "/api/posts",

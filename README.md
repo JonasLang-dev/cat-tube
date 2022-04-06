@@ -1,21 +1,25 @@
 # cat-tube
+
 [![deploy-server](https://github.com/Cat-Family/cat-tube/actions/workflows/main.yml/badge.svg?event=deployment_status)](https://github.com/Cat-Family/cat-tube/actions/workflows/main.yml)
 [![CodeQL](https://github.com/Cat-Family/cat-tube/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Cat-Family/cat-tube/actions/workflows/codeql-analysis.yml)
 </br>
 
 <p align="left"> 
- <img src="https://komarev.com/ghpvc/?username=Cat-Family&label=Profile%20views&color=0e75b6&style=flat" alt="dey-sumit" /> 
+ <img src="https://komarev.com/ghpvc/?username=Cat-Family&label=Profile%20views&style=for-the-badge" alt="dey-sumit" /> 
   <a href="https://github.com/Cat-Family/cat-tube/issues">
-    <img src="https://img.shields.io/github/issues/Cat-Family/cat-tube"/> 
+    <img src="https://img.shields.io/github/issues/Cat-Family/cat-tube?style=for-the-badge"/> 
   </a>
   <a href="https://github.com/Cat-Family/cat-tube/network/members">
-    <img src="https://img.shields.io/github/forks/Cat-Family/cat-tube"/> 
+    <img src="https://img.shields.io/github/forks/Cat-Family/cat-tube?style=for-the-badge"/> 
   </a>  
   <a href="https://github.com/Cat-Family/cat-tube/stargazers">
-    <img src="https://img.shields.io/github/stars/Cat-Family/cat-tube"/> 
+    <img src="https://img.shields.io/github/stars/Cat-Family/cat-tube?style=for-the-badge"/> 
   </a>
     <a href="https://github.com/Cat-Family/cat-tube/LICENSE">
-    <img src="https://img.shields.io/github/license/Cat-Family/cat-tube"/> 
+    <img src="https://img.shields.io/github/license/Cat-Family/cat-tube?style=for-the-badge"/> 
+  </a>
+   <a href="https://github.com/Cat-Family/cat-tube">
+    <img src="https://img.shields.io/github/languages/top/Cat-Family/cat-tube?style=for-the-badge"/> 
   </a>
 </p>
 

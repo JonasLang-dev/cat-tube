@@ -2,16 +2,15 @@ import { Request, Response } from "express";
 import { nanoid } from "nanoid";
 import {
   CreateUserInput,
-  deleteUserInput,
   ForgetPasswordInput,
   ResetPasswordSchema,
-  updateUserSchema,
+  UpdatePasswordInput,
+  UpdateUserInput,
   VerifyUserInput,
 } from "../schema/user.schema";
 import { signAccessToken, signRefreshToken } from "../service/auth.service";
 import {
   createUser,
-  findUsers,
   findUserById,
   findUserByEmail,
 } from "../service/user.service";
@@ -147,57 +146,34 @@ export async function getCurrentUserHandler(req: Request, res: Response) {
   return res.send(res.locals.user);
 }
 
-export async function getAllUserHandler(req: Request, res: Response) {
-  const users = await findUsers({});
+export async function getUserHandler(req: Request, res: Response) {
+  const user = await findUserById(res.locals.user._id, "posts subscribers");
 
-  return res.send(users);
+  return res.send(user);
 }
 
-export async function deleteUserHandler(
-  req: Request<deleteUserInput, {}, {}>,
-  res: Response
-) {
-  const { id } = req.params;
-
+export async function deleteUserHandler(req: Request, res: Response) {
   const actionUser = res.locals.user;
 
-  let user;
-
-  try {
-    user = await findUserById(id);
-  } catch (error) {
-    return res.status(400).send([{ message: "User does not exists" }]);
-  }
+  const user = await findUserById(actionUser._id);
 
   if (!user || user.isDelete) {
-    return res.status(400).send([{ message: "User does not exists" }]);
+    return res.status(400).send({ message: "User does not exists" });
   }
 
-  if (actionUser.isAdmin) {
-    user.isDelete = true;
-    await user.save();
-    res.send("User successfully deleted");
-  }
+  user.isDelete = true;
+  await user.save();
 
-  if (actionUser._id == id) {
-    user.isDelete = true;
-    await user.save();
-    res.send("User successfully deleted");
-  }
-
-  res
-    .status(401)
-    .send([{ message: "You are not authorized to delete this user" }]);
+  res.send({ message: "User successfully deleted" });
 }
 
 export async function updateUserHandler(
-  req: Request<updateUserSchema["params"], {}, updateUserSchema["body"]>,
+  req: Request<{}, {}, UpdateUserInput>,
   res: Response
 ) {
-  const { id } = req.params;
   const actionUser = res.locals.user;
 
-  let updateUser: updateUserSchema["body"] = {};
+  let updateUser: UpdateUserInput = {};
 
   const { name, email, avatar } = req.body;
 
@@ -213,30 +189,80 @@ export async function updateUserHandler(
     updateUser["avatar"] = avatar;
   }
 
-  let user;
+  const user = await findUserById(actionUser._id);
 
-  try {
-    user = await findUserById(id);
-  } catch (error) {
+  if (!user || user.isDelete) {
     return res.status(400).send([{ message: "Could not change user" }]);
   }
 
-  if (!user) {
-    return res.status(400).send([{ message: "Could not change user" }]);
+  // update user
+  Object.assign(user, updateUser);
+
+  await user.save();
+
+  // sign new token
+  const accessToken = signAccessToken(user);
+
+  const refresh = await signRefreshToken({ userId: user._id });
+
+  return res.send({ accessToken, refresh });
+}
+
+export async function updateAvatarHandler(req: Request, res: Response) {
+  const actionUser = res.locals.user;
+
+  const user = await findUserById(actionUser._id);
+
+  if (!user || user.isDelete) {
+    return res.status(400).send({ message: "Could not change user avatar" });
   }
 
-  if (actionUser._id == id) {
-    // update user
-    Object.assign(user, updateUser);
-    await user.save();
-    // sign new token
-
-    const accessToken = signAccessToken(user);
-
-    const refresh = await signRefreshToken({ userId: user._id });
-
-    return res.send({ accessToken, refresh });
+  if (!req.file) {
+    return res.status(400).send({ message: "Could not change user avatar" });
   }
 
-  return res.status(400).send([{ message: "Could not change user" }]);
+  const { filename } = req.file;
+
+  user.avatar = filename;
+
+  await user.save();
+
+  // sign new token
+  const accessToken = signAccessToken(user);
+
+  const refresh = await signRefreshToken({ userId: user._id });
+
+  return res.send({ accessToken, refresh });
+}
+
+export async function updatePasswordHandler(
+  req: Request<{}, {}, UpdatePasswordInput>,
+  res: Response
+) {
+  const { _id } = res.locals.user;
+
+  const { oldPassword, newPassword } = req.body;
+
+  const user = await findUserById(_id);
+
+  if (!user || user.isDelete) {
+    return res.status(400).send({ message: "Could not change user password" });
+  }
+
+  const isValid = await user.validatePassword(oldPassword);
+
+  if (!isValid) {
+    res.status(400).send({ message: "Could not change user password" });
+  }
+
+  user.password = newPassword;
+
+  await user.save();
+
+  // sign new token
+  const accessToken = signAccessToken(user);
+
+  const refresh = await signRefreshToken({ userId: user._id });
+
+  return res.send({ accessToken, refresh });
 }

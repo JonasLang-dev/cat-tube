@@ -1,26 +1,31 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import {
   createUserHandler,
   forgetPasswordHandler,
-  getAllUserHandler,
+  getUserHandler,
   getCurrentUserHandler,
   resetPasswordHandler,
   verifyUserHandler,
   deleteUserHandler,
   updateUserHandler,
+  updateAvatarHandler,
+  updatePasswordHandler,
 } from "../controller/user.controller";
 import requireUser from "../middleware/requireUser";
 import validateResource from "../middleware/validateResourse";
 import {
   createUserSchema,
-  deleteUserSchema,
   forgetPasswordSchema,
   resetPasswordSchema,
   verifyUserSchema,
   updateUserSchema,
+  updatePasswordSchema,
 } from "../schema/user.schema";
+import { upload } from "../utils/multer";
 
 const router = express.Router();
+
+router.get("/api/users", requireUser, getUserHandler);
 
 router.post(
   "/api/users",
@@ -28,40 +33,42 @@ router.post(
   createUserHandler
 );
 
+router.put("/api/users", validateResource(updateUserSchema), updateUserHandler);
+
+router.delete("/api/users", deleteUserHandler);
+
+router.get("/api/users/current", requireUser, getCurrentUserHandler);
+
 router.get(
   "/api/users/verify/:id/:verificationCode",
   validateResource(verifyUserSchema),
   verifyUserHandler
 );
 
-router.post(
+router.put(
   "/api/users/forgotpassword",
   validateResource(forgetPasswordSchema),
   forgetPasswordHandler
 );
 
-router.post(
+router.put(
   "/api/users/resetpassword/:id/:passwordResetCode",
   validateResource(resetPasswordSchema),
   resetPasswordHandler
 );
 
-router.get("/api/users/current", requireUser, getCurrentUserHandler);
-
-router.get("/api/users", getAllUserHandler);
-
-router.delete(
-  "/api/users/:id",
+router.put(
+  "/api/users/avatar",
   requireUser,
-  validateResource(deleteUserSchema),
-  deleteUserHandler
+  upload.single("avatar"),
+  updateAvatarHandler
 );
 
-router.post(
-  "/api/users/:id",
+router.put(
+  "/api/users/password/new",
   requireUser,
-  validateResource(updateUserSchema),
-  updateUserHandler
+  validateResource(updatePasswordSchema),
+  updatePasswordHandler
 );
 
 export default router;
