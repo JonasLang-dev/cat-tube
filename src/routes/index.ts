@@ -6,6 +6,7 @@ import upload from "./upload.routes";
 import like from "./like.routes";
 import subscription from "./subscription.routes";
 import category from "./category.routes";
+import reply from "./reply.routes";
 
 const router = express.Router();
 
@@ -19,6 +20,7 @@ router.use("/posts", post);
 router.use("/like", like);
 router.use("/sub", subscription);
 router.use("/category", category);
+router.use("/reply", reply)
 router.use(upload);
 
 export default router;
