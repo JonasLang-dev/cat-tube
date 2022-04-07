@@ -3,7 +3,7 @@ import {
   CreateSubInput,
   GetChannelInput,
   RemoveSubInput,
-} from "../schema/sub.schema";
+} from "../schema/subscription.schema";
 import { findPostsMoreInfo } from "../service/post.service";
 import {
   createSubscription,
@@ -11,7 +11,7 @@ import {
   findSubs,
   findSubscribers,
   findSubsMoreInfo,
-} from "../service/sub.service";
+} from "../service/subscription.service";
 import { findUserById } from "../service/user.service";
 
 export const createSubHnadler = async (
