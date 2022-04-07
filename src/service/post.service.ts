@@ -29,3 +29,10 @@ export const updatePost = (
 ) => {
   return PostModel.findOneAndUpdate(query, update, options);
 };
+
+export const findPostsMoreInfo = async (
+  query: FilterQuery<Post>,
+  options: QueryOptions = { lean: true }
+) => {
+  return PostModel.find(query, {}, options).populate("Comments Likes");
+};

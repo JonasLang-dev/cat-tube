@@ -44,10 +44,8 @@ export const findUserPostsHandler = async (req: Request, res: Response) => {
 };
 
 export const findAllPostsHandler = async (__req: Request, res: Response) => {
-
   const posts = await findPosts({});
   return res.send({ data: posts });
-
 };
 
 export const deletePostHandler = async (req: Request, res: Response) => {
