@@ -3,7 +3,8 @@ import user from "./user.routes";
 import auth from "./auth.routes";
 import post from "./post.routes";
 import upload from "./upload.routes";
-import like from "./like.routes"
+import like from "./like.routes";
+import sub from "./sub.routes";
 
 const router = express.Router();
 
@@ -14,7 +15,8 @@ router.get("/healthcheck", (_req: Request, res: Response) =>
 router.use("/users", user);
 router.use("/session", auth);
 router.use("/posts", post);
+router.use("/like", like);
+router.use("/sub", sub);
 router.use(upload);
-router.use("/like", like)
 
 export default router;
