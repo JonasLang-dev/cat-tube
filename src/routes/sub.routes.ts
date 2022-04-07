@@ -17,6 +17,8 @@ import {
 
 const router = express.Router();
 
+router.get("/", requireUser, getOwnSubsHandler);
+
 router.post(
   "/",
   requireUser,
@@ -31,7 +33,7 @@ router.delete(
   removeSubHnadler
 );
 
-router.get("/", requireUser, getOwnSubsHandler);
+router.get("/subscribers", requireUser, getOwnSubscribersHandler);
 
 router.get(
   "/posts/channel/:id",
@@ -46,7 +48,5 @@ router.get(
   validateResource(getChannelSchema),
   getOwnChannelHandler
 );
-
-router.get("/subscribers", requireUser, getOwnSubscribersHandler);
 
 export default router;

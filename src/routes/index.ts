@@ -5,6 +5,7 @@ import post from "./post.routes";
 import upload from "./upload.routes";
 import like from "./like.routes";
 import sub from "./sub.routes";
+import category from "./category.routes";
 
 const router = express.Router();
 
@@ -17,6 +18,7 @@ router.use("/session", auth);
 router.use("/posts", post);
 router.use("/like", like);
 router.use("/sub", sub);
+router.use("/category", category);
 router.use(upload);
 
 export default router;

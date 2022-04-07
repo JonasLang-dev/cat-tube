@@ -4,7 +4,7 @@ import {
   GetChannelInput,
   RemoveSubInput,
 } from "../schema/sub.schema";
-import { findPosts, findPostsMoreInfo } from "../service/post.service";
+import { findPostsMoreInfo } from "../service/post.service";
 import {
   createSubscription,
   findSubById,
@@ -62,7 +62,7 @@ export const removeSubHnadler = async (
   }
 };
 
-export const getOwnSubsHandler = async (req: Request, res: Response) => {
+export const getOwnSubsHandler = async (_req: Request, res: Response) => {
   try {
     const publishers = await findSubs({ subscriber: res.locals.user._id });
     return res.status(200).send({ data: publishers });
@@ -93,7 +93,7 @@ export const getPostsFromChannelHandler = async (
   }
 };
 
-export const getOwnChannelHandler = async (req: Request, res: Response) => {
+export const getOwnChannelHandler = async (_req: Request, res: Response) => {
   try {
     const publishers = await findSubsMoreInfo({
       subscriber: res.locals.user._id,
@@ -104,7 +104,10 @@ export const getOwnChannelHandler = async (req: Request, res: Response) => {
   }
 };
 
-export const getOwnSubscribersHandler = async (req: Request, res: Response) => {
+export const getOwnSubscribersHandler = async (
+  _req: Request,
+  res: Response
+) => {
   try {
     const subscribers = await findSubscribers({
       publisher: res.locals.user._id,
