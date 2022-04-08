@@ -1,8 +1,8 @@
 import express from "express"
-import { createSessionHandler, refreshAccessTokenHandler, getSessionHandler, removeSessionHandler } from "../controller/auth.controller"
-import requireUser from "../middleware/requireUser"
-import validateResource from "../middleware/validateResourse"
-import { createSessionSchema, removeSessionSchema } from "../schema/auth.schema"
+import { createSessionHandler, refreshAccessTokenHandler, getSessionHandler, removeSessionHandler } from "../../controller/auth.controller"
+import requireUser from "../../middleware/requireUser"
+import validateResource from "../../middleware/validateResourse"
+import { createSessionSchema, removeSessionSchema } from "../../schema/auth.schema"
 
 const router = express.Router()
 

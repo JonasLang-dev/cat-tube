@@ -10,9 +10,9 @@ import {
   updateUserHandler,
   updateAvatarHandler,
   updatePasswordHandler,
-} from "../controller/user.controller";
-import requireUser from "../middleware/requireUser";
-import validateResource from "../middleware/validateResourse";
+} from "../../controller/user.controller";
+import requireUser from "../../middleware/requireUser";
+import validateResource from "../../middleware/validateResourse";
 import {
   createUserSchema,
   forgetPasswordSchema,
@@ -20,8 +20,8 @@ import {
   verifyUserSchema,
   updateUserSchema,
   updatePasswordSchema,
-} from "../schema/user.schema";
-import { upload } from "../utils/multer";
+} from "../../schema/user.schema";
+import { upload } from "../../utils/multer";
 
 const router = express.Router();
 

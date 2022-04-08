@@ -4,10 +4,10 @@ import {
   findAllPostsHandler,
   deletePostHandler,
   updatePostHandler,
-} from "../controller/post.controller";
-import requireUser from "../middleware/requireUser";
-import validateResource from "../middleware/validateResourse";
-import { createPostSchema, updatePostSchema } from "../schema/post.schema";
+} from "../../controller/post.controller";
+import requireUser from "../../middleware/requireUser";
+import validateResource from "../../middleware/validateResourse";
+import { createPostSchema, updatePostSchema } from "../../schema/post.schema";
 
 const router = express.Router();
 

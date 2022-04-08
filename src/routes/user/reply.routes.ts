@@ -1,9 +1,9 @@
 import express from "express"
-import { deletePostHandler } from "../controller/post.controller";
-import { createReplyHandler, getOwnRepliesHandler, updateReplyHandler } from "../controller/reply.controller";
-import requireUser from "../middleware/requireUser";
-import validateResource from "../middleware/validateResourse";
-import { createReplySchema, deleteReplySchema, updateReplySchema } from "../schema/reply.schema";
+import { deletePostHandler } from "../../controller/post.controller";
+import { createReplyHandler, getOwnRepliesHandler, updateReplyHandler } from "../../controller/reply.controller";
+import requireUser from "../../middleware/requireUser";
+import validateResource from "../../middleware/validateResourse";
+import { createReplySchema, deleteReplySchema, updateReplySchema } from "../../schema/reply.schema";
 
 const router = express.Router();
 

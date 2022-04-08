@@ -1,12 +1,6 @@
 import express, { Request, Response } from "express";
-import user from "./user.routes";
-import auth from "./auth.routes";
-import post from "./post.routes";
-import upload from "./upload.routes";
-import like from "./like.routes";
-import subscription from "./subscription.routes";
-import category from "./category.routes";
-import reply from "./reply.routes";
+import user from "./user";
+import admin from "./admin";
 
 const router = express.Router();
 
@@ -14,13 +8,7 @@ router.get("/healthcheck", (_req: Request, res: Response) =>
   res.sendStatus(200)
 );
 
-router.use("/users", user);
-router.use("/session", auth);
-router.use("/posts", post);
-router.use("/like", like);
-router.use("/sub", subscription);
-router.use("/category", category);
-router.use("/reply", reply)
-router.use(upload);
+router.use("/", user);
+router.use("/", admin);
 
 export default router;

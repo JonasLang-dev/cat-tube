@@ -266,3 +266,20 @@ export async function updatePasswordHandler(
 
   return res.send({ accessToken, refresh });
 }
+
+export async function createChargeHandler(req: Request, res: Response) {
+  const user = await findUserById(res.locals.user._id);
+
+  if (!user || user.isDelete || user.isPremium) {
+    return res.status(400).send({ message: "Could not create charge" });
+  }
+
+  user["isPremium"] = true;
+
+  try {
+    await user.save();
+    return res.status(200).send({ message: "Successfully created charge" });
+  } catch (error) {
+    return res.status(400).send({ message: "Could not create charge" });
+  }
+}
