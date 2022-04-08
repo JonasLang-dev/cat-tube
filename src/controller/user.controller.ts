@@ -173,21 +173,7 @@ export async function updateUserHandler(
 ) {
   const actionUser = res.locals.user;
 
-  let updateUser: UpdateUserInput = {};
-
   const { name, email, avatar } = req.body;
-
-  if (name) {
-    updateUser["name"] = name;
-  }
-
-  if (email) {
-    updateUser["email"] = email;
-  }
-
-  if (avatar) {
-    updateUser["avatar"] = avatar;
-  }
 
   const user = await findUserById(actionUser._id);
 
@@ -195,8 +181,17 @@ export async function updateUserHandler(
     return res.status(400).send([{ message: "Could not change user" }]);
   }
 
-  // update user
-  Object.assign(user, updateUser);
+  if (name) {
+    user["name"] = name;
+  }
+
+  if (email) {
+    user["email"] = email;
+  }
+
+  if (avatar) {
+    user["avatar"] = avatar;
+  }
 
   await user.save();
 
@@ -267,7 +262,7 @@ export async function updatePasswordHandler(
   return res.send({ accessToken, refresh });
 }
 
-export async function createChargeHandler(req: Request, res: Response) {
+export async function createChargeHandler(_req: Request, res: Response) {
   const user = await findUserById(res.locals.user._id);
 
   if (!user || user.isDelete || user.isPremium) {

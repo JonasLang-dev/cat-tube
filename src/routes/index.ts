@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import user from "./user";
 import admin from "./admin";
+import requireAdmin from "../middleware/requireAdmin";
 
 const router = express.Router();
 
@@ -9,6 +10,6 @@ router.get("/healthcheck", (_req: Request, res: Response) =>
 );
 
 router.use("/", user);
-router.use("/", admin);
+router.use("/admin", requireAdmin, admin);
 
 export default router;
