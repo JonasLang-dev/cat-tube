@@ -6,16 +6,16 @@ import {
   findOwnCommentHandler,
   findPostCommentsHandler,
   findUserCommentsHandler,
-} from "../controller/comment.controller";
-import requireUser from "../middleware/requireUser";
-import validateResource from "../middleware/validateResourse";
+} from "../../controller/comment.controller";
+import requireUser from "../../middleware/requireUser";
+import validateResource from "../../middleware/validateResourse";
 import {
   createCommentSchema,
   updateCommentSchema,
   removeCommentSchema,
   getPostCommentsSchema,
   getUsreCommentsSchema,
-} from "../schema/comment.schema";
+} from "../../schema/comment.schema";
 
 const router = express.Router();
 

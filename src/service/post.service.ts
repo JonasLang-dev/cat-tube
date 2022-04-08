@@ -11,28 +11,9 @@ export const findPosts = (
   query: FilterQuery<Post>,
   options: QueryOptions = { lean: true }
 ) => {
-  return PostModel.find(query, {}, options).populate("user", _PrivateFields);
+  return PostModel.find(query, {}, options).populate("user", _PrivateFields).populate("category").populate("likes").populate("comments");
 };
 
 export const findPostbyId = async (id: string) => {
   return PostModel.findById(id).populate("user");
-};
-
-export const deletePost = (query: FilterQuery<Post>) => {
-  return PostModel.deleteOne(query);
-};
-
-export const updatePost = (
-  query: FilterQuery<Post>,
-  update: UpdateQuery<Post>,
-  options: QueryOptions
-) => {
-  return PostModel.findOneAndUpdate(query, update, options);
-};
-
-export const findPostsMoreInfo = async (
-  query: FilterQuery<Post>,
-  options: QueryOptions = { lean: true }
-) => {
-  return PostModel.find(query, {}, options).populate("Comments Likes");
 };

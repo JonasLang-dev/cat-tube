@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import multer from "multer";
 import fs from "fs";
 import config from "config";
-import requireUser from "../middleware/requireUser";
+import requireUser from "../../middleware/requireUser";
 import { logger } from "@typegoose/typegoose/lib/logSettings";
 
 const port = config.get<number>("port");

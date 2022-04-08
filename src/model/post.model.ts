@@ -48,17 +48,7 @@ export class Post {
     justOne: false,
     count: true
   })
-  public likes: Ref<Like>[];
-
-  @prop({
-    ref: () => Like,
-    localField: "_id",
-    foreignField: "post",
-    match: { isLike: false },
-    justOne: false,
-    count: true
-  })
-  public dislikes: Ref<Like>[];
+  public likes: number;
 
   @prop({
     ref: () => Comment,
@@ -67,6 +57,6 @@ export class Post {
     justOne: false,
     count: true
   })
-  public comments: Ref<Comment>[];
+  public comments: number;
 }
 

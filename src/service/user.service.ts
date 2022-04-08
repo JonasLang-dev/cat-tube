@@ -13,6 +13,6 @@ export const findUserByEmail = async (email: string) => {
   return UserModel.findOne({ email });
 };
 
-export const findWithUpdateUser = async (id: any, user: Partial<User>) => {
-  return UserModel.findOneAndUpdate(id, user);
-};
+export const findAllUsers = async () => {
+  return UserModel.find({});
+}

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { nanoid } from "nanoid";
 import {
   CreateUserInput,
+  UserByAdminSchemaInput,
   ForgetPasswordInput,
   ResetPasswordSchema,
   UpdatePasswordInput,
@@ -13,6 +14,7 @@ import {
   createUser,
   findUserById,
   findUserByEmail,
+  findAllUsers,
 } from "../service/user.service";
 import log from "../utils/logger";
 import sendEmail from "../utils/mailer";
@@ -173,21 +175,7 @@ export async function updateUserHandler(
 ) {
   const actionUser = res.locals.user;
 
-  let updateUser: UpdateUserInput = {};
-
   const { name, email, avatar } = req.body;
-
-  if (name) {
-    updateUser["name"] = name;
-  }
-
-  if (email) {
-    updateUser["email"] = email;
-  }
-
-  if (avatar) {
-    updateUser["avatar"] = avatar;
-  }
 
   const user = await findUserById(actionUser._id);
 
@@ -195,8 +183,17 @@ export async function updateUserHandler(
     return res.status(400).send([{ message: "Could not change user" }]);
   }
 
-  // update user
-  Object.assign(user, updateUser);
+  if (name) {
+    user["name"] = name;
+  }
+
+  if (email) {
+    user["email"] = email;
+  }
+
+  if (avatar) {
+    user["avatar"] = avatar;
+  }
 
   await user.save();
 
@@ -265,4 +262,107 @@ export async function updatePasswordHandler(
   const refresh = await signRefreshToken({ userId: user._id });
 
   return res.send({ accessToken, refresh });
+}
+
+export async function createChargeHandler(_req: Request, res: Response) {
+  const user = await findUserById(res.locals.user._id);
+
+  if (!user || user.isDelete || user.isPremium) {
+    return res.status(400).send({ message: "Could not create charge" });
+  }
+
+  user["isPremium"] = true;
+
+  try {
+    await user.save();
+    return res.status(200).send({ message: "Successfully created charge" });
+  } catch (error) {
+    return res.status(400).send({ message: "Could not create charge" });
+  }
+}
+
+
+export async function getAllUserHandler(_req: Request, res: Response) {
+  const users = await findAllUsers();
+  return res.send(users);
+}
+
+export async function deleteUserByAdminHandler(req: Request<UserByAdminSchemaInput, {}, {}>, res: Response) {
+  const { id } = req.params;
+
+  if(id === res.locals.user._id) {
+    return res.status(400).send({ message: "You can not delete yourself" });
+  }
+
+  const user = await findUserById(id);
+
+  if (!user) {
+    return res.status(400).send({ message: "User does not exists" });
+  }
+
+  if(user.isDelete) {
+    return res.status(400).send({ message: "User is already deleted" });
+  }
+
+  user.isDelete = true;
+  await user.save();
+
+  res.send({ message: "User successfully deleted" });
+}
+
+export async function activeUserByAdminHandler(req: Request<UserByAdminSchemaInput, {}, {}>, res: Response) {
+  const { id } = req.params;
+
+  const user = await findUserById(id);
+
+  if (!user ) {
+    return res.status(400).send({ message: "User does not exists" });
+  }
+
+  if(!user.isDelete) {
+    return res.status(400).send({ message: "User has been active" });
+  }
+
+  user.isDelete = false;
+  await user.save();
+
+  res.send({ message: "User successfully active" });
+}
+
+export async function activeUserPremuimHandler(req: Request<UserByAdminSchemaInput, {}, {}>, res: Response) {
+  const { id } = req.params;
+
+  const user = await findUserById(id);
+
+  if (!user) {
+    return res.status(400).send({ message: "User does not exists" });
+  }
+
+  if(user.isPremium) {
+    return res.status(400).send({ message: "User is already premium" });
+  }
+
+  user.isPremium = true;
+  await user.save();
+
+  res.send({ message: "User premium update successfully" });
+}
+
+export async function inActiveUserPremuimHandler(req: Request<UserByAdminSchemaInput, {}, {}>, res: Response) {
+  const { id } = req.params;
+
+  const user = await findUserById(id);
+
+  if (!user ) {
+    return res.status(400).send({ message: "User does not exists" });
+  }
+
+  if(!user.isPremium) {
+    return res.status(400).send({ message: "User is not premium" });
+  }
+
+  user.isPremium = false;
+  await user.save();
+
+  res.send({ message: "User premuim inActive successfully" });
 }

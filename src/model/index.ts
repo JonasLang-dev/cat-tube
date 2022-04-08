@@ -8,6 +8,7 @@ import { User } from "./user.model";
 import { Comment } from "./comment.model";
 import { Subscription } from "./subscription.model";
 import { History } from "./history.model";
+import { Ads } from "./ads.model";
 
 export const UserModel = getModelForClass(User);
 export const PostModel = getModelForClass(Post);
@@ -18,8 +19,4 @@ export const LikeModel = getModelForClass(Like);
 export const CommentModel = getModelForClass(Comment);
 export const SubscriptionModel = getModelForClass(Subscription);
 export const HistoryModel = getModelForClass(History);
-
-
-
-
-
+export const AdsModel = getModelForClass(Ads);

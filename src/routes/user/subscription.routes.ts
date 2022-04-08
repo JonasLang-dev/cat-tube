@@ -6,14 +6,14 @@ import {
   getPostsFromChannelHandler,
   getOwnChannelHandler,
   getOwnSubscribersHandler,
-} from "../controller/subscription.controller";
-import requireUser from "../middleware/requireUser";
-import validateResource from "../middleware/validateResourse";
+} from "../../controller/subscription.controller";
+import requireUser from "../../middleware/requireUser";
+import validateResource from "../../middleware/validateResourse";
 import {
   createSubSchema,
   getChannelSchema,
   removeSubSchema,
-} from "../schema/subscription.schema";
+} from "../../schema/subscription.schema";
 
 const router = express.Router();
 
