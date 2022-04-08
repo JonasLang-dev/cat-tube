@@ -21,5 +21,12 @@ export const updatePostSchema = object({
   }),
 });
 
+export const adminPostSchema = object({
+  params: object({
+    id: string({ required_error: "post id is required" }),
+  })
+})
+
 export type CreatePostInput = TypeOf<typeof createPostSchema>["body"];
 export type UpdatePostSchema = TypeOf<typeof updatePostSchema>;
+export type AdminPostSchemaInput = TypeOf<typeof adminPostSchema>["params"];

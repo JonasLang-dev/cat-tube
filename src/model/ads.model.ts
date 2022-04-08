@@ -1,9 +1,9 @@
 import { prop } from "@typegoose/typegoose";
 
 export class Ads {
-  @prop({ required: true })
-  public content: string;
+  @prop({ required: true, unique: true })
+  public title: string;
 
   @prop({ required: true })
-  public adUrl: string;
+  public image: string;
 }

@@ -1,4 +1,4 @@
-import { boolean, object, string, TypeOf } from "zod";
+import {  object, string, TypeOf } from "zod";
 
 export const createUserSchema = object({
   body: object({
@@ -85,6 +85,12 @@ export const updatePasswordSchema = object({
     }),
 });
 
+export const userByAdminSchema = object({
+  params: object({
+    id: string({ required_error: "User id is required" }),
+  })
+})
+
 export type CreateUserInput = TypeOf<typeof createUserSchema>["body"];
 
 export type VerifyUserInput = TypeOf<typeof verifyUserSchema>["params"];
@@ -96,3 +102,5 @@ export type ResetPasswordSchema = TypeOf<typeof resetPasswordSchema>;
 export type UpdateUserInput = TypeOf<typeof updateUserSchema>["body"];
 
 export type UpdatePasswordInput = TypeOf<typeof updatePasswordSchema>["body"];
+
+export type UserByAdminSchemaInput = TypeOf<typeof userByAdminSchema>["params"];

@@ -20,21 +20,21 @@ export const createSessionHandler = async (
   const user = await findUserByEmail(email);
 
   if (!user) {
-    return res.status(400).send([{ message: message }]);
+    return res.status(400).send({ message: message });
   }
 
   if (!user.verified) {
-    return res.status(400).send([{ message: "Please verify your email" }]);
+    return res.status(400).send({ message: "Please verify your email" });
   }
 
   if (user.isDelete) {
-    return res.status(400).send([{ message: message }]);
+    return res.status(400).send({ message: message });
   }
 
   const isValid = await user.validatePassword(password);
 
   if (!isValid) {
-    return res.status(400).send([{ message: message }]);
+    return res.status(400).send({ message: message });
   }
 
   // sign a access token
@@ -64,7 +64,7 @@ export const refreshAccessTokenHandler = async (
   if (!decoded) {
     return res
       .status(401)
-      .send([{ message: "Could not refresh access token" }]);
+      .send({ message: "Could not refresh access token" });
   }
 
   const session = await findSessionById(decoded.session);
@@ -72,13 +72,13 @@ export const refreshAccessTokenHandler = async (
   if (!session || !session.valid) {
     return res
       .status(401)
-      .send([{ message: "Could not refresh access token" }]);
+      .send({ message: "Could not refresh access token" });
   }
 
   const user = await findUserById(String(session.user));
 
   if (!user) {
-    return res.status(401).send([{ message: "Could not refresh token" }]);
+    return res.status(401).send({ message: "Could not refresh token" });
   }
 
   const accessToken = signAccessToken(user);
@@ -88,7 +88,7 @@ export const refreshAccessTokenHandler = async (
 
 export const getSessionHandler = async (_req: Request, res: Response) => {
   const sessions = await findSessions({ "user": res.locals.user._id });
-  return res.send(sessions);
+  return res.send({data: sessions});
 
 };
 
@@ -109,4 +109,23 @@ export const removeSessionHandler = async (req: Request<RemoveSessionInput, {}, 
 
   return res.send({ message: "Session removed" });
 
+}
+
+export const getAllSessionHandler = async (req: Request, res: Response) => {
+  const sessions = await findSessions({});
+  return res.send({data: sessions});
+}
+
+export const removeSessionByAdminHandler = async (req: Request<RemoveSessionInput, {}, {}>, res: Response) => {
+  const session = await findSessionById(req.params.id);
+
+  if (!session || !session.valid) {
+    return res.status(400).send({ message: "Could not remove session" });
+  }
+
+  session.valid = false;
+
+  session.save()
+
+  return res.send({ message: "Session removed" });
 }
