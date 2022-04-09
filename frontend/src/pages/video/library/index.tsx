@@ -16,6 +16,7 @@ import {
   CardActions,
   CardContent,
   CardHeader,
+  CardMedia,
   Container,
   Grid,
   IconButton,
@@ -28,7 +29,6 @@ import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import { selectCurrentUserStatus } from "../../../features/auth/currentUserSlice";
 import { useAppSelector } from "../../../hooks/redux.hooks";
-import Image from "mui-image";
 import { red } from "@mui/material/colors";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -102,26 +102,15 @@ function Library({ loading = false }) {
                       to={{ pathname: "/watch", search: `?v=${card}` }}
                       component={Link}
                     >
-                      <Image
-                        src="https://source.unsplash.com/random"
-                        height="200px"
-                        width="auto"
-                        fit="cover"
-                        duration={300}
-                        easing="cubic-bezier(0.7, 0, 0.6, 1)"
-                        showLoading={
-                          <Skeleton
-                            variant="rectangular"
-                            width="100%"
-                            height="200px"
-                            animation="wave"
-                          />
-                        }
-                        errorIcon={true}
-                        shift={null}
-                        distanc="100px"
-                        shiftDuration={900}
-                        bgColor="inherit"
+                      <CardMedia
+                        component="img"
+                        height="200"
+                        width="100%"
+                        sx={{
+                          bgcolor: "rgba(0, 0, 0, 0.08)",
+                          objectFit: "cover",
+                        }}
+                        image="https://source.unsplash.com/random"
                       />
                     </CardActionArea>
                     <CardContent sx={{ flexGrow: 1 }}>
