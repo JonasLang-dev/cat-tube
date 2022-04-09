@@ -74,6 +74,7 @@ import {
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import * as locales from "../../../locales";
+import { baseURL } from "../../request";
 type SupportedLocales = keyof typeof locales;
 
 interface Admin {
@@ -154,7 +155,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
       <MenuItem onClick={handleProfileMenuClose} component={Link} to="/profile">
         <Avatar
           alt={currentUserInfo && currentUserInfo.name}
-          src={currentUserInfo && currentUserInfo.avatar}
+          src={currentUserInfo && `${baseURL}/${currentUserInfo.avatar}`}
         />
         &nbsp; {currentUserInfo && currentUserInfo.name}
       </MenuItem>
@@ -679,7 +680,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
             >
               <Avatar
                 alt={currentUserInfo && currentUserInfo.name}
-                src={currentUserInfo && currentUserInfo.avatar}
+                src={currentUserInfo && `${baseURL}/${currentUserInfo.avatar}`}
               />
             </IconButton>
           </Box>

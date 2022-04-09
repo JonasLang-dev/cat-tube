@@ -74,7 +74,7 @@ import {
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import { DropzoneDialogBase, FileObject } from "mui-file-dropzone";
-import axiosInstance from "../../request";
+import axiosInstance, { baseURL } from "../../request";
 import { useSnackbar } from "notistack";
 import * as locales from "../../../locales";
 type SupportedLocales = keyof typeof locales;
@@ -159,7 +159,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
       <MenuItem onClick={handleProfileMenuClose} component={Link} to="/profile">
         <Avatar
           alt={currentUserInfo && currentUserInfo.name}
-          src={currentUserInfo && currentUserInfo.avatar}
+          src={currentUserInfo && `${baseURL}/${currentUserInfo.avatar}`}
         />
         &nbsp; {currentUserInfo && currentUserInfo.name}
       </MenuItem>
@@ -510,10 +510,11 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
     // const bodyFormData = new FormData();
     // bodyFormData.append("video", uploadFiles[0].data);
     setShowBackdrop(true);
+    
     try {
       const { data } = await axiosInstance.post(
-        "/api/upload/video",
-        { video: uploadFiles[0].data },
+        "/api/posts",
+        { ...uploadFiles[0] },
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -631,7 +632,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
             >
               <Avatar
                 alt={currentUserInfo && currentUserInfo.name}
-                src={currentUserInfo && currentUserInfo.avatar}
+                src={currentUserInfo && `${baseURL}/${currentUserInfo.avatar}`}
               />
             </IconButton>
           </Box>

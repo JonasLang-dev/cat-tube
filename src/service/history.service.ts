@@ -12,7 +12,7 @@ export const findAllHistory = (
     select: "title description postUrl videoUrl views user likes comments",
     populate: {
       path: "user",
-      select: "username avatarUrl",
+      select: "name avatarUrl",
     },
   });
 };

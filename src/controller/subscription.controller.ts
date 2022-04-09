@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
+import { stubTrue } from "lodash";
 import {
   CreateSubInput,
   GetChannelInput,
   RemoveSubInput,
 } from "../schema/subscription.schema";
-import { findPostsMoreInfo } from "../service/post.service";
+import { findPosts } from "../service/post.service";
 import {
   createSubscription,
   findSubById,
@@ -83,8 +84,8 @@ export const getPostsFromChannelHandler = async (
   }
 
   try {
-    const posts = await findPostsMoreInfo(
-      { user: publisher._id, isActive: true, isPublic: false },
+    const posts = await findPosts(
+      { user: publisher._id, isActive: true, isPublic: true },
       {}
     );
     return res.status(200).send({ data: posts });

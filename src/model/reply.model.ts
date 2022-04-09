@@ -5,7 +5,7 @@ import { User } from "./user.model";
 @pre<Reply>("find", async function () {
     this.populate({
         path: "user",
-        select: "username avatar",
+        select: "name avatar",
         options: {
             sort: "+createdAt",
         }

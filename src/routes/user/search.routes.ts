@@ -1,16 +1,14 @@
 import express from "express";
-import { createSearchController } from "../../controller/history.controller";
-import requireUser from "../../middleware/requireUser";
+import { searchController } from "../../controller/history.controller";
 import validateResource from "../../middleware/validateResourse";
 import { createSearchSchema } from "../../schema/history.schema";
 
 const router = express.Router();
 
-router.post(
+router.get(
   "/",
-  requireUser,
   validateResource(createSearchSchema),
-  createSearchController
+  searchController
 );
 
 export default router;

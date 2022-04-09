@@ -38,10 +38,10 @@ export async function createUserHandler(
     return res.send("user successfully created");
   } catch (e: any) {
     if (e.code === 11000) {
-      return res.status(409).send([{ message: "Account already exists" }]);
+      return res.status(409).send({ message: "Account already exists" });
     }
 
-    return res.status(500).send([{ message: e.message }]);
+    return res.status(500).send({ message: e.message });
   }
 }
 
@@ -85,11 +85,11 @@ export async function forgetPasswordHandler(
 
   if (!user) {
     log.debug(`User with email ${email} does not exists`);
-    return res.status(200).send([{ message: message }]);
+    return res.status(200).send({ message: message });
   }
 
   if (!user.verified) {
-    return res.status(400).send([{ message: "User is not verified" }]);
+    return res.status(400).send({ message: "User is not verified" });
   }
 
   const passwordResetCode = nanoid();
@@ -108,7 +108,7 @@ reset code:${user.passwordResetCode}`,
   });
 
   log.debug(`Password is send to ${user.email}`);
-  return res.status(200).send([{ message: message }]);
+  return res.status(200).send({ message: message });
 }
 
 export async function resetPasswordHandler(
@@ -124,7 +124,7 @@ export async function resetPasswordHandler(
   try {
     user = await findUserById(id);
   } catch (error) {
-    return res.status(400).send([{ message: "Could not reset user password" }]);
+    return res.status(400).send({ message: "Could not reset user password" });
   }
 
   if (
@@ -132,7 +132,13 @@ export async function resetPasswordHandler(
     !user.passwordResetCode ||
     user.passwordResetCode !== passwordResetCode
   ) {
-    return res.status(400).send([{ message: "Could not reset user password" }]);
+    return res.status(400).send({ message: "Could not reset user password" });
+  }
+
+  const match = await user.validatePassword(password)
+
+  if (match) {
+    return res.status(400).send({ message: "Could not reset user password" });
   }
 
   user.passwordResetCode = null;
@@ -175,7 +181,11 @@ export async function updateUserHandler(
 ) {
   const actionUser = res.locals.user;
 
-  const { name, email, avatar } = req.body;
+  const { name } = req.body;
+
+  if (!name) {
+    return res.status(400).send({ message: "Name is required" });
+  }
 
   const user = await findUserById(actionUser._id);
 
@@ -183,17 +193,7 @@ export async function updateUserHandler(
     return res.status(400).send([{ message: "Could not change user" }]);
   }
 
-  if (name) {
-    user["name"] = name;
-  }
-
-  if (email) {
-    user["email"] = email;
-  }
-
-  if (avatar) {
-    user["avatar"] = avatar;
-  }
+  user["name"] = name;
 
   await user.save();
 
@@ -239,6 +239,10 @@ export async function updatePasswordHandler(
   const { _id } = res.locals.user;
 
   const { oldPassword, newPassword } = req.body;
+
+  if (!oldPassword || !newPassword) {
+    return res.status(400).send({ message: "Password is required" });
+  }
 
   const user = await findUserById(_id);
 
@@ -290,7 +294,7 @@ export async function getAllUserHandler(_req: Request, res: Response) {
 export async function deleteUserByAdminHandler(req: Request<UserByAdminSchemaInput, {}, {}>, res: Response) {
   const { id } = req.params;
 
-  if(id === res.locals.user._id) {
+  if (id === res.locals.user._id) {
     return res.status(400).send({ message: "You can not delete yourself" });
   }
 
@@ -300,7 +304,7 @@ export async function deleteUserByAdminHandler(req: Request<UserByAdminSchemaInp
     return res.status(400).send({ message: "User does not exists" });
   }
 
-  if(user.isDelete) {
+  if (user.isDelete) {
     return res.status(400).send({ message: "User is already deleted" });
   }
 
@@ -315,11 +319,11 @@ export async function activeUserByAdminHandler(req: Request<UserByAdminSchemaInp
 
   const user = await findUserById(id);
 
-  if (!user ) {
+  if (!user) {
     return res.status(400).send({ message: "User does not exists" });
   }
 
-  if(!user.isDelete) {
+  if (!user.isDelete) {
     return res.status(400).send({ message: "User has been active" });
   }
 
@@ -338,7 +342,7 @@ export async function activeUserPremuimHandler(req: Request<UserByAdminSchemaInp
     return res.status(400).send({ message: "User does not exists" });
   }
 
-  if(user.isPremium) {
+  if (user.isPremium) {
     return res.status(400).send({ message: "User is already premium" });
   }
 
@@ -353,11 +357,11 @@ export async function inActiveUserPremuimHandler(req: Request<UserByAdminSchemaI
 
   const user = await findUserById(id);
 
-  if (!user ) {
+  if (!user) {
     return res.status(400).send({ message: "User does not exists" });
   }
 
-  if(!user.isPremium) {
+  if (!user.isPremium) {
     return res.status(400).send({ message: "User is not premium" });
   }
 
@@ -365,4 +369,23 @@ export async function inActiveUserPremuimHandler(req: Request<UserByAdminSchemaI
   await user.save();
 
   res.send({ message: "User premuim inActive successfully" });
+}
+
+export async function delegateAdminHandler(req: Request<UserByAdminSchemaInput, {}, {}>, res: Response) {
+  const { id } = req.params;
+
+  const user = await findUserById(id);
+
+  if (!user) {
+    return res.status(400).send({ message: "User does not exists" });
+  }
+
+  if (user.isAdmin) {
+    return res.status(400).send({ message: "User is already admin" });
+  }
+
+  user.isAdmin = true;
+  await user.save();
+
+  res.send({ message: "User admin update successfully" });
 }

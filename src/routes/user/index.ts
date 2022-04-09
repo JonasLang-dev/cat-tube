@@ -8,14 +8,15 @@ import category from "./category.routes";
 import reply from "./reply.routes";
 import history from "./history.routes";
 import search from "./search.routes";
+import post from "./post.routes"
 
 const router = express.Router();
 
 router.use("/users", user);
 router.use("/session", auth);
-// router.use("/posts", post);
+router.use("/posts", post);
 router.use("/like", like);
-router.use("/sub", subscription);
+router.use("/subscription", subscription);
 router.use("/category", category);
 router.use("/reply", reply);
 router.use("/history", history);
