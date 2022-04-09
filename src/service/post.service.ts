@@ -15,5 +15,9 @@ export const findPosts = (
 };
 
 export const findPostbyId = async (id: string) => {
-  return PostModel.findById(id).populate("user")
+  return PostModel.findById(id)
 };
+
+export const findPostMoreInfobyId = async (id: string) => {
+  return PostModel.findById(id).populate("user", "name avatar").populate({path: "category", select: "title"}).populate("likes").populate({ path: "commentsList", populate: { path: "replies user", select: "name avatar" } });
+}

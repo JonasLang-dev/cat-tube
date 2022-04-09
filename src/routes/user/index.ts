@@ -1,7 +1,7 @@
 import express from "express";
 import user from "./user.routes";
 import auth from "./auth.routes";
-import upload from "./upload.routes";
+import comment from "./comment.routes";
 import like from "./like.routes";
 import subscription from "./subscription.routes";
 import category from "./category.routes";
@@ -21,6 +21,6 @@ router.use("/category", category);
 router.use("/reply", reply);
 router.use("/history", history);
 router.use("/search", search);
-router.use(upload);
+router.use("/comment", comment)
 
 export default router;

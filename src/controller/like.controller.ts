@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { CreateLikeInput, RemoveLikeInput } from "../schema/like.schema"
+import { CreateLikeInput, PostLikesInput, RemoveLikeInput } from "../schema/like.schema"
 import { createLike, findLikebyId, findLikes } from "../service/like.service"
 import { findPostbyId } from "../service/post.service"
 import log from "../utils/logger"
@@ -7,10 +7,22 @@ import log from "../utils/logger"
 export const createLikeHandler = async (req: Request<{}, {}, CreateLikeInput>, res: Response) => {
     const user = res.locals.user._id
 
-    const post = await findPostbyId(req.body.post)
+    let post;
+
+    try {
+        post = await findPostbyId(req.body.post)
+    } catch (error: any) {
+        return res.status(400).send({ message: error.message })
+    }
 
     if (!post) {
         return res.status(404).send({ message: "Could not find post" })
+    }
+
+    const isLike = await findLikes({ user, post: post._id })
+
+    if (isLike) {
+        return res.status(400).send({ message: "You already liked this post" })
     }
 
     try {
@@ -24,13 +36,18 @@ export const createLikeHandler = async (req: Request<{}, {}, CreateLikeInput>, r
 export const removeLikeHandler = async (req: Request<RemoveLikeInput>, res: Response) => {
     const user = res.locals.user._id
 
-    const like = await findLikebyId(req.params.id)
+    let like;
+    try {
+        like = await findLikebyId(req.params.id)
+    } catch (error: any) {
+        return res.status(400).send({ message: error.message })
+    }
 
     if (!like) {
         return res.status(404).send({ message: "Could not find like" })
     }
 
-    if (like.user != user._id) {
+    if (like.user != user) {
         return res.status(401).send({ message: "Unauthorized" })
     }
 
@@ -54,3 +71,10 @@ export const getLickPostsHandler = async (_req: Request, res: Response) => {
     return res.send({ data: likes })
 }
 
+export const getPostLikesHandler = async (req: Request<PostLikesInput, {}, {}>, res: Response) => {
+    const { post } = req.params
+
+    const likes = await findLikes({ post })
+
+    return res.send({ data: likes })
+}

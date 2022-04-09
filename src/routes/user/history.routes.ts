@@ -4,7 +4,6 @@ import {
   deleteHistoryController,
   deleteTypeHistoryController,
   getAllHistoryController,
-  getTypeHistoryController,
 } from "../../controller/history.controller";
 import requireUser from "../../middleware/requireUser";
 import validateResource from "../../middleware/validateResourse";
@@ -30,13 +29,6 @@ router.delete(
   requireUser,
   validateResource(deleteHistorySchema),
   deleteHistoryController
-);
-
-router.get(
-  "/:type",
-  requireUser,
-  validateResource(historyTypeSchema),
-  getTypeHistoryController
 );
 
 router.delete(

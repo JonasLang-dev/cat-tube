@@ -12,6 +12,13 @@ export const removeLikeSchema = object({
     })
 })
 
+export const postLikesSchema = object({
+    params: object({
+        post: string({ required_error: "post is required." }),
+    })
+})
+
 export type CreateLikeInput = TypeOf<typeof createLikeSchema>["body"];
 export type RemoveLikeInput = TypeOf<typeof removeLikeSchema>["params"];
+export type PostLikesInput = TypeOf<typeof postLikesSchema>["params"];
 
