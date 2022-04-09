@@ -21,7 +21,6 @@ import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import Input from "@mui/material/Input";
 import { IconButton, List, ListItem, Skeleton } from "@mui/material";
 import Box from "@mui/system/Box";
-import Image from "mui-image";
 import ClearIcon from "@mui/icons-material/Clear";
 
 interface HistoryType {
@@ -153,29 +152,14 @@ const History: FC<HistoryType> = ({ theme }) => {
               <List sx={{ pt: 4 }}>
                 <ListItem>
                   <Box height={138} width={246}>
-                    <Image
-                      src={
-                        "https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
-                      }
-                      sx={{
-                        bgcolor: "rgba(0, 0, 0, 0.08)",
+                    <img
+                      src="https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
+                      style={{
+                        backgroundColor: "rgba(0, 0, 0, 0.08)",
                         objectFit: "cover",
+                         width: "100%",
+                        height: "100%",
                       }}
-                      fit="cover"
-                      duration={300}
-                      easing="cubic-bezier(0.7, 0, 0.6, 1)"
-                      showLoading={
-                        <Skeleton
-                          variant="rectangular"
-                          width="100%"
-                          height="200px"
-                          animation="wave"
-                        />
-                      }
-                      errorIcon={true}
-                      shift={null}
-                      distanc="100px"
-                      shiftDuration={900}
                     />
                   </Box>
                   <Box sx={{ flex: 1, pl: "1rem" }}>
@@ -205,29 +189,14 @@ const History: FC<HistoryType> = ({ theme }) => {
                 </ListItem>
                 <ListItem>
                   <Box height={138} width={246}>
-                    <Image
-                      src={
-                        "https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
-                      }
-                      sx={{
-                        bgcolor: "rgba(0, 0, 0, 0.08)",
+                    <img
+                      src="https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
+                      style={{
+                        backgroundColor: "rgba(0, 0, 0, 0.08)",
                         objectFit: "cover",
+                        width: "100%",
+                        height: "100%",
                       }}
-                      fit="cover"
-                      duration={300}
-                      easing="cubic-bezier(0.7, 0, 0.6, 1)"
-                      showLoading={
-                        <Skeleton
-                          variant="rectangular"
-                          width="100%"
-                          height="200px"
-                          animation="wave"
-                        />
-                      }
-                      errorIcon={true}
-                      shift={null}
-                      distanc="100px"
-                      shiftDuration={900}
                     />
                   </Box>
                   <Box sx={{ flex: 1, pl: "1rem" }}>
@@ -265,25 +234,14 @@ const History: FC<HistoryType> = ({ theme }) => {
                     height={138}
                     width={246}
                   >
-                    <Image
-                      src={
-                        "https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
-                      }
-                      fit="cover"
-                      duration={300}
-                      easing="cubic-bezier(0.7, 0, 0.6, 1)"
-                      showLoading={
-                        <Skeleton
-                          variant="rectangular"
-                          width="100%"
-                          height="200px"
-                          animation="wave"
-                        />
-                      }
-                      errorIcon={true}
-                      shift={null}
-                      distanc="100px"
-                      shiftDuration={900}
+                    <img
+                      src="https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
+                      style={{
+                        backgroundColor: "rgba(0, 0, 0, 0.08)",
+                        objectFit: "cover",
+                        width: "100%",
+                        height: "100%",
+                      }}
                     />
                   </Box>
                   <Box sx={{ flex: 1, pl: "1rem" }}>

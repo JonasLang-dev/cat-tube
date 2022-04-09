@@ -61,9 +61,7 @@ export const resetPasswordSchema = object({
 
 export const updateUserSchema = object({
   body: object({
-    name: string().optional(),
-    email: string().email("Not a valid email").optional(),
-    avatar: string().optional(),
+    name: string({required_error: "User name is required"}),
   }),
 });
 

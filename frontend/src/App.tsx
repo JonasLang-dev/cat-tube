@@ -7,7 +7,6 @@ import { Route, Routes } from "react-router-dom";
 import DashboardPage from "./pages/dashboard/DashboardPage";
 import HomePage from "./pages/home/HomePage";
 import Pricing from "./components/PricingContent";
-import Watch from "./pages/watch/index";
 import { SnackbarProvider } from "notistack";
 import RestPassword from "./pages/users/password/new";
 import SignInPage from "./pages/users/signin/SignInPage";
@@ -25,6 +24,7 @@ import StudioVideo from "./pages/studio/video";
 import AdminVideo from "./pages/admin/video";
 import AdminAuth from "./pages/admin/auth";
 import AdminUser from "./pages/admin/user";
+const Watch = React.lazy(() => import("./pages/watch/index"));
 
 export const AppContext = createContext<any>(null);
 
@@ -103,7 +103,14 @@ function App() {
               <Route path="/settings" element={<Settings />} />
               <Route path="/subscriptions" element={<Subscriptions />} />
               <Route path="/premium" element={<Pricing />} />
-              <Route path="/watch" element={<Watch />} />
+              <Route
+                path="/watch"
+                element={
+                  <React.Suspense fallback={<div>Loading...</div>}>
+                    <Watch />
+                  </React.Suspense>
+                }
+              />
               <Route path="/profile" element={<Profile />} />
             </Route>
             <Route

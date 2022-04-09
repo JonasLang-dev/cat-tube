@@ -10,7 +10,8 @@ import {
   findAllHistory,
   findHistoryById,
 } from "../service/history.service";
-import { findPostbyId } from "../service/post.service";
+import { findPostbyId, findPosts } from "../service/post.service";
+import { findUsers } from "../service/user.service";
 
 export const createHistoryController = async (
   req: Request<{}, {}, CreateHistoryInput>,
@@ -30,19 +31,18 @@ export const createHistoryController = async (
   }
 };
 
-export const createSearchController = async (
+export const searchController = async (
   req: Request<{}, {}, CreateSearchInput>,
   res: Response
 ) => {
   const { search } = req.body;
-  const user = res.locals;
 
-  try {
-    const history = createHistory({ search, type: "search", user: user._id });
-    return res.status(201).send(history);
-  } catch (error: any) {
-    return res.status(400).send({ message: error.message });
-  }
+  const reg = new RegExp(search, 'i')
+  const channels = await findUsers({ $or: [{ name: { $regex: reg } }] });
+
+  const posts = await findPosts({ $or: [{ title: { $regex: reg } }, { description: { $regex: reg } }] })
+
+  return res.status(200).send({ data: { channels, posts } });
 };
 
 export const getAllHistoryController = async (_req: Request, res: Response) => {

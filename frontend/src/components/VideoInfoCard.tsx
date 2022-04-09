@@ -7,9 +7,8 @@ import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
-import Image from "mui-image";
-import Skeleton from "@mui/material/Skeleton";
 import { Circle } from "@mui/icons-material";
+import { CardMedia } from "@mui/material";
 
 interface VideoCardType {
   path: any;
@@ -29,10 +28,7 @@ const VideoInfoCard: FC<VideoCardType> = ({
   loading = false,
 }) => {
   return (
-    <Grid
-      item
-      sx={{ display: "flex", justifyContent: "center" }}
-    >
+    <Grid item sx={{ display: "flex", justifyContent: "center" }}>
       <Card
         sx={{
           width: 1,
@@ -46,31 +42,15 @@ const VideoInfoCard: FC<VideoCardType> = ({
           to={{ pathname: "/watch", search: `?v=${path}` }}
           component={Link}
         >
-          <Image
-            src={
-              "https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
-            }
+          <CardMedia
+            component="img"
+            height="194"
+            width="100%"
             sx={{
-              width: "100%",
-              height: 0,
               bgcolor: "rgba(0, 0, 0, 0.08)",
               objectFit: "cover",
             }}
-            fit="cover"
-            duration={300}
-            easing="cubic-bezier(0.7, 0, 0.6, 1)"
-            showLoading={
-              <Skeleton
-                variant="rectangular"
-                width="100%"
-                height="200px"
-                animation="wave"
-              />
-            }
-            errorIcon={true}
-            shift={null}
-            distanc="100px"
-            shiftDuration={900}
+            image="https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
           />
         </CardActionArea>
         <CardContent

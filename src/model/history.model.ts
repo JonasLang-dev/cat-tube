@@ -1,4 +1,4 @@
-import {  prop, Ref } from "@typegoose/typegoose";
+import { prop, Ref } from "@typegoose/typegoose";
 import { Post } from "./post.model";
 import { User } from "./user.model";
 
@@ -10,7 +10,7 @@ export class History {
     @prop({ type: String, require: true, enum: ["watch", "search"] })
     public type: string;
 
-    @prop({ ref: () => User })
+    @prop({ required: true, ref: () => User })
     public user: Ref<User>;
 
     @prop({ ref: () => Post })

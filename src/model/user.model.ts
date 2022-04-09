@@ -41,6 +41,7 @@ export const _PrivateFields = [
   return;
 })
 @index({ email: 1 }, { unique: true })
+@index({ name: "text" })
 @modelOptions({
   schemaOptions: {
     toJSON: { virtuals: true },

@@ -1,4 +1,4 @@
-import { modelOptions, prop, Ref } from "@typegoose/typegoose";
+import { modelOptions, prop, Ref, index } from "@typegoose/typegoose";
 import { Category } from "./category.model";
 import { Like } from "./like.model";
 import { Comment } from "./comment.model";
@@ -12,6 +12,7 @@ import { User } from "./user.model";
   }
 })
 
+@index({ title: "text" })
 export class Post {
   @prop({ ref: () => User })
   public user: Ref<User>;
@@ -25,7 +26,7 @@ export class Post {
   @prop()
   public postUrl: string;
 
-  @prop({ required: true })
+  @prop()
   public description: string;
 
   @prop({ default: false })

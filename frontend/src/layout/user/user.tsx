@@ -80,6 +80,7 @@ import PostDialog from "../../components/PostDialog";
 import AboutDialog from "../../components/AboutDialog";
 import * as locales from "../../../locales";
 import SearchIcon from "@mui/icons-material/Search";
+import { baseURL } from "../../request";
 type SupportedLocales = keyof typeof locales;
 
 interface Layout {
@@ -169,7 +170,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
       <MenuItem onClick={handleProfileMenuClose} component={Link} to="/profile">
         <Avatar
           alt={currentUserInfo && currentUserInfo.name}
-          src={currentUserInfo && currentUserInfo.avatar}
+          src={currentUserInfo && `${baseURL}/${currentUserInfo.avatar}`}
         />
         &nbsp; {currentUserInfo && currentUserInfo.name}
       </MenuItem>
@@ -908,7 +909,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
                 >
                   <Avatar
                     alt={currentUserInfo && currentUserInfo.name}
-                    src={currentUserInfo && currentUserInfo.avatar}
+                    src={currentUserInfo && `${baseURL}/${currentUserInfo.avatar}`}
                   />
                 </IconButton>
               </>

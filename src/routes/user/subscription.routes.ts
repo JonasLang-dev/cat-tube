@@ -43,9 +43,8 @@ router.get(
 );
 
 router.get(
-  "/channel/:id",
+  "/channel",
   requireUser,
-  validateResource(getChannelSchema),
   getOwnChannelHandler
 );
 

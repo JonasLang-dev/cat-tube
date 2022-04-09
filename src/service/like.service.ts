@@ -15,5 +15,5 @@ export const findLikes = async (
     query: FilterQuery<Like>,
     options: QueryOptions = { lean: true }
 ) => {
-    return LikeModel.find(query, {}, options).populate('user', "email username avatar").populate("post", "title postUrl videoUrl");
+    return LikeModel.find(query, {}, options).populate('user', "email name avatar").populate("post", "title postUrl videoUrl");
 };

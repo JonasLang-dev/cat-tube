@@ -33,9 +33,9 @@ router.post(
   createUserHandler
 );
 
-router.put("/", validateResource(updateUserSchema), updateUserHandler);
+router.put("/", requireUser, validateResource(updateUserSchema), updateUserHandler);
 
-router.delete("/", deleteUserHandler);
+router.delete("/", requireUser, deleteUserHandler);
 
 router.get("/current", requireUser, getCurrentUserHandler);
 

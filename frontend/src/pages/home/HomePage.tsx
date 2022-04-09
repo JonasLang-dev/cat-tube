@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import VideoCard from "../../components/VideoCard";
 import Carousel from "react-material-ui-carousel";
-import Image from "mui-image";
 import Skeleton from "@mui/material/Skeleton";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Button } from "@mui/material";
@@ -63,23 +62,9 @@ const HomePage: FC<Home> = ({ loading = false, colorMode, theme }) => {
             {mdImgs.map((item, index) => {
               return (
                 <Grid item xs={4} key={item.Name}>
-                  <Image
+                  <img
                     src={item.Image}
-                    sx={{ overflow: "hidden", width: "100%" }}
-                    duration={300}
-                    easing="cubic-bezier(0.7, 0, 0.6, 1)"
-                    showLoading={
-                      <Skeleton
-                        variant="rectangular"
-                        width="100%"
-                        height="200px"
-                        animation="wave"
-                      />
-                    }
-                    errorIcon={true}
-                    shift={null}
-                    distanc="100px"
-                    shiftDuration={900}
+                    style={{ overflow: "hidden", width: "100%" }}
                   />
                 </Grid>
               );
