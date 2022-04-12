@@ -18,13 +18,19 @@ export const createHistoryController = async (
   res: Response
 ) => {
   const user = res.locals.user;
-  const post = await findPostbyId(req.body.post);
+
+  let post
+  try {
+    post = await findPostbyId(req.body.post);
+  } catch (error: any) {
+    return res.status(400).send({ message: error.message });
+  }
 
   if (!post) {
     return res.status(404).send({ message: "Post not found" });
   }
   try {
-    const history = createHistory({ post: post._id, user: user._id });
+    const history = await createHistory({ post: post._id, type: "watch", user: user._id });
     return res.status(201).send(history);
   } catch (error: any) {
     return res.status(400).send({ message: error.message });
@@ -62,7 +68,12 @@ export const deleteHistoryController = async (
 ) => {
   const { id } = req.params;
 
-  const history = await findHistoryById(id);
+  let history;
+  try {
+    history = await findHistoryById(id);
+  } catch (error: any) {
+    return res.status(400).send({ message: error.message });
+  }
 
   if (!history) {
     return res.status(404).send({ message: "History not found" });
