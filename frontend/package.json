@@ -23,7 +23,7 @@
     "@tauri-apps/api": "^1.0.0-rc.3",
     "axios": "^0.26.1",
     "color": "^4.2.3",
-    "i18next": "^21.6.14",
+    "i18next": "^21.6.16",
     "i18next-browser-languagedetector": "^6.1.4",
     "i18next-http-backend": "^1.4.0",
     "mui-file-dropzone": "^4.0.1",
