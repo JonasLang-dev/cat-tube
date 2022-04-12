@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
-import { AdminPostSchemaInput } from "../schema/post.schema";
+import { AdminPostSchemaInput, PostSchemaInput, UpdatePostSchema } from "../schema/post.schema";
 import fs from "fs";
 import {
   createPost,
   findPostbyId,
+  findPostMoreInfobyId,
   findPosts,
 } from "../service/post.service";
+import { findCategoryById } from "../service/category.service";
 
 export const findAllPostsHandler = async (_req: Request, res: Response) => {
   try {
@@ -17,7 +19,7 @@ export const findAllPostsHandler = async (_req: Request, res: Response) => {
 }
 
 export const activePostHandler = async (req: Request<AdminPostSchemaInput, {}, {}>, res: Response) => {
-  
+
   let post
 
   try {
@@ -46,8 +48,12 @@ export const activePostHandler = async (req: Request<AdminPostSchemaInput, {}, {
 
 export const inActivePostHandler = async (req: Request<AdminPostSchemaInput, {}, {}>, res: Response) => {
   const { id } = req.params;
-
-  const post = await findPostbyId(id)
+  let post
+  try {
+    post = await findPostbyId(id)
+  } catch (error: any) {
+    return res.status(400).send({ message: error.message });
+  }
 
   if (!post) {
     return res.status(404).send({ message: "Post not found" });
@@ -59,11 +65,9 @@ export const inActivePostHandler = async (req: Request<AdminPostSchemaInput, {},
 
   post.isActive = false;
 
-  try {
-    return res.status(200).send({ data: post });
-  } catch (error: any) {
-    return res.status(400).send({ message: error.message });
-  }
+  post.save()
+  return res.status(200).send({ data: post });
+
 }
 
 export const findPostsHandler = async (req: Request, res: Response) => {
@@ -86,8 +90,8 @@ export const findOwnPostsHandler = async (req: Request, res: Response) => {
 
 export const createPostHandler = async (req: Request, res: Response) => {
   try {
-    const fileName = `${Date.now()}${req.body.file.path}`;
-    const path = `uploads/${fileName}`;
+    const filename = `${Date.now()}${req.body.file.path}`;
+    const path = `uploads/${filename}`;
     const data = req.body.data;
 
     // to convert base64 format into random filename
@@ -96,7 +100,7 @@ export const createPostHandler = async (req: Request, res: Response) => {
 
     fs.writeFileSync(path, base64Data, { encoding: "base64" });
 
-    const post = await createPost({ user: res.locals.user._id, title: req.body.file.path, videoUrl: `/${fileName}` });
+    const post = await createPost({ user: res.locals.user._id, title: req.body.file.path, videoUrl: filename });
 
     return res.send({
       data: post
@@ -105,4 +109,139 @@ export const createPostHandler = async (req: Request, res: Response) => {
     return res.status(400).send({ message: e.message });
   }
 
+}
+
+export const updatePostHandler = async (req: Request<UpdatePostSchema["params"], {}, UpdatePostSchema["body"]>, res: Response) => {
+  const { title, description, isPublic, categoryId } = req.body;
+
+  let post;
+
+  try {
+    post = await findPostbyId(req.params.id);
+  } catch (error: any) {
+    return res.status(400).send({ message: error });
+  }
+
+  if (!post) {
+    return res.status(404).send({ message: "Post not found" });
+  }
+
+  if (post.user != res.locals.user._id) {
+    return res.status(403).send({ message: "You are not authorized to update this post" });
+  }
+
+  if (title) {
+    post["title"] = title;
+  }
+
+  if (description) {
+    post["description"] = description;
+  }
+
+  if (isPublic !== null || isPublic !== undefined) {
+    post["isPublic"] = Boolean(isPublic);
+  }
+
+  if (categoryId) {
+    try {
+      const category = await findCategoryById(categoryId);
+
+      console.log(category);
+
+      if (!category) {
+        return res.status(404).send({ message: "Category not found" });
+      }
+
+      post["category"] = category._id;
+    } catch (error: any) {
+      return res.status(400).send({ message: error.message });
+    }
+  }
+
+  post.save();
+
+  return res.status(200).send({ data: post });
+}
+
+export const updatePostViewsHandler = async (req: Request<PostSchemaInput, {}, {}>, res: Response) => {
+  try {
+    const post = await findPostbyId(req.params.id);
+    if (!post) {
+      return res.status(404).send({ message: "Post not found" });
+    }
+
+    post.views += 1;
+    post.save();
+
+    return res.status(200).send({ data: post });
+  } catch (error: any) {
+    return res.status(400).send({ message: error.message });
+  }
+}
+
+export const deletePostHandler = async (req: Request<PostSchemaInput, {}, {}>, res: Response) => {
+  try {
+    const post = await findPostbyId(req.params.id);
+    if (!post) {
+      return res.status(404).send({ message: "Post not found" });
+    }
+
+    if (post.user != res.locals.user._id) {
+      return res.status(403).send({ message: "You are not authorized to delete this post" });
+    }
+
+    post.remove();
+
+    return res.status(200).send({ meesage: "Post deleted successfully" });
+  } catch (error: any) {
+    return res.status(400).send({ message: error.message });
+  }
+}
+
+export const postMoreInfoHandler = async (req: Request<PostSchemaInput, {}, {}>, res: Response) => {
+  try {
+    const post = await findPostMoreInfobyId(req.params.id);
+    if (!post) {
+      return res.status(404).send({ message: "Post not found" });
+    }
+
+    if (!post.isPublic || !post.isActive) {
+      return res.status(403).send({ message: "You are not authorized to view this post" });
+    }
+
+    return res.status(200).send({ data: post });
+  } catch (error: any) {
+    return res.status(400).send({ message: error.message });
+  }
+}
+
+export const updatePosterHandler = async (req: Request<PostSchemaInput, {}, {}>, res: Response) => {
+  const { id } = req.params;
+
+  let post;
+  try {
+    post = await findPostbyId(id);
+  } catch (error: any) {
+    return res.status(400).send({ message: error.message });
+  }
+
+  if (!post) {
+    return res.status(404).send({ message: "Post not found" });
+  }
+
+  if (post.user != res.locals.user._id) {
+    return res.status(403).send({ message: "You are not authorized to update this post" });
+  }
+
+  if (!req.file) {
+    return res.status(400).send({ message: "No file provided" });
+  }
+
+  const { filename } = req.file;
+
+  post["postUrl"] = filename;
+
+  post.save();
+
+  return res.status(200).send({ data: post });
 }

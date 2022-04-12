@@ -34,7 +34,12 @@ export const getOwnRepliesHandler = async (_req: Request, res: Response) => {
 export const updateReplyHandler = async (req: Request<UpdateReplySchema["params"], {}, UpdateReplySchema["body"]>, res: Response) => {
     const { content } = req.body;
 
-    const reply = await findReplyById(req.params.id);
+    let reply;
+    try {
+        reply = await findReplyById(req.params.id);
+    } catch (error: any) {
+        return res.status(400).send({ message: error.message });
+    }
 
     if (!reply) {
         return res.status(404).send({ message: "Reply not found" });
@@ -55,8 +60,13 @@ export const updateReplyHandler = async (req: Request<UpdateReplySchema["params"
 }
 
 export const deleteReplyHandler = async (req: Request<DeleteReplyInput, {}, {}>, res: Response) => {
+    let reply
 
-    const reply = await findReplyById(req.params.id);
+    try {
+        reply = await findReplyById(req.params.id);
+    } catch (error: any) {
+        return res.status(400).send({ message: error.message });
+    }
 
     if (!reply) {
         return res.status(404).send({ message: "Reply not found" });
@@ -66,10 +76,6 @@ export const deleteReplyHandler = async (req: Request<DeleteReplyInput, {}, {}>,
         return res.status(403).send({ message: "You are not allowed to delete this reply" });
     }
 
-    try {
-        reply.remove();
-        return res.status(204).send({ mssage: "Reply deleted" });
-    } catch (error: any) {
-        return res.status(400).send({ message: error.message });
-    }
+    await reply.remove();
+    return res.send({ mssage: "Reply deleted" });
 }

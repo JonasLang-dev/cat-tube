@@ -54,10 +54,18 @@ export class Post {
   @prop({
     ref: () => Comment,
     localField: "_id",
-    foreignField: "postId",
+    foreignField: "post",
     justOne: false,
     count: true
   })
   public comments: number;
+
+  @prop({
+    ref: () => Comment,
+    localField: "_id",
+    foreignField: "post",
+    justOne: false,
+  })
+  public commentsList: Ref<Comment>[];
 }
 

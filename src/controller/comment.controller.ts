@@ -22,7 +22,12 @@ export const createCommentHandler = async (
 
   const { content } = req.body;
 
-  const post = await findPostbyId(req.body.post);
+  let post;
+  try {
+    post = await findPostbyId(req.body.post);
+  } catch (error: any) {
+    return res.status(400).send({ message: error.message });
+  }
 
   if (!post || !post.isPublic || !post.isActive) {
     return res.status(404).send({ message: "Post not found" });
@@ -48,7 +53,12 @@ export const updateCommentHandler = async (
   const { id } = req.params;
   const { content } = req.body;
 
-  const comment = await findCommentById(id);
+  let comment;
+  try {
+    comment = await findCommentById(id);
+  } catch (error: any) {
+    return res.status(400).send({ message: error.message });
+  }
 
   if (!comment) {
     return res.status(404).send({ message: "Comment do not exists" });
@@ -60,18 +70,20 @@ export const updateCommentHandler = async (
 
   comment["content"] = content;
 
-  try {
-    const updateComment = await comment.save();
-    res.send({ data: updateComment });
-  } catch (error: any) {
-    res.status(400).send({ message: error.message });
-  }
+  const updateComment = await comment.save();
+  res.send({ data: updateComment });
+
 };
 
 export const removeCommentHandler = async (req: Request, res: Response) => {
   const { id } = req.params;
 
-  const comment = await findCommentById(id);
+  let comment;
+  try {
+    comment = await findCommentById(id);
+  } catch (error: any) {
+    return res.status(400).send({ message: error.message });
+  }
 
   if (!comment) {
     return res.status(404).send({ message: "Comment do not find" });
@@ -90,9 +102,8 @@ export const removeCommentHandler = async (req: Request, res: Response) => {
 };
 
 export const findOwnCommentHandler = async (req: Request, res: Response) => {
-  const { id } = res.locals;
 
-  const comments = await findUserComments({ user: id });
+  const comments = await findUserComments({ user: res.locals.user._id });
 
   return res.send({ data: comments });
 };
@@ -101,7 +112,13 @@ export const findPostCommentsHandler = async (
   req: Request<GetPostCommentsInput, {}, {}>,
   res: Response
 ) => {
-  const post = await findPostbyId(req.params.post);
+  let post
+
+  try {
+    post = await findPostbyId(req.params.post);
+  } catch (error: any) {
+    return res.status(400).send({ message: error.message });
+  }
 
   if (!post || !post.isPublic || !post.isActive) {
     return res.status(404).send({ message: "post dot not find" });
