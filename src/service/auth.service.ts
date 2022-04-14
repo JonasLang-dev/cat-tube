@@ -34,8 +34,6 @@ export function signAccessToken(user: DocumentType<User>) {
     return signJwt(payload, "accessTokenPrivateKey", {
         expiresIn: "15m"
     });
-
-
 }
 
 export const findSessions = async (

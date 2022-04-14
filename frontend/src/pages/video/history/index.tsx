@@ -39,7 +39,7 @@ const History: FC<HistoryType> = ({ theme }) => {
 
   return (
     <>
-      {!userInfo ? (
+      {userInfo ? (
         <main
           style={{
             height: "93vh",
