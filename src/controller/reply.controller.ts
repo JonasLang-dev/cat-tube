@@ -46,7 +46,7 @@ export const updateReplyHandler = async (req: Request<UpdateReplySchema["params"
     }
 
     if (reply.user != res.locals.user._id) {
-        return res.status(403).send({ message: "You are not allowed to update this reply" });
+        return res.status(401).send({ message: "You are not allowed to update this reply" });
     }
 
     reply.content = content;
@@ -73,7 +73,7 @@ export const deleteReplyHandler = async (req: Request<DeleteReplyInput, {}, {}>,
     }
 
     if (reply.user != res.locals.user._id) {
-        return res.status(403).send({ message: "You are not allowed to delete this reply" });
+        return res.status(401).send({ message: "You are not allowed to delete this reply" });
     }
 
     await reply.remove();

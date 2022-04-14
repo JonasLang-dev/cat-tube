@@ -127,7 +127,7 @@ export const updatePostHandler = async (req: Request<UpdatePostSchema["params"],
   }
 
   if (post.user != res.locals.user._id) {
-    return res.status(403).send({ message: "You are not authorized to update this post" });
+    return res.status(401).send({ message: "You are not authorized to update this post" });
   }
 
   if (title) {
@@ -187,7 +187,7 @@ export const deletePostHandler = async (req: Request<PostSchemaInput, {}, {}>, r
     }
 
     if (post.user != res.locals.user._id) {
-      return res.status(403).send({ message: "You are not authorized to delete this post" });
+      return res.status(401).send({ message: "You are not authorized to delete this post" });
     }
 
     post.remove();
@@ -206,7 +206,7 @@ export const postMoreInfoHandler = async (req: Request<PostSchemaInput, {}, {}>,
     }
 
     if (!post.isPublic || !post.isActive) {
-      return res.status(403).send({ message: "You are not authorized to view this post" });
+      return res.status(401).send({ message: "You are not authorized to view this post" });
     }
 
     return res.status(200).send({ data: post });
@@ -230,7 +230,7 @@ export const updatePosterHandler = async (req: Request<PostSchemaInput, {}, {}>,
   }
 
   if (post.user != res.locals.user._id) {
-    return res.status(403).send({ message: "You are not authorized to update this post" });
+    return res.status(401).send({ message: "You are not authorized to update this post" });
   }
 
   if (!req.file) {
