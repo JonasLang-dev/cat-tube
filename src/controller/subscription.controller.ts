@@ -50,7 +50,7 @@ export const removeSubHnadler = async (
   }
 
   if (subscription.subscriber != res.locals.user._id) {
-    return res.status(403).send({
+    return res.status(401).send({
       message: "You are not authorized to remove this subscription",
     });
   }
