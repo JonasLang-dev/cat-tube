@@ -70,7 +70,7 @@ export const inActivePostHandler = async (req: Request<AdminPostSchemaInput, {},
 
 }
 
-export const findPostsHandler = async (req: Request, res: Response) => {
+export const findPostsHandler = async (_req: Request, res: Response) => {
   try {
     const posts = await findPosts({ isActive: true, isPublic: true }, { sort: { createdAt: -1 } });
     return res.status(200).send({ data: posts });
@@ -79,7 +79,7 @@ export const findPostsHandler = async (req: Request, res: Response) => {
   }
 }
 
-export const findOwnPostsHandler = async (req: Request, res: Response) => {
+export const findOwnPostsHandler = async (_req: Request, res: Response) => {
   try {
     const posts = await findPosts({ user: res.locals.user._id }, { sort: { createdAt: -1 } });
     return res.status(200).send({ data: posts });
