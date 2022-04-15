@@ -1,11 +1,7 @@
-import React, { FC, useContext, useEffect, useMemo } from "react";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import React, { FC, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -14,17 +10,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Copyright from "../../../../components/Copyright";
 import { Link as Links, useNavigate } from "react-router-dom";
-import { Autocomplete, IconButton, PaletteMode } from "@mui/material";
+import { Autocomplete, IconButton } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useSnackbar } from "notistack";
 import { useAppSelector, useAppDispatch } from "../../../../hooks/redux.hooks";
-import {
-  clearSignUpState,
-  selectSignUpError,
-  selectSignUpStatus,
-  signUp,
-} from "../../../../features/auth/signUpSlice";
+import { clearSignUpState } from "../../../../features/auth/signUpSlice";
 import { LoadingButton } from "@mui/lab";
 import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -59,14 +50,13 @@ const resetPasswordSchema = object({
 
 type ResetPasswordInput = TypeOf<typeof resetPasswordSchema>;
 
-interface RestPassword {
+interface RestPasswordInput {
   theme: any;
   colorMode: any;
 }
 
-const RestPassword: FC<RestPassword> = ({ theme, colorMode }) => {
+const RestPassword: FC<RestPasswordInput> = ({ theme, colorMode }) => {
   const { t, i18n } = useTranslation();
-  const [locale, setLocale] = React.useState<SupportedLocales>("zhCN");
   const dispatch = useAppDispatch();
   const {
     register,
@@ -78,7 +68,7 @@ const RestPassword: FC<RestPassword> = ({ theme, colorMode }) => {
   });
   const resetPasswordStatus = useAppSelector(selectResetPasswordStatus);
   const resetPasswordError = useAppSelector(selectResetPasswordErrors);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const changeLanguageHandler = (lang: SupportedLocales) => {
     i18n.changeLanguage(lang);
@@ -86,11 +76,7 @@ const RestPassword: FC<RestPassword> = ({ theme, colorMode }) => {
 
   useEffect(() => {
     if (resetPasswordStatus === "failed") {
-      if (Array.isArray(resetPasswordError)) {
-        resetPasswordError.map((item) => {
-          enqueueSnackbar(item.message, { variant: "error" });
-        });
-      }
+      enqueueSnackbar(resetPasswordError?.message, { variant: "error" });
       dispatch(clearSignUpState());
     }
     if (resetPasswordStatus === "success") {
@@ -124,8 +110,7 @@ const RestPassword: FC<RestPassword> = ({ theme, colorMode }) => {
           style={{ width: 140 }}
           value={i18n.language.replace(/\-/, "") || window.localStorage.i18n}
           disableClearable
-          onChange={(event: any, newValue: string | null) => {
-            setLocale(newValue as SupportedLocales);
+          onChange={(_event: any, newValue: string | null) => {
             changeLanguageHandler(newValue as SupportedLocales);
           }}
           renderInput={(params) => (
@@ -205,8 +190,6 @@ const RestPassword: FC<RestPassword> = ({ theme, colorMode }) => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             loading={resetPasswordStatus === "loading"}
-            // component={Links}
-            // to="/"
           >
             {t("reset")}
           </LoadingButton>

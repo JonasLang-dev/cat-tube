@@ -8,7 +8,7 @@ import { RootState } from "../../store";
 // Define a type for the slice state
 interface ResetPasswordState {
   status: "idle" | "loading" | "failed" | "success";
-  error: Array<any> | { message: string } | undefined;
+  error: any;
 }
 
 // Define the initial state using that type
@@ -24,7 +24,7 @@ export const resetPassword = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await axiosInstance.post(`/api/users/resetpassword/${value.id}/${value.passwordResetCode}`, {
+      const { data } = await axiosInstance.put(`/api/users/resetpassword/${value.id}/${value.passwordResetCode}`, {
         password: value.password,
         passwordConfirmation: value.passwordConfirmation
       });
@@ -52,12 +52,12 @@ export const resetPasswordSlice = createSlice({
         state.error = undefined;
         state.status = "loading";
       })
-      .addCase(resetPassword.fulfilled, (state, action) => {
+      .addCase(resetPassword.fulfilled, (state) => {
         state.status = "success";
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload as Array<any>;
+        state.error = action.payload;
       })
       .addDefaultCase((state) => {
         state.status = "idle";
