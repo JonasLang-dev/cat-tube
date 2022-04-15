@@ -18,7 +18,7 @@ export const emailForPass = createAsyncThunk(
   "email/password/new",
   async (user: { email: string }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post(
+      const { data } = await axiosInstance.put(
         `/api/users/forgotpassword`,
         user
       );
@@ -46,7 +46,7 @@ export const emailForPassSlice = createSlice({
         state.error = undefined;
         state.status = "loading";
       })
-      .addCase(emailForPass.fulfilled, (state, action) => {
+      .addCase(emailForPass.fulfilled, (state) => {
         state.status = "success";
       })
       .addCase(emailForPass.rejected, (state, action) => {

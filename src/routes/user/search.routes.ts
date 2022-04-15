@@ -3,12 +3,12 @@ import { searchController } from "../../controller/history.controller";
 import validateResource from "../../middleware/validateResourse";
 import { createSearchSchema } from "../../schema/history.schema";
 
-const router = express.Router();
+const search = express.Router();
 
-router.get(
+search.get(
   "/",
   validateResource(createSearchSchema),
   searchController
 );
 
-export default router;
+export default search;
