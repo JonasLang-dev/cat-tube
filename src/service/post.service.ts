@@ -10,7 +10,7 @@ export const findPosts = async (
   query: FilterQuery<Post>,
   options: QueryOptions = { lean: true }
 ) => {
-  return await PostModel.find(query, {}, options).populate("user", "name avatar").populate("category").populate("likes").populate("comments");
+  return PostModel.find(query, {}, options).populate("user", "name avatar").populate("category").populate("likes").populate("comments");
 };
 
 export const findPostbyId = async (id: string) => {
