@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { stubTrue } from "lodash";
 import {
   CreateSubInput,
   GetChannelInput,

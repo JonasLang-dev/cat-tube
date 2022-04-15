@@ -19,7 +19,7 @@ import Divider from "@mui/material/Divider";
 import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import Input from "@mui/material/Input";
-import { IconButton, List, ListItem, Skeleton } from "@mui/material";
+import { IconButton, List, ListItem } from "@mui/material";
 import Box from "@mui/system/Box";
 import ClearIcon from "@mui/icons-material/Clear";
 
