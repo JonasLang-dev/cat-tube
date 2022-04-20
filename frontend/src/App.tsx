@@ -111,7 +111,10 @@ function App() {
                   </React.Suspense>
                 }
               />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/channel">
+                <Route index element={<Profile />} />
+                <Route path="*" element={<Profile />} />
+              </Route>
             </Route>
             <Route
               path="/admin"
