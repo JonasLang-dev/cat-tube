@@ -156,7 +156,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      <MenuItem onClick={handleProfileMenuClose} component={Link} to="/profile">
+      <MenuItem onClick={handleProfileMenuClose} component={Link} to="/channel">
         <Avatar
           alt={currentUserInfo && currentUserInfo.name}
           src={currentUserInfo && `${baseURL}/${currentUserInfo.avatar}`}
