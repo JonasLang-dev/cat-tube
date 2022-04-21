@@ -34,7 +34,7 @@
     "react-hook-form": "^7.30.0",
     "react-i18next": "^11.16.7",
     "react-material-ui-carousel": "^3.3.3",
-    "react-redux": "^8.0.0",
+    "react-redux": "^8.0.1",
     "react-router-dom": "6.3.0",
     "zod": "^3.14.4"
   },

@@ -863,6 +863,19 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
+              onKeyDown={(event) => {
+                if (
+                  event.key === "Enter" &&
+                  (event.target as HTMLInputElement).value
+                ) {
+                  navigate(
+                    `/result?search_query=${
+                      (event.target as HTMLInputElement).value
+                    }`,
+                    { replace: true }
+                  );
+                }
+              }}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
@@ -909,7 +922,9 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
                 >
                   <Avatar
                     alt={currentUserInfo && currentUserInfo.name}
-                    src={currentUserInfo && `${baseURL}/${currentUserInfo.avatar}`}
+                    src={
+                      currentUserInfo && `${baseURL}/${currentUserInfo.avatar}`
+                    }
                   />
                 </IconButton>
               </>

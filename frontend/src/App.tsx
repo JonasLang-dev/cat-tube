@@ -24,6 +24,7 @@ import StudioVideo from "./pages/studio/video";
 import AdminVideo from "./pages/admin/video";
 import AdminAuth from "./pages/admin/auth";
 import AdminUser from "./pages/admin/user";
+import SearchPage from "./pages/search";
 const Watch = React.lazy(() => import("./pages/watch/index"));
 
 export const AppContext = createContext<any>(null);
@@ -103,6 +104,7 @@ function App() {
               <Route path="/settings" element={<Settings />} />
               <Route path="/subscriptions" element={<Subscriptions />} />
               <Route path="/premium" element={<Pricing />} />
+              <Route path="/result" element={<SearchPage />} />
               <Route
                 path="/watch"
                 element={
