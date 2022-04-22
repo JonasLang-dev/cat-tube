@@ -10,7 +10,7 @@
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
   },
   "dependencies": {
-    "@typegoose/typegoose": "^9.8.0",
+    "@typegoose/typegoose": "^9.8.1",
     "argon2": "^0.28.5",
     "config": "^3.3.7",
     "cors": "^2.8.5",
