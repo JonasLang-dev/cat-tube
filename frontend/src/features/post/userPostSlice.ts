@@ -20,7 +20,7 @@ export const userPost = createAsyncThunk(
   "post/user",
   async (id: string, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/posts/${id}`);
+      const { data } = await axios.get(`/api/posts/private`);
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -46,7 +46,7 @@ export const userPostSlice = createSlice({
       })
       .addCase(userPost.fulfilled, (state, action) => {
         state.status = "success";
-        state.data = action.payload;
+        state.data = action.payload.data;
       })
       .addCase(userPost.rejected, (state, action) => {
         state.status = "failed";

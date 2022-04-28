@@ -11,7 +11,7 @@ router.get("/", findPostsHandler)
 
 router.get("/private", requireUser, findOwnPostsHandler);
 
-router.post("/", requireUser, validateResource(createPostSchema), createPostHandler);
+router.post("/", requireUser, createPostHandler);
 
 router.put("/:id", requireUser, validateResource(updatePostSchema), updatePostHandler);
 

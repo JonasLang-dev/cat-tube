@@ -28,7 +28,7 @@ function SearchPage() {
   return (
     <>
       {params ? (
-        <Grid width="100%" pt={4} margin="0">
+        <Grid width="100%" maxWidth="100vw" pt={4} margin="0">
           <Container maxWidth="md">
             <Typography variant="subtitle1">{params}的搜索结果</Typography>
             <Divider sx={{ pt: 2 }} />

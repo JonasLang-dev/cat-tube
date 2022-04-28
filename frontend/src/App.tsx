@@ -105,16 +105,17 @@ function App() {
               <Route path="/subscriptions" element={<Subscriptions />} />
               <Route path="/premium" element={<Pricing />} />
               <Route path="/result" element={<SearchPage />} />
-              <Route
-                path="/watch"
-                element={
-                  <React.Suspense fallback={<div>Loading...</div>}>
-                    <Watch />
-                  </React.Suspense>
-                }
-              />
+              <Route path="/watch">
+                <Route
+                  path="*"
+                  element={
+                    <React.Suspense fallback={<div>Loading...</div>}>
+                      <Watch />
+                    </React.Suspense>
+                  }
+                />
+              </Route>
               <Route path="/channel">
-                <Route index element={<Profile />} />
                 <Route path="*" element={<Profile />} />
               </Route>
             </Route>

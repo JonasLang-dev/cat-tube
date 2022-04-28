@@ -4,6 +4,7 @@ import {
   GridToolbar,
   GridActionsCellItem,
   GridRenderCellParams,
+  GridColumns,
 } from "@mui/x-data-grid";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
 import { selectCurrentUserStatus } from "../../features/auth/currentUserSlice";
@@ -16,11 +17,13 @@ import {
 } from "../../features/post/userPostSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { Avatar, Skeleton } from "@mui/material";
 import { post, selectPostData } from "../../features/post/postSlice";
+import { YouTube } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 function StudioVideo() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
   const postStatus = useAppSelector(selectUserPostStatus);
   const postError = useAppSelector(selectUserPostError);
@@ -30,6 +33,10 @@ function StudioVideo() {
   const deletePost = (id: string) => {};
 
   const updatePost = (id: string) => {};
+
+  const viewPost = (id: string) => {
+    navigate(`/watch/${id}`);
+  };
   const columns = React.useMemo(
     () => [
       { field: "_id", headerName: "ID", hide: true },
@@ -46,50 +53,9 @@ function StudioVideo() {
               style={{ objectFit: "contain", width: "100%" }}
             >
               <source
-                src={
-                  params.value
-                    ? `http://localhost:5020${params.value}`
-                    : "http://localhost:5020/avatar.png"
-                }
+                src={params.value && `http://localhost:5020/${params.value}`}
               />
             </video>
-          );
-        },
-      },
-      {
-        field: "postUrl",
-        headerName: "Post Url",
-        renderCell: (params: GridRenderCellParams) => {
-          return (
-            <img
-              style={{ objectFit: "contain", width: "100%" }}
-              src={
-                params.value
-                  ? `http://localhost:5020${params.value}`
-                  : "http://localhost:5020/avatar.png"
-              }
-            />
-          );
-        },
-        width: 200,
-      },
-      {
-        field: "user",
-        headerName: "User",
-        width: 160,
-        renderCell: (params: GridRenderCellParams) => {
-          return (
-            <>
-              <Avatar
-                alt={params.value.name}
-                src={
-                  params.value.avatar
-                    ? `http://localhost:5020${params.value.avatar}`
-                    : "http://localhost:5020/avatar.png"
-                }
-              />{" "}
-              &nbsp; {params.value.name}
-            </>
           );
         },
       },
@@ -101,24 +67,12 @@ function StudioVideo() {
         width: 200,
       },
       {
-        field: "isActive",
-        headerName: "Visibility",
-        type: "boolean",
-      },
-
-      {
-        field: "createdAt",
-        headerName: "CreatedAt",
-        type: "dateTime",
-        valueGetter: ({ value }: { value: string }) => value && new Date(value),
-        width: 160,
+        field: "likes",
+        headerName: "likes",
       },
       {
-        field: "updatedAt",
-        headerName: "updatedAt",
-        valueGetter: ({ value }: { value: string }) => value && new Date(value),
-        type: "dateTime",
-        width: 160,
+        field: "views",
+        headerName: "views",
       },
       {
         field: "actions",
@@ -133,7 +87,11 @@ function StudioVideo() {
             icon={<DeleteIcon />}
             label="Delete"
             onClick={() => deletePost(params.id)}
-            showInMenu
+          />,
+          <GridActionsCellItem
+            icon={<YouTube />}
+            label="View"
+            onClick={() => viewPost(params.id)}
           />,
         ],
       },
@@ -149,12 +107,13 @@ function StudioVideo() {
       dispatch(clearUserPostState());
     };
   }, [currentUserInfo, postData]);
+
   return (
     <div style={{ height: "80vh", padding: "0 1rem" }}>
       <DataGrid
         getRowId={(data) => data._id}
         rows={postsData || []}
-        columns={columns}
+        columns={columns as GridColumns<any>}
         pageSize={5}
         rowsPerPageOptions={[5, 10, 20]}
         checkboxSelection

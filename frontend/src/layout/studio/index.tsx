@@ -18,8 +18,6 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
 import {
   Backdrop,
   CircularProgress,
@@ -48,7 +46,6 @@ import {
   ArrowForwardIosOutlined,
   Brightness7Outlined,
   Brightness4Outlined,
-  PostAddOutlined,
 } from "@mui/icons-material";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../..//hooks/redux.hooks";
@@ -507,10 +504,8 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
   const scheme = getCozyScheme();
 
   const uploadVideoHandler = async () => {
-    // const bodyFormData = new FormData();
-    // bodyFormData.append("video", uploadFiles[0].data);
     setShowBackdrop(true);
-    
+
     try {
       const { data } = await axiosInstance.post(
         "/api/posts",
@@ -521,7 +516,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           },
         }
       );
-      postRef.current.setVideoUrl(data.message);
+      postRef.current.setPostInfo(data);
       setUploadFiles([]);
       setShowBackdrop(false);
       setShowAddVideosForm(false);

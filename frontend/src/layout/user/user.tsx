@@ -167,7 +167,11 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      <MenuItem onClick={handleProfileMenuClose} component={Link} to="/channel">
+      <MenuItem
+        onClick={handleProfileMenuClose}
+        component={Link}
+        to={`/channel/${currentUserInfo?._id}`}
+      >
         <Avatar
           alt={currentUserInfo && currentUserInfo.name}
           src={currentUserInfo && `${baseURL}/${currentUserInfo.avatar}`}
