@@ -33,13 +33,21 @@ function Profile() {
   };
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
-    navigate("/" + location.pathname.split("/")[1] + "/" + newValue, {
-      replace: true,
-    });
+    navigate(
+      "/" +
+        location.pathname.split("/")[1] +
+        "/" +
+        location.pathname.split("/")[2] +
+        "/" +
+        newValue,
+      {
+        replace: true,
+      }
+    );
   };
   return (
     <Box sx={{ bgcolor: "background.paper" }}>
-      <TabContext value={location.pathname.split("/")[2] || "featured"}>
+      <TabContext value={location.pathname.split("/")[3] || "featured"}>
         <Container sx={{ pt: 4 }}>
           <Grid container spacing={3}>
             <Grid item>
@@ -54,7 +62,7 @@ function Profile() {
               {sub ? (
                 <>
                   <Button color="info" variant="outlined" onClick={toggle}>
-                    退订
+                    已订阅
                   </Button>
                   <IconButton>
                     <NotificationsNoneOutlinedIcon />

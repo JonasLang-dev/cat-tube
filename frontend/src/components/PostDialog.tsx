@@ -13,7 +13,7 @@ import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PhotoCamera } from "@mui/icons-material";
 import styled from "@emotion/styled";
-import axiosInstance from "../request";
+import axiosInstance, { baseURL } from "../request";
 import {
   clearPostState,
   post,
@@ -49,12 +49,12 @@ const PostDialog = forwardRef((props, ref) => {
   });
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState<string>("");
-  const [videoUrl, setVideoUrl] = useState<string>("");
+  const [postInfo, setPostInfo] = useState<object>({});
   const [loadingPostUpload, setLoadingPostUpload] = useState<boolean>(false);
   const handleClose = () => {
     dispatch(clearPostState());
     setLoadingPostUpload(false);
-    setVideoUrl("");
+    setPostInfo({});
     setImage("");
     resetField("title");
     resetField("description");
@@ -65,8 +65,8 @@ const PostDialog = forwardRef((props, ref) => {
     handleClickOpen() {
       setOpen(true);
     },
-    setVideoUrl(url: string) {
-      setVideoUrl(url);
+    setPostInfo(post: { data: object }) {
+      setPostInfo(post.data);
     },
   }));
 
@@ -95,7 +95,7 @@ const PostDialog = forwardRef((props, ref) => {
       post({
         ...value,
         postUrl: image,
-        videoUrl,
+        videoUrl: postInfo.videoUrl,
       })
     );
   };
@@ -188,12 +188,12 @@ const PostDialog = forwardRef((props, ref) => {
             type="url"
             fullWidth
             disabled
-            value={videoUrl}
+            value={postInfo.videoUrl}
           />
           <video
             controls
             style={{ width: "100%" }}
-            src={`http://localhost:5020${videoUrl}`}
+            src={baseURL+ "/" + postInfo.videoUrl}
           />
         </DialogContent>
         <DialogActions>

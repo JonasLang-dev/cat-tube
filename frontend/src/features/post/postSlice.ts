@@ -54,7 +54,7 @@ export const postSlice = createSlice({
       })
       .addCase(post.fulfilled, (state, action) => {
         state.status = "success";
-        state.data = action.payload;
+        state.data = action.payload.data;
       })
       .addCase(post.rejected, (state, action) => {
         state.status = "failed";
