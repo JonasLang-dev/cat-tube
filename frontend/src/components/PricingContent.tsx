@@ -150,7 +150,7 @@ function PricingContent() {
                       ${tier.price}
                     </Typography>
                     <Typography variant="h6" color="text.secondary">
-                      /mo
+                      /月
                     </Typography>
                   </Box>
                   <ul>
