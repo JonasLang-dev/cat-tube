@@ -9,9 +9,8 @@ import { User } from "./user.model";
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
     timestamps: true,
-  }
+  },
 })
-
 @index({ title: "text" })
 export class Post {
   @prop({ ref: () => User })
@@ -47,7 +46,7 @@ export class Post {
     foreignField: "post",
     match: { isLike: true },
     justOne: false,
-    count: true
+    count: true,
   })
   public likes: number;
 
@@ -56,7 +55,7 @@ export class Post {
     localField: "_id",
     foreignField: "post",
     justOne: false,
-    count: true
+    count: true,
   })
   public comments: number;
 
@@ -68,4 +67,3 @@ export class Post {
   })
   public commentsList: Ref<Comment>[];
 }
-

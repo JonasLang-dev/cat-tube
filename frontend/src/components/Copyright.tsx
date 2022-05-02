@@ -5,16 +5,7 @@ import { Link as Links } from "react-router-dom";
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" pl={2} {...props}>
-      <Link component={Links} color="inherit" to="/">
-        Cat Tube
-      </Link>
-      &nbsp;
-      {"©"}
-      <Link color="inherit" href="https://supercutcat.com" target="_blank">
-        supercutcat
-      </Link>
-      &nbsp;
-      {new Date().getFullYear()}
+      毕业设计 - 郎国昱 & 黎英杰
     </Typography>
   );
 }

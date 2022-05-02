@@ -654,7 +654,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
 
           {matcheWithLg ? (
             <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
-              ube Video
+              视频点播系统
             </Typography>
           ) : matcheWithSm ? (
             <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
@@ -662,7 +662,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
             </Typography>
           ) : (
             <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
-              ube
+              视频点播
             </Typography>
           )}
 

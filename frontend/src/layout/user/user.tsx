@@ -759,37 +759,11 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
       </List>
       {matcheWithLg && !open && (
         <>
-          <Typography variant="body2" pl={2} mt={1}>
-            About Press Copyright
-            <br />
-            Contact us Creators
-            <br />
-            Advertise Developers
-            <br />
-            Terms Privacy Policy & Safety
-            <br />
-            How Cat Tube works
-            <br />
-            Test new features
-          </Typography>
           <Copyright sx={{ pt: 2 }} />{" "}
         </>
       )}
       {!matcheWithLg && !matcheWithSm && open && (
         <>
-          <Typography variant="body2" pl={2} mt={1}>
-            About Press Copyright
-            <br />
-            Contact us Creators
-            <br />
-            Advertise Developers
-            <br />
-            Terms Privacy Policy & Safety
-            <br />
-            How Cat Tube works
-            <br />
-            Test new features
-          </Typography>
           <Copyright sx={{ pt: 2 }} />{" "}
         </>
       )}
@@ -848,7 +822,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
 
           {matcheWithLg ? (
             <Typography variant="h6" component="h1">
-              ube Video
+              视频点播系统
             </Typography>
           ) : matcheWithSm ? (
             <Typography variant="h6" component="h1">
@@ -856,7 +830,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
             </Typography>
           ) : (
             <Typography variant="h6" component="h1">
-              ube
+              视频点播
             </Typography>
           )}
           <Box sx={{ flexGrow: 1, minWidth: "1rem" }} />

@@ -37,19 +37,11 @@ const PostDialog = forwardRef((props, ref) => {
   const dispatch = useAppDispatch();
   const postStatus = useAppSelector(selectPostStatus);
   const postError = useAppSelector(selectPostError);
-
-  const { enqueueSnackbar } = useSnackbar();
-  const {
-    register,
-    handleSubmit,
-    resetField,
-    formState: { errors },
-  } = useForm<PostInput>({
-    resolver: zodResolver(postSchema),
-  });
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState<string>("");
-  const [postInfo, setPostInfo] = useState<object>({});
+  const [postInfo, setPostInfo] = useState<any>({});
+  const { enqueueSnackbar } = useSnackbar();
+
   const [loadingPostUpload, setLoadingPostUpload] = useState<boolean>(false);
   const handleClose = () => {
     dispatch(clearPostState());
@@ -69,6 +61,16 @@ const PostDialog = forwardRef((props, ref) => {
       setPostInfo(post.data);
     },
   }));
+
+  const {
+    register,
+    handleSubmit,
+    resetField,
+    formState: { errors },
+  } = useForm<PostInput>({
+    defaultValues: { title: postInfo.title },
+    resolver: zodResolver(postSchema),
+  });
 
   const uploadPosterHandler = async (e: any) => {
     const file = e.target.files[0];
@@ -193,7 +195,7 @@ const PostDialog = forwardRef((props, ref) => {
           <video
             controls
             style={{ width: "100%" }}
-            src={baseURL+ "/" + postInfo.videoUrl}
+            src={baseURL + "/" + postInfo.videoUrl}
           />
         </DialogContent>
         <DialogActions>

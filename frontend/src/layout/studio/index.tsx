@@ -516,6 +516,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           },
         }
       );
+      console.log(data);
       postRef.current.setPostInfo(data);
       setUploadFiles([]);
       setShowBackdrop(false);
@@ -591,7 +592,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
 
           {matcheWithLg ? (
             <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
-              ube Studio
+              视频点播系统
             </Typography>
           ) : matcheWithSm ? (
             <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
@@ -599,7 +600,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
             </Typography>
           ) : (
             <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
-              &nbsp;Studio
+              视频
             </Typography>
           )}
 
@@ -649,21 +650,19 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           )}
         </EdgeTrigger>
       </EdgeSidebar>
-      <Content>
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-          }}
-        >
-          <Toolbar>
-            <Typography variant="h5">{getHeader()}</Typography>
-          </Toolbar>
-          <Outlet />
-        </Box>
+      <Content
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === "light"
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          height: "100%",
+        }}
+      >
+        <Toolbar>
+          <Typography variant="h5">{getHeader()}</Typography>
+        </Toolbar>
+        <Outlet />
       </Content>
       <Footer>
         <Copyright sx={{ pt: 4, pr: 10, textAlign: "right" }} />
