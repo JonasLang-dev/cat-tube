@@ -4,6 +4,7 @@ import {
   GridToolbar,
   GridActionsCellItem,
   GridRenderCellParams,
+  GridColumns,
 } from "@mui/x-data-grid";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
 import { selectCurrentUserStatus } from "../../features/auth/currentUserSlice";
@@ -65,15 +66,9 @@ function AdminAuth() {
         flex: 2,
         getActions: (params: any) => [
           <GridActionsCellItem
-            icon={<SettingsSuggestOutlinedIcon />}
-            label="Update"
-            onClick={() => updateAuth(params.id)}
-          />,
-          <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
             onClick={() => deleteAuth(params.id)}
-            showInMenu
           />,
         ],
       },
@@ -93,7 +88,7 @@ function AdminAuth() {
       <DataGrid
         getRowId={(data) => data._id}
         rows={adminAuthData || []}
-        columns={adminColumns}
+        columns={adminColumns as GridColumns<any>}
         rowsPerPageOptions={[5, 10, 20, 50, 100]}
         loading={adminAuthStatus === "loading"}
         checkboxSelection

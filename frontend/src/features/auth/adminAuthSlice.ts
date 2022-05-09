@@ -20,10 +20,10 @@ export const adminAuth = createAsyncThunk(
   "auth/admin",
   async (data, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/session`);
-      return data;
+      const { data } = await axios.get(`/api/admin/session`);
+      return data.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response.data.message);
     }
   }
 );

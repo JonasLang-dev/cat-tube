@@ -516,7 +516,6 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           },
         }
       );
-      console.log(data);
       postRef.current.setPostInfo(data);
       setUploadFiles([]);
       setShowBackdrop(false);

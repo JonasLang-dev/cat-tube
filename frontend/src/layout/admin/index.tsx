@@ -492,7 +492,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
           </ListItemIcon>
           <ListItemText
             sx={{ whiteSpace: "nowrap" }}
-            primary={t("admin.auth")}
+            primary={t("Auth Management")}
           />
         </ListItemButton>
         <ListItemButton
@@ -513,7 +513,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
           </ListItemIcon>
           <ListItemText
             sx={{ whiteSpace: "nowrap" }}
-            primary={t("admin.copyright")}
+            primary={t("Category Management")}
           />
         </ListItemButton>
         <ListItemButton

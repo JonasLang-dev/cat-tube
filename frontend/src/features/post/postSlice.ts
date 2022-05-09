@@ -20,6 +20,7 @@ export const post = createAsyncThunk(
   "post",
   async (
     post: {
+      id: string;
       title: string;
       description: string;
       postUrl: string;
@@ -28,7 +29,7 @@ export const post = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await axios.put(`/api/posts`, post);
+      const { data } = await axios.put(`/api/posts/${post.id}`, post);
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);

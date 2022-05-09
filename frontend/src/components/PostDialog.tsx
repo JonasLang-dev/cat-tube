@@ -79,7 +79,7 @@ const PostDialog = forwardRef((props, ref) => {
     bodyFormData.append("poster", file);
     setLoadingPostUpload(true);
     try {
-      const { data } = await axiopsInstance.post(
+      const { data } = await axiosInstance.post(
         `/api/posts/${postInfo.id}`,
         bodyFormData
       );
@@ -100,6 +100,7 @@ const PostDialog = forwardRef((props, ref) => {
         ...value,
         postUrl: image,
         videoUrl: postInfo.videoUrl,
+        id: postInfo.id,
       })
     );
   };
