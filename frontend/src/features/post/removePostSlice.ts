@@ -3,36 +3,36 @@ import axios from "../../request";
 import type { RootState } from "../../store";
 
 // Define a type for the slice state
-interface AdminPostState {
+interface SignUpState {
   status: "idle" | "loading" | "failed" | "success";
   error: any | undefined;
-  data: any | undefined;
+  data: object | undefined;
 }
 
 // Define the initial state using that type
-const initialState: AdminPostState = {
+const initialState: SignUpState = {
   status: "idle",
   error: undefined,
   data: undefined,
 };
 
-export const adminPost = createAsyncThunk(
-  "post/admin",
-  async (data, { rejectWithValue }) => {
+export const removePost = createAsyncThunk(
+  "post/remove",
+  async (id: string, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/admin/post`);
-      return data.data;
+      const { data } = await axios.delete(`/api/posts/${id}`);
+      return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
 );
 
-export const adminPostSlice = createSlice({
-  name: "post/admin",
+export const removePostSlice = createSlice({
+  name: "post/remove",
   initialState,
   reducers: {
-    clearAdminPostState: (state) => {
+    clearRemovePostState: (state) => {
       state.status = "idle";
       state.error = undefined;
       state.data = undefined;
@@ -40,15 +40,15 @@ export const adminPostSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(adminPost.pending, (state) => {
+      .addCase(removePost.pending, (state) => {
         state.error = undefined;
         state.status = "loading";
       })
-      .addCase(adminPost.fulfilled, (state, action) => {
+      .addCase(removePost.fulfilled, (state, action) => {
         state.status = "success";
-        state.data = action.payload;
+        state.data = action.payload.data;
       })
-      .addCase(adminPost.rejected, (state, action) => {
+      .addCase(removePost.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
@@ -59,11 +59,12 @@ export const adminPostSlice = createSlice({
   },
 });
 
-export const { clearAdminPostState } = adminPostSlice.actions;
+export const { clearRemovePostState } = removePostSlice.actions;
 
-export const selectAdminPostStatus = (state: RootState) =>
-  state.adminPost.status;
-export const selectAdminPostError = (state: RootState) => state.adminPost.error;
-export const selectAdminPostData = (state: RootState) => state.adminPost.data;
+export const selectRemovePostStatus = (state: RootState) =>
+  state.removePost.status;
+export const selectRemovePostError = (state: RootState) =>
+  state.removePost.error;
+export const selectRemovePostData = (state: RootState) => state.removePost.data;
 
-export default adminPostSlice.reducer;
+export default removePostSlice.reducer;

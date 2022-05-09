@@ -20,7 +20,7 @@ export const adminUser = createAsyncThunk(
   "user/admin",
   async (data, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/users`);
+      const { data } = await axios.get(`/api/admin/user`);
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);

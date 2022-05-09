@@ -4,16 +4,10 @@ import {
   GridToolbar,
   GridActionsCellItem,
   GridRenderCellParams,
+  GridColumns,
 } from "@mui/x-data-grid";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
 import { selectCurrentUserStatus } from "../../features/auth/currentUserSlice";
-import {
-  clearAdminPostState,
-  adminPost,
-  selectAdminPostError,
-  selectAdminPostData,
-  selectAdminPostStatus,
-} from "../../features/post/adminPostSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsSuggestOutlinedIcon from "@mui/icons-material/SettingsSuggestOutlined";
 import {
@@ -37,7 +31,7 @@ function AdminAuth() {
 
   const columns = React.useMemo(
     () => [
-      { field: "_id", headerName: "ID", type: "string", flex: 2 },
+      { field: "_id", headerName: "ID", type: "string", flex: 2, hide: true },
       { field: "email", headerName: "Email", type: "string", flex: 2 },
       {
         field: "name",
@@ -47,7 +41,6 @@ function AdminAuth() {
       },
       { field: "avatar", headerName: "Avatar", type: "string", flex: 2 },
       { field: "isAdmin", headerName: "Admin", type: "boolean", flex: 1 },
-      { field: "isPremium", headerName: "Premium", type: "boolean", flex: 1 },
       { field: "isDelete", headerName: "Delete", type: "boolean", flex: 1 },
       {
         field: "createdAt",
@@ -77,7 +70,6 @@ function AdminAuth() {
             icon={<DeleteIcon />}
             label="Delete"
             onClick={() => deletePost(params.id)}
-            showInMenu
           />,
         ],
       },
@@ -97,7 +89,7 @@ function AdminAuth() {
       <DataGrid
         getRowId={(data) => data._id}
         rows={adminUserData || []}
-        columns={columns}
+        columns={columns as GridColumns<any>}
         rowsPerPageOptions={[5, 10, 20, 50, 100]}
         loading={adminUserStatus === "loading"}
         checkboxSelection

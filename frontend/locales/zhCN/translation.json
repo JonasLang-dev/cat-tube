@@ -70,6 +70,12 @@
         "Light": "浅色",
         "Channel dashboard": "频道信息中心",
         "Dashboard": "信息中心",
-        "Video Manager": "视频管理"
+        "Post Management": "视频管理",
+        "User Management": "用户管理",
+        "Auth Management": "权限管理",
+        "Category Management": "版权管理",
+        "Price Management": "收费管理",
+        "Ad Management": "广告管理",
+        "Add ad": "添加广告"
     }
 }

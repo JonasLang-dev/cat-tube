@@ -612,6 +612,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
               onClick={() => {
                 // postRef.current.handleClickOpen();
                 setShowAddVideosForm(true);
+                navigate("/studio/video?upload=video");
               }}
               size="large"
             >
@@ -697,6 +698,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
         onClose={() => {
           setUploadFiles([]);
           setShowAddVideosForm(false);
+          navigate("/studio/video");
         }}
         onSave={uploadVideoHandler}
         showPreviews={true}

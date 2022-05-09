@@ -19,7 +19,7 @@ export const createHistoryController = async (
 ) => {
   const user = res.locals.user;
 
-  let post
+  let post;
   try {
     post = await findPostbyId(req.body.post);
   } catch (error: any) {
@@ -30,7 +30,11 @@ export const createHistoryController = async (
     return res.status(404).send({ message: "Post not found" });
   }
   try {
-    const history = await createHistory({ post: post._id, type: "watch", user: user._id });
+    const history = await createHistory({
+      post: post._id,
+      type: "watch",
+      user: user._id,
+    });
     return res.status(201).send(history);
   } catch (error: any) {
     return res.status(400).send({ message: error.message });
@@ -43,10 +47,12 @@ export const searchController = async (
 ) => {
   const { search } = req.body;
 
-  const reg = new RegExp(search, 'i')
+  const reg = new RegExp(search, "i");
   const channels = await findUsers({ $or: [{ name: { $regex: reg } }] });
 
-  const posts = await findPosts({ $or: [{ title: { $regex: reg } }, { description: { $regex: reg } }] })
+  const posts = await findPosts({
+    $or: [{ title: { $regex: reg } }, { description: { $regex: reg } }],
+  });
 
   return res.status(200).send({ data: { channels, posts } });
 };

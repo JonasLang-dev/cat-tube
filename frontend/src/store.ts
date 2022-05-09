@@ -9,6 +9,10 @@ import userPostReducer from "./features/post/userPostSlice";
 import adminPostReducer from "./features/post/adminPostSlice";
 import adminUserReducer from "./features/users/adminUserSlice";
 import adminAuthReducer from "./features/auth/adminAuthSlice";
+import removePostReducer from "./features/post/removePostSlice";
+import adsReducer from "./features/ads/adsSlice";
+import adminRemovePostReducer from "./features/post/adminRemovePostSlice";
+import adminUpdatePostReducer from "./features/post/adminUpdatePostSlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +26,10 @@ export const store = configureStore({
     post: postReducer,
     adminUser: adminUserReducer,
     adminAuth: adminAuthReducer,
+    removePost: removePostReducer,
+    ads: adsReducer,
+    adminRemovePost: adminRemovePostReducer,
+    adminUpdatePost: adminUpdatePostReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import {
   DataGrid,
   GridToolbar,
@@ -20,22 +20,34 @@ import EditIcon from "@mui/icons-material/Edit";
 import { post, selectPostData } from "../../features/post/postSlice";
 import { YouTube } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import {
+  removePost,
+  selectRemovePostError,
+  selectRemovePostStatus,
+} from "../../features/post/removePostSlice";
+import { useSnackbar } from "notistack";
+import { useTranslation } from "react-i18next";
 
 function StudioVideo() {
+  const { t, i18n } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
   const postStatus = useAppSelector(selectUserPostStatus);
   const postError = useAppSelector(selectUserPostError);
   const postsData = useAppSelector(selectUserPostData);
   const postData = useAppSelector(selectPostData);
-
-  const deletePost = (id: string) => {};
+  const removePostStatus = useAppSelector(selectRemovePostStatus);
+  const removePostError = useAppSelector(selectRemovePostError);
+  const deletePost = (id: string) => {
+    dispatch(removePost(id));
+  };
 
   const updatePost = (id: string) => {};
 
   const viewPost = (id: string) => {
-    navigate(`/watch/${id}`);
+    navigate(`/watch?v=${id}`);
   };
   const columns = React.useMemo(
     () => [
@@ -108,6 +120,18 @@ function StudioVideo() {
     };
   }, [currentUserInfo, postData]);
 
+  useEffect(() => {
+    if (removePostStatus === "success") {
+      if (currentUserInfo?._id) {
+        enqueueSnackbar(t("Remove post success"), { variant: "success" });
+        dispatch(userPost(currentUserInfo._id));
+      }
+    }
+    if (removePostStatus === "failed") {
+      enqueueSnackbar(removePostError, { variant: "error" });
+    }
+  }, [removePostStatus]);
+
   return (
     <div style={{ height: "80vh", padding: "0 1rem" }}>
       <DataGrid
@@ -117,7 +141,7 @@ function StudioVideo() {
         pageSize={5}
         rowsPerPageOptions={[5, 10, 20]}
         checkboxSelection
-        loading={postStatus === "loading"}
+        loading={postStatus === "loading" || removePostStatus === "loading"}
         components={{ Toolbar: GridToolbar }}
         error={postError}
         rowHeight={200}

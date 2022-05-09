@@ -18,6 +18,7 @@ import {
   ListItemButton,
   Typography,
   ButtonBase,
+  Button,
 } from "@mui/material";
 import logo from "../../logo.svg";
 import Copyright from "../../components/Copyright";
@@ -47,6 +48,8 @@ import {
   Brightness7Outlined,
   Brightness4Outlined,
   GTranslateOutlined,
+  Category,
+  CategoryOutlined,
 } from "@mui/icons-material";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -468,7 +471,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
           </ListItemIcon>
           <ListItemText
             sx={{ whiteSpace: "nowrap" }}
-            primary={t("Video Manager")}
+            primary={t("Post Management")}
           />
         </ListItemButton>
         <ListItemButton
@@ -494,18 +497,18 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
         </ListItemButton>
         <ListItemButton
           component={Link}
-          to="/admin/copyright"
-          selected={selectedIndex === "/admin/copyright"}
+          to="/admin/category"
+          selected={selectedIndex === "/admin/category"}
           onClick={() => {
-            handleListItemClick("/admin/copyright");
+            handleListItemClick("/admin/category");
             !matcheWithLg && handleDrawerClose();
           }}
         >
           <ListItemIcon>
-            {selectedIndex === "/admin/copyright" ? (
-              <CopyrightRounded />
+            {selectedIndex === "/admin/category" ? (
+              <Category />
             ) : (
-              <CopyrightOutlined />
+              <CategoryOutlined />
             )}
           </ListItemIcon>
           <ListItemText
@@ -592,16 +595,16 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
   const getHeader = () => {
     switch (location.pathname) {
       case "/admin":
-        return "User Management";
-      case t("/admin/auth"):
-        return "Auth Management";
-      case t("/admin/copyright"):
-        return "Copyright Management";
-      case t("/admin/video"):
-        return "Channel content";
-      case t("/admin/price"):
-        return "Price Management";
-      case t("/admin/ad"):
+        return t("User Management");
+      case "/admin/auth":
+        return t("Auth Management");
+      case "/admin/category":
+        return t("Category Management");
+      case "/admin/video":
+        return t("Post Management");
+      case "/admin/price":
+        return t("Price Management");
+      case "/admin/ad":
         return t("Ad Management");
       default:
         return t("Admin");
@@ -715,6 +718,12 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
         >
           <Toolbar>
             <Typography variant="h5">{getHeader()}</Typography>
+            {location.pathname === "/admin/ad" && (
+              <>
+                <Box flexGrow={1} />{" "}
+                <Button variant="outlined">{t("Add ad")}</Button>
+              </>
+            )}
           </Toolbar>
           <Outlet />
         </Box>

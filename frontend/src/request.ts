@@ -6,7 +6,7 @@ import axios, {
 } from "axios";
 
 export const baseURL: string = "http://localhost:5020";
-// export const baseURL: string = " http://192.168.1.7:5020";
+// export const baseURL: string = " http://192.168.177.60:5020";
 
 let refreshToken = localStorage.getItem("refreshToken");
 let accessToken = localStorage.getItem("accessToken");

@@ -26,7 +26,7 @@ app.use(
 app.use(express.json({ limit: "100mb" }));
 app.use(express.urlencoded({ limit: "100mb" }));
 
-app.use("/api", apiLimiter);
+// app.use("/api", apiLimiter);
 
 app.use(deserializeUser);
 

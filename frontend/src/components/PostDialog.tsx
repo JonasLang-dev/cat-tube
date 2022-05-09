@@ -53,24 +53,25 @@ const PostDialog = forwardRef((props, ref) => {
     setOpen(false);
   };
 
-  useImperativeHandle(ref, () => ({
-    handleClickOpen() {
-      setOpen(true);
-    },
-    setPostInfo(post: { data: object }) {
-      setPostInfo(post.data);
-    },
-  }));
-
   const {
     register,
     handleSubmit,
     resetField,
+    setValue,
     formState: { errors },
   } = useForm<PostInput>({
-    defaultValues: { title: postInfo.title },
     resolver: zodResolver(postSchema),
   });
+
+  useImperativeHandle(ref, () => ({
+    handleClickOpen() {
+      setOpen(true);
+    },
+    setPostInfo(post: { data: any }) {
+      setPostInfo(post.data);
+      setValue("title", post.data.title);
+    },
+  }));
 
   const uploadPosterHandler = async (e: any) => {
     const file = e.target.files[0];
@@ -78,11 +79,12 @@ const PostDialog = forwardRef((props, ref) => {
     bodyFormData.append("poster", file);
     setLoadingPostUpload(true);
     try {
-      const { data } = await axiosInstance.post(
-        "/api/upload/poster",
+      const { data } = await axiopsInstance.post(
+        `/api/posts/${postInfo.id}`,
         bodyFormData
       );
-      setImage(data.payload.filename);
+
+      setImage(data.data.postUrl);
       setLoadingPostUpload(false);
     } catch (error: any) {
       enqueueSnackbar(error.response.data.message || error.message, {

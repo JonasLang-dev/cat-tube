@@ -1,9 +1,10 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import {
   DataGrid,
   GridToolbar,
   GridActionsCellItem,
   GridRenderCellParams,
+  GridColumns,
 } from "@mui/x-data-grid";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
 import { selectCurrentUserStatus } from "../../features/auth/currentUserSlice";
@@ -16,17 +17,37 @@ import {
 } from "../../features/post/adminPostSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsSuggestOutlinedIcon from "@mui/icons-material/SettingsSuggestOutlined";
+import {
+  adminRemovePost,
+  selectAdminRemovePostError,
+  selectAdminRemovePostStatus,
+} from "../../features/post/adminRemovePostSlice";
+import {
+  adminUpdatePost,
+  selectAdminUpdatePostError,
+  selectAdminUpdatePostStatus,
+} from "../../features/post/adminUpdatePostSlice";
+import { useSnackbar } from "notistack";
 
 function AdminVideo() {
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
   const adminPostStatus = useAppSelector(selectAdminPostStatus);
   const adminPostError = useAppSelector(selectAdminPostError);
   const adminPostData = useAppSelector(selectAdminPostData);
+  const adminRemovePostError = useAppSelector(selectAdminRemovePostError);
+  const adminRemovePostStatus = useAppSelector(selectAdminRemovePostStatus);
+  const adminUpdatePostError = useAppSelector(selectAdminUpdatePostError);
+  const adminUpdatePostStatus = useAppSelector(selectAdminUpdatePostStatus);
 
-  const deletePost = (id: string) => {};
+  const deletePost = (id: string) => {
+    dispatch(adminRemovePost({ id }));
+  };
 
-  const updatePost = (id: string) => {};
+  const updatePost = (id: string) => {
+    dispatch(adminUpdatePost({ id }));
+  };
 
   const adminColumns = React.useMemo(
     () => [
@@ -77,7 +98,6 @@ function AdminVideo() {
             icon={<DeleteIcon />}
             label="Delete"
             onClick={() => deletePost(params.id)}
-            showInMenu
           />,
         ],
       },
@@ -92,14 +112,39 @@ function AdminVideo() {
     };
   }, [currentUserInfo]);
 
+  useEffect(() => {
+    if (
+      adminRemovePostStatus === "success" ||
+      adminUpdatePostStatus === "success"
+    ) {
+      enqueueSnackbar("操作成功", {
+        variant: "success",
+      });
+      dispatch(adminPost());
+    }
+
+    if (
+      adminRemovePostStatus === "failed" ||
+      adminUpdatePostStatus === "failed"
+    ) {
+      enqueueSnackbar(adminRemovePostError || adminUpdatePostError, {
+        variant: "error",
+      });
+    }
+  }, [adminRemovePostStatus, adminUpdatePostStatus]);
+
   return (
     <div style={{ height: "75vh", minWidth: "100%", padding: "0 1rem" }}>
       <DataGrid
         getRowId={(data) => data._id}
         rows={adminPostData || []}
-        columns={adminColumns}
+        columns={adminColumns as GridColumns<any>}
         rowsPerPageOptions={[5, 10, 20, 50, 100]}
-        loading={adminPostStatus === "loading"}
+        loading={
+          adminPostStatus === "loading" ||
+          adminRemovePostStatus === "loading" ||
+          adminUpdatePostStatus === "loading"
+        }
         checkboxSelection
         components={{ Toolbar: GridToolbar }}
       />

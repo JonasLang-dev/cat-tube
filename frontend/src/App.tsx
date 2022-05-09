@@ -25,6 +25,7 @@ import AdminVideo from "./pages/admin/video";
 import AdminAuth from "./pages/admin/auth";
 import AdminUser from "./pages/admin/user";
 import SearchPage from "./pages/search";
+import AdsPage from "./pages/admin/ads";
 const Watch = React.lazy(() => import("./pages/watch/index"));
 
 export const AppContext = createContext<any>(null);
@@ -123,10 +124,10 @@ function App() {
             >
               <Route index element={<AdminUser />} />
               <Route path="/admin/auth" element={<AdminAuth />} />
-              <Route path="/admin/copyright" element={<DashboardPage />} />
+              <Route path="/admin/category" element={<DashboardPage />} />
               <Route path="/admin/video" element={<AdminVideo />} />
               <Route path="/admin/price" element={<DashboardPage />} />
-              <Route path="/admin/ad" element={<DashboardPage />} />
+              <Route path="/admin/ad" element={<AdsPage />} />
             </Route>
             <Route
               path="/studio"
