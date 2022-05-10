@@ -603,7 +603,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
       case "/admin/video":
         return t("Post Management");
       case "/admin/price":
-        return t("Price Management");
+        return t("Premium Management");
       case "/admin/ad":
         return t("Ad Management");
       default:
@@ -722,6 +722,12 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
               <>
                 <Box flexGrow={1} />{" "}
                 <Button variant="outlined">{t("Add ad")}</Button>
+              </>
+            )}
+            {location.pathname === "/admin/category" && (
+              <>
+                <Box flexGrow={1} />{" "}
+                <Button variant="outlined">{t("Add category")}</Button>
               </>
             )}
           </Toolbar>

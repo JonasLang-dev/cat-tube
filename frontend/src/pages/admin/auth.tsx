@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import {
   DataGrid,
   GridToolbar,
@@ -18,16 +18,26 @@ import {
   selectAdminAuthStatus,
 } from "../../features/auth/adminAuthSlice";
 import { Avatar } from "@mui/material";
+import {
+  adminAuthRemove,
+  selectAdminAuthRemoveError,
+  selectAdminAuthRemoveStatus,
+} from "../../features/auth/adminRemoveSlice";
+import { useSnackbar } from "notistack";
 
 function AdminAuth() {
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+  const currentUserInfo = useAppSelector(selectCurrentUserStatus);
   const adminAuthStatus = useAppSelector(selectAdminAuthStatus);
   const adminAuthError = useAppSelector(selectAdminAuthError);
   const adminAuthData = useAppSelector(selectAdminAuthData);
+  const adminAuthRemoveError = useAppSelector(selectAdminAuthRemoveError);
+  const adminAuthRemoveStatus = useAppSelector(selectAdminAuthRemoveStatus);
 
-  const deleteAuth = (id: string) => {};
-
-  const updateAuth = (id: string) => {};
+  const deleteAuth = (id: string) => {
+    dispatch(adminAuthRemove({ id }));
+  };
 
   const adminColumns = React.useMemo(
     () => [
@@ -73,7 +83,7 @@ function AdminAuth() {
         ],
       },
     ],
-    [deleteAuth, updateAuth]
+    [deleteAuth]
   );
 
   useLayoutEffect(() => {
@@ -81,7 +91,22 @@ function AdminAuth() {
     return () => {
       dispatch(clearAdminAuthState());
     };
-  }, []);
+  }, [currentUserInfo]);
+
+  useEffect(() => {
+    if (adminAuthRemoveStatus === "success") {
+      enqueueSnackbar("操作成功", {
+        variant: "success",
+      });
+      dispatch(adminAuth());
+    }
+
+    if (adminAuthRemoveStatus === "failed") {
+      enqueueSnackbar(adminAuthRemoveError, {
+        variant: "error",
+      });
+    }
+  }, [adminAuthRemoveStatus]);
 
   return (
     <div style={{ height: "75vh", minWidth: "100%", padding: "0 1rem" }}>
@@ -90,7 +115,9 @@ function AdminAuth() {
         rows={adminAuthData || []}
         columns={adminColumns as GridColumns<any>}
         rowsPerPageOptions={[5, 10, 20, 50, 100]}
-        loading={adminAuthStatus === "loading"}
+        loading={
+          adminAuthStatus === "loading" || adminAuthRemoveStatus === "loading"
+        }
         checkboxSelection
         components={{ Toolbar: GridToolbar }}
       />

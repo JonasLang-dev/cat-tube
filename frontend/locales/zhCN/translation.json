@@ -76,6 +76,8 @@
         "Category Management": "分类管理",
         "Price Management": "收费管理",
         "Ad Management": "广告管理",
-        "Add ad": "添加广告"
+        "Premium Management": "会员管理",
+        "Add ad": "添加广告",
+        "Add category": "添加类别"
     }
 }

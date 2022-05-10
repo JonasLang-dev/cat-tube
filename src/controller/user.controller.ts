@@ -135,7 +135,7 @@ export async function resetPasswordHandler(
     return res.status(400).send({ message: "Could not reset user password" });
   }
 
-  const match = await user.validatePassword(password)
+  const match = await user.validatePassword(password);
 
   if (match) {
     return res.status(400).send({ message: "Could not reset user password" });
@@ -285,13 +285,15 @@ export async function createChargeHandler(_req: Request, res: Response) {
   }
 }
 
-
 export async function getAllUserHandler(_req: Request, res: Response) {
   const users = await findAllUsers();
   return res.send(users);
 }
 
-export async function deleteUserByAdminHandler(req: Request<UserByAdminSchemaInput, {}, {}>, res: Response) {
+export async function deleteUserByAdminHandler(
+  req: Request<UserByAdminSchemaInput, {}, {}>,
+  res: Response
+) {
   const { id } = req.params;
 
   if (id === res.locals.user._id) {
@@ -314,7 +316,10 @@ export async function deleteUserByAdminHandler(req: Request<UserByAdminSchemaInp
   res.send({ message: "User successfully deleted" });
 }
 
-export async function activeUserByAdminHandler(req: Request<UserByAdminSchemaInput, {}, {}>, res: Response) {
+export async function activeUserByAdminHandler(
+  req: Request<UserByAdminSchemaInput, {}, {}>,
+  res: Response
+) {
   const { id } = req.params;
 
   const user = await findUserById(id);
@@ -333,7 +338,10 @@ export async function activeUserByAdminHandler(req: Request<UserByAdminSchemaInp
   res.send({ message: "User successfully active" });
 }
 
-export async function activeUserPremuimHandler(req: Request<UserByAdminSchemaInput, {}, {}>, res: Response) {
+export async function activeUserPremuimHandler(
+  req: Request<UserByAdminSchemaInput, {}, {}>,
+  res: Response
+) {
   const { id } = req.params;
 
   const user = await findUserById(id);
@@ -352,7 +360,10 @@ export async function activeUserPremuimHandler(req: Request<UserByAdminSchemaInp
   res.send({ message: "User premium update successfully" });
 }
 
-export async function inActiveUserPremuimHandler(req: Request<UserByAdminSchemaInput, {}, {}>, res: Response) {
+export async function inActiveUserPremuimHandler(
+  req: Request<UserByAdminSchemaInput, {}, {}>,
+  res: Response
+) {
   const { id } = req.params;
 
   const user = await findUserById(id);
@@ -371,7 +382,10 @@ export async function inActiveUserPremuimHandler(req: Request<UserByAdminSchemaI
   res.send({ message: "User premuim inActive successfully" });
 }
 
-export async function delegateAdminHandler(req: Request<UserByAdminSchemaInput, {}, {}>, res: Response) {
+export async function delegateAdminHandler(
+  req: Request<UserByAdminSchemaInput, {}, {}>,
+  res: Response
+) {
   const { id } = req.params;
 
   const user = await findUserById(id);
@@ -385,6 +399,28 @@ export async function delegateAdminHandler(req: Request<UserByAdminSchemaInput, 
   }
 
   user.isAdmin = true;
+  await user.save();
+
+  res.send({ message: "User admin update successfully" });
+}
+
+export async function revokeAdminHandler(
+  req: Request<UserByAdminSchemaInput, {}, {}>,
+  res: Response
+) {
+  const { id } = req.params;
+
+  const user = await findUserById(id);
+
+  if (!user) {
+    return res.status(400).send({ message: "User does not exists" });
+  }
+
+  if (!user.isAdmin) {
+    return res.status(400).send({ message: "User is not admin permissions" });
+  }
+
+  user.isAdmin = false;
   await user.save();
 
   res.send({ message: "User admin update successfully" });

@@ -13,6 +13,14 @@ import removePostReducer from "./features/post/removePostSlice";
 import adsReducer from "./features/ads/adsSlice";
 import adminRemovePostReducer from "./features/post/adminRemovePostSlice";
 import adminUpdatePostReducer from "./features/post/adminUpdatePostSlice";
+import adminCateReducer from "./features/category/adminCateSlice";
+import adminBanReducer from "./features/users/adminBanSlice";
+import adminActiveReducer from "./features/users/adminActiveSlice";
+import adminDelegateReducer from "./features/users/adminDelegateSlice";
+import adminRevokeReducer from "./features/users/adminRevokeSlice";
+import adminAuthRemoveReducer from "./features/auth/adminRemoveSlice";
+import adminActivePreReducer from "./features/users/adminPriceSlice";
+import adminInactivePreReducer from "./features/users/adminCancelPriceSlice";
 
 export const store = configureStore({
   reducer: {
@@ -30,6 +38,14 @@ export const store = configureStore({
     ads: adsReducer,
     adminRemovePost: adminRemovePostReducer,
     adminUpdatePost: adminUpdatePostReducer,
+    adminCategory: adminCateReducer,
+    adminBan: adminBanReducer,
+    adminActive: adminActiveReducer,
+    adminRevoke: adminRevokeReducer,
+    adminDelegate: adminDelegateReducer,
+    adminAuthRemove: adminAuthRemoveReducer,
+    adminActivePre: adminActivePreReducer,
+    adminInactivePre: adminInactivePreReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

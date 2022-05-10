@@ -62,17 +62,13 @@ export const refreshAccessTokenHandler = async (
   );
 
   if (!decoded) {
-    return res
-      .status(401)
-      .send({ message: "Could not refresh access token" });
+    return res.status(401).send({ message: "Could not refresh access token" });
   }
 
   const session = await findSessionById(decoded.session);
 
   if (!session || !session.valid) {
-    return res
-      .status(401)
-      .send({ message: "Could not refresh access token" });
+    return res.status(401).send({ message: "Could not refresh access token" });
   }
 
   const user = await findUserById(String(session.user));
@@ -87,12 +83,14 @@ export const refreshAccessTokenHandler = async (
 };
 
 export const getSessionHandler = async (_req: Request, res: Response) => {
-  const sessions = await findSessions({ "user": res.locals.user._id });
-  return res.send({data: sessions});
-
+  const sessions = await findSessions({ user: res.locals.user._id });
+  return res.send({ data: sessions });
 };
 
-export const removeSessionHandler = async (req: Request<RemoveSessionInput, {}, {}>, res: Response) => {
+export const removeSessionHandler = async (
+  req: Request<RemoveSessionInput, {}, {}>,
+  res: Response
+) => {
   const session = await findSessionById(req.params.id);
 
   if (!session || !session.valid) {
@@ -105,18 +103,20 @@ export const removeSessionHandler = async (req: Request<RemoveSessionInput, {}, 
 
   session.valid = false;
 
-  session.save()
+  session.save();
 
   return res.send({ message: "Session removed" });
-
-}
+};
 
 export const getAllSessionHandler = async (req: Request, res: Response) => {
   const sessions = await findSessions({});
-  return res.send({data: sessions});
-}
+  return res.send({ data: sessions });
+};
 
-export const removeSessionByAdminHandler = async (req: Request<RemoveSessionInput, {}, {}>, res: Response) => {
+export const removeSessionByAdminHandler = async (
+  req: Request<RemoveSessionInput, {}, {}>,
+  res: Response
+) => {
   const session = await findSessionById(req.params.id);
 
   if (!session || !session.valid) {
@@ -125,7 +125,7 @@ export const removeSessionByAdminHandler = async (req: Request<RemoveSessionInpu
 
   session.valid = false;
 
-  session.save()
+  session.save();
 
   return res.send({ message: "Session removed" });
-}
+};
