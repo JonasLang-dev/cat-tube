@@ -4,10 +4,21 @@ import Container from "@mui/material/Container";
 import GameCard from "../../components/SolidGameCard";
 import VideoCard from "../../components/VideoCard";
 import { Stack } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
+import {
+  posts,
+  selectPostsData,
+  selectPostsStatus,
+  selectPostsError,
+} from "../../features/post/postsSlice";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const Explore = () => {
+  const dispatch = useAppDispatch();
+  const postsData = useAppSelector(selectPostsData);
+  const postsStatus = useAppSelector(selectPostsStatus);
+  const postsError = useAppSelector(selectPostsError);
   return (
     <main>
       <Container
@@ -69,18 +80,21 @@ const Explore = () => {
       </Container>
 
       <Container maxWidth="lg" sx={{ pt: 2 }}>
-        {/* <Grid container spacing={4}>
-          {cards.map((card) => (
-            <VideoCard
-              key={card}
-              poster={card}
-              path={card}
-              avatar={card}
-              title={card}
-              name={card}
-            />
-          ))}
-        </Grid> */}
+        <Grid container spacing={4}>
+          {postsData &&
+            postsData.length > 0 &&
+            postsData.map((post: any) => (
+              <VideoCard
+                key={post._id}
+                poster={post.postUrl}
+                path={post._id}
+                user={post.user}
+                title={post.title}
+                views={post.views}
+                date={post.createdAt}
+              />
+            ))}
+        </Grid>
       </Container>
     </main>
   );

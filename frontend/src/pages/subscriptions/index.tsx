@@ -14,7 +14,13 @@ import {
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import { selectCurrentUserStatus } from "../../features/auth/currentUserSlice";
-import { useAppSelector } from "../../hooks/redux.hooks";
+import {
+  posts,
+  selectPostsData,
+  selectPostsStatus,
+  selectPostsError,
+} from "../../features/post/postsSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
 
 import VideoCard from "../../components/VideoCard";
 
@@ -28,6 +34,10 @@ const Subscriptions: FC<SubscriptionsType> = ({ loading = false }) => {
   const location = useLocation();
   const { t } = useTranslation();
   const currentUserInfo = useAppSelector(selectCurrentUserStatus);
+  const dispatch = useAppDispatch();
+  const postsData = useAppSelector(selectPostsData);
+  const postsStatus = useAppSelector(selectPostsStatus);
+  const postsError = useAppSelector(selectPostsError);
 
   return (
     <>
@@ -35,16 +45,19 @@ const Subscriptions: FC<SubscriptionsType> = ({ loading = false }) => {
         <main>
           <Container maxWidth="lg" sx={{ pt: 2, pb: 2 }}>
             <Grid container spacing={4}>
-              {/* {cards.map((card) => (
-                <VideoCard
-                  key={card}
-                  poster={card}
-                  path={card}
-                  avatar={card}
-                  title={card}
-                  name={card}
-                />
-              ))} */}
+              {postsData &&
+                postsData.length > 0 &&
+                postsData.map((post: any) => (
+                  <VideoCard
+                    key={post._id}
+                    poster={post.postUrl}
+                    path={post._id}
+                    user={post.user}
+                    title={post.title}
+                    views={post.views}
+                    date={post.createdAt}
+                  />
+                ))}
             </Grid>
           </Container>
         </main>

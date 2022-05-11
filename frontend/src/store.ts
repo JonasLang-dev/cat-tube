@@ -24,6 +24,8 @@ import adminActivePreReducer from "./features/users/adminPriceSlice";
 import adminInactivePreReducer from "./features/users/adminCancelPriceSlice";
 import removeAdReducer from "./features/ads/removeAdSlice";
 import postsReducer from "./features/post/postsSlice";
+import addCateReducer from "./features/category/addCateSlice";
+import removeCateReducer from "./features/category/removeCateSlice";
 
 export const store = configureStore({
   reducer: {
@@ -52,6 +54,8 @@ export const store = configureStore({
     adminInactivePre: adminInactivePreReducer,
     removeAd: removeAdReducer,
     posts: postsReducer,
+    addCate: addCateReducer,
+    removeCate: removeCateReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

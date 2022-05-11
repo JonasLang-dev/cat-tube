@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import {
   DataGrid,
   GridToolbar,
@@ -17,6 +17,13 @@ import {
   selectAdminCateError,
   selectAdminCateStatus,
 } from "../../features/category/adminCateSlice";
+import {
+  removeCategory,
+  selectRemoveCateStatus,
+  selectRemoveCateError,
+  clearRemoveCateState,
+} from "../../features/category/removeCateSlice";
+import { useSnackbar } from "notistack";
 
 function AdminCategory() {
   const dispatch = useAppDispatch();
@@ -24,8 +31,13 @@ function AdminCategory() {
   const adminCateStatus = useAppSelector(selectAdminCateStatus);
   const adminCateError = useAppSelector(selectAdminCateError);
   const adminCateData = useAppSelector(selectAdminCateData);
+  const removeCateStatus = useAppSelector(selectRemoveCateStatus);
+  const removeCateError = useAppSelector(selectRemoveCateError);
+  const { enqueueSnackbar } = useSnackbar();
 
-  const deletePost = (id: string) => {};
+  const deleteCategory = (id: string) => {
+    dispatch(removeCategory({ id }));
+  };
 
   const columns = React.useMemo(
     () => [
@@ -72,12 +84,12 @@ function AdminCategory() {
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
-            onClick={() => deletePost(params.id)}
+            onClick={() => deleteCategory(params.id)}
           />,
         ],
       },
     ],
-    [deletePost]
+    [deleteCategory]
   );
 
   useLayoutEffect(() => {
@@ -87,6 +99,14 @@ function AdminCategory() {
     };
   }, [currentUserInfo]);
 
+  useEffect(() => {
+    if (removeCateStatus === "success") {
+      enqueueSnackbar("操作成功", { variant: "success" });
+      dispatch(clearRemoveCateState());
+      dispatch(adminCategory());
+    }
+  }, [removeCateStatus]);
+
   return (
     <div style={{ height: "75vh", minWidth: "100%", padding: "0 1rem" }}>
       <DataGrid
@@ -94,7 +114,9 @@ function AdminCategory() {
         rows={adminCateData || []}
         columns={columns as GridColumns<any>}
         rowsPerPageOptions={[5, 10, 20, 50, 100]}
-        loading={adminCateStatus === "loading"}
+        loading={
+          adminCateStatus === "loading" || removeCateStatus === "loading"
+        }
         checkboxSelection
         components={{ Toolbar: GridToolbar }}
       />

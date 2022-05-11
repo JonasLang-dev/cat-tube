@@ -30,6 +30,7 @@ import {
 } from "../../features/ads/adsSlice";
 import { baseURL } from "../../request";
 import {
+  clearRemoveAdState,
   removeAd,
   selectRemoveAdError,
   selectRemoveAdStatus,
@@ -86,8 +87,9 @@ function AdsPage() {
     dispatch(getAds());
 
     if (removeAdStatus === "success") {
-      enqueueSnackbar("添加成功", { variant: "success" });
+      enqueueSnackbar("删除成功", { variant: "success" });
       dispatch(getAds());
+      dispatch(clearRemoveAdState());
     }
 
     if (removeAdStatus === "failed") {

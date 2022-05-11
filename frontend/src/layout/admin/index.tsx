@@ -60,7 +60,6 @@ import {
 } from "../../features/auth/currentUserSlice";
 
 import { useTranslation } from "react-i18next";
-import PostDialog from "../../components/PostDialog";
 import AboutDialog from "../../components/AboutDialog";
 import {
   Root,
@@ -78,8 +77,8 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import * as locales from "../../../locales";
 import axiosInstance, { baseURL } from "../../request";
-import { addAd } from "../../features/ads/addAdSlice";
 import { getAds } from "../../features/ads/adsSlice";
+import CategoryDialog from "../../components/CategoryDialog";
 type SupportedLocales = keyof typeof locales;
 
 interface Admin {
@@ -95,6 +94,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
   const matcheWithSm = useMediaQuery("(max-width:600px)");
   const profileMenuId = "primary-account-menu";
   const postRef = useRef<any>();
+  const categoryRef = useRef<any>();
   const aboutRef = useRef<any>();
   const location = useLocation();
   const navigate = useNavigate();
@@ -748,7 +748,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
                     onChange={uploadAdHandler}
                   />
                   <Button variant="contained" component="span">
-                    Upload
+                    {t("Add ad")}
                   </Button>
                 </label>
               </>
@@ -756,7 +756,14 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
             {location.pathname === "/admin/category" && (
               <>
                 <Box flexGrow={1} />
-                <Button variant="outlined">{t("Add category")}</Button>
+                <Button
+                  variant="outlined"
+                  onClick={() => {
+                    categoryRef.current.handleClickOpen();ww
+                  }}
+                >
+                  {t("Add category")}
+                </Button>
               </>
             )}
           </Toolbar>
@@ -767,7 +774,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
         </Footer>
       </Content>
 
-      <PostDialog ref={postRef} />
+      <CategoryDialog ref={categoryRef} />
       <AboutDialog ref={aboutRef} />
     </Root>
   );
