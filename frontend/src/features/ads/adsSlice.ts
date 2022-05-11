@@ -19,7 +19,7 @@ export const getAds = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get(`/api/admin/ads`);
-      return data;
+      return data.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data.message);
     }

@@ -35,7 +35,7 @@ const Subscriptions: FC<SubscriptionsType> = ({ loading = false }) => {
         <main>
           <Container maxWidth="lg" sx={{ pt: 2, pb: 2 }}>
             <Grid container spacing={4}>
-              {cards.map((card) => (
+              {/* {cards.map((card) => (
                 <VideoCard
                   key={card}
                   poster={card}
@@ -44,7 +44,7 @@ const Subscriptions: FC<SubscriptionsType> = ({ loading = false }) => {
                   title={card}
                   name={card}
                 />
-              ))}
+              ))} */}
             </Grid>
           </Container>
         </main>

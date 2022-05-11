@@ -5,6 +5,7 @@ import signUpReducer from "./features/auth/signUpSlice";
 import restEmailReducer from "./features/email/restSlice";
 import resetPasswordReducer from "./features/users/resetPasswordSlice";
 import postReducer from "./features/post/postSlice";
+import postDetailReducer from "./features/post/postDetailSlice";
 import userPostReducer from "./features/post/userPostSlice";
 import adminPostReducer from "./features/post/adminPostSlice";
 import adminUserReducer from "./features/users/adminUserSlice";
@@ -21,6 +22,8 @@ import adminRevokeReducer from "./features/users/adminRevokeSlice";
 import adminAuthRemoveReducer from "./features/auth/adminRemoveSlice";
 import adminActivePreReducer from "./features/users/adminPriceSlice";
 import adminInactivePreReducer from "./features/users/adminCancelPriceSlice";
+import removeAdReducer from "./features/ads/removeAdSlice";
+import postsReducer from "./features/post/postsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -32,6 +35,7 @@ export const store = configureStore({
     adminPost: adminPostReducer,
     userPost: userPostReducer,
     post: postReducer,
+    postDetail: postDetailReducer,
     adminUser: adminUserReducer,
     adminAuth: adminAuthReducer,
     removePost: removePostReducer,
@@ -46,6 +50,8 @@ export const store = configureStore({
     adminAuthRemove: adminAuthRemoveReducer,
     adminActivePre: adminActivePreReducer,
     adminInactivePre: adminInactivePreReducer,
+    removeAd: removeAdReducer,
+    posts: postsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

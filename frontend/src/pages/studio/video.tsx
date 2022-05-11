@@ -27,6 +27,7 @@ import {
 } from "../../features/post/removePostSlice";
 import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
+import { baseURL } from "../../request";
 
 function StudioVideo() {
   const { t, i18n } = useTranslation();
@@ -64,9 +65,7 @@ function StudioVideo() {
               controlsList="nodownload nofullscreen noremoteplayback"
               style={{ objectFit: "contain", width: "100%" }}
             >
-              <source
-                src={params.value && `http://localhost:5020/${params.value}`}
-              />
+              <source src={params.value && `${baseURL}/${params.value}`} />
             </video>
           );
         },

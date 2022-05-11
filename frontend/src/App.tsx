@@ -111,7 +111,7 @@ function App() {
               <Route
                 path="/watch"
                 element={
-                  <React.Suspense fallback={<div>Loading...</div>}>
+                  <React.Suspense>
                     <Watch />
                   </React.Suspense>
                 }

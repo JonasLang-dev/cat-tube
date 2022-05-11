@@ -28,6 +28,12 @@ import {
   selectAdsError,
   selectAdsStatus,
 } from "../../features/ads/adsSlice";
+import { baseURL } from "../../request";
+import {
+  removeAd,
+  selectRemoveAdError,
+  selectRemoveAdStatus,
+} from "../../features/ads/removeAdSlice";
 
 function AdsPage() {
   const { t, i18n } = useTranslation();
@@ -37,20 +43,61 @@ function AdsPage() {
   const ads = useAppSelector(selectAds);
   const adsError = useAppSelector(selectAdsError);
   const adsStatus = useAppSelector(selectAdsStatus);
+  const removeAdStatus = useAppSelector(selectRemoveAdStatus);
+  const removeAdError = useAppSelector(selectRemoveAdError);
 
-  const deleteAds = (id: string) => {};
+  const deleteAds = (id: string) => {
+    dispatch(removeAd({ id }));
+  };
 
   const columns = React.useMemo(
-    () => [{ field: "_id", headerName: "ID" }],
+    () => [
+      { field: "_id", headerName: "ID", hidden: true },
+      { field: "title", headerName: "title", flex: 1 },
+      {
+        field: "image",
+        headerName: "image",
+        flex: 1,
+        renderCell: (params: GridRenderCellParams) => {
+          return (
+            <img
+              style={{ objectFit: "contain", width: "80%" }}
+              src={params.value && `${baseURL}/${params.value}`}
+            />
+          );
+        },
+      },
+      {
+        field: "actions",
+        type: "actions",
+        getActions: (params: any) => [
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={() => deleteAds(params.id)}
+          />,
+        ],
+      },
+    ],
     [deleteAds]
   );
 
   useEffect(() => {
     dispatch(getAds());
+
+    if (removeAdStatus === "success") {
+      enqueueSnackbar("添加成功", { variant: "success" });
+      dispatch(getAds());
+    }
+
+    if (removeAdStatus === "failed") {
+      enqueueSnackbar(removeAdError, { variant: "error" });
+    }
+
     return () => {
       dispatch(clearAdsState());
     };
-  }, []);
+  }, [removeAdStatus]);
 
   return (
     <div style={{ height: "80vh", padding: "0 1rem" }}>
@@ -61,7 +108,7 @@ function AdsPage() {
         pageSize={5}
         rowsPerPageOptions={[5, 10, 20]}
         checkboxSelection
-        loading={adsStatus === "loading"}
+        loading={adsStatus === "loading" || removeAdStatus === "loading"}
         components={{ Toolbar: GridToolbar }}
         error={adsError}
         rowHeight={200}

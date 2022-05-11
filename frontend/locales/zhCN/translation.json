@@ -78,6 +78,8 @@
         "Ad Management": "广告管理",
         "Premium Management": "会员管理",
         "Add ad": "添加广告",
-        "Add category": "添加类别"
+        "Add category": "添加类别",
+        "There are no videos yet.": "还没有视频",
+        "Upload first video.": "上传第一个视频吧"
     }
 }

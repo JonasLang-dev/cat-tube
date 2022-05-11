@@ -11,22 +11,20 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
+
 import {
   Link as Links,
   ListItemButton,
   Typography,
   ButtonBase,
   Button,
+  Input,
 } from "@mui/material";
 import logo from "../../logo.svg";
 import Copyright from "../../components/Copyright";
 import {
   Business,
   BusinessOutlined,
-  CopyrightOutlined,
-  CopyrightRounded,
   FeedbackOutlined,
   GitHub,
   InfoOutlined,
@@ -50,6 +48,7 @@ import {
   GTranslateOutlined,
   Category,
   CategoryOutlined,
+  PhotoCamera,
 } from "@mui/icons-material";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -73,11 +72,14 @@ import {
   Footer,
   getCozyScheme,
 } from "@mui-treasury/layout";
+import { useSnackbar } from "notistack";
 
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import * as locales from "../../../locales";
-import { baseURL } from "../../request";
+import axiosInstance, { baseURL } from "../../request";
+import { addAd } from "../../features/ads/addAdSlice";
+import { getAds } from "../../features/ads/adsSlice";
 type SupportedLocales = keyof typeof locales;
 
 interface Admin {
@@ -96,7 +98,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
   const aboutRef = useRef<any>();
   const location = useLocation();
   const navigate = useNavigate();
-
+  const { enqueueSnackbar } = useSnackbar();
   const [selectedIndex, setSelectedIndex] = useState(location.pathname);
   const [anchorProfileMenu, setAnchorProfileMenu] =
     useState<null | HTMLElement>(null);
@@ -108,6 +110,21 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
   const isLangMenuOpen = Boolean(anchorLangMenu);
 
   const [open, setOpen] = React.useState(false);
+
+  const uploadAdHandler = async (e: any) => {
+    const file = e.target.files[0];
+    const bodyFormData = new FormData();
+    bodyFormData.append("ads", file);
+
+    try {
+      await axiosInstance.post(`/api/admin/ads`, bodyFormData);
+      dispatch(getAds());
+    } catch (error: any) {
+      enqueueSnackbar(error.response.data.message || error.message, {
+        variant: "error",
+      });
+    }
+  };
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) =>
     setAnchorProfileMenu(event.currentTarget);
@@ -665,7 +682,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
             </Typography>
           ) : (
             <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
-              视频点播
+              视频
             </Typography>
           )}
 
@@ -720,13 +737,25 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
             <Typography variant="h5">{getHeader()}</Typography>
             {location.pathname === "/admin/ad" && (
               <>
-                <Box flexGrow={1} />{" "}
-                <Button variant="outlined">{t("Add ad")}</Button>
+                <Box flexGrow={1} />
+                <label htmlFor="contained-button-file">
+                  <input
+                    style={{ display: "none" }}
+                    accept="image/*"
+                    id="contained-button-file"
+                    multiple
+                    type="file"
+                    onChange={uploadAdHandler}
+                  />
+                  <Button variant="contained" component="span">
+                    Upload
+                  </Button>
+                </label>
               </>
             )}
             {location.pathname === "/admin/category" && (
               <>
-                <Box flexGrow={1} />{" "}
+                <Box flexGrow={1} />
                 <Button variant="outlined">{t("Add category")}</Button>
               </>
             )}
@@ -737,6 +766,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
           <Copyright sx={{ pt: 4, pr: 10, textAlign: "right" }} />
         </Footer>
       </Content>
+
       <PostDialog ref={postRef} />
       <AboutDialog ref={aboutRef} />
     </Root>

@@ -9,23 +9,24 @@ import Typography from "@mui/material/Typography";
 
 import { Circle } from "@mui/icons-material";
 import { CardMedia, Link } from "@mui/material";
+import { baseURL } from "../request";
 
 interface VideoCardType {
   path: any;
-  avatar: any;
+  user: any;
   title: any;
-  name: any;
   poster: any;
-  loading?: boolean;
+  views: number;
+  date: string;
 }
 
 const VideoCard: FC<VideoCardType> = ({
   path,
-  avatar,
+  user,
   poster,
   title,
-  name,
-  loading = false,
+  views,
+  date,
 }) => {
   return (
     <Grid
@@ -41,6 +42,7 @@ const VideoCard: FC<VideoCardType> = ({
         sx={{
           width: 1,
           maxWidth: 320,
+          maxHeight: 400,
           boxShadow:
             "0 2px 4px -2px rgba(0,0,0,0.24), 0 4px 24px -2px rgba(0, 0, 0, 0.2)",
           borderRadius: "0.8rem",
@@ -59,7 +61,7 @@ const VideoCard: FC<VideoCardType> = ({
               bgcolor: "rgba(0, 0, 0, 0.08)",
               objectFit: "cover",
             }}
-            image="https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
+            image={poster ? `${baseURL}/${poster} ` : `${baseURL}/default.png`}
           />
         </CardActionArea>
         <CardContent
@@ -72,13 +74,13 @@ const VideoCard: FC<VideoCardType> = ({
           <Box gridArea="avatar">
             <Avatar
               sx={{ height: 50, width: 50 }}
-              alt="Remy Sharp"
-              src={`https://i.pravatar.cc/300?img=${avatar}`}
+              alt={user.name}
+              src={`${baseURL}/${user.avatar}`}
             />
           </Box>
           <Box alignSelf="center" gridArea="title">
             <Typography variant="body1" color="textPrimary">
-              This is the title
+              {title}
             </Typography>
           </Box>
 
@@ -90,7 +92,7 @@ const VideoCard: FC<VideoCardType> = ({
               component="p"
               alignItems="center"
             >
-              Remy Sharp
+              {user.name}
             </Typography>
           </Box>
           <Box alignSelf="center" gridArea="info">
@@ -101,7 +103,7 @@ const VideoCard: FC<VideoCardType> = ({
               alignItems="center"
               color="textSecondary"
             >
-              11 views
+              {views} views
             </Typography>
           </Box>
           <Box alignSelf="center" gridArea="time">
@@ -114,7 +116,7 @@ const VideoCard: FC<VideoCardType> = ({
             >
               <Circle sx={{ fontSize: "5px", height: 10 }} />
               &nbsp;
-              {new Date().toLocaleDateString()}
+              {new Date(date).toLocaleDateString()}
             </Typography>
           </Box>
         </CardContent>

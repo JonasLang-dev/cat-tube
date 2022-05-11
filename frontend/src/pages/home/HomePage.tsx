@@ -6,9 +6,16 @@ import VideoCard from "../../components/VideoCard";
 import Carousel from "react-material-ui-carousel";
 import Skeleton from "@mui/material/Skeleton";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Button } from "@mui/material";
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+import { Button, Stack, Typography } from "@mui/material";
+import {
+  posts,
+  selectPostsData,
+  selectPostsStatus,
+  selectPostsError,
+} from "../../features/post/postsSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
+import { HourglassEmptyOutlined } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 interface Home {
   loading?: boolean;
@@ -17,8 +24,13 @@ interface Home {
 }
 
 const HomePage: FC<Home> = ({ loading = false, colorMode, theme }) => {
+  const { t } = useTranslation();
   const matchem = useMediaQuery(theme.breakpoints.up("md"));
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  const dispatch = useAppDispatch();
+  const postsData = useAppSelector(selectPostsData);
+  const postsStatus = useAppSelector(selectPostsStatus);
+  const postsError = useAppSelector(selectPostsError);
 
   const mdImgs = [
     {
@@ -31,6 +43,10 @@ const HomePage: FC<Home> = ({ loading = false, colorMode, theme }) => {
       Image: "https://source.unsplash.com/featured/?vacuum,cleaner",
     },
   ];
+
+  useLayoutEffect(() => {
+    dispatch(posts());
+  }, []);
 
   return (
     <main>
@@ -73,19 +89,34 @@ const HomePage: FC<Home> = ({ loading = false, colorMode, theme }) => {
         </Container>
       </Box>
 
-      <Container sx={{ py: 8 }} maxWidth="lg">
+      <Container sx={{ py: 6 }} maxWidth="lg">
         {/* End hero unit */}
         <Grid container spacing={4}>
-          {cards.map((card) => (
-            <VideoCard
-              key={card}
-              poster={card}
-              path={card}
-              avatar={card}
-              title={card}
-              name={card}
-            />
-          ))}
+          {postsData && postsData.length > 0 ? (
+            postsData.map((post: any) => (
+              <VideoCard
+                key={post._id}
+                poster={post.postUrl}
+                path={post._id}
+                user={post.user}
+                title={post.title}
+                views={post.views}
+                date={post.createdAt}
+              />
+            ))
+          ) : (
+            <Stack spacing={1} sx={{ flex: 1 }}>
+              <Typography variant="h1" align="center">
+                <HourglassEmptyOutlined fontSize="large" />
+              </Typography>
+              <Typography variant="h5" align="center">
+                {t("There are no videos yet.")}
+              </Typography>
+              <Typography variant="body1" paragraph align="center">
+                {t("Upload first video.")}
+              </Typography>
+            </Stack>
+          )}
         </Grid>
       </Container>
     </main>

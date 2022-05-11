@@ -69,7 +69,7 @@ const Explore = () => {
       </Container>
 
       <Container maxWidth="lg" sx={{ pt: 2 }}>
-        <Grid container spacing={4}>
+        {/* <Grid container spacing={4}>
           {cards.map((card) => (
             <VideoCard
               key={card}
@@ -80,7 +80,7 @@ const Explore = () => {
               name={card}
             />
           ))}
-        </Grid>
+        </Grid> */}
       </Container>
     </main>
   );
