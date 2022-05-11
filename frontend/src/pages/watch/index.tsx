@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import Plyr from "plyr-react";
 import "plyr-react/dist/plyr.css";
 import {
@@ -6,10 +6,11 @@ import {
   Box,
   Grid,
   IconButton,
+  Input,
   Stack,
   Typography,
 } from "@mui/material";
-import { Download, Favorite, Share } from "@mui/icons-material";
+import { Download, Favorite, SendOutlined, Share } from "@mui/icons-material";
 import Copyright from "../../components/Copyright";
 import axiosInstance, { baseURL } from "../../request";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
@@ -18,15 +19,45 @@ import {
   selectPostDetailData,
 } from "../../features/post/postDetailSlice";
 import { useLocation, useSearchParams } from "react-router-dom";
+import {
+  comment,
+  selectCommentData,
+} from "../../features/comment/commentSlice";
+import {
+  createComment,
+  clearCreateCommentState,
+  selectCreateCommentError,
+  selectCreateCommentStatus,
+} from "../../features/comment/createCommentSlice";
 
 const watch = () => {
   const dispatch = useAppDispatch();
   const search = useLocation().search.split("=")[1];
   const postDetailData = useAppSelector(selectPostDetailData);
+  const commentRef = useRef<HTMLDivElement>(null);
+  const createCommentError = useAppSelector(selectCreateCommentStatus);
+  const createCommentStatus = useAppSelector(selectCreateCommentError);
+  const commentData = useAppSelector(selectCommentData);
+
+  const commentHandler = (e) => {
+    if (commentRef != null) {
+      dispatch(
+        createComment({ post: search, content: commentRef?.current?.value })
+      );
+    }
+  };
 
   useLayoutEffect(() => {
     dispatch(postDetail({ id: search }));
+    dispatch(comment({ id: search }));
   }, []);
+
+  useEffect(() => {
+    if (createCommentStatus === "success") {
+      dispatch(comment({ id: search }));
+      dispatch(clearCreateCommentState());
+    }
+  }, [createCommentStatus]);
   return (
     <main style={{ background: "background.main" }}>
       <Grid sx={{ p: "1rem" }} container gap={6}>
@@ -77,6 +108,26 @@ const watch = () => {
                 <Share fontSize="large" />
               </IconButton>
             </Stack>
+            <Input
+              inputRef={commentRef}
+              fullWidth
+              id="comment-input"
+              placeholder={"评论"}
+              endAdornment={
+                <IconButton
+                  aria-label="comment"
+                  onClick={(e) => commentHandler(e)}
+                >
+                  <SendOutlined fontSize="small" />
+                </IconButton>
+              }
+            />
+            {commentData &&
+              commentData.map((item: any) => {
+                console.log(item);
+
+                <p key={item._id}>test</p>;
+              })}
           </Grid>
         </Grid>
       </Grid>

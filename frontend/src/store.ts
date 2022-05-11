@@ -26,6 +26,8 @@ import removeAdReducer from "./features/ads/removeAdSlice";
 import postsReducer from "./features/post/postsSlice";
 import addCateReducer from "./features/category/addCateSlice";
 import removeCateReducer from "./features/category/removeCateSlice";
+import commentReducer from "./features/comment/commentSlice";
+import createCommentReducer from "./features/comment/createCommentSlice";
 
 export const store = configureStore({
   reducer: {
@@ -56,6 +58,8 @@ export const store = configureStore({
     posts: postsReducer,
     addCate: addCateReducer,
     removeCate: removeCateReducer,
+    comment: commentReducer,
+    createComment: createCommentReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

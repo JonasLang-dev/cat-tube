@@ -29,7 +29,7 @@ export const createCommentHandler = async (
     return res.status(400).send({ message: error.message });
   }
 
-  if (!post || !post.isPublic || !post.isActive) {
+  if (!post) {
     return res.status(404).send({ message: "Post not found" });
   }
 
@@ -72,7 +72,6 @@ export const updateCommentHandler = async (
 
   const updateComment = await comment.save();
   res.send({ data: updateComment });
-
 };
 
 export const removeCommentHandler = async (req: Request, res: Response) => {
@@ -102,7 +101,6 @@ export const removeCommentHandler = async (req: Request, res: Response) => {
 };
 
 export const findOwnCommentHandler = async (req: Request, res: Response) => {
-
   const comments = await findUserComments({ user: res.locals.user._id });
 
   return res.send({ data: comments });
@@ -112,7 +110,7 @@ export const findPostCommentsHandler = async (
   req: Request<GetPostCommentsInput, {}, {}>,
   res: Response
 ) => {
-  let post
+  let post;
 
   try {
     post = await findPostbyId(req.params.post);
@@ -120,7 +118,7 @@ export const findPostCommentsHandler = async (
     return res.status(400).send({ message: error.message });
   }
 
-  if (!post || !post.isPublic || !post.isActive) {
+  if (!post) {
     return res.status(404).send({ message: "post dot not find" });
   }
 

@@ -41,11 +41,13 @@ router.delete(
 );
 
 router.get("/", requireUser, findOwnCommentHandler);
+
 router.get(
   "/:post/post",
   validateResource(getPostCommentsSchema),
   findPostCommentsHandler
 );
+
 router.get(
   "/:user/user",
   validateResource(getUsreCommentsSchema),

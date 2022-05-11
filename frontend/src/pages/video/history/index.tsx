@@ -157,7 +157,7 @@ const History: FC<HistoryType> = ({ theme }) => {
                       style={{
                         backgroundColor: "rgba(0, 0, 0, 0.08)",
                         objectFit: "cover",
-                         width: "100%",
+                        width: "100%",
                         height: "100%",
                       }}
                     />
