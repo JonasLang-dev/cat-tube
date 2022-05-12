@@ -1,7 +1,7 @@
 import { object, string, TypeOf } from "zod";
 
 export const createSearchSchema = object({
-  body: object({
+  params: object({
     search: string({ required_error: "search is required." }),
   }),
 });
@@ -24,7 +24,7 @@ export const deleteHistorySchema = object({
   }),
 });
 
-export type CreateSearchInput = TypeOf<typeof createSearchSchema>["body"];
+export type CreateSearchInput = TypeOf<typeof createSearchSchema>["params"];
 export type CreateHistoryInput = TypeOf<typeof createHistorySchema>["body"];
 export type HistoryTypeInput = TypeOf<typeof historyTypeSchema>["params"];
 export type DeleteHistoryInput = TypeOf<typeof deleteHistorySchema>["params"];

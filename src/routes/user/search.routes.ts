@@ -5,10 +5,6 @@ import { createSearchSchema } from "../../schema/history.schema";
 
 const search = express.Router();
 
-search.get(
-  "/",
-  validateResource(createSearchSchema),
-  searchController
-);
+search.get("/:search", validateResource(createSearchSchema), searchController);
 
 export default search;

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useLayoutEffect } from "react";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
@@ -38,6 +38,10 @@ const Subscriptions: FC<SubscriptionsType> = ({ loading = false }) => {
   const postsData = useAppSelector(selectPostsData);
   const postsStatus = useAppSelector(selectPostsStatus);
   const postsError = useAppSelector(selectPostsError);
+
+  useLayoutEffect(() => {
+    dispatch(posts());
+  }, []);
 
   return (
     <>

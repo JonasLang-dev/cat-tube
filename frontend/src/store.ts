@@ -28,6 +28,8 @@ import addCateReducer from "./features/category/addCateSlice";
 import removeCateReducer from "./features/category/removeCateSlice";
 import commentReducer from "./features/comment/commentSlice";
 import createCommentReducer from "./features/comment/createCommentSlice";
+import userAdsReducer from "./features/ads/userAdsSlice";
+import searchReducer from "./features/search/searchSlice";
 
 export const store = configureStore({
   reducer: {
@@ -60,6 +62,8 @@ export const store = configureStore({
     removeCate: removeCateReducer,
     comment: commentReducer,
     createComment: createCommentReducer,
+    userAds: userAdsReducer,
+    search: searchReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

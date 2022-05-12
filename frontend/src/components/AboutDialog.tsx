@@ -79,26 +79,20 @@ const AboutDialog = forwardRef((props, ref) => {
       aria-labelledby="scroll-dialog-title"
       aria-describedby="scroll-dialog-description"
     >
-      <DialogTitle id="scroll-dialog-title">About Cat Tube</DialogTitle>
+      <DialogTitle id="scroll-dialog-title">关于视频点播系统</DialogTitle>
       <DialogContent dividers={scroll === "paper"}>
         <DialogContentText
           id="scroll-dialog-description"
           ref={descriptionElementRef}
           tabIndex={-1}
         >
-          {[...new Array(50)]
-            .map(
-              () => `Cras mattis consectetur purus sit amet fermentum.
-Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
-            )
-            .join("\n")}
+          视频点播（ApsaraVideo
+          VoD，简称VoD）是集视频采集、编辑、上传、自动化转码处理、网络通信、计算机和数据库技术于一体的视频服务系统。通过它用户可以自由的选择点播影视、动漫、综艺节目,分享自己喜欢的节目给朋友,甚至可以自制节目上传,不再受制于电视台的节目表,极大地提高了用户的体验。
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleClose}>Ok</Button>
+        <Button onClick={handleClose}>取消</Button>
+        <Button onClick={handleClose}>确认</Button>
       </DialogActions>
     </Dialog>
   );

@@ -32,7 +32,7 @@ export const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    clearPostsState: (state) => {
+    clearPostsState: (state: PostsState) => {
       state.status = "idle";
       state.error = undefined;
       state.data = [];

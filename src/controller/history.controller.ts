@@ -42,13 +42,13 @@ export const createHistoryController = async (
 };
 
 export const searchController = async (
-  req: Request<{}, {}, CreateSearchInput>,
+  req: Request<CreateSearchInput, {}, {}>,
   res: Response
 ) => {
-  const { search } = req.body;
+  const { search } = req.params;
 
   const reg = new RegExp(search, "i");
-  const channels = await findUsers({ $or: [{ name: { $regex: reg } }] });
+  const channels = await findUsers({ name: { $regex: reg } });
 
   const posts = await findPosts({
     $or: [{ title: { $regex: reg } }, { description: { $regex: reg } }],

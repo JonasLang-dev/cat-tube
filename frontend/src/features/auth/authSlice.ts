@@ -43,7 +43,7 @@ export const authSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    clearAuthState: (state) => {
+    clearAuthState: (state: AuthState) => {
       state.status = "idle";
       state.error = undefined;
       state.token = undefined;
@@ -63,7 +63,6 @@ export const authSlice = createSlice({
       })
       .addCase(signIn.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload as Array<any>;
         state.token = undefined;
       })
       .addDefaultCase((state) => {

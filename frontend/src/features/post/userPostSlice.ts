@@ -18,7 +18,7 @@ const initialState: UserPostState = {
 
 export const userPost = createAsyncThunk(
   "post/user",
-  async (id: string, { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(`/api/posts/private`);
       return data;
@@ -32,7 +32,7 @@ export const userPostSlice = createSlice({
   name: "post/user",
   initialState,
   reducers: {
-    clearUserPostState: (state) => {
+    clearUserPostState: (state: UserPostState) => {
       state.status = "idle";
       state.error = undefined;
       state.data = undefined;

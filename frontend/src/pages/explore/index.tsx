@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import GameCard from "../../components/SolidGameCard";
@@ -19,6 +19,10 @@ const Explore = () => {
   const postsData = useAppSelector(selectPostsData);
   const postsStatus = useAppSelector(selectPostsStatus);
   const postsError = useAppSelector(selectPostsError);
+
+  useLayoutEffect(() => {
+    dispatch(posts());
+  });
   return (
     <main>
       <Container
