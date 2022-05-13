@@ -81,6 +81,7 @@
         "Add category": "添加类别",
         "There are no videos yet.": "还没有视频",
         "Upload first video.": "上传第一个视频吧",
-        "Success release a category": "成功发布一个分类"
+        "Success release a category": "成功发布一个分类",
+        "Post":"发布视频"
     }
 }

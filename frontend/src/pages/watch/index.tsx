@@ -32,14 +32,14 @@ import {
 
 const watch = () => {
   const dispatch = useAppDispatch();
-  const search = useLocation().search.split("=")[1];
+  const search = useLocation().search.split("=")[1]; 
   const postDetailData = useAppSelector(selectPostDetailData);
   const commentRef = useRef<HTMLDivElement>(null);
   const createCommentError = useAppSelector(selectCreateCommentStatus);
   const createCommentStatus = useAppSelector(selectCreateCommentError);
   const commentData = useAppSelector(selectCommentData);
 
-  const commentHandler = (e) => {
+  const commentHandler = (e: any) => {
     if (commentRef != null) {
       dispatch(
         createComment({ post: search, content: commentRef?.current?.value })

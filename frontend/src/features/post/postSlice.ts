@@ -29,7 +29,7 @@ export const post = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await axios.put(`/api/posts/${post.id}`, post);
+      const { data } = await axios.put(`/api/posts/${post.id}`, { ...post, isPublic: true });
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);

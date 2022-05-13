@@ -168,8 +168,6 @@ export const updatePostHandler = async (
     try {
       const category = await findCategoryById(categoryId);
 
-      console.log(category);
-
       if (!category) {
         return res.status(404).send({ message: "Category not found" });
       }
@@ -208,24 +206,26 @@ export const deletePostHandler = async (
   req: Request<PostSchemaInput, {}, {}>,
   res: Response
 ) => {
+  let post;
   try {
-    const post = await findPostbyId(req.params.id);
-    if (!post) {
-      return res.status(404).send({ message: "Post not found" });
-    }
-
-    if (post.user != res.locals.user._id) {
-      return res
-        .status(401)
-        .send({ message: "You are not authorized to delete this post" });
-    }
-
-    post.remove();
-
-    return res.status(200).send({ meesage: "Post deleted successfully" });
+    post = await findPostbyId(req.params.id);
   } catch (error: any) {
-    return res.status(400).send({ message: error.message });
+    return res.status(400).send({ message: error.message })
   }
+  if (!post) {
+    return res.status(404).send({ message: "Post not found" });
+  }
+
+  if (post.user != res.locals.user._id) {
+    return res
+      .status(401)
+      .send({ message: "You are not authorized to delete this post" });
+  }
+
+  post.remove();
+
+  return res.status(200).send({ meesage: "Post deleted successfully" });
+
 };
 
 export const postMoreInfoHandler = async (
