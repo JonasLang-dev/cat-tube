@@ -15,7 +15,7 @@ const initialState: CreateCommentState = {
 };
 
 export const createComment = createAsyncThunk(
-  "comment",
+  "comment/create",
   async (params: { post: string; content: any }, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(`/api/comment`, {
@@ -30,7 +30,7 @@ export const createComment = createAsyncThunk(
 );
 
 export const createCommentSlice = createSlice({
-  name: "comment",
+  name: "comment/create",
   initialState,
   reducers: {
     clearCreateCommentState: (state) => {

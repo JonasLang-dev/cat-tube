@@ -7,6 +7,8 @@ import {
   Grid,
   IconButton,
   Input,
+  List,
+  ListItem,
   Stack,
   Typography,
 } from "@mui/material";
@@ -29,14 +31,15 @@ import {
   selectCreateCommentError,
   selectCreateCommentStatus,
 } from "../../features/comment/createCommentSlice";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const watch = () => {
   const dispatch = useAppDispatch();
-  const search = useLocation().search.split("=")[1]; 
+  const search = useLocation().search.split("=")[1];
   const postDetailData = useAppSelector(selectPostDetailData);
   const commentRef = useRef<HTMLDivElement>(null);
-  const createCommentError = useAppSelector(selectCreateCommentStatus);
-  const createCommentStatus = useAppSelector(selectCreateCommentError);
+  const createCommentStatus = useAppSelector(selectCreateCommentStatus);
+  const createCommentError = useAppSelector(selectCreateCommentError);
   const commentData = useAppSelector(selectCommentData);
 
   const commentHandler = (e: any) => {
@@ -54,10 +57,20 @@ const watch = () => {
 
   useEffect(() => {
     if (createCommentStatus === "success") {
-      dispatch(comment({ id: search }));
       dispatch(clearCreateCommentState());
+      dispatch(comment({ id: search }))
     }
   }, [createCommentStatus]);
+
+  const deleteCommentHandler = async (id: string) => {
+    try {
+      const res = await axiosInstance.delete(`/api/comment/${id}`)
+      dispatch(comment({ id: search }))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <main style={{ background: "background.main" }}>
       <Grid sx={{ p: "1rem" }} container gap={6}>
@@ -86,9 +99,14 @@ const watch = () => {
         <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
           <Grid container gap={2} flexDirection="column">
             <Grid container gap={2} flexDirection="row">
-              <Avatar src={postDetailData?.user.avatar}>
-                {postDetailData?.user.name}
-              </Avatar>
+
+
+              <Box>
+                <Avatar src={baseURL + postDetailData?.user.avatar}>
+                  {postDetailData?.user.name}
+                </Avatar>
+                <Typography align="center" variant="subtitle2" >{postDetailData?.user.name}</Typography>
+              </Box>
               <Typography textAlign="center">
                 {postDetailData?.title}
               </Typography>
@@ -122,17 +140,38 @@ const watch = () => {
                 </IconButton>
               }
             />
-            {commentData &&
-              commentData.map((item: any) => {
-                console.log(item);
+            <List>
+              {commentData &&
+                commentData.map((item: any) => {
+                  return (
+                    <ListItem key={item._id} >
+                      <Stack direction="row" gap={4}>
+                        <Box>
+                          <Avatar src={baseURL + item?.user.avatar}>
+                            {item?.user.name}
+                          </Avatar>
+                          <Typography align="center" variant="subtitle2" >{item.user.name}</Typography>
+                        </Box>
+                        <Box>
+                          <Typography align="center" variant="subtitle2" >{item.content}</Typography>
+                          <Typography align="center" variant="body1">  {new Date(item?.createdAt).toLocaleString()}</Typography>
+                        </Box>
 
-                <p key={item._id}>test</p>;
-              })}
+                        <Box height="100px" sx={{ pl: "1rem" }}>
+                          <IconButton onClick={() => { deleteCommentHandler(item._id) }}>
+                            <ClearIcon />
+                          </IconButton>
+                        </Box>
+                      </Stack>
+                    </ListItem>
+                  )
+                })}
+            </List>
           </Grid>
         </Grid>
       </Grid>
       <Copyright sx={{ pr: 10, pb: 1, textAlign: "right" }} />
-    </main>
+    </main >
   );
 };
 

@@ -14,7 +14,7 @@ export const findPostComments = async (
   query: FilterQuery<Comment>,
   options: QueryOptions = { lean: true }
 ) => {
-  return CommentModel.find(query, {}, options).populate("replies");
+  return CommentModel.find(query, {}, options).populate("replies").populate("user");
 };
 
 export const findUserComments = async (

@@ -759,7 +759,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
                 <Button
                   variant="outlined"
                   onClick={() => {
-                    categoryRef.current.handleClickOpen();ww
+                    categoryRef.current.handleClickOpen();
                   }}
                 >
                   {t("Add category")}
