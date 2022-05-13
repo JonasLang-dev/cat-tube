@@ -8,8 +8,9 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import { Circle } from "@mui/icons-material";
-import { CardMedia, Link } from "@mui/material";
+import { CardMedia } from "@mui/material";
 import { baseURL } from "../request";
+import { Link } from "react-router-dom";
 
 interface VideoCardType {
   path: any;
@@ -49,8 +50,8 @@ const VideoCard: FC<VideoCardType> = ({
         }}
       >
         <CardActionArea
-          // to={{ pathname: "/watch", search: `?v=${path}` }}
-          href={`/watch?v=${path}`}
+          to={{ pathname: "/watch", search: `?v=${path}` }}
+          // href={`/watch?v=${path}`}
           component={Link}
         >
           <CardMedia

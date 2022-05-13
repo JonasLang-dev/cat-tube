@@ -112,7 +112,7 @@ function StudioVideo() {
 
   useLayoutEffect(() => {
     if (currentUserInfo?._id) {
-      dispatch(userPost(currentUserInfo._id));
+      dispatch(userPost());
     }
     return () => {
       dispatch(clearUserPostState());
@@ -123,7 +123,7 @@ function StudioVideo() {
     if (removePostStatus === "success") {
       if (currentUserInfo?._id) {
         enqueueSnackbar(t("Remove post success"), { variant: "success" });
-        dispatch(userPost(currentUserInfo._id));
+        dispatch(userPost());
       }
     }
     if (removePostStatus === "failed") {

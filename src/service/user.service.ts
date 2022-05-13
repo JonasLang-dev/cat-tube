@@ -16,11 +16,14 @@ export const findUserByEmail = async (email: string) => {
 
 export const findAllUsers = async () => {
   return UserModel.find({});
-}
+};
 
 export const findUsers = (
   query: FilterQuery<User>,
   options: QueryOptions = { lean: true }
 ) => {
-  return UserModel.find(query, {}, options).select(_PrivateFields).populate("posts");
+  return UserModel.find(query, {}, options)
+    .select(_PrivateFields)
+    .populate("posts")
+    .populate("followers");
 };

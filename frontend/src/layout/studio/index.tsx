@@ -74,6 +74,7 @@ import { DropzoneDialogBase, FileObject } from "mui-file-dropzone";
 import axiosInstance, { baseURL } from "../../request";
 import { useSnackbar } from "notistack";
 import * as locales from "../../../locales";
+import { userPost } from "../../features/post/userPostSlice";
 type SupportedLocales = keyof typeof locales;
 
 interface Studio {
@@ -516,6 +517,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
           },
         }
       );
+      dispatch(userPost());
       postRef.current.setPostInfo(data);
       setUploadFiles([]);
       setShowBackdrop(false);

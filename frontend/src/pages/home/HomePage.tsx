@@ -16,6 +16,8 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
 import { HourglassEmptyOutlined } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
+import { selectUserAdsData, userAds } from "../../features/ads/userAdsSlice";
+import { baseURL } from "../../request";
 
 interface Home {
   loading?: boolean;
@@ -31,63 +33,56 @@ const HomePage: FC<Home> = ({ loading = false, colorMode, theme }) => {
   const postsData = useAppSelector(selectPostsData);
   const postsStatus = useAppSelector(selectPostsStatus);
   const postsError = useAppSelector(selectPostsError);
-
-  const mdImgs = [
-    {
-      Name: "E",
-      Image: "/static/img/login-the-crown_2-1500x1000.jpg",
-    },
-
-    {
-      Name: "B",
-      Image: "https://source.unsplash.com/featured/?vacuum,cleaner",
-    },
-  ];
+  const adsData = useAppSelector(selectUserAdsData);
 
   useLayoutEffect(() => {
     dispatch(posts());
+    dispatch(userAds());
   }, []);
 
   return (
     <main>
-      <Box
-        sx={{
-          bgcolor: "background.paper",
-          pt: 4,
-          pb: 3,
-          borderRadius: "0.8rem",
-        }}
-      >
-        <Container maxWidth="md">
-          <Carousel
-            key="carousel"
-            autoPlay={false}
-            animation="fade"
-            indicators={true}
-            duration={500}
-            navButtonsAlwaysVisible={false}
-            navButtonsAlwaysInvisible={false}
-            cycleNavigation={true}
-            fullHeightHover={true}
-            swipe={true}
-            sx={{
-              borderRadius: "0.8rem",
-            }}
-            height={matchem ? 400 : matches ? 300 : 240}
-          >
-            {mdImgs.map((item, index) => {
-              return (
-                <Grid item xs={4} key={item.Name}>
-                  <img
-                    src={item.Image}
-                    style={{ overflow: "hidden", width: "100%" }}
-                  />
-                </Grid>
-              );
-            })}
-          </Carousel>
-        </Container>
-      </Box>
+      {adsData?.length > 0 && (
+        <Box
+          sx={{
+            bgcolor: "background.paper",
+            pt: 4,
+            pb: 3,
+            borderRadius: "0.8rem",
+          }}
+        >
+          <Container maxWidth="md">
+            <Carousel
+              key="carousel"
+              autoPlay={false}
+              animation="fade"
+              indicators={true}
+              duration={500}
+              navButtonsAlwaysVisible={false}
+              navButtonsAlwaysInvisible={false}
+              cycleNavigation={true}
+              fullHeightHover={true}
+              swipe={true}
+              sx={{
+                borderRadius: "0.8rem",
+              }}
+              height={matchem ? 350 : matches ? 300 : 240}
+            >
+              {adsData?.map((item: any) => {
+                return (
+                  <Grid item xs={4} key={item._id}>
+                    <img
+                      alt={item.title}
+                      src={`${baseURL}/${item.image}`}
+                      style={{ overflow: "hidden", width: "100%" }}
+                    />
+                  </Grid>
+                );
+              })}
+            </Carousel>
+          </Container>
+        </Box>
+      )}
 
       <Container sx={{ py: 6 }} maxWidth="lg">
         {/* End hero unit */}

@@ -95,7 +95,7 @@ const SignInPage: FC<SignIn> = ({ theme, colorMode }) => {
           enqueueSnackbar(t(item.message), { variant: "error" });
         });
       } else {
-        enqueueSnackbar(t("Network Error"), { variant: "error" });
+        enqueueSnackbar(authError?.message, { variant: "error" });
       }
       dispatch(clearAuthState());
     }

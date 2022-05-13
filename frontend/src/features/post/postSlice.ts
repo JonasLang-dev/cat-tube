@@ -3,14 +3,14 @@ import axios from "../../request";
 import type { RootState } from "../../store";
 
 // Define a type for the slice state
-interface SignUpState {
+interface PostState {
   status: "idle" | "loading" | "failed" | "success";
   error: any | undefined;
   data: object | undefined;
 }
 
 // Define the initial state using that type
-const initialState: SignUpState = {
+const initialState: PostState = {
   status: "idle",
   error: undefined,
   data: undefined,
@@ -41,7 +41,7 @@ export const postSlice = createSlice({
   name: "post",
   initialState,
   reducers: {
-    clearPostState: (state) => {
+    clearPostState: (state: PostState) => {
       state.status = "idle";
       state.error = undefined;
       state.data = undefined;

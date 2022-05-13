@@ -2,23 +2,23 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../request";
 import { RootState } from "../../store";
 
-interface AdsState {
+interface UserAdsState {
   status: "idle" | "loading" | "failed" | "success";
   error: string | undefined;
-  ads: any | undefined;
+  ads: Array<any>;
 }
 
-const initialState: AdsState = {
+const initialState: UserAdsState = {
   status: "idle",
   error: undefined,
-  ads: undefined,
+  ads: [],
 };
 
-export const getAds = createAsyncThunk(
-  "ads/getAds",
+export const userAds = createAsyncThunk(
+  "ads/user",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.get(`/api/admin/ads`);
+      const { data } = await axiosInstance.get(`/api/ads`);
       return data.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data.message);
@@ -26,38 +26,38 @@ export const getAds = createAsyncThunk(
   }
 );
 
-export const adsSlice = createSlice({
-  name: "ads/getAds",
+export const userAdsSlice = createSlice({
+  name: "ads/user",
   initialState,
   reducers: {
-    clearAdsState: (state: AdsState) => {
+    clearUserAdsState: (state: UserAdsState) => {
       state.status = "idle";
       state.error = undefined;
-      state.ads = undefined;
+      state.ads = [];
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAds.pending, (state) => {
+      .addCase(userAds.pending, (state) => {
         state.error = undefined;
-        state.ads = undefined;
+        state.ads = [];
         state.status = "loading";
       })
-      .addCase(getAds.fulfilled, (state, action) => {
+      .addCase(userAds.fulfilled, (state, action) => {
         state.status = "success";
         state.ads = action.payload;
       })
-      .addCase(getAds.rejected, (state, action) => {
+      .addCase(userAds.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload as string;
       });
   },
 });
 
-export const { clearAdsState } = adsSlice.actions;
+export const { clearUserAdsState } = userAdsSlice.actions;
 
-export const selectAdsStatus = (state: RootState) => state.ads.status;
-export const selectAdsError = (state: RootState) => state.ads.error;
-export const selectAds = (state: RootState) => state.ads.ads;
+export const selectUserAdsStatus = (state: RootState) => state.userAds.status;
+export const selectUserAdsError = (state: RootState) => state.userAds.error;
+export const selectUserAdsData = (state: RootState) => state.userAds.ads;
 
-export default adsSlice.reducer;
+export default userAdsSlice.reducer;

@@ -97,8 +97,9 @@ export class User {
     localField: "_id",
     foreignField: "subscriber",
     justOne: false,
+    count: true,
   })
-  public subscribers: Ref<Subscription>[];
+  public followers: Ref<Subscription>[];
 
   async validatePassword(this: DocumentType<User>, candidatePassword: string) {
     try {

@@ -3,24 +3,24 @@ import axios from "../../request";
 import type { RootState } from "../../store";
 
 // Define a type for the slice state
-interface UserPostState {
+interface SearchState {
   status: "idle" | "loading" | "failed" | "success";
   error: any | undefined;
-  data: any | undefined;
+  data: { channels: Array<any>; posts: Array<any> } | undefined;
 }
 
 // Define the initial state using that type
-const initialState: UserPostState = {
+const initialState: SearchState = {
   status: "idle",
   error: undefined,
   data: undefined,
 };
 
-export const userPost = createAsyncThunk(
-  "post/user",
-  async (data, { rejectWithValue }) => {
+export const search = createAsyncThunk(
+  "search",
+  async (search: string, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/posts/private`);
+      const { data } = await axios.get(`/api/search/${search}`);
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -28,11 +28,11 @@ export const userPost = createAsyncThunk(
   }
 );
 
-export const userPostSlice = createSlice({
-  name: "post/user",
+export const searchSlice = createSlice({
+  name: "search",
   initialState,
   reducers: {
-    clearUserPostState: (state: UserPostState) => {
+    clearSearchState: (state: SearchState) => {
       state.status = "idle";
       state.error = undefined;
       state.data = undefined;
@@ -40,15 +40,15 @@ export const userPostSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(userPost.pending, (state) => {
+      .addCase(search.pending, (state) => {
         state.error = undefined;
         state.status = "loading";
       })
-      .addCase(userPost.fulfilled, (state, action) => {
+      .addCase(search.fulfilled, (state, action) => {
         state.status = "success";
         state.data = action.payload.data;
       })
-      .addCase(userPost.rejected, (state, action) => {
+      .addCase(search.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
@@ -59,10 +59,10 @@ export const userPostSlice = createSlice({
   },
 });
 
-export const { clearUserPostState } = userPostSlice.actions;
+export const { clearSearchState } = searchSlice.actions;
 
-export const selectUserPostStatus = (state: RootState) => state.userPost.status;
-export const selectUserPostError = (state: RootState) => state.userPost.error;
-export const selectUserPostData = (state: RootState) => state.userPost.data;
+export const selectSearchStatus = (state: RootState) => state.search.status;
+export const selectSearchError = (state: RootState) => state.search.error;
+export const selectSearchData = (state: RootState) => state.search.data;
 
-export default userPostSlice.reducer;
+export default searchSlice.reducer;
