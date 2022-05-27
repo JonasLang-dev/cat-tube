@@ -58,18 +58,18 @@ const watch = () => {
   useEffect(() => {
     if (createCommentStatus === "success") {
       dispatch(clearCreateCommentState());
-      dispatch(comment({ id: search }))
+      dispatch(comment({ id: search }));
     }
   }, [createCommentStatus]);
 
   const deleteCommentHandler = async (id: string) => {
     try {
-      const res = await axiosInstance.delete(`/api/comment/${id}`)
-      dispatch(comment({ id: search }))
+      const res = await axiosInstance.delete(`/api/comment/${id}`);
+      dispatch(comment({ id: search }));
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <main style={{ background: "background.main" }}>
@@ -99,13 +99,13 @@ const watch = () => {
         <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
           <Grid container gap={2} flexDirection="column">
             <Grid container gap={2} flexDirection="row">
-
-
               <Box>
                 <Avatar src={baseURL + postDetailData?.user.avatar}>
                   {postDetailData?.user.name}
                 </Avatar>
-                <Typography align="center" variant="subtitle2" >{postDetailData?.user.name}</Typography>
+                <Typography align="center" variant="subtitle2">
+                  {postDetailData?.user.name}
+                </Typography>
               </Box>
               <Typography textAlign="center">
                 {postDetailData?.title}
@@ -144,34 +144,45 @@ const watch = () => {
               {commentData &&
                 commentData.map((item: any) => {
                   return (
-                    <ListItem key={item._id} >
+                    <ListItem key={item._id}>
                       <Stack direction="row" gap={4}>
                         <Box>
                           <Avatar src={baseURL + item?.user.avatar}>
                             {item?.user.name}
                           </Avatar>
-                          <Typography align="center" variant="subtitle2" >{item.user.name}</Typography>
+                          <Typography align="center" variant="subtitle2">
+                            {item.user.name}
+                          </Typography>
                         </Box>
                         <Box>
-                          <Typography align="center" variant="subtitle2" >{item.content}</Typography>
-                          <Typography align="center" variant="body1">  {new Date(item?.createdAt).toLocaleString()}</Typography>
+                          <Typography align="center" variant="subtitle2">
+                            {item.content}
+                          </Typography>
+                          <Typography align="center" variant="body1">
+                            {" "}
+                            {new Date(item?.createdAt).toLocaleString()}
+                          </Typography>
                         </Box>
 
                         <Box height="100px" sx={{ pl: "1rem" }}>
-                          <IconButton onClick={() => { deleteCommentHandler(item._id) }}>
+                          <IconButton
+                            onClick={() => {
+                              deleteCommentHandler(item._id);
+                            }}
+                          >
                             <ClearIcon />
                           </IconButton>
                         </Box>
                       </Stack>
                     </ListItem>
-                  )
+                  );
                 })}
             </List>
           </Grid>
         </Grid>
       </Grid>
       <Copyright sx={{ pr: 10, pb: 1, textAlign: "right" }} />
-    </main >
+    </main>
   );
 };
 
