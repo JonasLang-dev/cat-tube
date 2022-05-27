@@ -8,20 +8,20 @@ interface CurrentUserState {
   status: "idle" | "loading" | "failed" | "success";
   error: Array<object> | string | null;
   user:
-  | {
-    _id: string;
-    email: string;
-    name: string;
-    isAdmin: boolean;
-    isPremium: boolean;
-    isDelete: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-    iat: number;
-    exp: number;
-    avatar: string;
-  }
-  | undefined;
+    | {
+        _id: string;
+        email: string;
+        name: string;
+        isAdmin: boolean;
+        isPremium: boolean;
+        isDelete: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+        iat: number;
+        exp: number;
+        avatar: string;
+      }
+    | undefined;
 }
 
 // Define the initial state using that type
@@ -35,10 +35,10 @@ export const currentUser = createAsyncThunk(
   "user/current",
   async (accessToken: string, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/users/current`,{
+      const { data } = await axios.get(`/api/users/current`, {
         headers: {
-          "Authorization": `Bearer ${accessToken}`,
-        }
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
       return data;
     } catch (error: any) {
@@ -52,7 +52,7 @@ export const currentUsreSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    clearCurrentUsrState: (state) => {
+    clearCurrentUsrState: (state: CurrentUserState) => {
       state.status = "idle";
       state.error = null;
       state.user = undefined;
@@ -82,6 +82,7 @@ export const { clearCurrentUsrState } = currentUsreSlice.actions;
 // Other code such as selectors can use the imported `RootState` type
 export const selectCurrentUserStatus = (state: RootState) =>
   state.currentUser.user;
-export const selectCurrentUserState = (state: RootState) => state.currentUser.status
+export const selectCurrentUserState = (state: RootState) =>
+  state.currentUser.status;
 
 export default currentUsreSlice.reducer;

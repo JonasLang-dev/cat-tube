@@ -39,7 +39,7 @@ const SearchUserResult: FC<User> = ({ user }) => {
             height: "100%",
           }}
           variant="circular"
-          src={baseURL + user.avatar}
+          src={baseURL + "/" + user.avatar}
         />
       </Link>
 

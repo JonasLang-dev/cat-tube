@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import {
@@ -15,6 +15,12 @@ import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNone
 import OutlinedFlagTwoToneIcon from "@mui/icons-material/OutlinedFlagTwoTone";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux.hooks";
+import {
+  channel,
+  selectChannelData,
+} from "../../../features/users/channelSlice";
+import { baseURL } from "../../../request";
 
 function a11yProps(index: number) {
   return {
@@ -23,9 +29,10 @@ function a11yProps(index: number) {
   };
 }
 
-function Profile() {
+function ChannelPage() {
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
+  const channelInfo = useAppSelector(selectChannelData);
   const [sub, setSub] = useState<boolean>(false);
 
   const toggle = () => {
@@ -45,21 +52,31 @@ function Profile() {
       }
     );
   };
+
+  useLayoutEffect(() => {
+    dispatch(channel(location.pathname.split("/")[2]));
+  }, []);
+
   return (
     <Box sx={{ bgcolor: "background.paper" }}>
       <TabContext value={location.pathname.split("/")[3] || "featured"}>
         <Container sx={{ pt: 4 }}>
           <Grid container spacing={3}>
             <Grid item>
-              <Avatar />
+              <Avatar
+                alt={channelInfo?.user.name}
+                src={baseURL + "/" + channelInfo?.user.avatar}
+              />
             </Grid>
             <Grid item>
-              <Typography variant="body1">John Doe</Typography>
-              <Typography variant="body2">2.66万位订阅者</Typography>
+              <Typography variant="body1">{channelInfo?.user.name}</Typography>
+              <Typography variant="body2">
+                {channelInfo?.user.followers} 位订阅者
+              </Typography>
             </Grid>
             <Box sx={{ flexGrow: 1 }} />
             <Grid item>
-              {sub ? (
+              {channelInfo?.isFollow ? (
                 <>
                   <Button color="info" variant="outlined" onClick={toggle}>
                     已订阅
@@ -130,7 +147,10 @@ function Profile() {
                 <Stack spacing={1}>
                   <Typography variant="subtitle1">统计信息</Typography>
                   <Divider />
-                  <Typography variant="body2">2021年4月20日注册</Typography>
+                  <Typography variant="body2">
+                    {new Date(channelInfo?.user.createdAt).toLocaleDateString()}
+                    &nbsp; 注册
+                  </Typography>
                   <Divider />
                   <Typography variant="body2">2,150,046次观看</Typography>
                   <Divider />
@@ -149,4 +169,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default ChannelPage;

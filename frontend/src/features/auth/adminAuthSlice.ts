@@ -32,7 +32,7 @@ export const adminAuthSlice = createSlice({
   name: "auth/admin",
   initialState,
   reducers: {
-    clearAdminAuthState: (state) => {
+    clearAdminAuthState: (state: AdminAuthState) => {
       state.status = "idle";
       state.error = undefined;
       state.data = undefined;

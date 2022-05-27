@@ -122,7 +122,7 @@ function SearchPage() {
                       <Box sx={{ flex: 1, pl: "1rem" }}>
                         <Stack gap={1}>
                           <Typography alignItems="center" variant="body1">
-                            This is the post title
+                            {post.title}
                           </Typography>
                           <Typography variant="body2">
                             {post.user.name}

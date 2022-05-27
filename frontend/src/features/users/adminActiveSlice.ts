@@ -29,7 +29,7 @@ export const adminActiveSlice = createSlice({
   name: "user/active",
   initialState,
   reducers: {
-    clearAdminActiveState: (state) => {
+    clearAdminActiveState: (state: AdminActiveState) => {
       state.status = "idle";
       state.error = undefined;
     },

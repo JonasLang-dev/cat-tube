@@ -66,9 +66,7 @@ const watch = () => {
     try {
       const res = await axiosInstance.delete(`/api/comment/${id}`);
       dispatch(comment({ id: search }));
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (
@@ -100,7 +98,10 @@ const watch = () => {
           <Grid container gap={2} flexDirection="column">
             <Grid container gap={2} flexDirection="row">
               <Box>
-                <Avatar src={baseURL + postDetailData?.user.avatar}>
+                <Avatar
+                  alt={postDetailData?.user.name}
+                  src={baseURL + "/" + postDetailData?.user.avatar}
+                >
                   {postDetailData?.user.name}
                 </Avatar>
                 <Typography align="center" variant="subtitle2">

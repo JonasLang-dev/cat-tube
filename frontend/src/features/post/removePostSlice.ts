@@ -32,7 +32,7 @@ export const removePostSlice = createSlice({
   name: "post/remove",
   initialState,
   reducers: {
-    clearRemovePostState: (state) => {
+    clearRemovePostState: (state: SignUpState) => {
       state.status = "idle";
       state.error = undefined;
       state.data = undefined;

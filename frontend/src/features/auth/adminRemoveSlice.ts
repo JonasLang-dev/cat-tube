@@ -29,7 +29,7 @@ export const adminAuthRemoveSlice = createSlice({
   name: "auth/remove",
   initialState,
   reducers: {
-    clearAdminAuthRemoveState: (state) => {
+    clearAdminAuthRemoveState: (state: AdminAuthRemoveState) => {
       state.status = "idle";
       state.error = undefined;
     },

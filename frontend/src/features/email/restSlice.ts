@@ -34,7 +34,7 @@ export const emailForPassSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    clearEmailForPassState: (state) => {
+    clearEmailForPassState: (state: EmailState) => {
       state.status = "idle";
       state.error = undefined;
     },

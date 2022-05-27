@@ -10,6 +10,7 @@ import {
   updateUserHandler,
   updateAvatarHandler,
   updatePasswordHandler,
+  specifiedUserHandler,
 } from "../../controller/user.controller";
 import requireUser from "../../middleware/requireUser";
 import validateResource from "../../middleware/validateResourse";
@@ -20,6 +21,7 @@ import {
   verifyUserSchema,
   updateUserSchema,
   updatePasswordSchema,
+  specifiedUserSchema,
 } from "../../schema/user.schema";
 import { upload } from "../../utils/multer";
 
@@ -27,13 +29,14 @@ const router = express.Router();
 
 router.get("/", requireUser, getUserHandler);
 
-router.post(
-  "/",
-  validateResource(createUserSchema),
-  createUserHandler
-);
+router.post("/", validateResource(createUserSchema), createUserHandler);
 
-router.put("/", requireUser, validateResource(updateUserSchema), updateUserHandler);
+router.put(
+  "/",
+  requireUser,
+  validateResource(updateUserSchema),
+  updateUserHandler
+);
 
 router.delete("/", requireUser, deleteUserHandler);
 
@@ -70,5 +73,7 @@ router.put(
   validateResource(updatePasswordSchema),
   updatePasswordHandler
 );
+
+router.get("/:id", validateResource(specifiedUserSchema), specifiedUserHandler);
 
 export default router;

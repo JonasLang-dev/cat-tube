@@ -16,7 +16,7 @@ import Subscriptions from "./pages/subscriptions";
 import AdminLayout from "./layout/admin";
 import StudioLayout from "./layout/studio";
 import Settings from "./pages/settings";
-import Profile from "./pages/users/profile";
+import ChannelPage from "./pages/users/channel";
 import History from "./pages/video/history";
 import Library from "./pages/video/library";
 import Download from "./pages/video/download";
@@ -117,7 +117,7 @@ function App() {
                 }
               />
               <Route path="/channel">
-                <Route path="*" element={<Profile />} />
+                <Route path="*" element={<ChannelPage />} />
               </Route>
             </Route>
             <Route

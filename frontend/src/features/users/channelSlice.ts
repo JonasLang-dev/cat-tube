@@ -3,41 +3,36 @@ import axios from "../../request";
 import type { RootState } from "../../store";
 
 // Define a type for the slice state
-interface PostDetailState {
+interface ChannelState {
   status: "idle" | "loading" | "failed" | "success";
   error: any | undefined;
   data: any | undefined;
 }
 
 // Define the initial state using that type
-const initialState: PostDetailState = {
+const initialState: ChannelState = {
   status: "idle",
   error: undefined,
   data: undefined,
 };
 
-export const postDetail = createAsyncThunk(
-  "post/detail",
-  async (
-    post: {
-      id: string;
-    },
-    { rejectWithValue }
-  ) => {
+export const channel = createAsyncThunk(
+  "channel",
+  async (id: string, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/posts/${post.id}`);
-      return data.data;
+      const { data } = await axios.get(`/api/users/${id}`);
+      return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
 );
 
-export const postDetailSlice = createSlice({
-  name: "post/detail",
+export const channelSlice = createSlice({
+  name: "user/admin",
   initialState,
   reducers: {
-    clearPostDetailState: (state: PostDetailState) => {
+    clearChannelState: (state: ChannelState) => {
       state.status = "idle";
       state.error = undefined;
       state.data = undefined;
@@ -45,15 +40,15 @@ export const postDetailSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(postDetail.pending, (state) => {
+      .addCase(channel.pending, (state) => {
         state.error = undefined;
         state.status = "loading";
       })
-      .addCase(postDetail.fulfilled, (state, action) => {
+      .addCase(channel.fulfilled, (state, action) => {
         state.status = "success";
         state.data = action.payload;
       })
-      .addCase(postDetail.rejected, (state, action) => {
+      .addCase(channel.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
@@ -64,12 +59,10 @@ export const postDetailSlice = createSlice({
   },
 });
 
-export const { clearPostDetailState } = postDetailSlice.actions;
+export const { clearChannelState } = channelSlice.actions;
 
-export const selectPostDetailStatus = (state: RootState) =>
-  state.postDetail.status;
-export const selectPostDetailError = (state: RootState) =>
-  state.postDetail.error;
-export const selectPostDetailData = (state: RootState) => state.postDetail.data;
+export const selectChannelStatus = (state: RootState) => state.channel.status;
+export const selectChannelError = (state: RootState) => state.channel.error;
+export const selectChannelData = (state: RootState) => state.channel.data;
 
-export default postDetailSlice.reducer;
+export default channelSlice.reducer;

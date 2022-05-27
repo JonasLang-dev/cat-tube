@@ -30,6 +30,7 @@ import commentReducer from "./features/comment/commentSlice";
 import createCommentReducer from "./features/comment/createCommentSlice";
 import userAdsReducer from "./features/ads/userAdsSlice";
 import searchReducer from "./features/search/searchSlice";
+import channelReducer from "./features/users/channelSlice";
 
 export const store = configureStore({
   reducer: {
@@ -64,6 +65,7 @@ export const store = configureStore({
     createComment: createCommentReducer,
     userAds: userAdsReducer,
     search: searchReducer,
+    channel: channelReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

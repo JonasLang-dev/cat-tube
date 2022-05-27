@@ -29,7 +29,7 @@ export const adminDelegateSlice = createSlice({
   name: "user/delegate",
   initialState,
   reducers: {
-    clearAdminDelegateState: (state) => {
+    clearAdminDelegateState: (state: AdminDelegateState) => {
       state.status = "idle";
       state.error = undefined;
     },

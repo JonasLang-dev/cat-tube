@@ -29,7 +29,7 @@ export const adminRevokeSlice = createSlice({
   name: "user/revoke",
   initialState,
   reducers: {
-    clearAdminRevokeState: (state) => {
+    clearAdminRevokeState: (state: AdminRevokeState) => {
       state.status = "idle";
       state.error = undefined;
     },
