@@ -37,7 +37,7 @@ const watch = () => {
   const dispatch = useAppDispatch();
   const search = useLocation().search.split("=")[1];
   const postDetailData = useAppSelector(selectPostDetailData);
-  const commentRef = useRef<HTMLDivElement>(null);
+  const commentRef = useRef<any>(null);
   const createCommentStatus = useAppSelector(selectCreateCommentStatus);
   const createCommentError = useAppSelector(selectCreateCommentError);
   const commentData = useAppSelector(selectCommentData);
@@ -45,7 +45,7 @@ const watch = () => {
   const commentHandler = (e: any) => {
     if (commentRef != null) {
       dispatch(
-        createComment({ post: search, content: commentRef?.current?.value })
+        createComment({ post: search, content: commentRef?.current.value })
       );
     }
   };
