@@ -40,7 +40,7 @@
     "diagnostic-languageserver": "^1.14.2",
     "pino-pretty": "^7.6.1",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^4.7.2",
+    "typescript": "^4.7.3",
     "typescript-language-server": "^0.10.1"
   }
 }
