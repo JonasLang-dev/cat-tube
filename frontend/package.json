@@ -39,7 +39,7 @@
     "zod": "^3.17.3"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.0.0-rc.12",
+    "@tauri-apps/cli": "^1.0.0-rc.15",
     "@types/color": "^3.0.3",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
