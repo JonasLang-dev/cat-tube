@@ -655,7 +655,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
       >
         <Toolbar>
           <EdgeTrigger target={{ anchor: "left", field: "open" }}>
-            {(open, setOpen) => (
+            {(open: any, setOpen: any) => (
               <IconButton
                 size="large"
                 edge="start"
@@ -712,7 +712,7 @@ const AdminLayout: FC<Admin> = ({ theme, colorMode }) => {
       <EdgeSidebar anchor="left">
         <SidebarContent>{renderDrawerItem}</SidebarContent>
         <EdgeTrigger target={{ anchor: "left", field: "collapsed" }}>
-          {(collapsed, setCollapsed) => (
+          {(collapsed: any, setCollapsed: any) => (
             <ButtonBase
               onClick={() => setCollapsed(!collapsed)}
               sx={{ flexGrow: 1, height: 48 }}

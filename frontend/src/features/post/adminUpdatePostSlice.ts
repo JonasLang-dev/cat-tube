@@ -29,7 +29,7 @@ export const adminUpdatePostSlice = createSlice({
   name: "post/admin/update",
   initialState,
   reducers: {
-    clearAdminPostState: (state) => {
+    clearAdminPostState: (state: AdminUpdatePostState) => {
       state.status = "idle";
       state.error = undefined;
     },

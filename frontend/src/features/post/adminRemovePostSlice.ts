@@ -29,7 +29,7 @@ export const adminRemovePostSlice = createSlice({
   name: "post/admin/delete",
   initialState,
   reducers: {
-    clearAdminPostState: (state) => {
+    clearAdminPostState: (state: AdminRemovePostState) => {
       state.status = "idle";
       state.error = undefined;
     },

@@ -44,7 +44,7 @@ export const signUpSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    clearSignUpState: (state) => {
+    clearSignUpState: (state: SignUpState) => {
       state.status = "idle";
       state.error = undefined;
     },

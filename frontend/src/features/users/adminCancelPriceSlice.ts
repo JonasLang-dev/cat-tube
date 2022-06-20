@@ -22,7 +22,6 @@ export const adminInactivePre = createAsyncThunk(
         `/api/admin/user/${params.id}/premium`
       );
     } catch (error: any) {
-      console.log(error);
       return rejectWithValue(error.response.data.message);
     }
   }
@@ -32,7 +31,7 @@ export const adminInactivePreSlice = createSlice({
   name: "user/premuim/inactive",
   initialState,
   reducers: {
-    clearAdminInactivePreState: (state) => {
+    clearAdminInactivePreState: (state: AdminInactivePreState) => {
       state.status = "idle";
       state.error = undefined;
     },

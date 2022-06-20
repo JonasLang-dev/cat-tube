@@ -32,7 +32,7 @@ export const adminCateSlice = createSlice({
   name: "category/admin",
   initialState,
   reducers: {
-    clearAdminCateState: (state) => {
+    clearAdminCateState: (state: AdminCategoryState) => {
       state.status = "idle";
       state.error = undefined;
       state.data = undefined;

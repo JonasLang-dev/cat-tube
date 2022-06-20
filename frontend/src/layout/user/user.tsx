@@ -174,7 +174,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
       >
         <Avatar
           alt={currentUserInfo && currentUserInfo.name}
-          src={currentUserInfo && `${baseURL}/${currentUserInfo.avatar}`}
+          src={`${baseURL}/${currentUserInfo?.avatar}`}
         />
         &nbsp; {currentUserInfo && currentUserInfo.name}
       </MenuItem>
@@ -900,9 +900,7 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
                 >
                   <Avatar
                     alt={currentUserInfo && currentUserInfo.name}
-                    src={
-                      currentUserInfo && `${baseURL}/${currentUserInfo.avatar}`
-                    }
+                    src={`${baseURL}/${currentUserInfo?.avatar}`}
                   />
                 </IconButton>
               </>

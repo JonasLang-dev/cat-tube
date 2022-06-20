@@ -28,13 +28,9 @@ import {
 } from "../features/category/addCateSlice";
 import { adminCategory } from "../features/category/adminCateSlice";
 
-const Input = styled("input")({
-  display: "none",
-});
-
 const postSchema = object({
-  title: string().nonempty({ message: "Title is required" }),
-  description: string().nonempty({ message: "Title is required" }),
+  title: string().min(2, { message: "Title min 2 characters" }),
+  description: string().min(3, { message: "Description min 3 characters" }),
 });
 
 type PostInput = TypeOf<typeof postSchema>;
@@ -89,8 +85,6 @@ const CategoryDialog = forwardRef((props, ref) => {
     }
 
     if (addCateStatus === "failed") {
-      console.log(addCateError);
-
       if (Array.isArray(addCateError)) {
         addCateError.forEach((item) => {
           enqueueSnackbar(t(item.message), { variant: "error" });

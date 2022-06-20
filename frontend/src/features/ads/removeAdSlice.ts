@@ -27,7 +27,7 @@ export const removeAdSlice = createSlice({
   name: "ads/remove",
   initialState,
   reducers: {
-    clearRemoveAdState: (state) => {
+    clearRemoveAdState: (state: RemoveAdState) => {
       state.status = "idle";
       state.error = undefined;
     },
@@ -36,7 +36,6 @@ export const removeAdSlice = createSlice({
     builder
       .addCase(removeAd.pending, (state) => {
         state.error = undefined;
-        state.ads = undefined;
         state.status = "loading";
       })
       .addCase(removeAd.fulfilled, (state, action) => {

@@ -574,7 +574,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
       >
         <Toolbar>
           <EdgeTrigger target={{ anchor: "left", field: "open" }}>
-            {(open, setOpen) => (
+            {(open: any, setOpen: any) => (
               <IconButton
                 sx={{ mr: 2, color: "#EAF3FB" }}
                 size="large"
@@ -642,7 +642,7 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
       <EdgeSidebar anchor="left">
         <SidebarContent>{renderDrawerItem}</SidebarContent>
         <EdgeTrigger target={{ anchor: "left", field: "collapsed" }}>
-          {(collapsed, setCollapsed) => (
+          {(collapsed: any, setCollapsed: any) => (
             <ButtonBase
               onClick={() => setCollapsed(!collapsed)}
               sx={{ flexGrow: 1, height: 48 }}

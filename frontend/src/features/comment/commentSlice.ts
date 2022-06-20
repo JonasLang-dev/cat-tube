@@ -32,7 +32,7 @@ export const commentSlice = createSlice({
   name: "comment",
   initialState,
   reducers: {
-    clearCommentState: (state) => {
+    clearCommentState: (state: CommentState) => {
       state.status = "idle";
       state.error = undefined;
       state.data = undefined;

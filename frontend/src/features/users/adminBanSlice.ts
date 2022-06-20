@@ -29,7 +29,7 @@ export const adminBanSlice = createSlice({
   name: "user/ban",
   initialState,
   reducers: {
-    clearAdminBanState: (state) => {
+    clearAdminBanState: (state: AdminBanState) => {
       state.status = "idle";
       state.error = undefined;
     },

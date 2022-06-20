@@ -32,7 +32,7 @@ export const addCateSlice = createSlice({
   name: "category/add",
   initialState,
   reducers: {
-    clearAddCateState: (state) => {
+    clearAddCateState: (state: AddCategoryState) => {
       state.status = "idle";
       state.error = undefined;
     },

@@ -29,7 +29,7 @@ export const adminActivePreSlice = createSlice({
   name: "user/premuim/active",
   initialState,
   reducers: {
-    clearAdminActivePreState: (state) => {
+    clearAdminActivePreState: (state: AdminActivePreState) => {
       state.status = "idle";
       state.error = undefined;
     },
@@ -56,7 +56,9 @@ export const adminActivePreSlice = createSlice({
 
 export const { clearAdminActivePreState } = adminActivePreSlice.actions;
 
-export const selectAdminActivePreStatus = (state: RootState) => state.adminActivePre.status;
-export const selectAdminActivePreError = (state: RootState) => state.adminActivePre.error;
+export const selectAdminActivePreStatus = (state: RootState) =>
+  state.adminActivePre.status;
+export const selectAdminActivePreError = (state: RootState) =>
+  state.adminActivePre.error;
 
 export default adminActivePreSlice.reducer;

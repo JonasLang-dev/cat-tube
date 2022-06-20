@@ -72,7 +72,7 @@ const VideoCard: FC<VideoCardType> = ({
           gridTemplateColumns="1fr 1fr 1fr"
           component={Grid}
         >
-          <Box gridArea="avatar">
+          <Box gridArea="avatar" to={`/channel/${user.id}`} component={Link}>
             <Avatar
               sx={{ height: 50, width: 50 }}
               alt={user.name}

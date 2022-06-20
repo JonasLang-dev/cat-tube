@@ -1,7 +1,4 @@
-import {
-  createAsyncThunk,
-  createSlice
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../request";
 import { RootState } from "../../store";
 
@@ -14,20 +11,28 @@ interface ResetPasswordState {
 // Define the initial state using that type
 const initialState: ResetPasswordState = {
   status: "idle",
-  error: undefined
+  error: undefined,
 };
 
 export const resetPassword = createAsyncThunk(
   "email/password/new",
   async (
-    value: { id: string, passwordResetCode: string, password: string, passwordConfirmation: string },
+    value: {
+      id: string;
+      passwordResetCode: string;
+      password: string;
+      passwordConfirmation: string;
+    },
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await axiosInstance.put(`/api/users/resetpassword/${value.id}/${value.passwordResetCode}`, {
-        password: value.password,
-        passwordConfirmation: value.passwordConfirmation
-      });
+      const { data } = await axiosInstance.put(
+        `/api/users/resetpassword/${value.id}/${value.passwordResetCode}`,
+        {
+          password: value.password,
+          passwordConfirmation: value.passwordConfirmation,
+        }
+      );
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -40,7 +45,7 @@ export const resetPasswordSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    clearResetPasswordState: (state) => {
+    clearResetPasswordState: (state: ResetPasswordState) => {
       state.status = "idle";
       state.error = undefined;
     },
@@ -69,7 +74,9 @@ export const resetPasswordSlice = createSlice({
 export const { clearResetPasswordState } = resetPasswordSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectResetPasswordStatus = (state: RootState) => state.resetPassword.status;
-export const selectResetPasswordErrors = (state: RootState) => state.resetPassword.error;
+export const selectResetPasswordStatus = (state: RootState) =>
+  state.resetPassword.status;
+export const selectResetPasswordErrors = (state: RootState) =>
+  state.resetPassword.error;
 
 export default resetPasswordSlice.reducer;

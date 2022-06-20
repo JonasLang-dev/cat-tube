@@ -32,7 +32,7 @@ export const adminUserSlice = createSlice({
   name: "user/admin",
   initialState,
   reducers: {
-    clearAdminUserState: (state) => {
+    clearAdminUserState: (state: AdminUserState) => {
       state.status = "idle";
       state.error = undefined;
       state.data = undefined;

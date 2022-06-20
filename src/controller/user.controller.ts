@@ -8,8 +8,10 @@ import {
   UpdatePasswordInput,
   UpdateUserInput,
   VerifyUserInput,
+  SpecifiedUserSchemaInput,
 } from "../schema/user.schema";
 import { signAccessToken, signRefreshToken } from "../service/auth.service";
+import { findSubscribed } from "../service/subscription.service";
 import {
   createUser,
   findUserById,
@@ -425,3 +427,33 @@ export async function revokeAdminHandler(
 
   res.send({ message: "User admin update successfully" });
 }
+
+export const specifiedUserHandler = async (
+  req: Request<SpecifiedUserSchemaInput, {}, {}>,
+  res: Response
+) => {
+  const { id } = req.params;
+  let result;
+
+  const user = await findUserById(id, "posts followers");
+
+  if (!user) {
+    return res.status(400).send({ message: "User does not exists" });
+  }
+
+  result = { user, isMe: false, isFollow: false };
+
+  if (res.locals.user) {
+    if (id === res.locals.user._id) {
+      result.isMe = true;
+    }
+
+    const subscribed = await findSubscribed(res.locals.user._id, id);
+
+    if (subscribed.length > 0) {
+      result.isFollow = true;
+    }
+  }
+
+  res.send(result);
+};

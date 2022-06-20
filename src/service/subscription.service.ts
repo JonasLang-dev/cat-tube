@@ -37,3 +37,13 @@ export const findSubscribers = async (
     _PrivateFields
   );
 };
+
+export const findSubscribed = async (
+  currentUser: string,
+  queryChannel: string
+) => {
+  return SubscriptionModel.find({
+    publisher: queryChannel,
+    subscriber: currentUser,
+  });
+};

@@ -24,6 +24,7 @@ import {
   selectAdminAuthRemoveStatus,
 } from "../../features/auth/adminRemoveSlice";
 import { useSnackbar } from "notistack";
+import { baseURL } from "../../request";
 
 function AdminAuth() {
   const dispatch = useAppDispatch();
@@ -49,7 +50,10 @@ function AdminAuth() {
         renderCell: (params: GridRenderCellParams) => {
           return (
             <>
-              <Avatar alt={params.value.name} src={params.value.avatar} />
+              <Avatar
+                alt={params.value.name}
+                src={`${baseURL}/${params.value.avatar}`}
+              />
               &nbsp; {params.value.name}
             </>
           );

@@ -29,7 +29,7 @@ export const removeCateSlice = createSlice({
   name: "category/add",
   initialState,
   reducers: {
-    clearRemoveCateState: (state) => {
+    clearRemoveCateState: (state: RemoveCategoryState) => {
       state.status = "idle";
       state.error = undefined;
     },
