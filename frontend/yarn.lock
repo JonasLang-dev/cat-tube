@@ -461,20 +461,6 @@
   resolved "https://registry.npmjs.org/@mui-treasury/layout/-/layout-5.0.0.tgz"
   integrity sha512-MbGTKomwAG3cjuK36O1/W+/jiJ5v4BYBvhPA4hTAshZnFcraE3f490+1ayC4QTq6CkDDKpvKQYLeuAj9uSrI4w==
 
-"@mui/base@5.0.0-alpha.82":
-  version "5.0.0-alpha.82"
-  resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-alpha.82.tgz#19645af6790a79587517a5782ee32bf9ab7f7ac8"
-  integrity sha512-WUVDjCGnLXzmGxrmfW31blhucg0sRX4YddK2Falq7FlVzwdJaPgWn/xzPZmdLL0+WXon0gQVnDrq2qvggE/GMg==
-  dependencies:
-    "@babel/runtime" "^7.17.2"
-    "@emotion/is-prop-valid" "^1.1.2"
-    "@mui/types" "^7.1.3"
-    "@mui/utils" "^5.8.0"
-    "@popperjs/core" "^2.11.5"
-    clsx "^1.1.1"
-    prop-types "^15.8.1"
-    react-is "^17.0.2"
-
 "@mui/base@5.0.0-alpha.85":
   version "5.0.0-alpha.85"
   resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-alpha.85.tgz#e9e19678bf72dae228d0f25d33dfe20462aac833"
@@ -503,15 +489,15 @@
   dependencies:
     "@babel/runtime" "^7.17.2"
 
-"@mui/lab@^5.0.0-alpha.83":
-  version "5.0.0-alpha.83"
-  resolved "https://registry.yarnpkg.com/@mui/lab/-/lab-5.0.0-alpha.83.tgz#20e5acafb007407808b94384376afd3cc83d8025"
-  integrity sha512-y8JWVfuXckVDbKL+Txyv1WXMSAOCJmqfLuCRUpotYXxZDzNLgA67iv7jw5pya8+xrOvzht+rEy2llG57AqCoaQ==
+"@mui/lab@^5.0.0-alpha.86":
+  version "5.0.0-alpha.86"
+  resolved "https://registry.yarnpkg.com/@mui/lab/-/lab-5.0.0-alpha.86.tgz#83323e0ff17fdea641fa1d93be024413bf407ec3"
+  integrity sha512-5dx9/vHldiE5KFu99YUtEGKyUgwTiq8wM+IhEnNKkU+YjEMULVYV+mgS9nvnf6laKtgqy2hOE4JivqRPIuOGdA==
   dependencies:
     "@babel/runtime" "^7.17.2"
-    "@mui/base" "5.0.0-alpha.82"
-    "@mui/system" "^5.8.1"
-    "@mui/utils" "^5.8.0"
+    "@mui/base" "5.0.0-alpha.85"
+    "@mui/system" "^5.8.4"
+    "@mui/utils" "^5.8.4"
     "@mui/x-date-pickers" "5.0.0-alpha.1"
     clsx "^1.1.1"
     prop-types "^15.8.1"
@@ -554,7 +540,7 @@
     "@emotion/cache" "^11.7.1"
     prop-types "^15.8.1"
 
-"@mui/system@^5.4.1", "@mui/system@^5.8.1", "@mui/system@^5.8.4":
+"@mui/system@^5.4.1", "@mui/system@^5.8.4":
   version "5.8.4"
   resolved "https://registry.yarnpkg.com/@mui/system/-/system-5.8.4.tgz#88306aefcc3a60528f69dcd2d66516831859c328"
   integrity sha512-eeYZXlOn4p+tYwqqDlci6wW4knJ68aGx5A24YU9ubYZ5o0IwveoNP3LC9sHAMxigk/mUTqL4bpSMJ2HbTn2aQg==
@@ -568,12 +554,12 @@
     csstype "^3.1.0"
     prop-types "^15.8.1"
 
-"@mui/types@^7.1.3", "@mui/types@^7.1.4":
+"@mui/types@^7.1.4":
   version "7.1.4"
   resolved "https://registry.yarnpkg.com/@mui/types/-/types-7.1.4.tgz#4185c05d6df63ec673cda15feab80440abadc764"
   integrity sha512-uveM3byMbthO+6tXZ1n2zm0W3uJCQYtwt/v5zV5I77v2v18u0ITkb8xwhsDD2i3V2Kye7SaNR6FFJ6lMuY/WqQ==
 
-"@mui/utils@^5.6.0", "@mui/utils@^5.7.0", "@mui/utils@^5.8.0", "@mui/utils@^5.8.4":
+"@mui/utils@^5.6.0", "@mui/utils@^5.7.0", "@mui/utils@^5.8.4":
   version "5.8.4"
   resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.8.4.tgz#5c46b5900bd2452b3ce54a7a1c94a3e2a8a75c34"
   integrity sha512-BHYErfrjqqh76KaDAm8wZlhEip1Uj7Cmco65NcsF3BWrAl3FWngACpaPZeEbTgmaEwyWAQEE6LZhsmy43hfyqQ==
@@ -1467,10 +1453,10 @@ i18next-http-backend@^1.4.1:
   dependencies:
     cross-fetch "3.1.5"
 
-i18next@^21.8.4:
-  version "21.8.4"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-21.8.4.tgz#646e23065752036b38d9fda8898c18139b9e8ebe"
-  integrity sha512-b3LQ5n9V1juu8UItb5x1QTI4OTvNqsNs/wetwQlBvfijEqks+N5HKMKSoevf8w0/RGUrDQ7g4cvVzF8WBp9pUw==
+i18next@^21.8.5:
+  version "21.8.10"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-21.8.10.tgz#12f164cc0f5f7904f0d4e0cfdf5950b93793d171"
+  integrity sha512-7xRb6y4QlSqZRZ3uA5BIEsLuZpmxpzHLizQyKjDDThOcvdfgICOX7aFoBnh4BSWcLtJamTqSweaOuK22A2xqkA==
   dependencies:
     "@babel/runtime" "^7.17.2"
 
@@ -1817,10 +1803,10 @@ pkg-up@^3.1.0:
   dependencies:
     find-up "^3.0.0"
 
-plyr-react@^4.0.0-alpha.5:
-  version "4.0.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/plyr-react/-/plyr-react-4.0.0-alpha.5.tgz#c187ac75a4e9e0c9ccf69054a202a8bf83e57bac"
-  integrity sha512-B5aaLcbOXKOTtacK/XFFoJI5AplI01Sh86trvNWIaazcz60g8syFBrYft3hI0RI6ZU++0Al475MEKreySNjXfg==
+plyr-react@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/plyr-react/-/plyr-react-4.0.0.tgz#255e790e6abf25067c913fc5d9ef55a0ecece5bd"
+  integrity sha512-X1IgxiMdry9nMxUzXjbBtc6XwDgl6SaDI5v1KYjXokW1V3vcr2l4qJkhco0hXoKpOPUwRVIjLHdTOwzMBv8ycQ==
   dependencies:
     plyr "^3.7.2"
     react-aptor "^1.3.1"
@@ -1879,15 +1865,6 @@ react-aptor@^1.3.1:
   resolved "https://registry.yarnpkg.com/react-aptor/-/react-aptor-1.3.1.tgz#7da2d88137994b4999b7e01c24d686341546be18"
   integrity sha512-M2pVBhxhkmZg7iuBS09ENKsMlQg7VrYHBLcYXbzc99LL31UHB0OgmsCko8kErLgzScb/QrShosqb4uSkXIxFfg==
 
-react-dom@^17.0.2:
-  version "17.0.2"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
-  integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    scheduler "^0.20.2"
-
 react-dom@^18.1.0:
   version "18.1.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.1.0.tgz#7f6dd84b706408adde05e1df575b3a024d7e8a2f"
@@ -1934,10 +1911,10 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.0.0.tgz#026f6c4a27dbe33bf4a35655b9e1327c4e55e3f5"
   integrity sha512-yUcBYdBBbo3QiPsgYDcfQcIkGZHfxOaoE6HLSnr1sPzMhdyxusbfKOSUbSd/ocGi32dxcj366PsTj+5oggeKKw==
 
-react-material-ui-carousel@^3.3.3:
-  version "3.3.3"
-  resolved "https://registry.npmjs.org/react-material-ui-carousel/-/react-material-ui-carousel-3.3.3.tgz"
-  integrity sha512-pIojUKfu6s2r5icE5cQYUfEUTa9BT2dc/gw+gdBp32rJVfKlrOglb7Wdrho+hsdKDba2KQxnmYWixGKRbbMVaA==
+react-material-ui-carousel@^3.4.1:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/react-material-ui-carousel/-/react-material-ui-carousel-3.4.2.tgz#3db3b4719859960284f262470b304fecad89fa18"
+  integrity sha512-jUbC5aBWqbbbUOOdUe3zTVf4kMiZFwKJqwhxzHgBfklaXQbSopis4iWAHvEOLcZtSIJk4JAGxKE0CmxDoxvUuw==
   dependencies:
     "@emotion/react" "^11.7.1"
     "@emotion/styled" "^11.6.0"
@@ -1945,8 +1922,6 @@ react-material-ui-carousel@^3.3.3:
     "@mui/material" "^5.4.1"
     "@mui/system" "^5.4.1"
     framer-motion "^4.1.17"
-    react "^17.0.2"
-    react-dom "^17.0.2"
 
 react-redux@^8.0.2:
   version "8.0.2"
@@ -1989,14 +1964,6 @@ react-transition-group@^4.4.2:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
-
-react@^17.0.2:
-  version "17.0.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
-  integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
 
 react@^18.1.0:
   version "18.1.0"
@@ -2083,14 +2050,6 @@ safe-buffer@~5.1.1:
   version "5.1.2"
   resolved "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz"
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
-
-scheduler@^0.20.2:
-  version "0.20.2"
-  resolved "https://registry.npmjs.org/scheduler/-/scheduler-0.20.2.tgz"
-  integrity sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
 
 scheduler@^0.22.0:
   version "0.22.0"

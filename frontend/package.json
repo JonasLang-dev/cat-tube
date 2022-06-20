@@ -16,7 +16,7 @@
     "@mui-treasury/component-info": "^0.1.0-alpha.1",
     "@mui-treasury/layout": "^5.0.0",
     "@mui/icons-material": "^5.8.0",
-    "@mui/lab": "^5.0.0-alpha.83",
+    "@mui/lab": "^5.0.0-alpha.86",
     "@mui/material": "^5.8.4",
     "@mui/x-data-grid": "^5.11.1",
     "@reduxjs/toolkit": "^1.8.2",
