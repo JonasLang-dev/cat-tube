@@ -28,7 +28,7 @@
     "i18next-http-backend": "^1.4.1",
     "mui-file-dropzone": "^4.0.1",
     "notistack": "^2.0.5",
-    "plyr-react": "^4.0.0-alpha.5",
+    "plyr-react": "^4.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-hook-form": "^7.32.2",
