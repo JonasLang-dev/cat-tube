@@ -2174,10 +2174,10 @@ type-fest@^0.16.0:
   resolved "https://registry.npmjs.org/type-fest/-/type-fest-0.16.0.tgz"
   integrity sha512-eaBzG6MxNzEn9kiwvtre90cXaNLkmadMWa1zQMs3XORCXNbsH/OewwbxC5ia9dCxIxnTAsSxXJaa/p5y8DlvJg==
 
-typescript-language-server@^0.10.1:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/typescript-language-server/-/typescript-language-server-0.10.1.tgz#69232fcd860209f97f240a83532b306af960f6e1"
-  integrity sha512-Lk98jYbHthLOhldFziQhk0TubE7RvUtQaVW5un7hOR2uDVH78lQHf5RZsgtmlAECgZRxWXgTOJUZ+BWJ+v/a7A==
+typescript-language-server@^0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/typescript-language-server/-/typescript-language-server-0.11.1.tgz#d90759fe2a08ce97ff122f99c08bd85eac0f431d"
+  integrity sha512-kcF4pbTHzYJWPj1RBRKZ1lrqjDGoy2sMevdNy+AakDur57JvTv8rlnN549rUJCoRR5th4LFhJ6zAo3zLFR1gNw==
   dependencies:
     commander "^9.0.0"
     fs-extra "^10.0.0"
@@ -2187,7 +2187,7 @@ typescript-language-server@^0.10.1:
     tempy "^1.0.1"
     vscode-languageserver "^7.0.0"
     vscode-languageserver-protocol "3.16.0"
-    vscode-languageserver-textdocument "1.0.4"
+    vscode-languageserver-textdocument "1.0.5"
     vscode-uri "^3.0.2"
     which "^2.0.2"
 
@@ -2248,10 +2248,10 @@ vscode-languageserver-protocol@3.16.0, vscode-languageserver-protocol@^3.15.3:
     vscode-jsonrpc "6.0.0"
     vscode-languageserver-types "3.16.0"
 
-vscode-languageserver-textdocument@1.0.4, vscode-languageserver-textdocument@^1.0.1:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/vscode-languageserver-textdocument/-/vscode-languageserver-textdocument-1.0.4.tgz"
-  integrity sha512-/xhqXP/2A2RSs+J8JNXpiiNVvvNM0oTosNVmQnunlKvq9o4mupHOBAnnzH0lwIPKazXKvAKsVp1kr+H/K4lgoQ==
+vscode-languageserver-textdocument@1.0.5, vscode-languageserver-textdocument@^1.0.1:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/vscode-languageserver-textdocument/-/vscode-languageserver-textdocument-1.0.5.tgz#838769940ece626176ec5d5a2aa2d0aa69f5095c"
+  integrity sha512-1ah7zyQjKBudnMiHbZmxz5bYNM9KKZYz+5VQLj+yr8l+9w3g+WAhCkUkWbhMEdC5u0ub4Ndiye/fDyS8ghIKQg==
 
 vscode-languageserver-types@3.16.0:
   version "3.16.0"
