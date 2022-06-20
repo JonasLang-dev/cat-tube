@@ -560,6 +560,7 @@
   resolved "https://registry.yarnpkg.com/@mui/types/-/types-7.1.4.tgz#4185c05d6df63ec673cda15feab80440abadc764"
   integrity sha512-uveM3byMbthO+6tXZ1n2zm0W3uJCQYtwt/v5zV5I77v2v18u0ITkb8xwhsDD2i3V2Kye7SaNR6FFJ6lMuY/WqQ==
 
+
 "@mui/utils@^5.6.0", "@mui/utils@^5.7.0", "@mui/utils@^5.8.4":
   version "5.8.4"
   resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.8.4.tgz#5c46b5900bd2452b3ce54a7a1c94a3e2a8a75c34"
@@ -571,13 +572,13 @@
     prop-types "^15.8.1"
     react-is "^17.0.2"
 
-"@mui/x-data-grid@^5.11.1":
-  version "5.11.1"
-  resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-5.11.1.tgz#4780d76fd41e11f1e45935327e931313b47c3158"
-  integrity sha512-Iwm3gmHciZrYsmAOrX1W2JKo2CexgGhdG7ZXvHh1rW3OD66ITSoFilThPtrb88Eg1fZI/goDWnPr6R7JXLHc5Q==
+"@mui/x-data-grid@^5.12.2":
+  version "5.12.2"
+  resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-5.12.2.tgz#e7bde75549ab592ebdafe2d12a2b7f671d484d22"
+  integrity sha512-OA5jjSoGPrO742GWNSxUPac6U1m8wF0rzcmqlj5vMuBySkPi0ycPRRlVAlYJWTVhSBPs+UWoHA9QpTE19eMBYg==
   dependencies:
     "@babel/runtime" "^7.17.2"
-    "@mui/utils" "^5.7.0"
+    "@mui/utils" "^5.4.1"
     clsx "^1.1.1"
     prop-types "^15.8.1"
     reselect "^4.1.5"
@@ -1883,7 +1884,7 @@ react-dropzone@^10.2.1:
     file-selector "^0.1.12"
     prop-types "^15.7.2"
 
-react-hook-form@^7.32.2:
+react-hook-form@^7.31.3:
   version "7.32.2"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.32.2.tgz#58ec2ab0239ce97969baa2faa03ced13fae913ac"
   integrity sha512-F1A6n762xaRhvtQH5SkQQhMr19cCkHZYesTcKJJeNmrphiZp/cYFTIzC05FnQry0SspM54oPJ9tXFXlzya8VNQ==
