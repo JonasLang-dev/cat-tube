@@ -15,7 +15,7 @@
     "@hookform/resolvers": "^2.8.10",
     "@mui-treasury/component-info": "^0.1.0-alpha.1",
     "@mui-treasury/layout": "^5.0.0",
-    "@mui/icons-material": "^5.8.0",
+    "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.86",
     "@mui/material": "^5.8.4",
     "@mui/x-data-grid": "^5.12.2",
