@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.8.1",
+    "@emotion/styled": "^11.9.3",
     "@hookform/resolvers": "^2.8.10",
     "@mui-treasury/component-info": "^0.1.0-alpha.1",
     "@mui-treasury/layout": "^5.0.0",
@@ -31,7 +31,7 @@
     "plyr-react": "^4.0.0-alpha.5",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-hook-form": "^7.31.2",
+    "react-hook-form": "^7.32.2",
     "react-i18next": "^11.16.9",
     "react-material-ui-carousel": "^3.3.3",
     "react-redux": "^8.0.2",
