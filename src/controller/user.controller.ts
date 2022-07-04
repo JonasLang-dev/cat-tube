@@ -53,11 +53,16 @@ export async function verifyUserHandler(
 ) {
   const id = req.params.id;
   const verificationCode = req.params.verificationCode;
+  let user;
 
-  const user = await findUserById(id);
+  try {
+    user = await findUserById(id);
+  } catch (e) {
+    return res.status(400).send("Could not veriy user");
+  }
 
   if (!user) {
-    return res.send("Could not verify user.");
+    return res.status(404).send("Could not verify user.");
   }
 
   if (user.verified) {
@@ -72,7 +77,7 @@ export async function verifyUserHandler(
     return res.send("User successfully verified");
   }
 
-  return res.send("Could not veriy user");
+  return res.status(400).send("Could not veriy user");
 }
 
 export async function forgetPasswordHandler(

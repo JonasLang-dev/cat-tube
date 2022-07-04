@@ -593,15 +593,15 @@ const StudioLayout: FC<Studio> = ({ theme, colorMode }) => {
 
           {matcheWithLg ? (
             <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
-              视频点播系统
+              at Tube
             </Typography>
           ) : matcheWithSm ? (
             <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
-              <></>
+              ube
             </Typography>
           ) : (
             <Typography sx={{ color: "#EAF3FB" }} variant="h6" component="h1">
-              视频
+              at Tube
             </Typography>
           )}
 

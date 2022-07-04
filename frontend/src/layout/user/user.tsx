@@ -822,15 +822,15 @@ const UserLayout: FC<Layout> = ({ theme, colorMode }) => {
 
           {matcheWithLg ? (
             <Typography variant="h6" component="h1">
-              视频点播系统
+              at Tube
             </Typography>
           ) : matcheWithSm ? (
             <Typography variant="h6" component="h1">
-              <></>
+              <>ube</>
             </Typography>
           ) : (
             <Typography variant="h6" component="h1">
-              视频点播
+              at Tube
             </Typography>
           )}
           <Box sx={{ flexGrow: 1, minWidth: "1rem" }} />

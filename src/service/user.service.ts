@@ -7,7 +7,7 @@ export const createUser = async (input: Partial<User>) => {
 };
 
 export const findUserById = async (id: string, populate: string = "") => {
-  return UserModel.findById(id).populate(populate).select(_PrivateFields);
+  return UserModel.findById(id).populate(populate);
 };
 
 export const findUserByEmail = async (email: string) => {
