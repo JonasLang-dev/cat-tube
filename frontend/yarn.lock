@@ -387,10 +387,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
-"@hookform/resolvers@^2.9.1":
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-2.9.1.tgz#59121e38d8fc95d2fd1f41c9631393cd21e10b65"
-  integrity sha512-80lyFFcExEB7A09PFnl8k7A3obQyDF6MyO/FThtwetk+MTedYMs08Aqf7mgWnOawFGyz5QF+TZXJSYiIZW2tEg==
+"@hookform/resolvers@^2.9.5":
+  version "2.9.5"
+  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-2.9.5.tgz#adfa2d240a9315f4ab6ff4c63621d22d1b574c07"
+  integrity sha512-4XABrKdE4GpX6v2RZ+Ij1Wrl9qPEl5ZvVhFxROY+SZhP/6TU8gPw0LO4ZS9/GgIbTx3Pw1U8HmcXVAoGOq+7iA==
 
 "@jridgewell/gen-mapping@^0.1.0":
   version "0.1.1"
