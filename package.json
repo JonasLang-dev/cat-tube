@@ -10,23 +10,23 @@
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
   },
   "dependencies": {
-    "@typegoose/typegoose": "^9.8.1",
-    "argon2": "^0.28.5",
+    "@typegoose/typegoose": "^9.10.1",
+    "argon2": "^0.28.7",
     "config": "^3.3.7",
     "cors": "^2.8.5",
-    "dayjs": "^1.11.2",
+    "dayjs": "^1.11.4",
     "dotenv": "^16.0.1",
     "express": "^5.0.0-beta.1",
     "express-fileupload": "^1.4.0",
-    "express-rate-limit": "^6.4.0",
+    "express-rate-limit": "^6.5.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "mongoose": "^6.3.4",
+    "mongoose": "^6.4.6",
     "multer": "^1.4.4",
-    "nanoid": "3.3.3",
-    "nodemailer": "^6.7.5",
-    "pino": "^8.0.0",
-    "zod": "^3.17.3"
+    "nanoid": "3.3.4",
+    "nodemailer": "^6.7.7",
+    "pino": "^8.3.0",
+    "zod": "^3.17.10"
   },
   "devDependencies": {
     "@types/config": "^0.0.41",
@@ -38,9 +38,9 @@
     "@types/multer": "^1.4.7",
     "@types/nodemailer": "^6.4.4",
     "diagnostic-languageserver": "^1.14.2",
-    "pino-pretty": "^8.0.0",
+    "pino-pretty": "^8.1.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.7.4",
-    "typescript-language-server": "^0.11.1"
+    "typescript-language-server": "^0.11.2"
   }
 }
