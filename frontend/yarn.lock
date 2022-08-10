@@ -1882,10 +1882,10 @@ popmotion@9.3.6:
     style-value-types "4.1.4"
     tslib "^2.1.0"
 
-postcss@^8.4.14:
-  version "8.4.14"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.14.tgz#ee9274d5622b4858c1007a74d76e42e56fd21caf"
-  integrity sha512-E398TUmfAYFPBSdzgeieK2Y1+1cpdxJx8yXbK/m57nRhKSmk1GB2tO4lbLBtlkfPQTDKfe4Xqv1ASWPpayPEig==
+postcss@^8.4.16:
+  version "8.4.16"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.16.tgz#33a1d675fac39941f5f445db0de4db2b6e01d43c"
+  integrity sha512-ipHE1XBvKzm5xI7hiHCZJCSugxvsdq2mPnsq5+UF+VHCjiBvtDrlxJfMBToWaP9D5XlgNmcFGqoHmUn0EYEaRQ==
   dependencies:
     nanoid "^3.3.4"
     picocolors "^1.0.0"
@@ -2277,13 +2277,13 @@ use-sync-external-store@^1.0.0:
   resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
   integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
 
-vite@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-3.0.2.tgz#2a7b4642c53ae066cf724e7e581d6c1fd24e2c32"
-  integrity sha512-TAqydxW/w0U5AoL5AsD9DApTvGb2iNbGs3sN4u2VdT1GFkQVUfgUldt+t08TZgi23uIauh1TUOQJALduo9GXqw==
+vite@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-3.0.5.tgz#56b8d52e00bbbd5f21d02f0868dc613b3246ecc6"
+  integrity sha512-bRvrt9Tw8EGW4jj64aYFTnVg134E8hgDxyl/eEHnxiGqYk7/pTPss6CWlurqPOUzqvEoZkZ58Ws+Iu8MB87iMA==
   dependencies:
     esbuild "^0.14.47"
-    postcss "^8.4.14"
+    postcss "^8.4.16"
     resolve "^1.22.1"
     rollup "^2.75.6"
   optionalDependencies:
