@@ -1,5 +1,7 @@
 # cat-tube
 
+ <img alt="screenshot" src="./docs/screenshot.png" style="margin:2px;"/>
+
 [![deploy-server](https://github.com/Cat-Family/cat-tube/actions/workflows/main.yml/badge.svg?event=deployment_status)](https://github.com/Cat-Family/cat-tube/actions/workflows/main.yml)
 [![CodeQL](https://github.com/Cat-Family/cat-tube/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Cat-Family/cat-tube/actions/workflows/codeql-analysis.yml)
 </br>
