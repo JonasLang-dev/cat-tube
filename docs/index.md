@@ -89,9 +89,9 @@ This is the progress of the current project.
 
 ### Preview
 
- <img alt="screenshot" src="../屏幕截图 2022-08-26 155147.png" style="margin:2px;"/>
- <img alt="screenshot" src="../屏幕截图 2022-08-26 155209.png" style="margin:2px;"/>
- <img alt="screenshot" src="../屏幕截图 2022-08-26 155233.png" style="margin:2px;"/>
- <img alt="screenshot" src="../屏幕截图 2022-08-26 155307.png" style="margin:2px;"/>
- <img alt="screenshot" src="../屏幕截图 2022-08-26 155402.png" style="margin:2px;"/>
- <img alt="screenshot" src="../屏幕截图 2022-08-26 155514.png" style="margin:2px;"/>
+ <img alt="screenshot" src="../2022-08-26 155147.png" style="margin:2px;"/>
+ <img alt="screenshot" src="../2022-08-26 155209.png" style="margin:2px;"/>
+ <img alt="screenshot" src="../2022-08-26 155233.png" style="margin:2px;"/>
+ <img alt="screenshot" src="../2022-08-26 155307.png" style="margin:2px;"/>
+ <img alt="screenshot" src="../2022-08-26 155402.png" style="margin:2px;"/>
+ <img alt="screenshot" src="../2022-08-26 155514.png" style="margin:2px;"/>
