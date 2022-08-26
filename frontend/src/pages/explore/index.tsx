@@ -22,7 +22,7 @@ const Explore = () => {
 
   useLayoutEffect(() => {
     dispatch(posts());
-  });
+  }, []);
   return (
     <main>
       <Container
