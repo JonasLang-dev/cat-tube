@@ -41,7 +41,7 @@
   "devDependencies": {
     "@tauri-apps/cli": "^1.0.5",
     "@types/color": "^3.0.3",
-    "@types/react": "^18.0.15",
+    "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.0.0",
     "diagnostic-languageserver": "^1.14.2",
