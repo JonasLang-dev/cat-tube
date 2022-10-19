@@ -15,7 +15,7 @@
     "config": "^3.3.7",
     "cors": "^2.8.5",
     "dayjs": "^1.11.4",
-    "dotenv": "^16.0.1",
+    "dotenv": "^16.0.3",
     "express": "^5.0.0-beta.1",
     "express-fileupload": "^1.4.0",
     "express-rate-limit": "^6.5.1",
