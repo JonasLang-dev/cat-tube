@@ -26,7 +26,7 @@
     "nanoid": "3.3.4",
     "nodemailer": "^6.7.7",
     "pino": "^8.3.0",
-    "zod": "^3.17.10"
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@types/config": "^0.0.41",
